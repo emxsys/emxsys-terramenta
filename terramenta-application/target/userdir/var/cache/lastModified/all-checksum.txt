@@ -1,0 +1,8 @@
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\platform=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\bin=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\etc=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\extra=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\platform=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\terramenta\terramenta=1314242277302
+D:\repositories\B_Terramenta\trunk\terramenta-application\target\userdir=1314242277302
+crc=7

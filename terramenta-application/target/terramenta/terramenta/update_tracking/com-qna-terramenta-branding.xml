@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module codename="com.qna.terramenta.branding">
+    <module_version install_time="1314242228224" last="true" origin="installer" specification_version="1.0">
+        <file crc="304771462" name="config/Modules/com-qna-terramenta-branding.xml"/>
+        <file crc="1414329459" name="core/locale/core_terramenta.jar"/>
+        <file crc="2899552790" name="modules/com-qna-terramenta-branding.jar"/>
+        <file crc="2232481506" name="modules/locale/org-netbeans-core-windows_terramenta.jar"/>
+        <file crc="1052412447" name="modules/locale/org-netbeans-core_terramenta.jar"/>
+    </module_version>
+</module>

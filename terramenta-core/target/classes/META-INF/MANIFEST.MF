@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: com/qna/terramenta/Bundle.properties
+OpenIDE-Module-Layer: com/qna/terramenta/layer.xml
+OpenIDE-Module-Requires: org.openide.windows.WindowManager
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Implementation-Version: 1.0-20110824
+OpenIDE-Module-Build-Version: 201108250316
+OpenIDE-Module: com.qna.terramenta.core
+OpenIDE-Module-Public-Packages: -
+OpenIDE-Module-Display-Category: com.qna
+OpenIDE-Module-Name: Terramenta Core
+OpenIDE-Module-Short-Description: <undefined>
+OpenIDE-Module-Long-Description: <undefined>
+Class-Path: ext/com.vividsolutions/jts-1.11.jar ext/xerces/xercesImpl-
+ 2.4.0.jar ext/joda-time/joda-time-1.6.2.jar ext/org.jdesktop/beansbin
+ ding-1.2.1.jar ext/com.sun/jogl-1.1.2.jar ext/com.sun/gluegen-rt-1.0.
+ jar ext/gov.nasa/worldwind-1.2.0.jar ext/gov.nasa/worldwindx-1.2.0.ja
+ r
+OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
+ n/1 > 1.8.1, org.openide.windows > 6.39.1, org.openide.util > 8.14.1,
+  org.openide.util.lookup > 8.6.1, org.openide.awt > 7.30.1, org.netbe
+ ans.modules.settings/1 > 1.30.1, org.netbeans.modules.options.api/1 >
+  1.21.1, org.openide.nodes > 7.20.1, org.openide.dialogs > 7.18.1, or
+ g.openide.actions > 6.21.1, org.openide.explorer > 6.34.1
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module codename="com.qna.terramenta.waveformanalyst">
+    <module_version install_time="1314242245603" last="true" origin="installer" specification_version="1.0">
+        <file crc="2976154791" name="config/Modules/com-qna-terramenta-waveformanalyst.xml"/>
+        <file crc="112380660" name="modules/com-qna-terramenta-waveformanalyst.jar"/>
+        <file crc="1871618793" name="modules/ext/jfree/jcommon-1.0.15.jar"/>
+        <file crc="1059696229" name="modules/ext/jfree/jfreechart-1.0.13.jar"/>
+        <file crc="3522431894" name="modules/ext/joda-time/joda-time-1.6.2.jar"/>
+    </module_version>
+</module>
