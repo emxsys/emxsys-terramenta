@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module codename="joda_time">
-    <module_version install_time="1314242276132" last="true" origin="installer" specification_version="1.6.2">
-        <file crc="2287837868" name="config/Modules/joda_time.xml"/>
-        <file crc="3522431894" name="modules/joda_time.jar"/>
-    </module_version>
-</module>

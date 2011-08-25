@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<WorldWindConfiguration version="1">
-    <LayerList href="worldwind/worldwind.layers.xml"/>
-    <!--<Property name="gov.nasa.worldwind.avkey.SceneControllerClassName" value="com.qna.sanops.santerra.globe.AnaglyphSceneController"/>-->
-    <!--<Property name="gov.nasa.worldwind.avkey.TessellatorClassName" value="gov.nasa.worldwind.examples.sunlight.RectangularNormalTessellator"/>-->
-</WorldWindConfiguration>
