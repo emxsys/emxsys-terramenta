@@ -33,6 +33,7 @@ import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
+import gov.nasa.worldwindx.sunlight.SunLayer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
@@ -68,7 +69,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
     private boolean viewModeECI = false;// use Earth-centered inertial or Earth-centered, Earth-fixed
     private String flatProjection = FlatGlobe.PROJECTION_MERCATOR;
-    //private SunLayer sunLayer = new SunLayer();
+    private SunLayer sunLayer = new SunLayer();
     private StarsLayer starLayer;
     private ViewControlsLayer viewControlsLayer;
 
@@ -101,7 +102,6 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
             @Override
             public void changeEventOccurred(DateTimeChangeEvent evt) {
                 updateGlobe(evt.getDateTime());
-
                 wwm.getWorldWindow().redraw();
             }
         });
@@ -149,8 +149,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         }
 
         //Sun
-        //sunLayer.setEnabled(false);
-        //ll.add(1, sunLayer);
+        sunLayer.setEnabled(false);
+        ll.add(1, sunLayer);
 
         //Status Layers
         setStatusLayerType("STANDARD");
@@ -213,7 +213,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         }
 
         starLayer.setLongitudeOffset(Angle.fromDegrees(-orbit.getRotateECIdeg()));
-        //sunLayer.update(datetime);
+        sunLayer.update(datetime);
     }
 
     /**
