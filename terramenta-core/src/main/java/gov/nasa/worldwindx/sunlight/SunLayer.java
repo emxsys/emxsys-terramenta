@@ -26,13 +26,13 @@ public class SunLayer extends LensFlareLayer {
     private static final WorldWindManager wwm = WorldWindManager.getInstance();
     private final SkyGradientLayer skyGradientLayer;
     private final AtmosphereLayer atmosphereLayer = new AtmosphereLayer();
-    private final RectangularNormalTessellator tessellator;
+    private final DayNightRectangularTessellator tessellator;
 
     /**
      * 
      */
     public SunLayer() {
-        this.tessellator = (RectangularNormalTessellator) wwm.getWorldWindow().getModel().getGlobe().getTessellator();
+        this.tessellator = (DayNightRectangularTessellator) wwm.getWorldWindow().getModel().getGlobe().getTessellator();
 
         List<Layer> atmo = wwm.getWorldWindow().getModel().getLayers().getLayersByClass(SkyGradientLayer.class);
         if (!atmo.isEmpty()) {
