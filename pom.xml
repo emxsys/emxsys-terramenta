@@ -88,7 +88,8 @@
         <module>terramenta-core</module>
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
-  </modules>
+        <module>terramenta-waveformanalyst</module>
+    </modules>
 
     <properties>
         <netbeans.version>RELEASE70</netbeans.version>
