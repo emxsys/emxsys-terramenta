@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 
 /**
  *
- * @author heidtc
+ * @author heidtmare
  */
 public class SunLayer extends LensFlareLayer {
 

@@ -1,6 +1,5 @@
 package gov.nasa.worldwindx.sunlight;
 
-import gov.nasa.worldwindx.sunlight.AtmosphericScatteringComputer;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.layers.AbstractLayer;
 import gov.nasa.worldwind.geom.*;
