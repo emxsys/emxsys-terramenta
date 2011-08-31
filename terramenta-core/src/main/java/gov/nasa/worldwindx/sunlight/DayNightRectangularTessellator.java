@@ -15,8 +15,8 @@ import java.awt.*;
 public class DayNightRectangularTessellator extends RectangularTessellator {
 
     private Vec4 lightDirection;
-    private Material material = new Material(Color.GRAY);
-    private Color lightColor = Color.YELLOW;
+    private Material material = new Material(Color.WHITE);
+    private Color lightColor = Color.WHITE;
     private Color ambientColor = new Color(.1f, .1f, .1f);
 
     /**

@@ -1,0 +1,28 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.qna.terramenta.time.actions;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionID;
+import org.openide.util.NbBundle.Messages;
+
+@ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeStepBackwardAction")
+@ActionRegistration(iconBase = "images/control_start_blue.png", displayName = "#CTL_TimeStepBackwardAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Time", position = 4),
+    @ActionReference(path = "Toolbars/Time", position = 1)
+})
+@Messages("CTL_TimeStepBackwardAction=Step Backward")
+public final class TimeStepBackwardAction implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        TimeActionController.step(-1);
+    }
+}

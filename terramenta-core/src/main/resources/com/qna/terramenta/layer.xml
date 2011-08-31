@@ -4,11 +4,12 @@
  
     <folder name="Menu">
         <folder name="GoTo">
-            <file name="SeparatorBeforeGoToLine.instance_hidden"/>
+            <file name="SeparatorBeforeGoToLine.instance_hidden_hidden"/>
             <file name="core-windows-SeparatorAfterRecentList.instance_hidden"/>
             <file name="org-netbeans-core-windows-actions-RecentViewListAction.shadow_hidden"/>
             <file name="org-netbeans-modules-favorites-SelectInFavorites.shadow_hidden"/>
         </folder>
+        <folder name="Time"/>
         <folder name="Tools">
             <file name="Separator1.instance_hidden"/>
             <file name="Separator2.instance_hidden"/>
@@ -24,6 +25,12 @@
     </folder>
     <folder name="Toolbars">
         <folder name="Annotations"/>
+        <folder name="Time">
+            <file name="TimeToolbarSeparator1.instance">
+                <attr name="instanceClass" stringvalue="com.qna.terramenta.utilities.ToolbarSeparator" />
+                <attr name="position" intvalue="7" />
+            </file>
+        </folder>
         <file name="File_hidden"/>
         <file name="Clipboard_hidden"/>
         <file name="UndoRedo_hidden"/>

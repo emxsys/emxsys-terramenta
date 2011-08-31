@@ -9,6 +9,7 @@ import org.openide.cookies.InstanceCookie;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
 
 /**
@@ -17,6 +18,7 @@ import org.openide.util.actions.NodeAction;
  */
 @ActionID(id = "com.qna.terramenta.actions.ObjectGotoAction", category = "Other")
 @ActionRegistration(displayName = "#CTL_ObjectGotoAction")
+@Messages("CTL_ObjectGotoAction=Go To")
 public class ObjectGotoAction extends NodeAction {
 
     private static final Logger logger = Logger.getLogger(ObjectGotoAction.class.getName());

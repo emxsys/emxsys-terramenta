@@ -1,0 +1,28 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.qna.terramenta.time.actions;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.awt.ActionID;
+import org.openide.util.NbBundle.Messages;
+
+@ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeStepForwardAction")
+@ActionRegistration(iconBase = "images/control_end_blue.png", displayName = "#CTL_TimeStepForwardAction")
+@ActionReferences({
+    @ActionReference(path = "Menu/Time", position = 3),
+    @ActionReference(path = "Toolbars/Time", position = 5)
+})
+@Messages("CTL_TimeStepForwardAction=Step Forward")
+public final class TimeStepForwardAction implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        TimeActionController.step(1);
+    }
+}
