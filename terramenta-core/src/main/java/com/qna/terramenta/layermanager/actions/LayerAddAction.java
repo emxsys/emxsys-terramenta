@@ -10,14 +10,20 @@ import java.awt.event.ActionEvent;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.SystemAction;
 
 /**
  *
  * @author heidtmare
  */
+@ActionID(category = "Other", id = "com.qna.terramenta.layermanager.actions.LayerAddAction")
+@ActionRegistration(displayName = "#CTL_LayerAddAction")
+@Messages("CTL_LayerAddAction=Add Layer")
 public class LayerAddAction extends SystemAction {
 
     private static final WorldWindManager wwm = WorldWindManager.getInstance();

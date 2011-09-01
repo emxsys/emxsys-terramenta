@@ -4,17 +4,23 @@ import com.qna.terramenta.globe.WorldWindManager;
 import gov.nasa.worldwind.layers.Layer;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.cookies.InstanceCookie;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
 
 /**
  *
  * @author heidtmare
  */
+@ActionID(category = "Other", id = "com.qna.terramenta.layermanager.actions.LayerDeleteAction")
+@ActionRegistration(displayName = "#CTL_LayerDeleteAction")
+@Messages("CTL_LayerDeleteAction=Remove Layer")
 public class LayerDeleteAction extends NodeAction {
 
     private static final WorldWindManager wwm = WorldWindManager.getInstance();

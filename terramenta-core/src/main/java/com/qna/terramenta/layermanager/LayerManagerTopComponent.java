@@ -18,16 +18,12 @@ import org.openide.explorer.view.BeanTreeView;
 /**
  * Top component which displays something.
  */
-@ConvertAsProperties(dtd = "-//com.qna.terramenta.layermanager//LayerManager//EN",
-autostore = false)
-@TopComponent.Description(preferredID = "LayerManagerTopComponent",
-iconBase = "images/layers.png",
-persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@ConvertAsProperties(dtd = "-//com.qna.terramenta.layermanager//LayerManager//EN", autostore = false)
+@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "images/layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "rightSide", openAtStartup = true)
 @ActionID(category = "Window", id = "com.qna.terramenta.layermanager.LayerManagerTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
-@TopComponent.OpenActionRegistration(displayName = "#CTL_LayerManagerAction",
-preferredID = "LayerManagerTopComponent")
+@TopComponent.OpenActionRegistration(displayName = "#CTL_LayerManagerAction", preferredID = "LayerManagerTopComponent")
 public final class LayerManagerTopComponent extends TopComponent implements ExplorerManager.Provider {
 
     private final ExplorerManager em = new ExplorerManager();

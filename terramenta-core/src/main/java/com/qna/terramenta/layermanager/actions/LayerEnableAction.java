@@ -1,17 +1,23 @@
 package com.qna.terramenta.layermanager.actions;
 
 import gov.nasa.worldwind.layers.Layer;
+import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.cookies.InstanceCookie;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
 
 /**
  *
  * @author heidtmare
  */
+@ActionID(category = "Other", id = "com.qna.terramenta.layermanager.actions.LayerEnableAction")
+@ActionRegistration(displayName = "#CTL_LayerEnableAction")
+@Messages("CTL_LayerEnableAction=Toggle Layer Enabled")
 public class LayerEnableAction extends NodeAction {
 
     /**
