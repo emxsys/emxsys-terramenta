@@ -7,6 +7,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.SkyGradientLayer;
+import gov.nasa.worldwind.terrain.Tessellator;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -26,13 +27,15 @@ public class SunLayer extends LensFlareLayer {
     private static final WorldWindManager wwm = WorldWindManager.getInstance();
     private final SkyGradientLayer skyGradientLayer;
     private final AtmosphereLayer atmosphereLayer = new AtmosphereLayer();
-    private final DayNightRectangularTessellator tessellator;
+    private final RectangularNormalTessellator suntessellator;
+    private Tessellator oldtessellator;
 
     /**
      * 
      */
     public SunLayer() {
-        this.tessellator = (DayNightRectangularTessellator) wwm.getWorldWindow().getModel().getGlobe().getTessellator();
+        oldtessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
+        suntessellator = new RectangularNormalTessellator();
 
         List<Layer> atmo = wwm.getWorldWindow().getModel().getLayers().getLayersByClass(SkyGradientLayer.class);
         if (!atmo.isEmpty()) {
@@ -88,6 +91,8 @@ public class SunLayer extends LensFlareLayer {
         super.setEnabled(enabled);
 
         if (enabled) { // enable shading, use AtmosphereLayer
+            oldtessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
+            wwm.getWorldWindow().getModel().getGlobe().setTessellator(suntessellator);
             for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
                 Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
                 if (l instanceof SkyGradientLayer) {
@@ -95,9 +100,7 @@ public class SunLayer extends LensFlareLayer {
                 }
             }
         } else { // disable lighting, use SkyGradientLayer
-            this.tessellator.setLightDirection(null);
-            this.setSunDirection(null);
-            this.atmosphereLayer.setSunDirection(null);
+            wwm.getWorldWindow().getModel().getGlobe().setTessellator(oldtessellator);
             for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
                 Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
                 if (l instanceof AtmosphereLayer) {
@@ -121,7 +124,7 @@ public class SunLayer extends LensFlareLayer {
             logger.log(Level.FINE, "SUN Position: {0}", sunPosition.toString());
             Vec4 sunVector = wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(sunPosition).normalize3();
             this.setSunDirection(sunVector);
-            this.tessellator.setLightDirection(sunVector.getNegative3());
+            this.suntessellator.setLightDirection(sunVector.getNegative3());
             this.atmosphereLayer.setSunDirection(sunVector);
         }
     }
