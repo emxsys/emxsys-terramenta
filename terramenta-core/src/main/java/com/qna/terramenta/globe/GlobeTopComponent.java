@@ -136,7 +136,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
                 viewControlsLayer.setScale(6 / 10d);
                 viewControlsLayer.setPosition(AVKey.NORTHEAST);
                 viewControlsLayer.setLocationOffset(new Vec4(4, -40, 0, 0));
-                viewControlsLayer.setShowFovControls(true);
+                //viewControlsLayer.setShowFovControls(true); //these controls confuse people...
                 viewControlsLayer.setShowLookControls(true);
             } else if (layer instanceof StarsLayer) {
                 this.starLayer = (StarsLayer) layer; //Save a reference for rotation

@@ -137,7 +137,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = String.format("%,7.3f km", value / 1000);
         }
-        lengthLabel.setText(s);
+        lengthValueLabel.setText(s);
 
         // Update area label
         value = measureTool.getArea();
@@ -148,7 +148,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = String.format("%,7.3f km2", value / 1e6);
         }
-        areaLabel.setText(s);
+        areaValueLabel.setText(s);
 
         // Update width label
         value = measureTool.getWidth();
@@ -159,7 +159,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = String.format("%,7.3f km", value / 1000);
         }
-        widthLabel.setText(s);
+        widthValueLabel.setText(s);
 
         // Update height label
         value = measureTool.getHeight();
@@ -170,7 +170,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = String.format("%,7.3f km", value / 1000);
         }
-        heightLabel.setText(s);
+        heightValueLabel.setText(s);
 
         // Update heading label
         Angle angle = measureTool.getOrientation();
@@ -179,7 +179,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = "na";
         }
-        headingLabel.setText(s);
+        headingValueLabel.setText(s);
 
         // Update center label
         Position center = measureTool.getCenterPosition();
@@ -188,7 +188,7 @@ public final class MeasurementsTopComponent extends TopComponent {
         } else {
             s = "na";
         }
-        centerLabel.setText(s);
+        centerValueLabel.setText(s);
     }
 
     /** This method is called from within the constructor to
@@ -206,10 +206,15 @@ public final class MeasurementsTopComponent extends TopComponent {
         heightLabel = new javax.swing.JLabel();
         headingLabel = new javax.swing.JLabel();
         centerLabel = new javax.swing.JLabel();
+        lengthValueLabel = new javax.swing.JLabel();
+        areaValueLabel = new javax.swing.JLabel();
+        widthValueLabel = new javax.swing.JLabel();
+        heightValueLabel = new javax.swing.JLabel();
+        headingValueLabel = new javax.swing.JLabel();
+        centerValueLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         positionLog = new javax.swing.JTextArea();
         buttonPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         shapeCombo = new javax.swing.JComboBox();
         startButton = new javax.swing.JButton();
         pauseButton = new javax.swing.JButton();
@@ -241,6 +246,18 @@ public final class MeasurementsTopComponent extends TopComponent {
 
         org.openide.awt.Mnemonics.setLocalizedText(centerLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.centerLabel.text")); // NOI18N
 
+        org.openide.awt.Mnemonics.setLocalizedText(lengthValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.lengthValueLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(areaValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.areaValueLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(widthValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.widthValueLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(heightValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.heightValueLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(headingValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.headingValueLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(centerValueLabel, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.centerValueLabel.text")); // NOI18N
+
         javax.swing.GroupLayout metricsPanelLayout = new javax.swing.GroupLayout(metricsPanel);
         metricsPanel.setLayout(metricsPanelLayout);
         metricsPanelLayout.setHorizontalGroup(
@@ -254,22 +271,42 @@ public final class MeasurementsTopComponent extends TopComponent {
                     .addComponent(heightLabel)
                     .addComponent(headingLabel)
                     .addComponent(centerLabel))
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(centerValueLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(headingValueLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(heightValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(areaValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(lengthValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(widthValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                .addContainerGap())
         );
         metricsPanelLayout.setVerticalGroup(
             metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(metricsPanelLayout.createSequentialGroup()
-                .addComponent(lengthLabel)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lengthLabel)
+                    .addComponent(lengthValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(areaLabel)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(areaLabel)
+                    .addComponent(areaValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(widthLabel)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(widthLabel)
+                    .addComponent(widthValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(heightLabel)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(heightLabel)
+                    .addComponent(heightValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headingLabel)
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(headingLabel)
+                    .addComponent(headingValueLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(centerLabel))
+                .addGroup(metricsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(centerLabel)
+                    .addComponent(centerValueLabel)))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.jScrollPane1.border.title"))); // NOI18N
@@ -278,9 +315,6 @@ public final class MeasurementsTopComponent extends TopComponent {
         positionLog.setColumns(20);
         positionLog.setRows(5);
         jScrollPane1.setViewportView(positionLog);
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(MeasurementsTopComponent.class, "MeasurementsTopComponent.jLabel1.text")); // NOI18N
-        buttonPanel.add(jLabel1);
 
         shapeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Path", "Polygon", "Circle", "Ellipse", "Square", "Rectangle" }));
         shapeCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -392,7 +426,7 @@ public final class MeasurementsTopComponent extends TopComponent {
                         .addGap(13, 13, 13)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pathCombo, 0, 120, Short.MAX_VALUE)))
+                        .addComponent(pathCombo, 0, 74, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         settingsPanelLayout.setVerticalGroup(
@@ -444,12 +478,11 @@ public final class MeasurementsTopComponent extends TopComponent {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(tooltipsColorButton)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lineColorButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addComponent(pointsColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tooltipsColorButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lineColorButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                        .addComponent(pointsColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -467,15 +500,17 @@ public final class MeasurementsTopComponent extends TopComponent {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+            .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(metricsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(metricsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,12 +518,12 @@ public final class MeasurementsTopComponent extends TopComponent {
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(settingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(settingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(metricsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -597,18 +632,22 @@ private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_clearButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel areaLabel;
+    private javax.swing.JLabel areaValueLabel;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JLabel centerLabel;
+    private javax.swing.JLabel centerValueLabel;
     private javax.swing.JButton clearButton;
     private javax.swing.JCheckBox followTerrainCheckBox;
     private javax.swing.JCheckBox freeHandCheckBox;
     private javax.swing.JLabel headingLabel;
+    private javax.swing.JLabel headingValueLabel;
     private javax.swing.JLabel heightLabel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel heightValueLabel;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lengthLabel;
+    private javax.swing.JLabel lengthValueLabel;
     private javax.swing.JButton lineColorButton;
     private javax.swing.JPanel metricsPanel;
     private javax.swing.JComboBox pathCombo;
@@ -623,6 +662,7 @@ private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JCheckBox tooltipsCheckBox;
     private javax.swing.JButton tooltipsColorButton;
     private javax.swing.JLabel widthLabel;
+    private javax.swing.JLabel widthValueLabel;
     // End of variables declaration//GEN-END:variables
 
     @Override
