@@ -88,7 +88,6 @@
         <module>terramenta-core</module>
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
-        <module>terramenta-waveformanalyst</module>
     </modules>
 
     <properties>
