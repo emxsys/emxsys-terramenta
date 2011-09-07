@@ -130,7 +130,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>com.qna.terramenta.actions</publicPackage>
+                        <publicPackage>com.qna.terramenta.beans</publicPackage>
                         <publicPackage>com.qna.terramenta.globe</publicPackage>
                         <publicPackage>com.qna.terramenta.interfaces</publicPackage>
                         <publicPackage>com.qna.terramenta.time</publicPackage>
