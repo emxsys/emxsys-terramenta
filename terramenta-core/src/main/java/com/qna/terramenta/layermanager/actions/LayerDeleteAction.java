@@ -10,6 +10,7 @@ import org.openide.cookies.InstanceCookie;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
@@ -23,7 +24,7 @@ import org.openide.util.actions.NodeAction;
 @Messages("CTL_LayerDeleteAction=Remove Layer")
 public class LayerDeleteAction extends NodeAction {
 
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
 
     /**
      * 

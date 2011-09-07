@@ -46,6 +46,7 @@ import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
 import org.openide.util.actions.SystemAction;
 
@@ -62,7 +63,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
 
     private static final Logger logger = Logger.getLogger(GlobeTopComponent.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final OrbitUtilities orbit = new OrbitUtilities();
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();

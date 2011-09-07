@@ -13,6 +13,7 @@ import org.openide.NotifyDescriptor;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.SystemAction;
@@ -26,7 +27,7 @@ import org.openide.util.actions.SystemAction;
 @Messages("CTL_LayerAddAction=Add Layer")
 public class LayerAddAction extends SystemAction {
 
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
 
     /**
      *

@@ -17,6 +17,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
@@ -33,7 +34,7 @@ displayName = "#CTL_DrawRectangleAction")
 @Messages("CTL_DrawRectangleAction=Rectangle")
 public final class DrawRectangleAction implements ActionListener {
 
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
 
     @Override
     public void actionPerformed(ActionEvent e) {

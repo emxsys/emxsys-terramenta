@@ -17,6 +17,7 @@ import org.openide.nodes.Children;
 import org.openide.nodes.Index;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -25,7 +26,7 @@ import org.openide.util.Exceptions;
 public class RootChildren extends Children.Keys<Layer> implements Index {
 
     private static final Logger logger = Logger.getLogger(RootChildren.class.getName());
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private Index indexSupport;
 
     /**

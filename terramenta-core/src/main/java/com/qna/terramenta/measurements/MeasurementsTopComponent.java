@@ -27,6 +27,7 @@ import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Lookup;
 
 /**
  * Top component which displays something.
@@ -39,7 +40,7 @@ import org.openide.awt.ActionReference;
 @TopComponent.OpenActionRegistration(displayName = "#CTL_MeasurementsAction", preferredID = "MeasurementsTopComponent")
 public final class MeasurementsTopComponent extends TopComponent {
 
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final MeasureTool measureTool = new MeasureTool(wwm.getWorldWindow());
     private static final TerrainProfileLayer profile = new TerrainProfileLayer();
 

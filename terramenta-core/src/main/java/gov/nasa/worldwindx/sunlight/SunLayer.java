@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.DateTime;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -24,7 +25,7 @@ import org.joda.time.DateTime;
 public class SunLayer extends LensFlareLayer {
 
     private static final Logger logger = Logger.getLogger(SunLayer.class.getName());
-    private static final WorldWindManager wwm = WorldWindManager.getInstance();
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private final SkyGradientLayer skyGradientLayer;
     private final AtmosphereLayer atmosphereLayer = new AtmosphereLayer();
     private final RectangularNormalTessellator suntessellator;

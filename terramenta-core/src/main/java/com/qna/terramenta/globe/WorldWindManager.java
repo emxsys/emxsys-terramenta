@@ -16,11 +16,13 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.LayerList;
 import java.util.prefs.Preferences;
 import org.openide.util.NbPreferences;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author heidtmare
  */
+@ServiceProvider(service = WorldWindManager.class)
 public class WorldWindManager {
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
@@ -34,20 +36,8 @@ public class WorldWindManager {
         System.setProperty("gov.nasa.worldwind.app.config.document", prefs.get("options.globe.worldwindConfig", "worldwind/worldwind.xml"));
     }
     private static final WorldWindowGLJPanel wwd = new WorldWindowGLJPanel();
-    private static WorldWindManager instance;
 
-    /**
-     * 
-     * @return
-     */
-    public static synchronized WorldWindManager getInstance() {
-        if (instance == null) {
-            instance = new WorldWindManager();
-        }
-        return instance;
-    }
-
-    private WorldWindManager() {
+    public WorldWindManager() {
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
