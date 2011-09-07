@@ -10,6 +10,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeStepForwardAction")
@@ -21,8 +22,10 @@ import org.openide.util.NbBundle.Messages;
 @Messages("CTL_TimeStepForwardAction=Step Forward")
 public final class TimeStepForwardAction implements ActionListener {
 
+    private final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        TimeActionController.step(1);
+        tac.step(1);
     }
 }

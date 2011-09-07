@@ -12,6 +12,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.Presenter;
 
@@ -26,6 +27,7 @@ public final class TimeIncrementAction extends AbstractAction implements Present
     private JButton comp;
     private static final int[] stepIncrements = new int[]{1000, 10000, 60000, 600000, 3600000, 86400000};
     private static int stepIncrementsIndex = 0;
+    private final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
 
     public TimeIncrementAction() {
         comp = new JButton();
@@ -44,7 +46,7 @@ public final class TimeIncrementAction extends AbstractAction implements Present
         }
 
         int step = stepIncrements[stepIncrementsIndex];
-        TimeActionController.setStepIncrement(step);
+        tac.setStepIncrement(step);
         updateText(step);
     }
 

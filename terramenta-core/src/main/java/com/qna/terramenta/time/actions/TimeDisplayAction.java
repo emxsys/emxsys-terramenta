@@ -20,6 +20,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.Presenter;
 
@@ -31,7 +32,8 @@ import org.openide.util.actions.Presenter;
 @Messages("CTL_TimeDisplayAction=Current Time")
 public final class TimeDisplayAction extends AbstractAction implements Presenter.Toolbar {
 
-    private DateTimeController dateTimeController = DateTimeController.getInstance();
+    private static final DateTimeController dateTimeController = DateTimeController.getInstance();
+    private final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
     private JTextField field = new JTextField() {
 
         @Override
@@ -71,7 +73,7 @@ public final class TimeDisplayAction extends AbstractAction implements Presenter
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(field)) {
-            TimeActionController.stop();
+            tac.stop();
             parseDateTextField(field.getText().trim());
             field.setEnabled(false);
         }

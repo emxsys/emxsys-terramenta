@@ -5,12 +5,16 @@
 package com.qna.terramenta.time.actions;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.AbstractAction;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.WeakListeners;
 
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeRewindAction")
 @ActionRegistration(iconBase = "images/control_back_blue.png", displayName = "#CTL_TimeRewindAction")
@@ -19,10 +23,30 @@ import org.openide.util.NbBundle.Messages;
     @ActionReference(path = "Toolbars/Time", position = 2)
 })
 @Messages("CTL_TimeRewindAction=Rewind")
-public final class TimeRewindAction implements ActionListener {
+public final class TimeRewindAction extends AbstractAction {
+
+    private final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+    private final Listener listener = new Listener();
+
+    public TimeRewindAction() {
+        setEnabled(!tac.isPlaying());
+        tac.addPropertyChangeListener(WeakListeners.propertyChange(listener, tac));
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TimeActionController.play(-1);
+        tac.play(-1);
+    }
+
+    private class Listener implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals(TimeActionController.PLAY) && (evt.getNewValue().equals(-1))) {
+                TimeRewindAction.this.setEnabled(false);
+            } else {
+                TimeRewindAction.this.setEnabled(true);
+            }
+        }
     }
 }

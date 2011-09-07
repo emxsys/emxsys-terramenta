@@ -56,7 +56,7 @@
             <artifactId>org-openide-nodes</artifactId>
             <groupId>org.netbeans.api</groupId>
             <type>jar</type>
-            <version>${netbeans.version}</version>
+            <version>RELEASE70</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-dialogs</artifactId>
@@ -115,6 +115,11 @@
             <artifactId>worldwindx</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+            <version>RELEASE70</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -123,6 +128,15 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
+                <configuration>
+                    <publicPackages>
+                        <publicPackage>com.qna.terramenta.actions</publicPackage>
+                        <publicPackage>com.qna.terramenta.globe</publicPackage>
+                        <publicPackage>com.qna.terramenta.interfaces</publicPackage>
+                        <publicPackage>com.qna.terramenta.time</publicPackage>
+                        <publicPackage>com.qna.terramenta.utilities</publicPackage>
+                    </publicPackages>
+                </configuration>
             </plugin>
 
             <plugin>
