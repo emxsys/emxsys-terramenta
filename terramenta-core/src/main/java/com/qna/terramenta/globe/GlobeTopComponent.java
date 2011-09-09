@@ -130,13 +130,13 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
             if (layer instanceof CompassLayer) {
                 CompassLayer compassLayer = (CompassLayer) layer;
                 compassLayer.setIconScale(2 / 10d);
-                compassLayer.setLocationOffset(new Vec4(10, 10, 0, 0));
+                compassLayer.setLocationOffset(new Vec4(18, 5));
             } else if (layer instanceof ViewControlsLayer) {
                 viewControlsLayer = (ViewControlsLayer) layer;
                 viewControlsLayer.setLayout(AVKey.VERTICAL);
                 viewControlsLayer.setScale(6 / 10d);
                 viewControlsLayer.setPosition(AVKey.NORTHEAST);
-                viewControlsLayer.setLocationOffset(new Vec4(4, -40, 0, 0));
+                viewControlsLayer.setLocationOffset(new Vec4(11, -45));
                 //viewControlsLayer.setShowFovControls(true); //these controls confuse people...
                 viewControlsLayer.setShowLookControls(true);
             } else if (layer instanceof StarsLayer) {

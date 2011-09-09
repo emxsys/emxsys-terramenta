@@ -23,4 +23,5 @@
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ViewControlsLayer"/>
     <Layer className="gov.nasa.worldwind.layers.CompassLayer"/>
+    <Layer className="com.qna.terramenta.globe.layers.ClassificationBannerLayer"/>
 </LayerList>
