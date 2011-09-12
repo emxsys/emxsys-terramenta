@@ -56,7 +56,7 @@
             <artifactId>org-openide-nodes</artifactId>
             <groupId>org.netbeans.api</groupId>
             <type>jar</type>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-dialogs</artifactId>
@@ -77,12 +77,12 @@
             <version>${netbeans.version}</version>
         </dependency>
         
-        <dependency>
+        <!--<dependency>
             <groupId>com.vividsolutions</groupId>
             <artifactId>jts</artifactId>
             <version>1.11</version>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -118,7 +118,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-loaders</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
     </dependencies>
 

@@ -83,6 +83,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
 
         initLayers();
 
+        setStatusLayerType(prefs.get("options.globe.statusBar", "STANDARD"));
         setFlatGlobe(Boolean.parseBoolean(prefs.get("options.globe.isFlat", "false")));
         setFlatProjection(prefs.get("options.globe.flatProjection", "Lat Lon"));
 
@@ -152,9 +153,6 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         //Sun
         sunLayer.setEnabled(false);
         ll.add(1, sunLayer);
-
-        //Status Layers
-        setStatusLayerType("STANDARD");
     }
 
     /**

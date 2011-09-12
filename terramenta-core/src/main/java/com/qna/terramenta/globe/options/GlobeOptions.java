@@ -5,6 +5,7 @@
 package com.qna.terramenta.globe.options;
 
 import com.qna.terramenta.utilities.Classification;
+import com.qna.terramenta.utilities.CoordinateSystem;
 import gov.nasa.worldwind.avlist.AVKey;
 import java.util.prefs.Preferences;
 import javax.swing.ButtonModel;
@@ -274,10 +275,10 @@ public final class GlobeOptions extends javax.swing.JPanel {
 
         //Status Bar
         ButtonModel model = statusBarStandardRadioButton.getModel();
-        String sb = pref.get("options.globe.statusBar", "STANDARD");
-        if (sb.equalsIgnoreCase("UTM")) {
+        CoordinateSystem cs = CoordinateSystem.valueOf(pref.get("options.globe.statusBar", CoordinateSystem.LATLON.name()));
+        if (cs.equals(CoordinateSystem.UTM)) {
             model = statusBarUtmRadioButton.getModel();
-        } else if (sb.equalsIgnoreCase("MGRS")) {
+        } else if (cs.equals(CoordinateSystem.MGRS)) {
             model = statusBarMgrsRadioButton.getModel();
         }
         statusBarButtonGroup.setSelected(model, true);
