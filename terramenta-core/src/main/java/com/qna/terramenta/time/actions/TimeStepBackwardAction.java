@@ -14,7 +14,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeStepBackwardAction")
-@ActionRegistration(iconBase = "images/control_start_blue.png", displayName = "#CTL_TimeStepBackwardAction")
+@ActionRegistration(iconBase = "images/controlStepBackward.png", displayName = "#CTL_TimeStepBackwardAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Time", position = 4),
     @ActionReference(path = "Toolbars/Time", position = 1)

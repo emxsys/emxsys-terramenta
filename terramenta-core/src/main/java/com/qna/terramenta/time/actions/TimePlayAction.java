@@ -17,7 +17,7 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.util.WeakListeners;
 
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimePlayAction")
-@ActionRegistration(iconBase = "images/control_play_blue.png", displayName = "#CTL_TimePlayAction")
+@ActionRegistration(iconBase = "images/controlPlay.png", displayName = "#CTL_TimePlayAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Time", position = 1),
     @ActionReference(path = "Toolbars/Time", position = 4)

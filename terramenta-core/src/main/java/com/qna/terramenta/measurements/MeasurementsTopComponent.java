@@ -33,7 +33,7 @@ import org.openide.util.Lookup;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//com.qna.terramenta.measurements//Measurements//EN", autostore = false)
-@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "images/pencil-ruler.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
+@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "images/measurements.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
 @TopComponent.Registration(mode = "leftSlidingSide", openAtStartup = false)
 @ActionID(category = "Window", id = "com.qna.terramenta.measurements.MeasurementsTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)

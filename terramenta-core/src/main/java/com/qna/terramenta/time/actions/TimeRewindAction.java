@@ -17,7 +17,7 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.util.WeakListeners;
 
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeRewindAction")
-@ActionRegistration(iconBase = "images/control_back_blue.png", displayName = "#CTL_TimeRewindAction")
+@ActionRegistration(iconBase = "images/controlRewind.png", displayName = "#CTL_TimeRewindAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Time", position = 2),
     @ActionReference(path = "Toolbars/Time", position = 2)
