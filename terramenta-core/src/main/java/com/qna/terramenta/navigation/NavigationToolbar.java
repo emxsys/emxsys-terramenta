@@ -21,6 +21,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import org.openide.awt.ActionID;
@@ -36,15 +37,15 @@ import org.openide.util.actions.Presenter;
  * @author heidtmare
  */
 public class NavigationToolbar {
-    
+
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final JTextField positionField = new JTextField();
     private static final JComboBox coordTypeComboBox = new JComboBox(CoordinateSystem.values());
-    
+
     private static void parsePositionField() {
         Position position = null;
         CoordinateSystem system = (CoordinateSystem) coordTypeComboBox.getSelectedItem();
-        if (system.equals(CoordinateSystem.LATLON)) {
+        if (system.equals(CoordinateSystem.LatLon)) {
             position = parseStringLatLon(positionField.getText());
         } else if (system.equals(CoordinateSystem.MGRS)) {
             position = parseStringMGRS(positionField.getText(), wwm.getWorldWindow().getModel().getGlobe());
@@ -55,7 +56,7 @@ public class NavigationToolbar {
             wwm.gotoPosition(position);
         }
     }
-    
+
     private static Position parseStringLatLon(String text) {
         Position position = null;
         try {
@@ -68,7 +69,7 @@ public class NavigationToolbar {
         }
         return position;
     }
-    
+
     private static Position parseStringMGRS(String text, Globe globe) {
         Position position = null;
         try {
@@ -79,12 +80,12 @@ public class NavigationToolbar {
         }
         return position;
     }
-    
+
     private static Position parseStringUTM(String text, Globe globe) {
         Position position = null;
         try {
             String[] utmString = text.split(" ");
-            
+
             int zone;
             String latZone;
             double easting;
@@ -102,7 +103,7 @@ public class NavigationToolbar {
                 easting = Double.parseDouble(utmString[2]);
                 northing = Double.parseDouble(utmString[3]);
             }
-            
+
             String hemisphere = AVKey.NORTH;
             if ("ACDEFGHJKLM".contains(latZone)) {
                 hemisphere = AVKey.SOUTH;
@@ -114,7 +115,7 @@ public class NavigationToolbar {
         }
         return position;
     }
-    
+
     @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationCoordType")
     @ActionRegistration(displayName = "#CTL_NavigationCoordType")
     @ActionReferences({
@@ -122,59 +123,76 @@ public class NavigationToolbar {
     })
     @Messages("CTL_NavigationCoordType=Select Coord Type")
     public static final class NavigationCoordType extends AbstractAction implements Presenter.Toolbar {
-        
+
         public NavigationCoordType() {
-            coordTypeComboBox.setMaximumSize(new Dimension(75, 22));
-            coordTypeComboBox.setMinimumSize(new Dimension(65, 22));
-            coordTypeComboBox.setPreferredSize(new Dimension(70, 22));
-            coordTypeComboBox.setBorder(null);
+            coordTypeComboBox.setMaximumSize(new Dimension(70, 22));
+            coordTypeComboBox.setMinimumSize(new Dimension(60, 16));
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             //...
         }
-        
+
         @Override
         public Component getToolbarPresenter() {
             return coordTypeComboBox;
         }
     }
-    
-    @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationCoordField")
-    @ActionRegistration(displayName = "#CTL_NavigationCoordField")
+
+    @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationSpacer")
+    @ActionRegistration(displayName = "#CTL_NavigationSpacer")
     @ActionReferences({
         @ActionReference(path = "Toolbars/Navigation", position = 2)
     })
+    @Messages("CTL_NavigationSpacer=")
+    public static final class NavigationSpacer extends AbstractAction implements Presenter.Toolbar {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //...
+        }
+
+        @Override
+        public Component getToolbarPresenter() {
+            Dimension dim = new Dimension(2, 0);
+            return new Box.Filler(dim, dim, dim);
+        }
+    }
+
+    @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationCoordField")
+    @ActionRegistration(displayName = "#CTL_NavigationCoordField")
+    @ActionReferences({
+        @ActionReference(path = "Toolbars/Navigation", position = 3)
+    })
     @Messages("CTL_NavigationCoordField=Type Position")
     public static final class NavigationCoordField extends AbstractAction implements Presenter.Toolbar {
-        
+
         public NavigationCoordField() {
             positionField.setMaximumSize(new Dimension(150, 22));
-            positionField.setMinimumSize(new Dimension(100, 22));
-            positionField.setPreferredSize(new Dimension(125, 22));
+            positionField.setMinimumSize(new Dimension(100, 16));
             positionField.addActionListener(this);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             parsePositionField();
         }
-        
+
         @Override
         public Component getToolbarPresenter() {
             return positionField;
         }
     }
-    
+
     @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationGoButton")
     @ActionRegistration(iconBase = "images/world_go.png", displayName = "#CTL_NavigationGoButton")
     @ActionReferences({
-        @ActionReference(path = "Toolbars/Navigation", position = 3)
+        @ActionReference(path = "Toolbars/Navigation", position = 4)
     })
     @Messages("CTL_NavigationGoButton=Go to position...")
     public static final class NavigationGoButton extends AbstractAction {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             parsePositionField();

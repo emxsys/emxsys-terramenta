@@ -10,7 +10,7 @@ package com.qna.terramenta.utilities;
  */
 public enum CoordinateSystem {
 
-    LATLON,
+    LatLon,
     UTM,
     MGRS;
 }

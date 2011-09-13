@@ -275,7 +275,7 @@ public final class GlobeOptions extends javax.swing.JPanel {
 
         //Status Bar
         ButtonModel model = statusBarStandardRadioButton.getModel();
-        CoordinateSystem cs = CoordinateSystem.valueOf(pref.get("options.globe.statusBar", CoordinateSystem.LATLON.name()));
+        CoordinateSystem cs = CoordinateSystem.valueOf(pref.get("options.globe.statusBar", CoordinateSystem.LatLon.name()));
         if (cs.equals(CoordinateSystem.UTM)) {
             model = statusBarUtmRadioButton.getModel();
         } else if (cs.equals(CoordinateSystem.MGRS)) {
