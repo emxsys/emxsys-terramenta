@@ -27,7 +27,7 @@ import org.openide.util.actions.Presenter;
 @ActionID(category = "Other", id = "com.qna.terramenta.time.actions.TimeDisplayAction")
 @ActionRegistration(displayName = "#CTL_TimeDisplayAction")
 @ActionReferences({
-    @ActionReference(path = "Toolbars/Time", position = 6)
+    @ActionReference(path = "Toolbars/Time", position = 7)
 })
 @Messages("CTL_TimeDisplayAction=Current Time")
 public final class TimeDisplayAction extends AbstractAction implements Presenter.Toolbar {

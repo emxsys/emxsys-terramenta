@@ -126,7 +126,7 @@ public class NavigationToolbar {
 
         public NavigationCoordType() {
             coordTypeComboBox.setMaximumSize(new Dimension(70, 22));
-            coordTypeComboBox.setMinimumSize(new Dimension(60, 16));
+            coordTypeComboBox.setMinimumSize(new Dimension(60, 22));
         }
 
         @Override
@@ -170,7 +170,8 @@ public class NavigationToolbar {
 
         public NavigationCoordField() {
             positionField.setMaximumSize(new Dimension(150, 22));
-            positionField.setMinimumSize(new Dimension(100, 16));
+            positionField.setPreferredSize(new Dimension(125, 22));
+            positionField.setMinimumSize(new Dimension(100, 22));
             positionField.addActionListener(this);
         }
 
@@ -186,7 +187,7 @@ public class NavigationToolbar {
     }
 
     @ActionID(category = "Tools", id = "com.qna.terramenta.navigation.NavigationGoButton")
-    @ActionRegistration(iconBase = "images/world_go.png", displayName = "#CTL_NavigationGoButton")
+    @ActionRegistration(iconBase = "images/bulletGo.png", displayName = "#CTL_NavigationGoButton")
     @ActionReferences({
         @ActionReference(path = "Toolbars/Navigation", position = 4)
     })

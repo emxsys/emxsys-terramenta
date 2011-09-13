@@ -22,8 +22,8 @@ import org.openide.util.actions.SystemAction;
  */
 public class LayerNode extends BeanNode implements PropertyChangeListener {
 
-    private String ENABLED_ICON_BASE = "images/bullet_green.png";
-    private String DISABLED_ICON_BASE = "images/bullet_black.png";
+    private String ENABLED_ICON_BASE = "images/bulletGreen.png";
+    private String DISABLED_ICON_BASE = "images/bulletBlack.png";
 
     /**
      *

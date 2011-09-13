@@ -54,7 +54,7 @@ import org.openide.util.actions.SystemAction;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//com.qna.terramenta.globe//Globe//EN", autostore = false)
-@TopComponent.Description(preferredID = "GlobeTopComponent", iconBase = "images/world.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Description(preferredID = "GlobeTopComponent", iconBase = "images/globe.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "com.qna.terramenta.globe.GlobeTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)

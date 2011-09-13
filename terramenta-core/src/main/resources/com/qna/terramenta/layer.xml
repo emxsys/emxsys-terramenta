@@ -28,10 +28,10 @@
         <folder name="Annotations"/>
         <folder name="Navigation"/>
         <folder name="Time">
-            <file name="TimeToolbarSeparator1.instance">
+            <!--<file name="TimeToolbarSeparator1.instance">
                 <attr name="instanceClass" stringvalue="com.qna.terramenta.utilities.ToolbarSeparator"/>
                 <attr name="position" intvalue="7"/>
-            </file>
+            </file>-->
         </folder>
         <file name="File_hidden"/>
         <file name="Clipboard_hidden"/>
