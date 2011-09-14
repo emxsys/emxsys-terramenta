@@ -68,7 +68,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
-    private boolean viewModeECI = false;// use Earth-centered inertial or Earth-centered, Earth-fixed
+    private boolean eci = false;// use Earth-centered inertial or Earth-centered, Earth-fixed
     private String flatProjection = FlatGlobe.PROJECTION_MERCATOR;
     private SunLayer sunLayer = new SunLayer();
     private StarsLayer starLayer;
@@ -84,8 +84,9 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         initLayers();
 
         setStatusLayerType(prefs.get("options.globe.statusBar", "STANDARD"));
-        setFlatGlobe(Boolean.parseBoolean(prefs.get("options.globe.isFlat", "false")));
+        setFlat(prefs.getBoolean("options.globe.isFlat", false));
         setFlatProjection(prefs.get("options.globe.flatProjection", "Lat Lon"));
+        setECI(prefs.getBoolean("options.globe.isECI", false));
 
         // Add controllers to manage selection, highlighting, and tool tips.
         quickTipController.setArmed(Boolean.parseBoolean(prefs.get("options.globe.quickTips", "true")));
@@ -194,7 +195,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      * @param datetime
      */
     public void updateGlobe(DateTime datetime) {
-        if (isECIViewMode()) {
+        if (isECI()) {
             // need to do something to keep the ECI view moving even after user interaction
             wwm.getWorldWindow().getView().stopMovement();
 
@@ -219,17 +220,17 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      *
      * @return
      */
-    public boolean isECIViewMode() {
-        return this.viewModeECI;
+    public boolean isECI() {
+        return this.eci;
     }
 
     /**
      *
      * @param state
      */
-    public void setECIViewMode(boolean state) {
-        this.viewModeECI = state;
-        if (isECIViewMode()) {
+    public void setECI(boolean state) {
+        this.eci = state;
+        if (isECI()) {
             starLayer.setLongitudeOffset(Angle.fromDegrees(-orbit.getRotateECIdeg())); // update stars
         } else {
             starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal
@@ -240,7 +241,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      *
      * @return
      */
-    public boolean isFlatGlobe() {
+    public boolean isFlat() {
         return wwm.getWorldWindow().getModel().getGlobe() instanceof FlatGlobe;
     }
 
@@ -248,8 +249,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      *
      * @param flat
      */
-    private void setFlatGlobe(boolean flat) {
-        if (isFlatGlobe() == flat) {
+    private void setFlat(boolean flat) {
+        if (isFlat() == flat) {
             return;
         }
 
@@ -296,7 +297,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
             this.flatProjection = FlatGlobe.PROJECTION_LAT_LON;
         }
 
-        if (!isFlatGlobe()) {
+        if (!isFlat()) {
             return;
         }
         flatGlobe.setProjection(this.flatProjection);
@@ -307,7 +308,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     public void preferenceChange(PreferenceChangeEvent evt) {
         if (evt.getKey().equals("options.globe.isFlat")) {
             logger.fine("isFlat changed");
-            setFlatGlobe(Boolean.parseBoolean(evt.getNewValue()));
+            setFlat(Boolean.parseBoolean(evt.getNewValue()));
+        } else if (evt.getKey().equals("options.globe.isECI")) {
+            logger.fine("isECI changed");
+            setECI(Boolean.parseBoolean(evt.getNewValue()));
         } else if (evt.getKey().equals("options.globe.flatProjection")) {
             logger.fine("flatProjection changed");
             setFlatProjection(evt.getNewValue());

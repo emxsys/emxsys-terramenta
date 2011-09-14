@@ -271,7 +271,7 @@ public final class GlobeOptions extends javax.swing.JPanel {
             dmmodel = bStereoNone.getModel();
         }
         displayModeButtonGroup.setSelected(dmmodel, true);
-        focusAngleSlider.setValue(Integer.parseInt(pref.get("options.globe.focusAngle", "0")));
+        focusAngleSlider.setValue(pref.getInt("options.globe.focusAngle", 0));
 
         //Status Bar
         ButtonModel model = statusBarStandardRadioButton.getModel();
@@ -287,7 +287,7 @@ public final class GlobeOptions extends javax.swing.JPanel {
         worldwindConfigTextField.setText(pref.get("options.globe.worldwindConfig", "worldwind/worldwind.xml"));
 
         //ToolTips
-        quickTipsCheckBox.setSelected(Boolean.parseBoolean(pref.get("options.globe.quickTips", "true")));
+        quickTipsCheckBox.setSelected(pref.getBoolean("options.globe.quickTips", true));
 
         //Classification Banner
         classificationCombo.setSelectedItem(Classification.valueOf(pref.get("options.globe.classification", "UNCLASSIFIED")));
@@ -299,12 +299,12 @@ public final class GlobeOptions extends javax.swing.JPanel {
      */
     public void store() {
         //Flat Earth
-        pref.put("options.globe.isFlat", String.valueOf(useFlatEarthCheckBox.isSelected()));
+        pref.putBoolean("options.globe.isFlat", useFlatEarthCheckBox.isSelected());
         pref.put("options.globe.flatProjection", flatProjectionComboBox.getSelectedItem().toString());
 
         //View
         pref.put("options.globe.displayMode", displayModeButtonGroup.getSelection().getActionCommand());
-        pref.put("options.globe.focusAngle", String.valueOf(focusAngleSlider.getValue()));
+        pref.putInt("options.globe.focusAngle", focusAngleSlider.getValue());
 
         //Status Bar
         pref.put("options.globe.statusBar", statusBarButtonGroup.getSelection().getActionCommand());
@@ -317,7 +317,7 @@ public final class GlobeOptions extends javax.swing.JPanel {
         pref.put("options.globe.worldwindConfig", val);
 
         //ToolTips
-        pref.put("options.globe.quickTips", String.valueOf(quickTipsCheckBox.isSelected()));
+        pref.putBoolean("options.globe.quickTips", quickTipsCheckBox.isSelected());
 
         //Classification Banner
         pref.put("options.globe.classification", classificationCombo.getSelectedItem().toString());
