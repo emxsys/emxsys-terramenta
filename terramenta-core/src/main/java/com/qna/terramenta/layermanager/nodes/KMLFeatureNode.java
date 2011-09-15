@@ -1,11 +1,13 @@
 package com.qna.terramenta.layermanager.nodes;
 
+import com.qna.terramenta.actions.DestroyNodeAction;
+import com.qna.terramenta.actions.ToggleNodeAction;
 import com.qna.terramenta.interfaces.BooleanState;
-import com.qna.terramenta.actions.ToggleBooleanStateAction;
 import gov.nasa.worldwind.ogc.kml.KMLAbstractFeature;
 import java.beans.IntrospectionException;
 import javax.swing.Action;
 import org.openide.actions.PropertiesAction;
+import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
 import org.openide.util.actions.SystemAction;
@@ -61,7 +63,7 @@ public class KMLFeatureNode extends BeanNode implements BooleanState.Provider {
      */
     @Override
     public Action getPreferredAction() {
-        return SystemAction.get(ToggleBooleanStateAction.class);
+        return SystemAction.get(ToggleNodeAction.class);
     }
 
     /**
@@ -72,6 +74,10 @@ public class KMLFeatureNode extends BeanNode implements BooleanState.Provider {
     @Override
     public Action[] getActions(boolean bln) {
         Action[] actions = new Action[]{
+            SystemAction.get(RenameAction.class),
+            SystemAction.get(ToggleNodeAction.class),
+            SystemAction.get(DestroyNodeAction.class),
+            null,
             SystemAction.get(PropertiesAction.class)
         };
         return actions;

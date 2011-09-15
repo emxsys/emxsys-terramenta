@@ -66,6 +66,11 @@ public class DestroyNodeAction extends NodeAction {
      */
     @Override
     protected boolean enable(Node[] nodes) {
+        for (Node node : nodes) {
+            if (!(node instanceof Destroyable)) {
+                return false;
+            }
+        }
         return true;
     }
 
