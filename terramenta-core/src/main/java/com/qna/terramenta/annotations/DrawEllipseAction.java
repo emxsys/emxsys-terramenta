@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawEllipseAction")
 @ActionRegistration(iconBase = "images/ellipse.png",
 displayName = "#CTL_DrawEllipseAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 3),
     @ActionReference(path = "Toolbars/Annotations", position = 3)
 })
 @Messages("CTL_DrawEllipseAction=Ellipse")

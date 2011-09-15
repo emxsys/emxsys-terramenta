@@ -8,13 +8,11 @@ import com.qna.terramenta.globe.options.GlobeOptions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.prefs.Preferences;
-import javax.swing.ImageIcon;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.HelpCtx;
-import org.openide.util.ImageUtilities;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
@@ -24,13 +22,12 @@ import org.openide.util.actions.BooleanStateAction;
 @ActionRegistration(displayName = "#CTL_EarthRotationAction")
 @ActionReferences({
     @ActionReference(path = "Menu/View", position = 1000),
-    @ActionReference(path = "Shortcuts", name = "DS-R")
+    @ActionReference(path = "Shortcuts", name = "DS-E")
 })
-@Messages("CTL_EarthRotationAction=Show ECI")
+@Messages("CTL_EarthRotationAction=Earth-centered inertial (ECI) ")
 public final class EarthRotationAction extends BooleanStateAction implements PropertyChangeListener {
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
-    private static final ImageIcon icon = new ImageIcon(ImageUtilities.loadImage("images/tick.png", true));
 
     @Override
     protected void initialize() {
@@ -49,7 +46,7 @@ public final class EarthRotationAction extends BooleanStateAction implements Pro
 
     @Override
     protected String iconResource() {
-        return getBooleanState() ? "images/tick.png" : "org/netbeans/modules/form/resources/selection_mode.png";
+        return getBooleanState() ? "images/tick.png" : "";//"org/netbeans/modules/form/resources/selection_mode.png";
     }
 
     @Override

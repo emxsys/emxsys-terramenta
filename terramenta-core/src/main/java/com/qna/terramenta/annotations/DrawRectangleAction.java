@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawRectangleAction")
 @ActionRegistration(iconBase = "images/rectangle.png",
 displayName = "#CTL_DrawRectangleAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 5),
     @ActionReference(path = "Toolbars/Annotations", position = 5)
 })
 @Messages("CTL_DrawRectangleAction=Rectangle")

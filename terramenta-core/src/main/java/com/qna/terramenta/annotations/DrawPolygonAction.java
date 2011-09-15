@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawPolygonAction")
 @ActionRegistration(iconBase = "images/polygon.png",
 displayName = "#CTL_DrawPolygonAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 6),
     @ActionReference(path = "Toolbars/Annotations", position = 6)
 })
 @Messages("CTL_DrawPolygonAction=Polygon")

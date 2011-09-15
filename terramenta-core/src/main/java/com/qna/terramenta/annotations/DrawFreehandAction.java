@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawFreehandAction")
 @ActionRegistration(iconBase = "images/pencil.png",
 displayName = "#CTL_DrawFreehandAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 0),
     @ActionReference(path = "Toolbars/Annotations", position = 0)
 })
 @Messages("CTL_DrawFreehandAction=Free Hand")

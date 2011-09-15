@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawLineAction")
 @ActionRegistration(iconBase = "images/line.png",
 displayName = "#CTL_DrawLineAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position =12),
     @ActionReference(path = "Toolbars/Annotations", position = 1)
 })
 @Messages("CTL_DrawLineAction=Line")

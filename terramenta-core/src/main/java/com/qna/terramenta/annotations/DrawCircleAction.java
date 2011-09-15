@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawCircleAction")
 @ActionRegistration(iconBase = "images/circle.png",
 displayName = "#CTL_DrawCircleAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 2),
     @ActionReference(path = "Toolbars/Annotations", position = 2)
 })
 @Messages("CTL_DrawCircleAction=Circle")

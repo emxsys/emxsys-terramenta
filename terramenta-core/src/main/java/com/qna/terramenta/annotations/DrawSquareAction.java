@@ -29,6 +29,7 @@ id = "com.qna.terramenta.annotations.DrawSquareAction")
 @ActionRegistration(iconBase = "images/square.png",
 displayName = "#CTL_DrawSquareAction")
 @ActionReferences({
+    @ActionReference(path = "Menu/Tools/Annotations", position = 4),
     @ActionReference(path = "Toolbars/Annotations", position = 4)
 })
 @Messages("CTL_DrawSquareAction=Square")
