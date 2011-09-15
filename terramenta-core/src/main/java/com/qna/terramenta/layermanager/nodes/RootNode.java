@@ -4,8 +4,8 @@
  */
 package com.qna.terramenta.layermanager.nodes;
 
+import com.qna.terramenta.actions.DestroyNodeAction;
 import com.qna.terramenta.layermanager.actions.LayerAddAction;
-import com.qna.terramenta.actions.DestroyAction;
 import javax.swing.Action;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -49,7 +49,7 @@ public class RootNode extends AbstractNode {
     public Action[] getActions(boolean bln) {
         Action[] actions = new Action[]{
             SystemAction.get(LayerAddAction.class),
-            SystemAction.get(DestroyAction.class)
+            SystemAction.get(DestroyNodeAction.class)
         };
         return actions;
     }

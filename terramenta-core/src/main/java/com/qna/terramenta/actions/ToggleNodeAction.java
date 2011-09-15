@@ -58,6 +58,11 @@ public class ToggleNodeAction extends NodeAction {
      */
     @Override
     protected boolean enable(Node[] nodes) {
+        for (Node node : nodes) {
+            if (!(node instanceof BooleanState.Provider)) {
+                return false;
+            }
+        }
         return true;
     }
 
