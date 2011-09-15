@@ -16,12 +16,12 @@ import org.openide.util.actions.NodeAction;
  *
  * @author heidtmare
  */
-@ActionID(id = "com.qna.terramenta.actions.ObjectGotoAction", category = "Other")
-@ActionRegistration(displayName = "#CTL_ObjectGotoAction")
-@Messages("CTL_ObjectGotoAction=Go To")
-public class ObjectGotoAction extends NodeAction {
+@ActionID(id = "com.qna.terramenta.actions.GotoNodeAction", category = "Other")
+@ActionRegistration(displayName = "#CTL_GotoNodeAction")
+@Messages("CTL_GotoNodeAction=Go To")
+public class GotoNodeAction extends NodeAction {
 
-    private static final Logger logger = Logger.getLogger(ObjectGotoAction.class.getName());
+    private static final Logger logger = Logger.getLogger(GotoNodeAction.class.getName());
 
     /**
      * 
@@ -69,7 +69,7 @@ public class ObjectGotoAction extends NodeAction {
      */
     @Override
     public String getName() {
-        return NbBundle.getMessage(ObjectGotoAction.class, "CTL_ObjectGotoAction");
+        return NbBundle.getMessage(GotoNodeAction.class, "CTL_GotoNodeAction");
     }
 
     /**

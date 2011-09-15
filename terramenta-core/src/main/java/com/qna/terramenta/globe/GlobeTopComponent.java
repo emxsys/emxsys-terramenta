@@ -6,7 +6,7 @@ package com.qna.terramenta.globe;
 
 import com.qna.terramenta.utilities.OrbitUtilities;
 import com.qna.terramenta.utilities.SelectController;
-import com.qna.terramenta.actions.ObjectGotoAction;
+import com.qna.terramenta.actions.GotoNodeAction;
 import com.qna.terramenta.globe.options.GlobeOptions;
 import com.qna.terramenta.time.DateTimeChangeEvent;
 import com.qna.terramenta.time.DateTimeController;
@@ -31,6 +31,7 @@ import gov.nasa.worldwind.layers.WorldMapLayer;
 import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
+import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunLayer;
@@ -88,10 +89,13 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         setFlatProjection(prefs.get("options.globe.flatProjection", "Lat Lon"));
         setECI(prefs.getBoolean("options.globe.isECI", false));
 
-        // Add controllers to manage selection, highlighting, and tool tips.
+        // Add controllers to manage selection, highlighting, tool tips, kml, etc.
         quickTipController.setArmed(Boolean.parseBoolean(prefs.get("options.globe.quickTips", "true")));
         new SelectController(wwm.getWorldWindow());
         new HighlightController(wwm.getWorldWindow(), SelectEvent.ROLLOVER);
+        //new HotSpotController(wwm.getWorldWindow());
+        new KMLApplicationController(wwm.getWorldWindow());
+        //new BalloonController(wwm.getWorldWindow());
 
         //listeners
         wwm.getWorldWindow().addSelectListener(new ViewControlsSelectListener(wwm.getWorldWindow(), viewControlsLayer));
@@ -111,7 +115,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         DateTimeController.getInstance().doFire(); //trigger the above listener
 
         //Goto position on of object
-        SystemAction.get(ObjectGotoAction.class).addPropertyChangeListener(new PropertyChangeListener() {
+        SystemAction.get(GotoNodeAction.class).addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
