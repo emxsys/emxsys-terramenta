@@ -10,18 +10,17 @@
  */
 package com.qna.terramenta.layermanager;
 
+import com.qna.terramenta.globe.layers.KMLLayer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
-import gov.nasa.worldwind.ogc.kml.KMLRoot;
-import gov.nasa.worldwind.ogc.kml.impl.KMLController;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.stream.XMLStreamException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.openide.util.Exceptions;
 
 /**
@@ -31,6 +30,7 @@ import org.openide.util.Exceptions;
 public class LayerSelectorPanel extends javax.swing.JPanel {
 
     private final static Logger LOGGER = Logger.getLogger(LayerSelectorPanel.class.getName());
+    private final JFileChooser fileChooser = new JFileChooser();
 
     /** Creates new form LayerSelectorPanel */
     public LayerSelectorPanel() {
@@ -45,38 +45,22 @@ public class LayerSelectorPanel extends javax.swing.JPanel {
         String type = (String) jComboBox1.getSelectedItem();
         String text = jTextField1.getText();
         if (!text.isEmpty()) {
-            if (type.equals("KML")) {
-                LOGGER.log(Level.INFO, "Adding a KML layer for {0}", text);
-                try {
-                    KMLRoot root = new KMLRoot(new URL(text), null);
-                    root.parse();
-                    KMLController kmlController = new KMLController(root);
-                    RenderableLayer layer = new RenderableLayer();
-                    layer.setName(text);
-                    layer.addRenderable(kmlController);
-                    return layer;
-                } catch (XMLStreamException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            } else if (type.equals("Shapefile")) {
-                LOGGER.log(Level.INFO, "Adding a Shapefile layer for {0}", text);
-                try {
+            try {
+                if (type.equals("KML")) {
+                    LOGGER.log(Level.INFO, "Adding a KML layer for {0}", text);
+                    return new KMLLayer(text);
+                } else if (type.equals("Shapefile")) {
+                    LOGGER.log(Level.INFO, "Adding a Shapefile layer for {0}", text);
                     ShapefileLoader loader = new ShapefileLoader();
                     return (Layer) loader.createLayersFromSource(new URL(text));
-                } catch (MalformedURLException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            } else if (type.equals("GeoTiff")) {
-                LOGGER.log(Level.INFO, "Adding a GeoTiff layer for {0}", text);
-                try {
+                } else if (type.equals("GeoTiff")) {
+                    LOGGER.log(Level.INFO, "Adding a GeoTiff layer for {0}", text);
                     SurfaceImageLayer sil = new SurfaceImageLayer();
                     sil.addImage(text);
                     return sil;
-                } catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
                 }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
             }
         }
         return null;
@@ -95,14 +79,22 @@ public class LayerSelectorPanel extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
-        jLabel1.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jLabel1.text")); // NOI18N
+        jLabel1.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jLabel1.text_1")); // NOI18N
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GeoTiff", "KML", "Shapefile" }));
 
-        jLabel2.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jLabel2.text")); // NOI18N
+        jLabel2.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jLabel2.text_1")); // NOI18N
 
-        jTextField1.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jTextField1.text")); // NOI18N
+        jTextField1.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jTextField1.text_1")); // NOI18N
+
+        jButton1.setText(org.openide.util.NbBundle.getMessage(LayerSelectorPanel.class, "LayerSelectorPanel.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,15 +102,15 @@ public class LayerSelectorPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, 318, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)))
+                    .addComponent(jComboBox1, 0, 180, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,12 +122,26 @@ public class LayerSelectorPanel extends javax.swing.JPanel {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("KML/KMZ File", "kml", "kmz"));
+        int status = fileChooser.showOpenDialog(this);
+        if (status == JFileChooser.APPROVE_OPTION) {
+            try {
+                jTextField1.setText(fileChooser.getSelectedFile().toURI().toURL().toString());
+            } catch (MalformedURLException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

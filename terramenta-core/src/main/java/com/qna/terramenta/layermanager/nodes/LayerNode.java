@@ -1,7 +1,11 @@
 package com.qna.terramenta.layermanager.nodes;
 
-import com.qna.terramenta.layermanager.actions.LayerDeleteAction;
-import com.qna.terramenta.layermanager.actions.LayerEnableAction;
+import com.qna.terramenta.globe.WorldWindManager;
+import com.qna.terramenta.globe.layers.KMLLayer;
+import com.qna.terramenta.interfaces.BooleanState;
+import com.qna.terramenta.interfaces.Destroyable;
+import com.qna.terramenta.actions.DestroyNodeAction;
+import com.qna.terramenta.actions.ToggleNodeAction;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.beans.IntrospectionException;
@@ -13,6 +17,7 @@ import org.openide.actions.MoveUpAction;
 import org.openide.actions.PropertiesAction;
 import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
+import org.openide.util.Lookup;
 import org.openide.util.WeakListeners;
 import org.openide.util.actions.SystemAction;
 
@@ -20,7 +25,7 @@ import org.openide.util.actions.SystemAction;
  * 
  * @author heidtmare
  */
-public class LayerNode extends BeanNode implements PropertyChangeListener {
+public class LayerNode extends BeanNode implements BooleanState.Provider, Destroyable, PropertyChangeListener {
 
     private String ENABLED_ICON_BASE = "images/bulletGreen.png";
     private String DISABLED_ICON_BASE = "images/bulletBlack.png";
@@ -34,7 +39,9 @@ public class LayerNode extends BeanNode implements PropertyChangeListener {
         super(layer);
         this.setIconBaseWithExtension(layer.isEnabled() ? ENABLED_ICON_BASE : DISABLED_ICON_BASE);
         this.setSynchronizeName(true);
-        if (layer instanceof RenderableLayer) {
+        if (layer instanceof KMLLayer) {
+            this.setChildren(new KMLFeatureChildren(((KMLLayer) layer).getKmlController().getKmlRoot().getFeature()));
+        } else if (layer instanceof RenderableLayer) {
             this.setChildren(new LayerChildren((RenderableLayer) layer));
         }
         layer.addPropertyChangeListener(WeakListeners.propertyChange(this, layer));
@@ -60,7 +67,7 @@ public class LayerNode extends BeanNode implements PropertyChangeListener {
      */
     @Override
     public Action getPreferredAction() {
-        return SystemAction.get(LayerEnableAction.class);
+        return SystemAction.get(ToggleNodeAction.class);
     }
 
     /**
@@ -75,8 +82,8 @@ public class LayerNode extends BeanNode implements PropertyChangeListener {
             SystemAction.get(MoveDownAction.class),
             null,
             SystemAction.get(RenameAction.class),
-            SystemAction.get(LayerEnableAction.class),
-            SystemAction.get(LayerDeleteAction.class),
+            SystemAction.get(ToggleNodeAction.class),
+            SystemAction.get(DestroyNodeAction.class),
             null,
             SystemAction.get(PropertiesAction.class)
         };
@@ -91,7 +98,6 @@ public class LayerNode extends BeanNode implements PropertyChangeListener {
             } else {
                 this.setIconBaseWithExtension(DISABLED_ICON_BASE);
             }
-            //this.fireIconChange();
             this.fireDisplayNameChange(null, getDisplayName());
         }
     }
@@ -112,5 +118,21 @@ public class LayerNode extends BeanNode implements PropertyChangeListener {
     @Override
     public boolean canCopy() {
         return true;
+    }
+
+    @Override
+    public boolean getBooleanState() {
+        return ((Layer) getBean()).isEnabled();
+    }
+
+    @Override
+    public void setBooleanState(boolean state) {
+        ((Layer) getBean()).setEnabled(state);
+    }
+
+    @Override
+    public void doDestroy() {
+        WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+        wwm.getLayers().remove((Layer) getBean());
     }
 }
