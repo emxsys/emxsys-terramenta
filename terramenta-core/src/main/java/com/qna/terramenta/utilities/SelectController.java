@@ -30,6 +30,9 @@ import org.openide.util.ImageUtilities;
  */
 public class SelectController implements SelectListener, Disposable {
 
+    private static AVList lastSelect = null;
+    private static AVList lastHover = null;
+    private static AVList lastRollover = null;
     private final WorldWindow wwd;
 
     /**
@@ -56,11 +59,7 @@ public class SelectController implements SelectListener, Disposable {
     @Override
     public void selected(SelectEvent e) {
         if (e.isLeftClick() && e.hasObjects()) {
-            /*try {
-                NodeOperation.getDefault().showProperties(new BeanNode(e.getTopObject()));
-            } catch (IntrospectionException ex) {
-                Exceptions.printStackTrace(ex);
-            }*/
+            doSelect(e.getTopObject());
         } else if (e.isRightClick() && e.hasObjects()) {
             PickedObjectList pickedObjects = e.getObjects();
             if (!pickedObjects.hasNonTerrainObjects()) {
@@ -88,6 +87,55 @@ public class SelectController implements SelectListener, Disposable {
                 popup.add(new JMenuItem(new ContextMenuItemAction(name, icon, userObject)));
             }
             popup.show((Component) e.getSource(), e.getMouseEvent().getX(), e.getMouseEvent().getY());
+        } else if (e.isHover() && e.hasObjects()) {
+            doHover(e.getTopObject());
+        } else if (e.isRollover() && e.hasObjects()) {
+            doRollover(e.getTopObject());
+        }
+    }
+
+    private static void doSelect(Object obj) {
+        if (lastSelect != null) {
+            lastSelect.firePropertyChange("SELECTED", null, false);
+            lastSelect = null;
+        }
+
+        if (obj instanceof AVList) {
+            AVList avl = (AVList) obj;
+            avl.firePropertyChange("SELECTED", null, true);
+            lastSelect = avl;
+        } else {
+            try {
+                NodeOperation.getDefault().showProperties(new BeanNode(obj));
+            } catch (IntrospectionException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+    }
+
+    private static void doHover(Object obj) {
+        if (lastHover != null) {
+            lastHover.firePropertyChange("HOVER", null, false);
+            lastHover = null;
+        }
+
+        if (obj instanceof AVList) {
+            AVList avl = (AVList) obj;
+            avl.firePropertyChange("HOVER", null, true);
+            lastHover = avl;
+        }
+    }
+
+    private static void doRollover(Object obj) {
+        if (lastRollover != null) {
+            lastRollover.firePropertyChange("ROLLOVER", null, false);
+            lastRollover = null;
+        }
+
+        if (obj instanceof AVList) {
+            AVList avl = (AVList) obj;
+            avl.firePropertyChange("ROLLOVER", null, true);
+            lastRollover = avl;
         }
     }
 
@@ -111,11 +159,7 @@ public class SelectController implements SelectListener, Disposable {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            try {
-                NodeOperation.getDefault().showProperties(new BeanNode(sel));
-            } catch (IntrospectionException ex) {
-                Exceptions.printStackTrace(ex);
-            }
+            doSelect(sel);
         }
     }
 }
