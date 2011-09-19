@@ -24,5 +24,5 @@
     <Layer className="gov.nasa.worldwind.layers.ViewControlsLayer"/>
     <Layer className="gov.nasa.worldwind.layers.CompassLayer"/>
     <Layer className="com.qna.terramenta.globe.layers.ClassificationBannerLayer"/>
-    <Layer className="com.qna.terramenta.globe.layers.TimeControlsLayer"/>
+    <!--<Layer className="com.qna.terramenta.globe.layers.TimeControlsLayer"/>-->
 </LayerList>

@@ -8,7 +8,6 @@ import org.openide.awt.ActionRegistration;
 import org.openide.cookies.InstanceCookie;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
 
@@ -69,7 +68,7 @@ public class GotoNodeAction extends NodeAction {
      */
     @Override
     public String getName() {
-        return NbBundle.getMessage(GotoNodeAction.class, "CTL_GotoNodeAction");
+        return Bundle.CTL_GotoNodeAction();
     }
 
     /**

@@ -7,7 +7,6 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionRegistration;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.NodeAction;
 
@@ -80,7 +79,7 @@ public class DestroyNodeAction extends NodeAction {
      */
     @Override
     public String getName() {
-        return NbBundle.getMessage(DestroyNodeAction.class, "CTL_DestroyNodeAction");
+        return Bundle.CTL_DestroyNodeAction();
     }
 
     /**

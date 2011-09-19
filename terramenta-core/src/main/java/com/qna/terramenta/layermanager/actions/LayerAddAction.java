@@ -14,7 +14,6 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
-import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.SystemAction;
 
@@ -51,7 +50,7 @@ public class LayerAddAction extends SystemAction {
      */
     @Override
     public String getName() {
-        return NbBundle.getMessage(LayerAddAction.class, "CTL_LayerAddAction");
+        return Bundle.CTL_LayerAddAction();
     }
 
     /**

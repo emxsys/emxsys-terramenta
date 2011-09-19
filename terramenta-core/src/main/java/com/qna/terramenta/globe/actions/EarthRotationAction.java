@@ -13,7 +13,6 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
 import org.openide.util.actions.BooleanStateAction;
@@ -24,7 +23,7 @@ import org.openide.util.actions.BooleanStateAction;
     @ActionReference(path = "Menu/View", position = 1000),
     @ActionReference(path = "Shortcuts", name = "DS-E")
 })
-@Messages("CTL_EarthRotationAction=Earth-centered inertial (ECI) ")
+@Messages("CTL_EarthRotationAction=Earth-centered inertial (ECI)")
 public final class EarthRotationAction extends BooleanStateAction implements PropertyChangeListener {
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
@@ -51,7 +50,7 @@ public final class EarthRotationAction extends BooleanStateAction implements Pro
 
     @Override
     public String getName() {
-        return NbBundle.getMessage(EarthRotationAction.class, "CTL_EarthRotationAction");
+        return Bundle.CTL_EarthRotationAction();
     }
 
     @Override

@@ -23,7 +23,10 @@ import org.openide.util.actions.Presenter;
 @ActionReferences({
     @ActionReference(path = "Toolbars/Time", position = 6)
 })
-@Messages("CTL_TimeIncrementAction=Adjust Increment")
+@Messages({
+    "CTL_TimeIncrementAction=Adjust Increment",
+    "HINT_TimeIncrementAction=Seconds Per Frame"
+})
 public final class TimeIncrementAction extends AbstractAction implements Presenter.Toolbar {
 
     private JButton comp = null;
@@ -49,8 +52,9 @@ public final class TimeIncrementAction extends AbstractAction implements Present
     public Component getToolbarPresenter() {
         if (comp == null) {
             comp = new JButton();
-            comp.setFont(new Font("Arial",Font.BOLD,11));
+            comp.setFont(new Font("Arial", Font.BOLD, 11));
             comp.setForeground(new Color(70, 130, 180));
+            comp.setToolTipText(Bundle.HINT_TimeIncrementAction());
             comp.addActionListener(this);
             int step = stepIncrements[stepIncrementsIndex];
             updateText(step);
