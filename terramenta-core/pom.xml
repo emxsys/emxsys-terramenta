@@ -130,11 +130,37 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
+                        <publicPackage>com.qna.terramenta.actions</publicPackage>
+                        <publicPackage>com.qna.terramenta.annotations</publicPackage>
                         <publicPackage>com.qna.terramenta.beans</publicPackage>
-                        <publicPackage>com.qna.terramenta.globe</publicPackage>
+                        <publicPackage>com.qna.terramenta.globe.*</publicPackage>
                         <publicPackage>com.qna.terramenta.interfaces</publicPackage>
+                        <publicPackage>com.qna.terramenta.layermanager</publicPackage>
+                        <publicPackage>com.qna.terramenta.layermanager.actions</publicPackage>
+                        <publicPackage>com.qna.terramenta.layermanager.nodes</publicPackage>
+                        <publicPackage>com.qna.terramenta.measurements</publicPackage>
+                        <publicPackage>com.qna.terramenta.navigation</publicPackage>
                         <publicPackage>com.qna.terramenta.time</publicPackage>
+                        <publicPackage>com.qna.terramenta.time.actions</publicPackage>
                         <publicPackage>com.qna.terramenta.utilities</publicPackage>
+                        <publicPackage>com.sun.gluegen.runtime</publicPackage>
+                        <publicPackage>com.sun.java.swing</publicPackage>
+                        <publicPackage>com.sun.opengl.cg</publicPackage>
+                        <publicPackage>com.sun.opengl.impl.*</publicPackage>
+                        <publicPackage>com.sun.opengl.util.*</publicPackage>
+                        <publicPackage>com.zebraimaging</publicPackage>
+                        <publicPackage>gov.nasa.worldwind.*</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.applications.glider</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.applications.sar.*</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.applications.worldwindow.*</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.examples.*</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.sunlight</publicPackage>
+                        <publicPackage>javax.annotation</publicPackage>
+                        <publicPackage>javax.annotation.meta</publicPackage>
+                        <publicPackage>javax.media.opengl</publicPackage>
+                        <publicPackage>javax.media.opengl.glu</publicPackage>
+                        <publicPackage>javax.swing</publicPackage>
+                        <publicPackage>org.joda.time.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

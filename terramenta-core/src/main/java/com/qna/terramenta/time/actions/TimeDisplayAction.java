@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in the editor.
  */
 package com.qna.terramenta.time.actions;
 
@@ -8,6 +7,7 @@ import com.qna.terramenta.time.DateTimeChangeEvent;
 import com.qna.terramenta.time.DateTimeController;
 import com.qna.terramenta.time.DateTimeEventListener;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,10 +16,10 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
-import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.actions.Presenter;
@@ -43,11 +43,11 @@ public final class TimeDisplayAction extends AbstractAction implements Presenter
     };
 
     public TimeDisplayAction() {
+        field.setPreferredSize(new Dimension(170, 20));
+        field.setEnabled(false);
         DateTime datetime = dateTimeController.getDateTime();
         String dateText = datetime.plusMillis(-datetime.getMillisOfSecond()).toString();//Remove millis for display
         field.setText(dateText);
-        field.setEnabled(false);
-        field.setHorizontalAlignment(JTextField.CENTER);
         field.addActionListener(this);
         field.addMouseListener(new MouseAdapter() {
 
@@ -65,7 +65,7 @@ public final class TimeDisplayAction extends AbstractAction implements Presenter
             public void changeEventOccurred(DateTimeChangeEvent evt) {
                 DateTime datetime = evt.getDateTime();
                 String dateText = datetime.plusMillis(-datetime.getMillisOfSecond()).withZone(DateTimeZone.UTC).toString();//Remove millis for display
-                field.setText(" " + dateText + " ");
+                field.setText(dateText);
             }
         });
     }
@@ -81,7 +81,7 @@ public final class TimeDisplayAction extends AbstractAction implements Presenter
 
     @Override
     public Component getToolbarPresenter() {
-        return this.field;
+        return field;
     }
 
     /**
