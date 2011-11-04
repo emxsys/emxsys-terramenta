@@ -20,53 +20,23 @@
     </properties>
     <profiles>
         <profile>
-            <id>windows-i586</id>
-            <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>i586</build.arch>
-                <build.os>windows</build.os>
-            </properties>
-        </profile>
-        <profile>
-            <id>windows-amd64</id>
+            <id>windows</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>amd64</build.arch>
                 <build.os>windows</build.os>
             </properties>
         </profile>
         <profile>
-            <id>linux-i586</id>
+            <id>linux</id>
             <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>i586</build.arch>
                 <build.os>linux</build.os>
             </properties>
         </profile>
         <profile>
-            <id>linux-amd64</id>
+            <id>macosx</id>
             <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>amd64</build.arch>
-                <build.os>linux</build.os>
-            </properties>
-        </profile>
-        <profile>
-            <id>macosx-universal</id>
-            <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>universal</build.arch>
-                <build.os>macosx</build.os>
-            </properties>
-        </profile>
-        <profile>
-            <id>macosx-ppc</id>
-            <properties>
-                <jogl.version>1.1.1</jogl.version>
-                <build.arch>ppc</build.arch>
                 <build.os>macosx</build.os>
             </properties>
         </profile>
@@ -144,7 +114,7 @@
                             <outputDirectory>${project.build.directory}/${brandingToken}/${brandingToken}/modules/lib</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/lib/jogl-${jogl.version}-${build.os}-${build.arch}/lib</directory>
+                                    <directory>src/main/lib/${build.os}</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
@@ -153,6 +123,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>Terramenta-${project.version}-${build.os}-${build.arch}</finalName>
+        <finalName>Terramenta-${project.version}-${build.os}</finalName>
     </build>
 </project>
