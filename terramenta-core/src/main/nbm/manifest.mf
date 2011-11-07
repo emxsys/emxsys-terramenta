@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Localizing-Bundle: com/qna/terramenta/Bundle.properties
-OpenIDE-Module-Layer: com/qna/terramenta/layer.xml
+OpenIDE-Module-Localizing-Bundle: com/terramenta/Bundle.properties
+OpenIDE-Module-Layer: com/terramenta/layer.xml
 OpenIDE-Module-Requires: org.openide.windows.WindowManager

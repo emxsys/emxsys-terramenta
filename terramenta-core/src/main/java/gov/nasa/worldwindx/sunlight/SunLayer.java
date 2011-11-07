@@ -1,7 +1,7 @@
 package gov.nasa.worldwindx.sunlight;
 
-import com.qna.terramenta.globe.WorldWindManager;
-import com.qna.terramenta.time.DateTimeController;
+import com.terramenta.globe.WorldWindManager;
+import com.terramenta.time.DateTimeController;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;

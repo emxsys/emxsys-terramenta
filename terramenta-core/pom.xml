@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
+        <groupId>com.terramenta</groupId>
         <artifactId>terramenta</artifactId>
-        <groupId>com.qna</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>terramenta-core</artifactId>
@@ -24,27 +24,27 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-windows</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-awt</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-settings</artifactId>
-            <version>RELEASE70</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -130,19 +130,19 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>com.qna.terramenta.actions</publicPackage>
-                        <publicPackage>com.qna.terramenta.annotations</publicPackage>
-                        <publicPackage>com.qna.terramenta.beans</publicPackage>
-                        <publicPackage>com.qna.terramenta.globe.*</publicPackage>
-                        <publicPackage>com.qna.terramenta.interfaces</publicPackage>
-                        <publicPackage>com.qna.terramenta.layermanager</publicPackage>
-                        <publicPackage>com.qna.terramenta.layermanager.actions</publicPackage>
-                        <publicPackage>com.qna.terramenta.layermanager.nodes</publicPackage>
-                        <publicPackage>com.qna.terramenta.measurements</publicPackage>
-                        <publicPackage>com.qna.terramenta.navigation</publicPackage>
-                        <publicPackage>com.qna.terramenta.time</publicPackage>
-                        <publicPackage>com.qna.terramenta.time.actions</publicPackage>
-                        <publicPackage>com.qna.terramenta.utilities</publicPackage>
+                        <publicPackage>com.terramenta.actions</publicPackage>
+                        <publicPackage>com.terramenta.annotations</publicPackage>
+                        <publicPackage>com.terramenta.beans</publicPackage>
+                        <publicPackage>com.terramenta.globe.*</publicPackage>
+                        <publicPackage>com.terramenta.interfaces</publicPackage>
+                        <publicPackage>com.terramenta.layermanager</publicPackage>
+                        <publicPackage>com.terramenta.layermanager.actions</publicPackage>
+                        <publicPackage>com.terramenta.layermanager.nodes</publicPackage>
+                        <publicPackage>com.terramenta.measurements</publicPackage>
+                        <publicPackage>com.terramenta.navigation</publicPackage>
+                        <publicPackage>com.terramenta.time</publicPackage>
+                        <publicPackage>com.terramenta.time.actions</publicPackage>
+                        <publicPackage>com.terramenta.utilities</publicPackage>
                         <publicPackage>com.sun.gluegen.runtime</publicPackage>
                         <publicPackage>com.sun.java.swing</publicPackage>
                         <publicPackage>com.sun.opengl.cg</publicPackage>
