@@ -18,7 +18,7 @@
             <url>http://download.java.net/maven/2/</url>
         </repository>
         <repository>
-            <!-- closed repo where i keep worldwind, worldwinx, jogl, and gluegen-rt-->
+            <!-- internal artifactory -->
             <id>codeforge</id>
             <name>codeforge-releases</name>
             <url>http://codeforge/artifactory/ext-release-local</url>
@@ -88,7 +88,7 @@
         <module>terramenta-core</module>
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
-  </modules>
+    </modules>
 
     <properties>
         <netbeans.version>RELEASE701</netbeans.version>
