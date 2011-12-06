@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util</artifactId>
-            <version>RELEASE701</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-awt</artifactId>
-            <version>RELEASE701</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -54,6 +54,11 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-loaders</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
             <artifactId>org-openide-nodes</artifactId>
             <groupId>org.netbeans.api</groupId>
             <type>jar</type>
@@ -63,7 +68,7 @@
             <artifactId>org-openide-dialogs</artifactId>
             <groupId>org.netbeans.api</groupId>
             <type>jar</type>
-            <version>RELEASE701</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-actions</artifactId>
@@ -77,6 +82,7 @@
             <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
+
         
         <!--<dependency>
             <groupId>com.vividsolutions</groupId>
@@ -116,11 +122,7 @@
             <artifactId>worldwindx</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-loaders</artifactId>
-            <version>${netbeans.version}</version>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -131,24 +133,23 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>com.terramenta.actions</publicPackage>
-                        <publicPackage>com.terramenta.annotations</publicPackage>
-                        <publicPackage>com.terramenta.beans</publicPackage>
-                        <publicPackage>com.terramenta.globe.*</publicPackage>
-                        <publicPackage>com.terramenta.interfaces</publicPackage>
-                        <publicPackage>com.terramenta.layermanager</publicPackage>
-                        <publicPackage>com.terramenta.layermanager.actions</publicPackage>
-                        <publicPackage>com.terramenta.layermanager.nodes</publicPackage>
-                        <publicPackage>com.terramenta.measurements</publicPackage>
-                        <publicPackage>com.terramenta.navigation</publicPackage>
-                        <publicPackage>com.terramenta.time</publicPackage>
-                        <publicPackage>com.terramenta.time.actions</publicPackage>
-                        <publicPackage>com.terramenta.utilities</publicPackage>
                         <publicPackage>com.sun.gluegen.runtime</publicPackage>
                         <publicPackage>com.sun.java.swing</publicPackage>
                         <publicPackage>com.sun.opengl.cg</publicPackage>
                         <publicPackage>com.sun.opengl.impl.*</publicPackage>
                         <publicPackage>com.sun.opengl.util.*</publicPackage>
+                        <publicPackage>com.terramenta.actions</publicPackage>
+                        <publicPackage>com.terramenta.annotations</publicPackage>
+                        <publicPackage>com.terramenta.beans</publicPackage>
+                        <publicPackage>com.terramenta.globe.*</publicPackage>
+                        <publicPackage>com.terramenta.interfaces</publicPackage>
+                        <publicPackage>com.terramenta.layermanager.*</publicPackage>
+                        <publicPackage>com.terramenta.listeners</publicPackage>
+                        <publicPackage>com.terramenta.measurements</publicPackage>
+                        <publicPackage>com.terramenta.navigation</publicPackage>
+                        <publicPackage>com.terramenta.time</publicPackage>
+                        <publicPackage>com.terramenta.time.actions</publicPackage>
+                        <publicPackage>com.terramenta.utilities</publicPackage>
                         <publicPackage>com.zebraimaging</publicPackage>
                         <publicPackage>gov.nasa.worldwind.*</publicPackage>
                         <publicPackage>gov.nasa.worldwindx.applications.glider</publicPackage>
@@ -162,6 +163,8 @@
                         <publicPackage>javax.media.opengl.glu</publicPackage>
                         <publicPackage>javax.swing</publicPackage>
                         <publicPackage>org.joda.time.*</publicPackage>
+                        <publicPackage>org.netbeans.*</publicPackage>
+                        <publicPackage>org.openide.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
