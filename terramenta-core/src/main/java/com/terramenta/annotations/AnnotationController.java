@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.avlist.AVListImpl;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.PositionListener;
@@ -13,8 +14,8 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.*;
-import java.awt.Component;
-import java.awt.Cursor;
+import gov.nasa.worldwind.util.UnitsFormat;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -22,18 +23,35 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 public class AnnotationController extends AVListImpl {
 
     private static final Logger logger = Logger.getAnonymousLogger();
+    private static final AnnotationAttributes labelAttributes = new AnnotationAttributes();
+    private static final UnitsFormat unitsFormat = new UnitsFormat();
     private final WorldWindow wwd;
+    private RenderableLayer layer;
     private final SurfaceShape shape;
+    private GlobeAnnotation label = null;
     private boolean armed = false;
     private boolean active = false;
     private boolean freehand = false;
+    private boolean showLabel = false;
     private ArrayList<Position> positions = new ArrayList<Position>();
+
+    static {
+        labelAttributes.setFrameShape(AVKey.SHAPE_NONE);
+        labelAttributes.setInsets(new Insets(0, 0, 0, 0));
+        labelAttributes.setDrawOffset(new Point(0, 10));
+        labelAttributes.setTextAlign(AVKey.CENTER);
+        labelAttributes.setEffect(AVKey.TEXT_EFFECT_OUTLINE);
+        labelAttributes.setFont(Font.decode("Arial-Bold-14"));
+        labelAttributes.setTextColor(Color.WHITE);
+        labelAttributes.setBackgroundColor(Color.BLACK);
+        labelAttributes.setSize(new Dimension(220, 0));
+    }
     private final MouseAdapter ma = new MouseAdapter() {
 
         @Override
@@ -84,16 +102,16 @@ public class AnnotationController extends AVListImpl {
     };
 
     /**
-     * Construct a new line builder using the specified polyline and layer and drawing events from the specified world
-     * window. Either or both the polyline and the layer may be null, in which case the necessary object is created.
+     * Construct a new line builder using the specified polyline and layer and drawing events from the specified world window. Either or both the
+     * polyline and the layer may be null, in which case the necessary object is created.
      *
-     * @param wwd       the world window to draw events from.
-     * @param shape 
+     * @param wwd the world window to draw events from.
+     * @param shape
      */
     public AnnotationController(final WorldWindow wwd, SurfaceShape shape) {
         this.wwd = wwd;
         this.shape = shape;
-        RenderableLayer layer = (RenderableLayer) wwd.getModel().getLayers().getLayerByName("User Annotations");
+        this.layer = (RenderableLayer) wwd.getModel().getLayers().getLayerByName("User Annotations");
         if (layer == null) {
             layer = new RenderableLayer();
             layer.setName("User Annotations");
@@ -103,8 +121,8 @@ public class AnnotationController extends AVListImpl {
     }
 
     /**
-     * Arms and disarms the line builder. When armed, the line builder monitors user input and builds the polyline in
-     * response to the actions mentioned in the overview above. When disarmed, the line builder ignores all user input.
+     * Arms and disarms the line builder. When armed, the line builder monitors user input and builds the polyline in response to the actions
+     * mentioned in the overview above. When disarmed, the line builder ignores all user input.
      *
      * @param armed true to arm the line builder, false to disarm it.
      */
@@ -166,14 +184,17 @@ public class AnnotationController extends AVListImpl {
                 startEnd.add(positions.get(positions.size() - 1));
                 lineShape.setLocations(startEnd);
             }
+        }
 
+        if (isShowLabel()) {
+            updateLabel(curPos);
         }
 
         this.wwd.redraw();
     }
 
     /**
-     * 
+     *
      * @param shape
      * @param newPosition
      */
@@ -208,8 +229,49 @@ public class AnnotationController extends AVListImpl {
         }
     }
 
+    protected void updateLabel(Position pos) {
+        String text = getDisplayString(pos);
+        if (label == null) {
+            label = new GlobeAnnotation(text, pos, labelAttributes);
+            layer.addRenderable(label);
+        } else {
+            label.setPosition(pos);
+            label.setText(text);
+        }
+        label.getAttributes().setVisible(pos != null);
+    }
+
+    protected String getDisplayString(Position pos) {
+        String displayString = null;
+        if (pos != null) {
+            if (shape instanceof SurfacePolyline) {
+                displayString = formatLineMeasurements(pos);
+            }
+        }
+        return displayString;
+    }
+
+    protected String formatLineMeasurements(Position pos) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(AnnotationController.unitsFormat.lengthNL("Length", this.shape.getLength(wwd.getModel().getGlobe())));
+        if (positions.size() > 1) {
+            Angle greatCircleAzimuth = LatLon.greatCircleAzimuth(this.positions.get(0), this.positions.get(1));
+            sb.append(AnnotationController.unitsFormat.angleNL("Orientation", greatCircleAzimuth));
+        }
+        sb.append(AnnotationController.unitsFormat.angleNL("Latitude", pos.getLatitude()));
+        sb.append(AnnotationController.unitsFormat.angleNL("Longitude", pos.getLongitude()));
+        return sb.toString();
+    }
+
+    /*
+     * protected Vec4 computeAnnotationPosition(Position pos) { Vec4 surfacePoint =
+     * this.wwd.getSceneController().getTerrain().getSurfacePoint(pos.getLatitude(), pos.getLongitude()); if (surfacePoint == null) { Globe globe =
+     * this.wwd.getModel().getGlobe(); surfacePoint = globe.computePointFromPosition(pos.getLatitude(), pos.getLongitude(),
+     * globe.getElevation(pos.getLatitude(), pos.getLongitude())); } return this.wwd.getView().project(surfacePoint);
+    }
+     */
     /**
-     * 
+     *
      * @return
      */
     public boolean isFreeHand() {
@@ -217,10 +279,26 @@ public class AnnotationController extends AVListImpl {
     }
 
     /**
-     * 
+     *
      * @param freehand
      */
     public void setFreeHand(boolean freehand) {
         this.freehand = freehand;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isShowLabel() {
+        return showLabel;
+    }
+
+    /**
+     *
+     * @param freehand
+     */
+    public void setShowLabel(boolean measurement) {
+        this.showLabel = measurement;
     }
 }
