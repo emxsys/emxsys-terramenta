@@ -43,7 +43,7 @@ public final class TimeStopAction extends AbstractAction {
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals(TimeActionController.PLAY)) {
                 TimeStopAction.this.setEnabled(true);
-            } else {
+            } else if (evt.getPropertyName().equals(TimeActionController.STOP)) {
                 TimeStopAction.this.setEnabled(false);
             }
         }

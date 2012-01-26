@@ -46,7 +46,8 @@ public class TimeActionController {
     }
 
     /**
-     * 1=forward, -1=backward, 0=no animation step, but can update time (esentially a graphic ini or refresh)
+     * 1=forward, -1=backward, 0=no animation step, but can update time
+     * (esentially a graphic ini or refresh)
      */
     public void play(final int direction) {
         stop();
@@ -76,7 +77,7 @@ public class TimeActionController {
      */
     public void step(int direction) {
         dateTimeController.add(DateTimeController.MILLISECOND, stepIncrement * direction);
-        //this.firePropertyChange(STEP, false, true);
+        this.firePropertyChange(STEP, false, true);
     }
 
     /**
