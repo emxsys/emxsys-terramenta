@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.joda.time.DateTime;
 import org.openide.util.Lookup;
 
 /**
@@ -32,7 +31,7 @@ public class SunLayer extends LensFlareLayer {
     private Tessellator oldtessellator;
 
     /**
-     * 
+     *
      */
     public SunLayer() {
         oldtessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
@@ -110,7 +109,7 @@ public class SunLayer extends LensFlareLayer {
             }
         }
 
-        update(DateTimeController.getInstance().getDateTime());
+        update(DateTimeController.getInstance().getDateTime().toGregorianCalendar());
         wwm.getWorldWindow().redraw();
     }
 
@@ -118,9 +117,9 @@ public class SunLayer extends LensFlareLayer {
      *
      * @param datetime
      */
-    public void update(DateTime datetime) {
+    public void update(Calendar time) {
         if (isEnabled()) {
-            double[] ll = subsolarPoint(datetime.toGregorianCalendar());
+            double[] ll = subsolarPoint(time);
             Position sunPosition = new Position(LatLon.fromRadians(ll[0], ll[1]), 0);
             logger.log(Level.FINE, "SUN Position: {0}", sunPosition.toString());
             Vec4 sunVector = wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(sunPosition).normalize3();
@@ -132,6 +131,7 @@ public class SunLayer extends LensFlareLayer {
 
     /**
      * Calculate the LatLon of sun at given time
+     *
      * @param time
      * @return
      */
