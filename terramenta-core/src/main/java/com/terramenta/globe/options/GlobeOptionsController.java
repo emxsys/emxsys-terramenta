@@ -12,13 +12,14 @@ import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
 /**
- * 
+ *
  * @author heidtmare
  */
-@OptionsPanelController.SubRegistration(location = "Advanced",
-displayName = "#AdvancedOption_DisplayName_Globe",
-keywords = "#AdvancedOption_Keywords_Globe",
-keywordsCategory = "Advanced/Globe")
+@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe",
+iconBase = "images/32x32-icon-earth.png",
+keywords = "#OptionsCategory_Keywords_Globe",
+keywordsCategory = "Globe")
+@org.openide.util.NbBundle.Messages({"OptionsCategory_Name_Globe=Globe", "OptionsCategory_Keywords_Globe=globe earth"})
 public final class GlobeOptionsController extends OptionsPanelController {
 
     private GlobeOptions panel;
@@ -26,73 +27,82 @@ public final class GlobeOptionsController extends OptionsPanelController {
     private boolean changed;
 
     /**
-     * 
+     *
      */
+    @Override
     public void update() {
         getPanel().load();
         changed = false;
     }
 
     /**
-     * 
+     *
      */
+    @Override
     public void applyChanges() {
         getPanel().store();
         changed = false;
     }
 
     /**
-     * 
+     *
      */
+    @Override
     public void cancel() {
         // need not do anything special, if no changes have been persisted yet
     }
 
     /**
-     * 
+     *
      * @return
      */
+    @Override
     public boolean isValid() {
         return getPanel().valid();
     }
 
     /**
-     * 
+     *
      * @return
      */
+    @Override
     public boolean isChanged() {
         return changed;
     }
 
     /**
-     * 
+     *
      * @return
      */
+    @Override
     public HelpCtx getHelpCtx() {
         return null; // new HelpCtx("...ID") if you have a help set
     }
 
     /**
-     * 
+     *
      * @param masterLookup
      * @return
      */
+    @Override
     public JComponent getComponent(Lookup masterLookup) {
         return getPanel();
     }
 
     /**
-     * 
+     *
      * @param l
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
     /**
-     * 
+     *
      * @param l
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
