@@ -103,13 +103,15 @@ public class SelectController implements SelectListener, Disposable {
             AVList avl = (AVList) obj;
             avl.firePropertyChange("SELECT", null, true);
             lastSelect = avl;
-        } else {
-            try {
-                NodeOperation.getDefault().showProperties(new BeanNode(obj));
-            } catch (IntrospectionException ex) {
-                Exceptions.printStackTrace(ex);
-            }
         }
+//we use to open a properties sheet by default, but it sometimes opened at undesireble moments
+//        else {
+//            try {
+//                NodeOperation.getDefault().showProperties(new BeanNode(obj));
+//            } catch (IntrospectionException ex) {
+//                Exceptions.printStackTrace(ex);
+//            }
+//        }
     }
 
     private static void doHover(Object obj) {
