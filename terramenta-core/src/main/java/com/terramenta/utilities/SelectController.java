@@ -95,13 +95,13 @@ public class SelectController implements SelectListener, Disposable {
 
     private static void doSelect(Object obj) {
         if (lastSelect != null) {
-            lastSelect.firePropertyChange("SELECTED", null, false);
+            lastSelect.firePropertyChange("SELECT", null, false);
             lastSelect = null;
         }
 
         if (obj instanceof AVList) {
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("SELECTED", null, true);
+            avl.firePropertyChange("SELECT", null, true);
             lastSelect = avl;
         } else {
             try {
