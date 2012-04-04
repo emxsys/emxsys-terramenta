@@ -16,9 +16,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.LayerList;
 import java.io.*;
 import java.util.prefs.Preferences;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
-import org.openide.util.Exceptions;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -83,44 +80,53 @@ public class WorldWindManager implements Serializable {
 
     public void saveState() {
         System.out.println("WorldWindManager.saveState");
-        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
-        if (file != null) {
-            ObjectOutputStream out = null;
-            try {
-                out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-                out.writeObject(getLayers());
-                out.flush();
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            } finally {
-                try {
-                    out.close();
-                } catch (IOException ex) {
-                    //...
-                }
-            }
-        }
+//        File dir = new File(System.getProperty("user.home") + File.separator + ".terramenta");
+//        if (!dir.exists()) {
+//            dir.mkdir();
+//        }
+//        File file = new File(dir, this.getClass().getName());
+//        try {
+//            file.createNewFile();
+//        } catch (IOException ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+//        if (file != null) {
+//            ObjectOutputStream out = null;
+//            try {
+//                out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
+//                out.writeObject(getLayers());
+//                out.flush();
+//            } catch (IOException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } finally {
+//                try {
+//                    out.close();
+//                } catch (IOException ex) {
+//                    //...
+//                }
+//            }
+//        }
     }
 
     public void restoreState() {
         System.out.println("WorldWindManager.restoreState");
-        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
-        if (file != null && file.exists()) {
-            ObjectInputStream in = null;
-            try {
-                in = new ObjectInputStream(new GZIPInputStream(new FileInputStream(file)));
-                getLayers().addAll((LayerList) in.readObject());
-            } catch (ClassNotFoundException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            } finally {
-                try {
-                    in.close();
-                } catch (IOException ex) {
-                    //...
-                }
-            }
-        }
+//        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
+//        if (file != null && file.exists()) {
+//            ObjectInputStream in = null;
+//            try {
+//                in = new ObjectInputStream(new GZIPInputStream(new FileInputStream(file)));
+//                getLayers().addAll((LayerList) in.readObject());
+//            } catch (ClassNotFoundException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } catch (IOException ex) {
+//                Exceptions.printStackTrace(ex);
+//            } finally {
+//                try {
+//                    in.close();
+//                } catch (IOException ex) {
+//                    //...
+//                }
+//            }
+//        }
     }
 }
