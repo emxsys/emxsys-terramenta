@@ -5,6 +5,7 @@
 package com.terramenta.listeners;
 
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
 import java.awt.Color;
 
@@ -23,7 +24,7 @@ public class AreaSelectionListener extends SectorSelector {
         this.setInteriorColor(new Color(1f, 1f, 1f, 0f));
         this.setBorderColor(new Color(1f, 1f, 0f, 0.5f));
         this.setBorderWidth(2);
-        //this.getShape().setValue("ARA_NAME", "Bounding Box");
+        this.getShape().setValue(AVKey.DISPLAY_NAME, "Bounding Box");
     }
 
     /**
