@@ -4,12 +4,6 @@
  
     <folder name="Actions">
         <folder name="Tools">
-            <file name="com-terramenta-annotations-DrawDistanceAction.instance">
-                <attr name="iconBase" stringvalue="images/measurements.png"/>
-                <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
-                <attr name="noIconInMenu" boolvalue="false"/>
-            </file>
-            <file name="com-terramenta-annotations-MeasureDistanceAction.instance_hidden"/>
         </folder>
     </folder>
     <folder name="Menu">

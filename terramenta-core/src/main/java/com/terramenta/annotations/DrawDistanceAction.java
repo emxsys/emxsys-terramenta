@@ -27,8 +27,8 @@ import org.openide.util.NbBundle.Messages;
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
 @ActionRegistration(iconBase = "images/measurements.png", displayName = "#CTL_DrawDistanceAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 7),
-    @ActionReference(path = "Toolbars/Annotations", position = 7)
+    @ActionReference(path = "Menu/Tools/Annotations", position = 8),
+    @ActionReference(path = "Toolbars/Annotations", position = 8)
 })
 @Messages("CTL_DrawDistanceAction=Distance Measurement")
 public final class DrawDistanceAction implements ActionListener {
