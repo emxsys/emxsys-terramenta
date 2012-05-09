@@ -8,10 +8,12 @@ package com.terramenta.interfaces;
  *
  * @author heidtmare
  */
-public interface Selectable {
+public interface Date {
 
-    /**
-     * 
-     */
-    public void doSelect();
+    public interface Provider {
+
+        public java.util.Date getDate();
+
+        public void setDate(java.util.Date date);
+    }
 }

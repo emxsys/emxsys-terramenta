@@ -1,6 +1,6 @@
 package com.terramenta.actions;
 
-import com.terramenta.interfaces.Geospatial;
+import com.terramenta.interfaces.Position;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.awt.ActionID;
@@ -23,7 +23,7 @@ public class GotoNodeAction extends NodeAction {
     private static final Logger logger = Logger.getLogger(GotoNodeAction.class.getName());
 
     /**
-     * 
+     *
      * @param nodes
      */
     @Override
@@ -31,8 +31,8 @@ public class GotoNodeAction extends NodeAction {
         for (Node node : nodes) {
             try {
                 Object instance = node.getLookup().lookup(InstanceCookie.class).instanceCreate();
-                if (instance instanceof Geospatial) {
-                    this.firePropertyChange("GOTO", null, ((Geospatial) instance).getPosition());
+                if (instance instanceof Position.Provider) {
+                    this.firePropertyChange("GOTO", null, ((Position.Provider) instance).getPosition());
                 }
             } catch (Exception ex) {
                 logger.log(Level.SEVERE, "Goto Error", ex);
@@ -54,7 +54,7 @@ public class GotoNodeAction extends NodeAction {
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override

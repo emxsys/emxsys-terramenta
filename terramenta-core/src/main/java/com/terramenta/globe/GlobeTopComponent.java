@@ -111,15 +111,15 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         DateTimeController.getInstance().doFire(); //trigger the above listener
 
         //Goto position on of object
-        SystemAction.get(GotoNodeAction.class).addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("GOTO")) {
-                    wwm.gotoPosition((Position) evt.getNewValue());
-                }
-            }
-        });
+//        SystemAction.get(GotoNodeAction.class).addPropertyChangeListener(new PropertyChangeListener() {
+//
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                if (evt.getPropertyName().equals("GOTO")) {
+//                    wwm.gotoPosition((Position) evt.getNewValue());
+//                }
+//            }
+//        });
 
         initComponents();
     }
