@@ -4,7 +4,6 @@
  */
 package com.terramenta.globe;
 
-import com.terramenta.actions.GotoNodeAction;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.time.DateTimeChangeEvent;
 import com.terramenta.time.DateTimeController;
@@ -29,8 +28,6 @@ import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunLayer;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
@@ -42,7 +39,6 @@ import org.openide.awt.ActionReference;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
-import org.openide.util.actions.SystemAction;
 import org.openide.windows.TopComponent;
 
 /**
@@ -109,17 +105,6 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
             }
         });
         DateTimeController.getInstance().doFire(); //trigger the above listener
-
-        //Goto position on of object
-//        SystemAction.get(GotoNodeAction.class).addPropertyChangeListener(new PropertyChangeListener() {
-//
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                if (evt.getPropertyName().equals("GOTO")) {
-//                    wwm.gotoPosition((Position) evt.getNewValue());
-//                }
-//            }
-//        });
 
         initComponents();
     }

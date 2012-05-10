@@ -25,7 +25,7 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @ServiceProvider(service = WorldWindManager.class)
 public class WorldWindManager implements Serializable {
-
+    
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
 
     /**
@@ -37,7 +37,7 @@ public class WorldWindManager implements Serializable {
         System.setProperty("gov.nasa.worldwind.app.config.document", prefs.get("options.globe.worldwindConfig", "worldwind/worldwind.xml"));
     }
     private static final WorldWindowGLJPanel wwd = new WorldWindowGLJPanel();
-
+    
     public WorldWindManager() {
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
@@ -74,10 +74,18 @@ public class WorldWindManager implements Serializable {
      * @param that
      */
     public void gotoPosition(Position that) {
-        View view = wwd.getView();
-        view.goTo(that, view.getCenterPoint().distanceTo3(view.getEyePoint()));
+        gotoPosition(that, true);
     }
-
+    
+    public void gotoPosition(Position that, boolean animate) {
+        View view = wwd.getView();
+        if (animate) {
+            view.goTo(that, view.getCenterPoint().distanceTo3(view.getEyePoint()));
+        } else {
+            view.setEyePosition(that);
+        }
+    }
+    
     public void saveState() {
         System.out.println("WorldWindManager.saveState");
 //        File dir = new File(System.getProperty("user.home") + File.separator + ".terramenta");
@@ -107,7 +115,7 @@ public class WorldWindManager implements Serializable {
 //            }
 //        }
     }
-
+    
     public void restoreState() {
         System.out.println("WorldWindManager.restoreState");
 //        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
