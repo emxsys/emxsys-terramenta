@@ -16,9 +16,11 @@ import org.openide.util.Lookup;
  * @author heidtmare
  */
 @OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe",
-iconBase = "images/32x32-icon-earth.png",
+iconBase = "images/globe_options.png",
 keywords = "#OptionsCategory_Keywords_Globe",
-keywordsCategory = "Globe")
+keywordsCategory = "Globe",
+position = 1000,
+id = "Globe")
 @org.openide.util.NbBundle.Messages({"OptionsCategory_Name_Globe=Globe", "OptionsCategory_Keywords_Globe=globe earth"})
 public final class GlobeOptionsController extends OptionsPanelController {
 
