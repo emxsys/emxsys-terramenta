@@ -34,19 +34,26 @@ import org.openide.util.NbBundle.Messages;
 public final class DrawDistanceAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static final ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes highattr = new BasicShapeAttributes();
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        SurfacePolyline shape = new SurfacePolyline();
-        ShapeAttributes attr = new BasicShapeAttributes();
-        attr.setInteriorMaterial(new Material(Color.red));
-        attr.setInteriorOpacity(0.2);
+    static {
         attr.setOutlineMaterial(new Material(Color.red));
         attr.setOutlineOpacity(0.6);
         attr.setOutlineWidth(2);
         attr.setOutlineStipplePattern((short) 0xAAAA);
         attr.setOutlineStippleFactor(8);
+
+        highattr.copy(attr);
+        highattr.setOutlineOpacity(1.0);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        SurfacePolyline shape = new SurfacePolyline();
+
         shape.setAttributes(attr);
+        shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "Distance Measurement");
         shape.setValue(AVKey.DISPLAY_ICON, "images/measurements.png");
         shape.setEnableBatchPicking(false);

@@ -21,7 +21,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 @ActionID(category = "Tools",
@@ -29,24 +29,33 @@ id = "com.terramenta.annotations.DrawLineAction")
 @ActionRegistration(iconBase = "images/line.png",
 displayName = "#CTL_DrawLineAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position =1),
+    @ActionReference(path = "Menu/Tools/Annotations", position = 1),
     @ActionReference(path = "Toolbars/Annotations", position = 1)
 })
 @Messages("CTL_DrawLineAction=Line")
 public final class DrawLineAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static final ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes highattr = new BasicShapeAttributes();
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        SurfacePolyline shape = new SurfacePolyline();
-        ShapeAttributes attr = new BasicShapeAttributes();
+    static {
         attr.setInteriorMaterial(new Material(Color.yellow));
         attr.setInteriorOpacity(0.2);
         attr.setOutlineMaterial(new Material(Color.yellow));
         attr.setOutlineOpacity(0.6);
         attr.setOutlineWidth(2);
+
+        highattr.copy(attr);
+        highattr.setInteriorOpacity(0.4);
+        highattr.setOutlineOpacity(1.0);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        SurfacePolyline shape = new SurfacePolyline();
         shape.setAttributes(attr);
+        shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Line");
         shape.setValue(AVKey.DISPLAY_ICON, "images/line.png");
         shape.setEnableBatchPicking(false);

@@ -13,15 +13,15 @@ import gov.nasa.worldwind.render.SurfaceCircle;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
-import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 @ActionID(category = "Tools",
@@ -36,17 +36,26 @@ displayName = "#CTL_DrawCircleAction")
 public final class DrawCircleAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static final ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes highattr = new BasicShapeAttributes();
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        SurfaceCircle shape = new SurfaceCircle();
-        ShapeAttributes attr = new BasicShapeAttributes();
+    static {
         attr.setInteriorMaterial(new Material(Color.yellow));
         attr.setInteriorOpacity(0.2);
         attr.setOutlineMaterial(new Material(Color.yellow));
         attr.setOutlineOpacity(0.6);
         attr.setOutlineWidth(2);
+
+        highattr.copy(attr);
+        highattr.setInteriorOpacity(0.4);
+        highattr.setOutlineOpacity(1.0);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        SurfaceCircle shape = new SurfaceCircle();
         shape.setAttributes(attr);
+        shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Circle");
         shape.setValue(AVKey.DISPLAY_ICON, "images/circle.png");
         shape.setEnableBatchPicking(false);

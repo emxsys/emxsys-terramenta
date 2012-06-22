@@ -21,7 +21,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 @ActionID(category = "Tools",
@@ -34,23 +34,32 @@ displayName = "#CTL_DrawEllipseAction")
 })
 @Messages("CTL_DrawEllipseAction=Ellipse")
 public final class DrawEllipseAction implements ActionListener {
-
+    
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        SurfaceEllipse shape = new SurfaceEllipse();
-        ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes highattr = new BasicShapeAttributes();
+    
+    static {
         attr.setInteriorMaterial(new Material(Color.yellow));
         attr.setInteriorOpacity(0.2);
         attr.setOutlineMaterial(new Material(Color.yellow));
         attr.setOutlineOpacity(0.6);
         attr.setOutlineWidth(2);
+        
+        highattr.copy(attr);
+        highattr.setInteriorOpacity(0.4);
+        highattr.setOutlineOpacity(1.0);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        SurfaceEllipse shape = new SurfaceEllipse();
         shape.setAttributes(attr);
+        shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Ellipse");
         shape.setValue(AVKey.DISPLAY_ICON, "images/ellipse.png");
         shape.setEnableBatchPicking(false);
-
+        
         AnnotationController builder = new AnnotationController(wwm.getWorldWindow(), shape);
         builder.setArmed(true);
     }

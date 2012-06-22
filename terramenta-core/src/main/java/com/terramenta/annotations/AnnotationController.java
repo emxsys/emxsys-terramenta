@@ -20,7 +20,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +27,6 @@ import java.util.logging.Logger;
  */
 public class AnnotationController extends AVListImpl {
 
-    private static final Logger logger = Logger.getAnonymousLogger();
     private static final AnnotationAttributes labelAttributes = new AnnotationAttributes();
     private static final UnitsFormat unitsFormat = new UnitsFormat();
     private final WorldWindow wwd;
@@ -268,7 +266,7 @@ public class AnnotationController extends AVListImpl {
      * this.wwd.getSceneController().getTerrain().getSurfacePoint(pos.getLatitude(), pos.getLongitude()); if (surfacePoint == null) { Globe globe =
      * this.wwd.getModel().getGlobe(); surfacePoint = globe.computePointFromPosition(pos.getLatitude(), pos.getLongitude(),
      * globe.getElevation(pos.getLatitude(), pos.getLongitude())); } return this.wwd.getView().project(surfacePoint);
-    }
+     * }
      */
     /**
      *

@@ -13,14 +13,10 @@ import gov.nasa.worldwind.pick.PickedObject;
 import gov.nasa.worldwind.pick.PickedObjectList;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.beans.IntrospectionException;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import org.openide.nodes.BeanNode;
-import org.openide.nodes.NodeOperation;
-import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 
 /**
