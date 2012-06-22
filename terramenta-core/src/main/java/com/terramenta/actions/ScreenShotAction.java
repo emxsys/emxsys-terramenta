@@ -26,8 +26,7 @@ import org.openide.util.NbBundle.Messages;
 id = "com.terramenta.actions.ScreenShotAction")
 @ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction")
 @ActionReferences({
-    @ActionReference(path = "Menu/Tools", position = 9),
-    //@ActionReference(path = "Toolbars/Annotations", position = 9)
+    @ActionReference(path = "Menu/Tools", position = 9)
 })
 @Messages("CTL_ScreenShotAction=Screen Shot")
 /**
