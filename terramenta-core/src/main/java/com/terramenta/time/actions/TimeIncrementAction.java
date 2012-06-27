@@ -4,12 +4,10 @@
  */
 package com.terramenta.time.actions;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.JComboBox;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -25,44 +23,52 @@ import org.openide.util.actions.Presenter;
 })
 @Messages({
     "CTL_TimeIncrementAction=Adjust Increment",
-    "HINT_TimeIncrementAction=Seconds Per Frame"
+    "HINT_TimeIncrementAction=Time Per Frame"
 })
 public final class TimeIncrementAction extends AbstractAction implements Presenter.Toolbar {
 
-    private JButton comp = null;
-    private static final int[] stepIncrements = new int[]{1000, 10000, 60000, 600000, 3600000, 86400000};
-    private static int stepIncrementsIndex = 0;
-    private final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+    private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+    private JComboBox comp = null;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        stepIncrementsIndex += 1;
+    private enum TimeIncrement {
 
-        // bounds checking
-        if (stepIncrementsIndex > (stepIncrements.length - 1)) {
-            stepIncrementsIndex = 0;
+        SECOND1("1 second", 1000),
+        SECOND10("10 seconds", 10000),
+        MINUTE1("1 minute", 60000),
+        MINUTE10("10 minutes", 600000),
+        MINUTE30("30 minutes", 1800000),
+        HOUR1("1 hour", 3600000);
+        private String label;
+        private int increment;
+
+        TimeIncrement(String label, int increment) {
+            this.label = label;
+            this.increment = increment;
         }
 
-        int step = stepIncrements[stepIncrementsIndex];
-        tac.setStepIncrement(step);
-        updateText(step);
-    }
+        public int getIncrement() {
+            return increment;
+        }
+
+        @Override
+        public String toString() {
+            return label;
+        }
+    };
 
     @Override
     public Component getToolbarPresenter() {
         if (comp == null) {
-            comp = new JButton();
-            comp.setFont(new Font("Arial", Font.BOLD, 11));
-            comp.setForeground(new Color(70, 130, 180));
+            comp = new JComboBox(TimeIncrement.values());
             comp.setToolTipText(Bundle.HINT_TimeIncrementAction());
             comp.addActionListener(this);
-            int step = stepIncrements[stepIncrementsIndex];
-            updateText(step);
         }
         return this.comp;
     }
 
-    private void updateText(int step) {
-        comp.setText(step / 1000 + " s");
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        TimeIncrement selected = (TimeIncrement) comp.getSelectedItem();
+        tac.setStepIncrement(selected.getIncrement());
     }
 }

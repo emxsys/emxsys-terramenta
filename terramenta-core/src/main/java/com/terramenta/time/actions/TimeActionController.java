@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.Timer;
+import org.joda.time.Duration;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -28,6 +29,7 @@ public class TimeActionController {
     private final PropertyChangeSupport propertyChangeSupport;
     private Timer playTimer = null;
     private int stepIncrement = 1000;
+    private Duration linger = null;
 
     public TimeActionController() {
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -98,5 +100,13 @@ public class TimeActionController {
 
     public boolean isPlaying() {
         return playTimer != null;
+    }
+
+    public void setLingerDuration(Duration linger) {
+        this.linger = linger;
+    }
+
+    public Duration getLingerDuration() {
+        return this.linger;
     }
 }

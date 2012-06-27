@@ -3,6 +3,10 @@
 <filesystem>
  
     <folder name="Actions">
+        <folder name="Other">
+            <file name="com-terramenta-time-actions-TimeIncrementAction.instance"/>
+            <file name="com-terramenta-time-actions-TimeIncrementAction1.instance_hidden"/>
+        </folder>
         <folder name="Tools">
         </folder>
     </folder>

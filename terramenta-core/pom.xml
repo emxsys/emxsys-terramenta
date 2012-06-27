@@ -102,14 +102,6 @@
             <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
-
-        
-        <!--<dependency>
-            <groupId>com.vividsolutions</groupId>
-            <artifactId>jts</artifactId>
-            <version>1.11</version>
-            <type>jar</type>
-        </dependency>-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -154,7 +146,6 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>com.sun.gluegen.runtime</publicPackage>
-                        <publicPackage>com.sun.java.swing</publicPackage>
                         <publicPackage>com.sun.opengl.cg</publicPackage>
                         <publicPackage>com.sun.opengl.impl.*</publicPackage>
                         <publicPackage>com.sun.opengl.util.*</publicPackage>
@@ -167,21 +158,17 @@
                         <publicPackage>com.terramenta.listeners</publicPackage>
                         <publicPackage>com.terramenta.measurements</publicPackage>
                         <publicPackage>com.terramenta.navigation</publicPackage>
+                        <publicPackage>com.terramenta.renderables</publicPackage>
+                        <publicPackage>com.terramenta.temporal</publicPackage>
                         <publicPackage>com.terramenta.time</publicPackage>
                         <publicPackage>com.terramenta.time.actions</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
-                        <publicPackage>com.zebraimaging</publicPackage>
                         <publicPackage>gov.nasa.worldwind.*</publicPackage>
                         <publicPackage>gov.nasa.worldwindx.examples.*</publicPackage>
                         <publicPackage>gov.nasa.worldwindx.sunlight</publicPackage>
-                        <publicPackage>javax.annotation</publicPackage>
-                        <publicPackage>javax.annotation.meta</publicPackage>
                         <publicPackage>javax.media.opengl</publicPackage>
                         <publicPackage>javax.media.opengl.glu</publicPackage>
-                        <publicPackage>javax.swing</publicPackage>
                         <publicPackage>org.joda.time.*</publicPackage>
-                        <publicPackage>org.netbeans.*</publicPackage>
-                        <publicPackage>org.openide.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
