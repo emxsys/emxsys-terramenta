@@ -25,6 +25,7 @@ public class AreaSelectionListener extends SectorSelector {
         this.setBorderColor(new Color(1f, 1f, 0f, 0.5f));
         this.setBorderWidth(2);
         this.getShape().setValue(AVKey.DISPLAY_NAME, "Bounding Box");
+        this.getShape().setHighlightAttributes(getShape().getAttributes());
     }
 
     /**
