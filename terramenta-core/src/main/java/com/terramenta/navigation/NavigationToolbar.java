@@ -41,6 +41,9 @@ public class NavigationToolbar {
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final JTextField positionField = new JTextField();
     private static final JComboBox coordTypeComboBox = new JComboBox(CoordinateSystem.values());
+    private static final int maxHeight = 24;
+    private static final int minHeight = 16;
+    private static final int prefHeight = 20;
 
     private static void parsePositionField() {
         Position position = null;
@@ -125,8 +128,8 @@ public class NavigationToolbar {
     public static final class NavigationCoordType extends AbstractAction implements Presenter.Toolbar {
 
         public NavigationCoordType() {
-            coordTypeComboBox.setMaximumSize(new Dimension(70, 22));
-            coordTypeComboBox.setMinimumSize(new Dimension(60, 22));
+            coordTypeComboBox.setMaximumSize(new Dimension(70, maxHeight));
+            coordTypeComboBox.setMinimumSize(new Dimension(60, minHeight));
         }
 
         @Override
@@ -169,9 +172,9 @@ public class NavigationToolbar {
     public static final class NavigationCoordField extends AbstractAction implements Presenter.Toolbar {
 
         public NavigationCoordField() {
-            positionField.setMaximumSize(new Dimension(150, 22));
-            positionField.setPreferredSize(new Dimension(125, 22));
-            positionField.setMinimumSize(new Dimension(100, 22));
+            positionField.setMaximumSize(new Dimension(150, maxHeight));
+            positionField.setPreferredSize(new Dimension(125, prefHeight));
+            positionField.setMinimumSize(new Dimension(100, minHeight));
             positionField.addActionListener(this);
         }
 
