@@ -305,9 +305,7 @@ public class TimeActionToolbar {
     })
     @Messages({
         "CTL_TimeLingerAction=Adjust Linger Time",
-        "HINT_TimeLingerAction=Linger Time",
-        "HINT_TimeLingerAction_BindText=Bind",
-        "HINT_TimeLingerAction_BindToolTip=Bind Time to dispalyed renderables."
+        "HINT_TimeLingerAction=Linger Time"
     })
     public static final class TimeLingerAction extends AbstractAction implements Presenter.Toolbar {
 
@@ -325,15 +323,16 @@ public class TimeActionToolbar {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         JSlider source = (JSlider) e.getSource();
-                        if (!source.getValueIsAdjusting()) {
-                            Duration dur = null;
-                            int multiplier = (int) source.getValue();
-                            if (multiplier < 50) {
-                                int linger = tac.getStepIncrement() * multiplier;
-                                dur = new Duration(linger);
-                            }
-                            tac.setLingerDuration(dur);
+                        //if (!source.getValueIsAdjusting()) {
+                        Duration dur = null;
+                        int multiplier = (int) source.getValue();
+                        if (multiplier < 50) {
+                            int linger = tac.getStepIncrement() * multiplier;
+                            dur = new Duration(linger);
                         }
+                        tac.setLingerDuration(dur);
+                        tac.step(0);//force refresh
+                        //}
                     }
                 });
             }
@@ -364,33 +363,6 @@ public class TimeActionToolbar {
 
         public int getIncrement() {
             return increment;
-        }
-
-        @Override
-        public String toString() {
-            return label;
-        }
-    };
-
-    private enum LingerDuration {
-
-        NONE("None", new Duration(1)),//dont linger
-        SECOND10("10 seconds", new Duration(10000)),
-        MINUTE1("1 minute", new Duration(60000)),
-        MINUTE10("10 minutes", new Duration(600000)),
-        MINUTE30("30 minutes", new Duration(1800000)),
-        HOUR1("1 hour", new Duration(3600000)),
-        ALWAYS("Always", null);//always visible
-        private String label;
-        private Duration duration = null;
-
-        LingerDuration(String label, Duration duration) {
-            this.label = label;
-            this.duration = duration;
-        }
-
-        public Duration getDuration() {
-            return duration;
         }
 
         @Override

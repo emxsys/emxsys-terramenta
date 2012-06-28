@@ -86,7 +86,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         new SelectController(wwm.getWorldWindow());
         new HighlightController(wwm.getWorldWindow(), SelectEvent.ROLLOVER);
         //new HotSpotController(wwm.getWorldWindow());
-        new KMLApplicationController(wwm.getWorldWindow());
+        //new KMLApplicationController(wwm.getWorldWindow());
         //new BalloonController(wwm.getWorldWindow());
 
         //listeners

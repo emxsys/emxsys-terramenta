@@ -24,8 +24,9 @@ public class TimeActionController {
     public static final String PLAY = "TimeActionController.Play";
     public static final String STEP = "TimeActionController.Step";
     public static final String INCREMENT = "TimeActionController.StepIncrement";
+    public static final String LINGER = "TimeActionController.LingerDuration";
     private static final DateTimeController dateTimeController = DateTimeController.getInstance();
-    private static final int animationRefreshRateMs = 75;//~15 frames per second
+    private static final int animationRefreshRateMs = 100;//~10 frames per second
     private final PropertyChangeSupport propertyChangeSupport;
     private Timer playTimer = null;
     private int stepIncrement = 1000;
@@ -66,6 +67,10 @@ public class TimeActionController {
         this.firePropertyChange(PLAY, null, direction);
     }
 
+    public boolean isPlaying() {
+        return playTimer != null;
+    }
+
     public void stop() {
         if (playTimer != null) {
             playTimer.stop();
@@ -98,15 +103,13 @@ public class TimeActionController {
         this.firePropertyChange(INCREMENT, old, si);
     }
 
-    public boolean isPlaying() {
-        return playTimer != null;
+    public Duration getLingerDuration() {
+        return this.linger;
     }
 
     public void setLingerDuration(Duration linger) {
+        Duration old = this.linger;
         this.linger = linger;
-    }
-
-    public Duration getLingerDuration() {
-        return this.linger;
+        this.firePropertyChange(LINGER, old, linger);
     }
 }

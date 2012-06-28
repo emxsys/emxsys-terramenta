@@ -5,7 +5,8 @@
 package com.terramenta.utilities;
 
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.*;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 
 /**
@@ -20,15 +21,15 @@ public class QuickTipController extends ToolTipController {
     private boolean armed = true;
 
     /**
-     * 
+     *
      * @param ww
      */
     public QuickTipController(WorldWindow ww) {
-        super(ww);
+        super(ww, AVKey.DISPLAY_NAME, AVKey.DESCRIPTION);
     }
 
     /**
-     * 
+     *
      * @return
      */
     public boolean isArmed() {
@@ -36,7 +37,7 @@ public class QuickTipController extends ToolTipController {
     }
 
     /**
-     * 
+     *
      * @param armed
      */
     public void setArmed(boolean armed) {
