@@ -13,11 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
+import java.util.Date;
+import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.JComboBox;
+import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -186,6 +189,12 @@ public class TimeActionToolbar {
         private JComboBox comp = null;
 
         @Override
+        public void actionPerformed(ActionEvent e) {
+            TimeIncrement selected = (TimeIncrement) comp.getSelectedItem();
+            tac.setStepIncrement(selected.getIncrement());
+        }
+
+        @Override
         public Component getToolbarPresenter() {
             if (comp == null) {
                 comp = new JComboBox(TimeIncrement.values());
@@ -195,13 +204,7 @@ public class TimeActionToolbar {
                 comp.setToolTipText(Bundle.HINT_TimeIncrementAction());
                 comp.addActionListener(this);
             }
-            return this.comp;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            TimeIncrement selected = (TimeIncrement) comp.getSelectedItem();
-            tac.setStepIncrement(selected.getIncrement());
+            return comp;
         }
     }
 
@@ -233,68 +236,45 @@ public class TimeActionToolbar {
     @Messages("CTL_TimeDisplayAction=Current Time")
     public static final class TimeDisplayAction extends AbstractAction implements Presenter.Toolbar {
 
-        private JTextField field = new JTextField();// {
-//
-//        @Override
-//        public void setBorder(Border border) {
-//            // GO AWAY!
-//        }
-//    };
-
-        public TimeDisplayAction() {
-            field.setMaximumSize(new Dimension(150, maxHeight));
-            field.setPreferredSize(new Dimension(150, prefHeight));
-            field.setMinimumSize(new Dimension(150, minHeight));
-//        field.setEnabled(false);
-            DateTime datetime = dateTimeController.getDateTime();
-            String dateText = datetime.plusMillis(-datetime.getMillisOfSecond()).toString();//Remove millis for display
-            field.setText(dateText);
-            field.addActionListener(this);
-//        field.addMouseListener(new MouseAdapter() {
-//
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                if (!field.isEnabled()) {
-//                    field.setEnabled(true);
-//                }
-//            }
-//        });
-
-            dateTimeController.addDateTimeEventListener(new DateTimeEventListener() {
-
-                @Override
-                public void changeEventOccurred(DateTimeChangeEvent evt) {
-                    DateTime datetime = evt.getDateTime();
-                    String dateText = datetime.plusMillis(-datetime.getMillisOfSecond()).withZone(DateTimeZone.UTC).toString();//Remove millis for display
-                    field.setText(dateText);
-                }
-            });
-        }
+        private DateChooser field = null;
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(field)) {
-                tac.stop();
-                parseDateTextField(field.getText().trim());
-                //field.setEnabled(false);
-            }
+            //...
         }
 
         @Override
         public Component getToolbarPresenter() {
-            return field;
-        }
+            if (field == null) {
+                field = new DateChooser();
+                field.setMaximumSize(new Dimension(200, maxHeight));
+                field.setPreferredSize(new Dimension(180, prefHeight));
+                field.setMinimumSize(new Dimension(180, minHeight));
+                field.setDate(dateTimeController.getDateTime().toDate());
 
-        /**
-         *
-         */
-        private void parseDateTextField(String text) {
-            DateTime dt = DateTimeController.parseIsoString(text);
-            if (dt == null) {
-                dateTimeController.setDateTime(dateTimeController.getDateTime());
-            } else {
-                dateTimeController.setDateTime(dt);
+                field.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        Date newDate = (Date) evt.getNewValue();
+                        if (newDate == null) {
+                            field.setDate((Date) evt.getOldValue());//revert to old value, no blank date allowed
+                        } else {
+                            dateTimeController.setDateTime(new DateTime(newDate));
+                        }
+                    }
+                });
+
+
+                dateTimeController.addDateTimeEventListener(new DateTimeEventListener() {
+
+                    @Override
+                    public void changeEventOccurred(DateTimeChangeEvent evt) {
+                        field.setDate(evt.getDateTime().toDate());
+                    }
+                });
             }
+            return field;
         }
     }
 
@@ -312,6 +292,11 @@ public class TimeActionToolbar {
         private JSlider comp = null;
 
         @Override
+        public void actionPerformed(ActionEvent e) {
+            //...
+        }
+
+        @Override
         public Component getToolbarPresenter() {
             if (comp == null) {
                 comp = new JSlider(JSlider.HORIZONTAL, 1, 50, 10);
@@ -323,7 +308,6 @@ public class TimeActionToolbar {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         JSlider source = (JSlider) e.getSource();
-                        //if (!source.getValueIsAdjusting()) {
                         Duration dur = null;
                         int multiplier = (int) source.getValue();
                         if (multiplier < 50) {
@@ -332,16 +316,10 @@ public class TimeActionToolbar {
                         }
                         tac.setLingerDuration(dur);
                         tac.step(0);//force refresh
-                        //}
                     }
                 });
             }
             return comp;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //...
         }
     }
 
