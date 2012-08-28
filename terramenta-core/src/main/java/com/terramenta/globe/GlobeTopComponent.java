@@ -4,6 +4,7 @@
  */
 package com.terramenta.globe;
 
+import com.terramenta.globe.dnd.RenderableDropTargetListener;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.time.DateTimeChangeEvent;
 import com.terramenta.time.DateTimeController;
@@ -24,10 +25,11 @@ import gov.nasa.worldwind.layers.*;
 import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
-import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunLayer;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
@@ -74,6 +76,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         setName(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent"));
         setToolTipText(NbBundle.getMessage(GlobeTopComponent.class, "HINT_GlobeTopComponent"));
 
+        //setup DnD
+        initDnD();
+
+        //tweak base layers
         initLayers();
 
         setStatusLayerType(prefs.get("options.globe.statusBar", "STANDARD"));
@@ -97,7 +103,6 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
 
         //establish datetime listener
         DateTimeController.getInstance().addDateTimeEventListener(new DateTimeEventListener() {
-
             @Override
             public void changeEventOccurred(DateTimeChangeEvent evt) {
                 updateGlobe(evt.getDateTime());
@@ -107,6 +112,12 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         DateTimeController.getInstance().doFire(); //trigger the above listener
 
         initComponents();
+    }
+
+    private void initDnD() {
+        DropTarget dt = new DropTarget(this, new RenderableDropTargetListener());
+        dt.setDefaultActions(DnDConstants.ACTION_COPY_OR_MOVE);
+        dt.setActive(true);
     }
 
     private void initLayers() {

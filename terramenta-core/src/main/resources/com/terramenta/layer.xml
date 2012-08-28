@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
- 
-    <folder name="Actions">
-        <folder name="Other">
-            <file name="com-terramenta-time-actions-TimeIncrementAction.instance"/>
-            <file name="com-terramenta-time-actions-TimeIncrementAction1.instance_hidden"/>
-        </folder>
-        <folder name="Tools">
-        </folder>
-    </folder>
     <folder name="Menu">
         <folder name="GoTo_hidden"/>
         <folder name="Tools">
