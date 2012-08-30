@@ -151,8 +151,6 @@
                     <publicPackages>
                         <publicPackage>com.sun.gluegen.runtime</publicPackage>
                         <publicPackage>com.sun.opengl.cg</publicPackage>
-                        <publicPackage>com.sun.opengl.impl.*</publicPackage>
-                        <publicPackage>com.sun.opengl.util.*</publicPackage>
                         <publicPackage>com.terramenta.actions</publicPackage>
                         <publicPackage>com.terramenta.annotations</publicPackage>
                         <publicPackage>com.terramenta.beans</publicPackage>
@@ -168,11 +166,9 @@
                         <publicPackage>com.terramenta.time.actions</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
                         <publicPackage>gov.nasa.worldwind.*</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.examples.*</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.sunlight</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.*</publicPackage>
                         <publicPackage>javax.media.opengl</publicPackage>
                         <publicPackage>javax.media.opengl.glu</publicPackage>
-                        <publicPackage>org.joda.time.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
