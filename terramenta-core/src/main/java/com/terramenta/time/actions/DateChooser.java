@@ -42,9 +42,9 @@ public class DateChooser extends JDateChooser {
         }
 
         //adjust calendar visuals
-        JCalendar cal = this.getJCalendar();
-        cal.setTodayButtonText("Now");
-        cal.setTodayButtonVisible(true);
+//        JCalendar cal = this.getJCalendar();
+//        cal.setTodayButtonText("Now");
+//        cal.setTodayButtonVisible(true);
         //cal.setNullDateButtonText("Clear");
         //cal.setNullDateButtonVisible(true);
     }
