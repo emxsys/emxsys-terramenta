@@ -51,7 +51,6 @@ public class AnnotationController extends AVListImpl {
         labelAttributes.setSize(new Dimension(220, 0));
     }
     private final MouseAdapter ma = new MouseAdapter() {
-
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             if (armed && mouseEvent.getButton() == MouseEvent.BUTTON1) {
@@ -75,7 +74,6 @@ public class AnnotationController extends AVListImpl {
         }
     };
     private final MouseMotionAdapter mma = new MouseMotionAdapter() {
-
         @Override
         public void mouseDragged(MouseEvent mouseEvent) {
             if (armed && (mouseEvent.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
@@ -89,7 +87,6 @@ public class AnnotationController extends AVListImpl {
         }
     };
     private final PositionListener pl = new PositionListener() {
-
         @Override
         public void moved(PositionEvent event) {
             if (!active) {
@@ -100,8 +97,8 @@ public class AnnotationController extends AVListImpl {
     };
 
     /**
-     * Construct a new line builder using the specified polyline and layer and drawing events from the specified world window. Either or both the
-     * polyline and the layer may be null, in which case the necessary object is created.
+     * Construct a new line builder using the specified polyline and layer and drawing events from the specified world
+     * window. Either or both the polyline and the layer may be null, in which case the necessary object is created.
      *
      * @param wwd the world window to draw events from.
      * @param shape
@@ -118,14 +115,25 @@ public class AnnotationController extends AVListImpl {
         layer.addRenderable(shape);
     }
 
+    public AnnotationController(final WorldWindow wwd, SurfaceShape shape, RenderableLayer layer) {
+        this.wwd = wwd;
+        this.shape = shape;
+        this.layer = layer;
+        layer.addRenderable(shape);
+    }
+
+    public RenderableLayer getLayer() {
+        return this.layer;
+    }
+
     /**
-     * Arms and disarms the line builder. When armed, the line builder monitors user input and builds the polyline in response to the actions
-     * mentioned in the overview above. When disarmed, the line builder ignores all user input.
+     * Arms and disarms the line builder. When armed, the line builder monitors user input and builds the polyline in
+     * response to the actions mentioned in the overview above. When disarmed, the line builder ignores all user input.
      *
      * @param armed true to arm the line builder, false to disarm it.
      */
     public void setArmed(boolean armed) {
-        this.armed = armed;
+        firePropertyChange("armed", this.armed, this.armed = armed);
         if (armed) {
             this.wwd.getInputHandler().addMouseListener(ma);
             this.wwd.getInputHandler().addMouseMotionListener(mma);

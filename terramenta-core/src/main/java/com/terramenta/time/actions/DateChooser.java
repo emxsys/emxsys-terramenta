@@ -4,7 +4,6 @@
  */
 package com.terramenta.time.actions;
 
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JSpinnerDateEditor;
 import java.util.Date;
@@ -17,7 +16,7 @@ import javax.swing.JSpinner;
  */
 public class DateChooser extends JDateChooser {
 
-    public final static String DEFAULT_DATEPATTERN = "yyyy-MM-dd HH:mm:ssZ";
+    public final static String DEFAULT_DATEPATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ";
     public final static TimeZone DEFAULT_TIMEZONE = TimeZone.getTimeZone("UTC");
 
     public DateChooser() {

@@ -135,6 +135,7 @@
                         <publicPackage>com.terramenta.measurements</publicPackage>
                         <publicPackage>com.terramenta.navigation</publicPackage>
                         <publicPackage>com.terramenta.renderables</publicPackage>
+                        <publicPackage>com.terramenta.selectors</publicPackage>
                         <publicPackage>com.terramenta.temporal</publicPackage>
                         <publicPackage>com.terramenta.time</publicPackage>
                         <publicPackage>com.terramenta.time.actions</publicPackage>
