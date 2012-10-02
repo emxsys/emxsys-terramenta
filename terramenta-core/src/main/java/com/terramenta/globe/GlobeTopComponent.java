@@ -6,10 +6,9 @@ package com.terramenta.globe;
 
 import com.terramenta.globe.dnd.RenderableDropTargetListener;
 import com.terramenta.globe.options.GlobeOptions;
-import com.terramenta.time.DateTimeChangeEvent;
-import com.terramenta.time.DateTimeController;
-import com.terramenta.time.DateTimeEventListener;
-import com.terramenta.utilities.OrbitUtilities;
+import com.terramenta.time.DateProvider;
+import com.terramenta.time.JulianConversions;
+import com.terramenta.utilities.EciController;
 import com.terramenta.utilities.QuickTipController;
 import com.terramenta.utilities.SelectController;
 import gov.nasa.worldwind.StereoSceneController;
@@ -30,11 +29,13 @@ import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunLayer;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
-import org.joda.time.DateTime;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -59,7 +60,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private static final Logger logger = Logger.getLogger(GlobeTopComponent.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-    private static final OrbitUtilities orbit = new OrbitUtilities();
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final EciController eciController = new EciController();
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
@@ -102,14 +104,21 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         prefs.addPreferenceChangeListener(this);
 
         //establish datetime listener
-        DateTimeController.getInstance().addDateTimeEventListener(new DateTimeEventListener() {
+        dateProvider.addObserver(new Observer() {
             @Override
-            public void changeEventOccurred(DateTimeChangeEvent evt) {
-                updateGlobe(evt.getDateTime());
+            public void update(Observable o, Object arg) {
+                Date date;
+                if (arg instanceof Date) {
+                    date = (Date) arg;
+                } else {
+                    date = dateProvider.getDate();
+                }
+
+                updateGlobe(date);
                 wwm.getWorldWindow().redraw();
             }
         });
-        DateTimeController.getInstance().doFire(); //trigger the above listener
+        dateProvider.setDate(dateProvider.getDate()); //trigger the above listener
 
         initComponents();
     }
@@ -190,26 +199,26 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      *
      * @param datetime
      */
-    public void updateGlobe(DateTime datetime) {
+    public void updateGlobe(Date date) {
         if (isECI()) {
             // need to do something to keep the ECI view moving even after user interaction
             wwm.getWorldWindow().getView().stopMovement();
 
             // update rotation of view and Stars
-            double theta0 = orbit.getRotateECIdeg();
-            orbit.setCurrentMJD(DateTimeController.convertToMJD(datetime));
-            double thetaf = orbit.getRotateECIdeg();
+            double theta0 = eciController.getRotateECIdeg();
+            eciController.setCurrentMJD(JulianConversions.convertToMJD(date));
+            double thetaf = eciController.getRotateECIdeg();
             double rotateEarthDelta = thetaf - theta0; // amount to rotate the globe around poles axis in degrees
 
             Position pos = ((BasicOrbitView) wwm.getWorldWindow().getView()).getCenterPosition();
             Position newPos = pos.add(new Position(Angle.fromDegrees(0), Angle.fromDegrees(-rotateEarthDelta), 0.0));
             ((BasicOrbitView) wwm.getWorldWindow().getView()).setCenterPosition(newPos);
         } else {
-            orbit.setCurrentMJD(DateTimeController.convertToMJD(datetime));
+            eciController.setCurrentMJD(JulianConversions.convertToMJD(date));
         }
 
-        starLayer.setLongitudeOffset(Angle.fromDegrees(-orbit.getRotateECIdeg()));
-        sunLayer.update(datetime.toGregorianCalendar());
+        starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg()));
+        sunLayer.update(date);
     }
 
     /**
@@ -227,7 +236,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     public void setECI(boolean state) {
         this.eci = state;
         if (isECI()) {
-            starLayer.setLongitudeOffset(Angle.fromDegrees(-orbit.getRotateECIdeg())); // update stars
+            starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg())); // update stars
         } else {
             starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal
         }
@@ -331,9 +340,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
+     * content of this method is always regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

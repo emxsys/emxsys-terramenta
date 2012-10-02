@@ -5,16 +5,14 @@
 package com.terramenta.renderables;
 
 import com.terramenta.interfaces.TemporalObject;
-import com.terramenta.time.DateTimeChangeEvent;
-import com.terramenta.time.DateTimeController;
-import com.terramenta.time.DateTimeEventListener;
+import com.terramenta.time.DateProvider;
 import com.terramenta.time.actions.TimeActionController;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemark;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Interval;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import org.openide.util.Lookup;
 
 /**
@@ -23,20 +21,42 @@ import org.openide.util.Lookup;
  */
 public class TemporalPlacemark extends PointPlacemark implements TemporalObject {
 
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-    private DateTime datetime;
-    private DateTimeEventListener dateTimeEventListener = new DateTimeEventListener() {
-
+    private Observer dateProviderObserver = new Observer() {
         @Override
-        public void changeEventOccurred(DateTimeChangeEvent evt) {
-            Duration linger = tac.getLingerDuration();
-            if (linger == null) {
-                setVisible(true); //null linger means items do not ever disapear
+        public void update(Observable o, Object arg) {
+            Date date;
+            if (arg instanceof Date) {
+                date = (Date) arg;
+            } else {
+                date = dateProvider.getDate();
+            }
+
+
+            int linger = tac.getLingerDuration();
+            if (linger == 0) {
+                setVisible(true); //0 linger means items do not ever disapear
                 return;
             }
 
-            Interval interval = new Interval(linger, evt.getDateTime());//interval of time from playtime-linger to playtime
-            setVisible(interval.contains(getDateTime()));
+            //get interval based on play direction
+            long startMillis;
+            long endMillis;
+            if (tac.getPreviousStepDirection() < 0) {
+                //interval from playtime to playtime+linger
+                startMillis = date.getTime();
+                endMillis = startMillis + linger;
+            } else {
+                //interval of time from playtime-linger to playtime
+                endMillis = date.getTime();
+                startMillis = endMillis - linger;
+            }
+
+            //does this placmark exist within the interval?
+            long eventMillis = getDate().getTime();
+            boolean isWithin = (eventMillis > startMillis && eventMillis < endMillis) ? true : false;
+            setVisible(isWithin);
         }
     };
 
@@ -48,20 +68,19 @@ public class TemporalPlacemark extends PointPlacemark implements TemporalObject 
     }
 
     @Override
-    public void setDateTime(DateTime datetime) {
-        this.datetime = datetime;
+    public void setDate(Date date) {
+        this.setValue("date", date);//AVList
 
-        DateTimeController dtc = DateTimeController.getInstance();
-        if (datetime != null) {
-            dtc.addDateTimeEventListener(dateTimeEventListener);
-            dtc.doFire(); //trigger the above listener
+        if (date != null) {
+            dateProvider.addObserver(dateProviderObserver);
+            dateProvider.setDate(dateProvider.getDate()); //trigger the above listener
         } else {
-            dtc.removeDateTimeEventListener(dateTimeEventListener);
+            dateProvider.deleteObserver(dateProviderObserver);
         }
     }
 
     @Override
-    public DateTime getDateTime() {
-        return this.datetime;
+    public Date getDate() {
+        return (Date) this.getValue("date");//AVList
     }
 }

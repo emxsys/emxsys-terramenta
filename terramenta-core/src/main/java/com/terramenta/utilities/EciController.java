@@ -8,7 +8,7 @@ package com.terramenta.utilities;
  *
  * @author heidtmare
  */
-public class OrbitUtilities {
+public class EciController {
 
     /**
      * 

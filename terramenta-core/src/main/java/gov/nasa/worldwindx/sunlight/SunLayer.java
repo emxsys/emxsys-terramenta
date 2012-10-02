@@ -1,7 +1,7 @@
 package gov.nasa.worldwindx.sunlight;
 
 import com.terramenta.globe.WorldWindManager;
-import com.terramenta.time.DateTimeController;
+import com.terramenta.time.DateProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
@@ -12,7 +12,9 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.util.Lookup;
@@ -25,6 +27,7 @@ public class SunLayer extends LensFlareLayer {
 
     private static final Logger logger = Logger.getLogger(SunLayer.class.getName());
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private final SkyGradientLayer skyGradientLayer;
     private final AtmosphereLayer atmosphereLayer = new AtmosphereLayer();
     private final RectangularNormalTessellator suntessellator;
@@ -109,7 +112,7 @@ public class SunLayer extends LensFlareLayer {
             }
         }
 
-        update(DateTimeController.getInstance().getDateTime().toGregorianCalendar());
+        update(dateProvider.getDate());
         wwm.getWorldWindow().redraw();
     }
 
@@ -117,9 +120,9 @@ public class SunLayer extends LensFlareLayer {
      *
      * @param datetime
      */
-    public void update(Calendar time) {
+    public void update(Date date) {
         if (isEnabled()) {
-            double[] ll = subsolarPoint(time);
+            double[] ll = subsolarPoint(date);
             Position sunPosition = new Position(LatLon.fromRadians(ll[0], ll[1]), 0);
             logger.log(Level.FINE, "SUN Position: {0}", sunPosition.toString());
             Vec4 sunVector = wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(sunPosition).normalize3();
@@ -135,7 +138,7 @@ public class SunLayer extends LensFlareLayer {
      * @param time
      * @return
      */
-    public static double[] subsolarPoint(Calendar time) {
+    public static double[] subsolarPoint(Date date) {
         // Main variables
         double elapsedJulianDays;
         double decimalHours;
@@ -146,6 +149,9 @@ public class SunLayer extends LensFlareLayer {
         // Calculate difference in days between the current Julian Day
         // and JD 2451545.0, which is noon 1 January 2000 Universal Time
         {
+            Calendar time = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            time.setTime(date);
+
             // Calculate time of the day in UT decimal hours
             decimalHours = time.get(Calendar.HOUR_OF_DAY)
                     + (time.get(Calendar.MINUTE) + time.get(Calendar.SECOND) / 60.0)

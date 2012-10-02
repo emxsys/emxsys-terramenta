@@ -4,13 +4,14 @@
  */
 package com.terramenta.time.actions;
 
-import com.terramenta.time.DateTimeController;
+import com.terramenta.time.DateProvider;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Calendar;
 import javax.swing.Timer;
-import org.joda.time.Duration;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -20,43 +21,66 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = TimeActionController.class)
 public class TimeActionController {
 
+    /**
+     *
+     */
     public static final String STOP = "TimeActionController.Stop";
+    /**
+     *
+     */
     public static final String PLAY = "TimeActionController.Play";
+    /**
+     *
+     */
     public static final String STEP = "TimeActionController.Step";
+    /**
+     *
+     */
     public static final String INCREMENT = "TimeActionController.StepIncrement";
+    /**
+     *
+     */
     public static final String LINGER = "TimeActionController.LingerDuration";
-    private static final DateTimeController dateTimeController = DateTimeController.getInstance();
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final int animationRefreshRateMs = 100;//~10 frames per second
-    private final PropertyChangeSupport propertyChangeSupport;
+    private final PropertyChangeSupport pcs;
     private Timer playTimer = null;
     private int stepIncrement = 1000;
-    private Duration linger = null;
+    private int linger = 0;
+    private int dir = 0;
 
+    /**
+     *
+     */
     public TimeActionController() {
-        propertyChangeSupport = new PropertyChangeSupport(this);
-    }
-
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
+        pcs = new PropertyChangeSupport(this);
     }
 
     /**
-     * 1=forward, -1=backward, 0=no animation step, but can update time
-     * (esentially a graphic ini or refresh)
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    /**
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * 1=forward, -1=backward, 0=no animation step, but can update time (esentially a graphic ini or refresh)
+     *
+     * @param direction
      */
     public void play(final int direction) {
         stop();
 
         playTimer = new Timer(animationRefreshRateMs, new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent evt) {
                 step(direction);
@@ -64,27 +88,47 @@ public class TimeActionController {
         });
         playTimer.setRepeats(true);
         playTimer.start();
-        this.firePropertyChange(PLAY, null, direction);
+        pcs.firePropertyChange(PLAY, null, direction);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPlaying() {
         return playTimer != null;
     }
 
+    /**
+     *
+     */
     public void stop() {
         if (playTimer != null) {
             playTimer.stop();
             playTimer = null;
         }
-        this.firePropertyChange(STOP, false, true);
+        pcs.firePropertyChange(STOP, false, true);
     }
 
     /**
      * advance one frame in the animation
+     *
+     * @param direction
      */
     public void step(int direction) {
-        dateTimeController.add(DateTimeController.MILLISECOND, stepIncrement * direction);
-        this.firePropertyChange(STEP, false, true);
+        this.dir = direction;//so we know the last direction we went for visual purposes.
+
+        dateProvider.add(Calendar.MILLISECOND, stepIncrement * direction);
+        pcs.firePropertyChange(STEP, false, true);
+    }
+
+    /**
+     * Get the last known animation direction
+     *
+     * @return
+     */
+    public int getPreviousStepDirection() {
+        return dir;
     }
 
     /**
@@ -95,21 +139,25 @@ public class TimeActionController {
     }
 
     /**
-     * @param stepIncrement the stepIncrement to set
+     * @param si
      */
     public void setStepIncrement(int si) {
-        int old = stepIncrement;
-        stepIncrement = si;
-        this.firePropertyChange(INCREMENT, old, si);
+        pcs.firePropertyChange(INCREMENT, this.stepIncrement, this.stepIncrement = si);
     }
 
-    public Duration getLingerDuration() {
+    /**
+     *
+     * @return
+     */
+    public int getLingerDuration() {
         return this.linger;
     }
 
-    public void setLingerDuration(Duration linger) {
-        Duration old = this.linger;
-        this.linger = linger;
-        this.firePropertyChange(LINGER, old, linger);
+    /**
+     *
+     * @param linger
+     */
+    public void setLingerDuration(int linger) {
+        pcs.firePropertyChange(LINGER, this.linger, this.linger = linger);
     }
 }

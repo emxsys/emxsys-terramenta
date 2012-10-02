@@ -16,21 +16,45 @@ import javax.swing.JSpinner;
  */
 public class DateChooser extends JDateChooser {
 
-    public final static String DEFAULT_DATEPATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ";
+    /**
+     *
+     */
+    public final static String DEFAULT_DATEPATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    /**
+     *
+     */
     public final static TimeZone DEFAULT_TIMEZONE = TimeZone.getTimeZone("UTC");
 
+    /**
+     *
+     */
     public DateChooser() {
         this(null, DEFAULT_DATEPATTERN, DEFAULT_TIMEZONE);
     }
 
+    /**
+     *
+     * @param initDate
+     */
     public DateChooser(Date initDate) {
         this(initDate, DEFAULT_DATEPATTERN, DEFAULT_TIMEZONE);
     }
 
+    /**
+     *
+     * @param initDate
+     * @param datePattern
+     */
     public DateChooser(Date initDate, String datePattern) {
         this(initDate, datePattern, DEFAULT_TIMEZONE);
     }
 
+    /**
+     *
+     * @param initDate
+     * @param datePattern
+     * @param timeZone
+     */
     public DateChooser(Date initDate, String datePattern, TimeZone timeZone) {
         super(initDate, datePattern, new JSpinnerDateEditor());
 

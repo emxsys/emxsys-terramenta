@@ -4,9 +4,7 @@
  */
 package com.terramenta.time.actions;
 
-import com.terramenta.time.DateTimeChangeEvent;
-import com.terramenta.time.DateTimeController;
-import com.terramenta.time.DateTimeEventListener;
+import com.terramenta.time.DateProvider;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -14,14 +12,14 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -37,12 +35,15 @@ import org.openide.util.actions.Presenter;
  */
 public class TimeActionToolbar {
 
-    private static final DateTimeController dateTimeController = DateTimeController.getInstance();
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
     private static final int maxHeight = 24;
     private static final int minHeight = 16;
     private static final int prefHeight = 20;
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepBackwardAction")
     @ActionRegistration(iconBase = "images/controlStepBackward.png", displayName = "#CTL_TimeStepBackwardAction")
     @ActionReferences({
@@ -58,6 +59,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeRewindAction")
     @ActionRegistration(iconBase = "images/controlRewind.png", displayName = "#CTL_TimeRewindAction")
     @ActionReferences({
@@ -69,6 +73,9 @@ public class TimeActionToolbar {
 
         private final TimeRewindAction.Listener listener = new TimeRewindAction.Listener();
 
+        /**
+         *
+         */
         public TimeRewindAction() {
             setEnabled(!tac.isPlaying());
             tac.addPropertyChangeListener(WeakListeners.propertyChange(listener, tac));
@@ -83,7 +90,7 @@ public class TimeActionToolbar {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(TimeActionController.PLAY) && (evt.getNewValue().equals(-1))) {
+                if (evt.getPropertyName().equals(TimeActionController.PLAY) && evt.getNewValue().equals(-1)) {
                     TimeRewindAction.this.setEnabled(false);
                 } else {
                     TimeRewindAction.this.setEnabled(true);
@@ -92,6 +99,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStopAction")
     @ActionRegistration(iconBase = "images/controlStop.png", displayName = "#CTL_TimeStopAction")
     @ActionReferences({
@@ -101,8 +111,11 @@ public class TimeActionToolbar {
     @Messages("CTL_TimeStopAction=Stop")
     public static final class TimeStopAction extends AbstractAction {
 
-        private final Listener listener = new Listener();
+        private final TimeStopAction.Listener listener = new TimeStopAction.Listener();
 
+        /**
+         *
+         */
         public TimeStopAction() {
             setEnabled(tac.isPlaying());
             tac.addPropertyChangeListener(WeakListeners.propertyChange(listener, tac));
@@ -126,6 +139,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimePlayAction")
     @ActionRegistration(iconBase = "images/controlPlay.png", displayName = "#CTL_TimePlayAction")
     @ActionReferences({
@@ -137,6 +153,9 @@ public class TimeActionToolbar {
 
         private final TimePlayAction.Listener listener = new TimePlayAction.Listener();
 
+        /**
+         *
+         */
         public TimePlayAction() {
             setEnabled(!tac.isPlaying());
             tac.addPropertyChangeListener(WeakListeners.propertyChange(listener, tac));
@@ -151,7 +170,7 @@ public class TimeActionToolbar {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(TimeActionController.PLAY) && (evt.getNewValue().equals(1))) {
+                if (evt.getPropertyName().equals(TimeActionController.PLAY) && evt.getNewValue().equals(1)) {
                     TimePlayAction.this.setEnabled(false);
                 } else {
                     TimePlayAction.this.setEnabled(true);
@@ -160,6 +179,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepForwardAction")
     @ActionRegistration(iconBase = "images/controlStepForward.png", displayName = "#CTL_TimeStepForwardAction")
     @ActionReferences({
@@ -175,6 +197,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeIncrementAction")
     @ActionRegistration(displayName = "#CTL_TimeIncrementAction")
     @ActionReferences({
@@ -194,6 +219,10 @@ public class TimeActionToolbar {
             tac.setStepIncrement(selected.getIncrement());
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public Component getToolbarPresenter() {
             if (comp == null) {
@@ -208,6 +237,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.Spacer")
     @ActionRegistration(displayName = "#CTL_Spacer")
     @ActionReferences({
@@ -221,6 +253,10 @@ public class TimeActionToolbar {
             //...
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public Component getToolbarPresenter() {
             Dimension dim = new Dimension(2, 0);
@@ -228,6 +264,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeDisplayAction")
     @ActionRegistration(displayName = "#CTL_TimeDisplayAction")
     @ActionReferences({
@@ -243,6 +282,10 @@ public class TimeActionToolbar {
             //...
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public Component getToolbarPresenter() {
             if (field == null) {
@@ -250,27 +293,25 @@ public class TimeActionToolbar {
                 field.setMaximumSize(new Dimension(200, maxHeight));
                 field.setPreferredSize(new Dimension(180, prefHeight));
                 field.setMinimumSize(new Dimension(180, minHeight));
-                field.setDate(dateTimeController.getDateTime().toDate());
+                field.setDate(dateProvider.getDate());
 
                 field.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
-
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
                         Date newDate = (Date) evt.getNewValue();
                         if (newDate == null) {
                             field.setDate((Date) evt.getOldValue());//revert to old value, no blank date allowed
                         } else {
-                            dateTimeController.setDateTime(new DateTime(newDate));
+                            dateProvider.setDate(newDate);
                         }
                     }
                 });
 
 
-                dateTimeController.addDateTimeEventListener(new DateTimeEventListener() {
-
+                dateProvider.addObserver(new Observer() {
                     @Override
-                    public void changeEventOccurred(DateTimeChangeEvent evt) {
-                        field.setDate(evt.getDateTime().toDate());
+                    public void update(Observable o, Object arg) {
+                        field.setDate(dateProvider.getDate());
                     }
                 });
             }
@@ -278,6 +319,9 @@ public class TimeActionToolbar {
         }
     }
 
+    /**
+     *
+     */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeLingerAction")
     @ActionRegistration(displayName = "#CTL_TimeLingerAction")
     @ActionReferences({
@@ -296,25 +340,27 @@ public class TimeActionToolbar {
             //...
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public Component getToolbarPresenter() {
             if (comp == null) {
                 comp = new JSlider(JSlider.HORIZONTAL, 1, 50, 10);
                 comp.setMaximumSize(new Dimension(50, maxHeight));
-                comp.setPreferredSize(new Dimension(40, prefHeight));
-                comp.setMinimumSize(new Dimension(30, minHeight));
+                comp.setPreferredSize(new Dimension(50, prefHeight));
+                comp.setMinimumSize(new Dimension(50, minHeight));
                 comp.addChangeListener(new ChangeListener() {
-
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         JSlider source = (JSlider) e.getSource();
-                        Duration dur = null;
+                        int linger = 0;
                         int multiplier = (int) source.getValue();
                         if (multiplier < 50) {
-                            int linger = tac.getStepIncrement() * multiplier;
-                            dur = new Duration(linger);
+                            linger = tac.getStepIncrement() * multiplier;
                         }
-                        tac.setLingerDuration(dur);
+                        tac.setLingerDuration(linger);
                         tac.step(0);//force refresh
                     }
                 });

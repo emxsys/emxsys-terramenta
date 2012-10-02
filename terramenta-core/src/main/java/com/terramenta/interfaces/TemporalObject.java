@@ -4,7 +4,7 @@
  */
 package com.terramenta.interfaces;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  *
@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
  */
 public interface TemporalObject {
 
-    public void setDateTime(DateTime name);
+    public void setDate(Date date);
 
-    public DateTime getDateTime();
+    public Date getDate();
 }
