@@ -5,6 +5,9 @@
 package com.terramenta.globe;
 
 import com.terramenta.globe.options.GlobeOptions;
+import com.terramenta.time.DateInterval;
+import com.terramenta.time.DateProvider;
+import com.terramenta.time.actions.TimeActionController;
 import gov.nasa.worldwind.Model;
 import gov.nasa.worldwind.StereoOptionSceneController;
 import gov.nasa.worldwind.View;
@@ -14,8 +17,13 @@ import gov.nasa.worldwind.awt.WorldWindowGLJPanel;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.LayerList;
+import gov.nasa.worldwind.render.DrawContext;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.prefs.Preferences;
+import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -25,8 +33,10 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @ServiceProvider(service = WorldWindManager.class)
 public class WorldWindManager implements Serializable {
-    
+
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
+    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
 
     /**
      * WorldWind Configuration Settings
@@ -37,13 +47,51 @@ public class WorldWindManager implements Serializable {
         System.setProperty("gov.nasa.worldwind.app.config.document", prefs.get("options.globe.worldwindConfig", "worldwind/worldwind.xml"));
     }
     private static final WorldWindowGLJPanel wwd = new WorldWindowGLJPanel();
-    
+    private Observer dateProviderObserver = new Observer() {
+        @Override
+        public void update(Observable o, Object arg) {
+            Date date;
+            if (arg instanceof Date) {
+                date = (Date) arg;
+            } else {
+                date = dateProvider.getDate();
+            }
+
+            DrawContext dc = wwd.getSceneController().getDrawContext();
+            dc.setValue("DISPLAY_DATE", date);
+
+            int linger = tac.getLingerDuration();
+            if (linger == 0) {
+                //0 linger means items do not ever disapear, so dont set a display interval
+                dc.removeKey("DISPLAY_DATEINTERVAL");
+                return;
+            }
+
+            //get interval based on play direction
+            DateInterval interval;
+            if (tac.getPreviousStepDirection() < 0) {
+                //interval from playtime to playtime+linger
+                long startMillis = date.getTime();
+                long endMillis = startMillis + linger;
+                interval = new DateInterval(startMillis, endMillis);
+            } else {
+                //interval of time from playtime-linger to playtime
+                long endMillis = date.getTime();
+                long startMillis = endMillis - linger;
+                interval = new DateInterval(startMillis, endMillis);
+            }
+
+            dc.setValue("DISPLAY_DATEINTERVAL", interval);
+        }
+    };
+
     public WorldWindManager() {
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
         asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(prefs.get("options.globe.focusAngle", "0")) / 10));
         asc.setDeepPickEnabled(true);
+        asc.getDrawContext().setValue("DISPLAY_DATE", dateProvider.getDate());
 
         //Model
         Model model = (Model) WorldWind.createConfigurationComponent(AVKey.MODEL_CLASS_NAME);
@@ -51,6 +99,8 @@ public class WorldWindManager implements Serializable {
         model.setShowWireframeInterior(false);
         model.setShowTessellationBoundingVolumes(false);
         wwd.setModel(model);
+
+        dateProvider.addObserver(dateProviderObserver);
     }
 
     /**
@@ -76,7 +126,7 @@ public class WorldWindManager implements Serializable {
     public void gotoPosition(Position that) {
         gotoPosition(that, true);
     }
-    
+
     public void gotoPosition(Position that, boolean animate) {
         View view = wwd.getView();
         if (animate) {
@@ -85,7 +135,7 @@ public class WorldWindManager implements Serializable {
             view.setEyePosition(that);
         }
     }
-    
+
     public void saveState() {
         System.out.println("WorldWindManager.saveState");
 //        File dir = new File(System.getProperty("user.home") + File.separator + ".terramenta");
@@ -115,7 +165,7 @@ public class WorldWindManager implements Serializable {
 //            }
 //        }
     }
-    
+
     public void restoreState() {
         System.out.println("WorldWindManager.restoreState");
 //        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
