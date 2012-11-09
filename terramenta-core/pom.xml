@@ -78,6 +78,11 @@
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-progress</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.jdesktop</groupId>
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
@@ -107,7 +112,6 @@
             <artifactId>worldwindx</artifactId>
             <version>1.4.0</version>
         </dependency>
-        
     </dependencies>
 
     <build>
@@ -128,6 +132,7 @@
                         <publicPackage>com.terramenta.layermanager.*</publicPackage>
                         <publicPackage>com.terramenta.listeners</publicPackage>
                         <publicPackage>com.terramenta.measurements</publicPackage>
+                        <publicPackage>com.terramenta.message</publicPackage>
                         <publicPackage>com.terramenta.navigation</publicPackage>
                         <publicPackage>com.terramenta.renderables</publicPackage>
                         <publicPackage>com.terramenta.selectors</publicPackage>
@@ -139,7 +144,6 @@
                         <publicPackage>gov.nasa.worldwindx.*</publicPackage>
                         <publicPackage>javax.media.opengl</publicPackage>
                         <publicPackage>javax.media.opengl.glu</publicPackage>
-                        <publicPackage>org.joda.time.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
