@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author heidtmare
  */
-public class AnnotationController extends AVListImpl {
+public class AnnotationBuilder extends AVListImpl {
 
     private static final AnnotationAttributes labelAttributes = new AnnotationAttributes();
     private static final UnitsFormat unitsFormat = new UnitsFormat();
@@ -103,7 +103,7 @@ public class AnnotationController extends AVListImpl {
      * @param wwd the world window to draw events from.
      * @param shape
      */
-    public AnnotationController(final WorldWindow wwd, SurfaceShape shape) {
+    public AnnotationBuilder(final WorldWindow wwd, SurfaceShape shape) {
         this.wwd = wwd;
         this.shape = shape;
         this.layer = (RenderableLayer) wwd.getModel().getLayers().getLayerByName("User Annotations");
@@ -115,7 +115,7 @@ public class AnnotationController extends AVListImpl {
         layer.addRenderable(shape);
     }
 
-    public AnnotationController(final WorldWindow wwd, SurfaceShape shape, RenderableLayer layer) {
+    public AnnotationBuilder(final WorldWindow wwd, SurfaceShape shape, RenderableLayer layer) {
         this.wwd = wwd;
         this.shape = shape;
         this.layer = layer;
@@ -259,13 +259,13 @@ public class AnnotationController extends AVListImpl {
 
     protected String formatLineMeasurements(Position pos) {
         StringBuilder sb = new StringBuilder();
-        sb.append(AnnotationController.unitsFormat.lengthNL("Length", this.shape.getLength(wwd.getModel().getGlobe())));
+        sb.append(AnnotationBuilder.unitsFormat.lengthNL("Length", this.shape.getLength(wwd.getModel().getGlobe())));
         if (positions.size() > 1) {
             Angle greatCircleAzimuth = LatLon.greatCircleAzimuth(this.positions.get(0), this.positions.get(1));
-            sb.append(AnnotationController.unitsFormat.angleNL("Orientation", greatCircleAzimuth));
+            sb.append(AnnotationBuilder.unitsFormat.angleNL("Orientation", greatCircleAzimuth));
         }
-        sb.append(AnnotationController.unitsFormat.angleNL("Latitude", pos.getLatitude()));
-        sb.append(AnnotationController.unitsFormat.angleNL("Longitude", pos.getLongitude()));
+        sb.append(AnnotationBuilder.unitsFormat.angleNL("Latitude", pos.getLatitude()));
+        sb.append(AnnotationBuilder.unitsFormat.angleNL("Longitude", pos.getLongitude()));
         return sb.toString();
     }
 

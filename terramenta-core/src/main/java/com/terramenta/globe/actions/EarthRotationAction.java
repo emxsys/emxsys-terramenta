@@ -18,7 +18,7 @@ import org.openide.util.NbPreferences;
 import org.openide.util.actions.BooleanStateAction;
 
 @ActionID(category = "View", id = "com.terramenta.globe.actions.EarthRotationAction")
-@ActionRegistration(displayName = "#CTL_EarthRotationAction")
+@ActionRegistration(displayName = "#CTL_EarthRotationAction", lazy = true)
 @ActionReferences({
     @ActionReference(path = "Menu/View", position = 1000),
     @ActionReference(path = "Shortcuts", name = "DS-E")

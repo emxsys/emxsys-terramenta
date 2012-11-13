@@ -13,12 +13,12 @@ import org.openide.util.actions.NodeAction;
  * @author heidtmare
  */
 @ActionID(category = "Other", id = "com.terramenta.layermanager.actions.ToggleNodeAction")
-@ActionRegistration(displayName = "#CTL_ToggleNodeAction")
+@ActionRegistration(displayName = "#CTL_ToggleNodeAction", lazy = true)
 @Messages("CTL_ToggleNodeAction=Toggle State")
 public class ToggleNodeAction extends NodeAction {
 
     /**
-     * 
+     *
      * @param nodes
      */
     @Override
@@ -28,6 +28,7 @@ public class ToggleNodeAction extends NodeAction {
 
     /**
      * reiterative node toggle
+     *
      * @param nodes
      */
     private void toggleNodes(Node[] nodes) {
@@ -42,7 +43,7 @@ public class ToggleNodeAction extends NodeAction {
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override

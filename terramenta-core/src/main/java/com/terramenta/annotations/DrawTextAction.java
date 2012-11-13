@@ -13,15 +13,15 @@ import org.openide.util.NbBundle.Messages;
  * @author R. Wathelet, April 2012
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.AddTextAction")
+id = "com.terramenta.annotations.DrawTextAction")
 @ActionRegistration(iconBase = "images/textbox.png",
-displayName = "#CTL_AddTextAction")
+displayName = "#CTL_DrawTextAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Tools/Annotations", position = 7),
     @ActionReference(path = "Toolbars/Annotations", position = 7)
 })
-@Messages("CTL_AddTextAction=Text")
-public class AddTextAction implements ActionListener {
+@Messages("CTL_DrawTextAction=Text")
+public class DrawTextAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {

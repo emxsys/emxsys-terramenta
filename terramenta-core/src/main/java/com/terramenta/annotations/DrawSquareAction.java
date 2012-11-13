@@ -13,6 +13,8 @@ import gov.nasa.worldwind.render.SurfaceSquare;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -53,15 +55,23 @@ public final class DrawSquareAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SurfaceSquare shape = new SurfaceSquare();
+        final SurfaceSquare shape = new SurfaceSquare();
 
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Square");
         shape.setValue(AVKey.DISPLAY_ICON, "images/square.png");
         shape.setEnableBatchPicking(false);
+        shape.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("SELECT")) {
+                    AnnotationEditor.enableEdit(shape);
+                }
+            }
+        });
 
-        AnnotationController builder = new AnnotationController(wwm.getWorldWindow(), shape);
+        AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
         builder.setArmed(true);
     }
 }

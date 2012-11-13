@@ -13,6 +13,8 @@ import gov.nasa.worldwind.render.SurfaceQuad;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -21,7 +23,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 @ActionID(category = "Tools",
@@ -36,7 +38,7 @@ displayName = "#CTL_DrawRectangleAction")
 public final class DrawRectangleAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-private static final ShapeAttributes attr = new BasicShapeAttributes();
+    private static final ShapeAttributes attr = new BasicShapeAttributes();
     private static final ShapeAttributes highattr = new BasicShapeAttributes();
 
     static {
@@ -50,16 +52,25 @@ private static final ShapeAttributes attr = new BasicShapeAttributes();
         highattr.setInteriorOpacity(0.4);
         highattr.setOutlineOpacity(1.0);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        SurfaceQuad shape = new SurfaceQuad();
+        final SurfaceQuad shape = new SurfaceQuad();
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Rectangle");
         shape.setValue(AVKey.DISPLAY_ICON, "images/rectangle.png");
         shape.setEnableBatchPicking(false);
+        shape.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("SELECT")) {
+                    AnnotationEditor.enableEdit(shape);
+                }
+            }
+        });
 
-        AnnotationController builder = new AnnotationController(wwm.getWorldWindow(), shape);
+        AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
         builder.setArmed(true);
     }
 }
