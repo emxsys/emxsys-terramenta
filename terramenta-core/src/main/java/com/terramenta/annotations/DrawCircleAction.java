@@ -61,16 +61,30 @@ public final class DrawCircleAction implements ActionListener {
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Circle");
         shape.setValue(AVKey.DISPLAY_ICON, "images/circle.png");
         shape.setEnableBatchPicking(false);
+
+        //edit on select
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("SELECT")) {
-                    AnnotationEditor.enableEdit(shape);
+                    AnnotationEditor.modify(shape);
                 }
             }
         });
 
+        if (AnnotationEditor.isEditing()) {
+            AnnotationEditor.commit();
+        }
+
         AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
+        builder.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("armed") && evt.getNewValue().equals(false)) {
+                    AnnotationEditor.modify(shape);
+                }
+            }
+        });
         builder.setArmed(true);
     }
 }

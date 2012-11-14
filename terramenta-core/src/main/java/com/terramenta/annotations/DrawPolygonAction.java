@@ -65,13 +65,28 @@ public final class DrawPolygonAction implements ActionListener {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("SELECT")) {
-                    AnnotationEditor.enableEdit(shape);
+                    //AnnotationEditor.modify(shape);
+                    if (AnnotationEditor.isEditing()) {
+                        AnnotationEditor.commit();
+                    }
                 }
             }
         });
 
+        if (AnnotationEditor.isEditing()) {
+            AnnotationEditor.commit();
+        }
+
         AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
         builder.setFreeHand(true);
+//        builder.addPropertyChangeListener(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                if (evt.getPropertyName().equals("armed") && evt.getNewValue().equals(false)) {
+//                    AnnotationEditor.modify(shape);
+//                }
+//            }
+//        });
         builder.setArmed(true);
     }
 }

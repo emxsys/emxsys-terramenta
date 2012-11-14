@@ -20,37 +20,45 @@ public class AnnotationEditor {
     //TODO: use a better tool than the MeasureTool
     private static final MeasureTool mt = new MeasureTool(wwm.getWorldWindow());
     private static final MeasureToolController mtc = new MeasureToolController();
+    private static boolean isEditing = false;
 
     static {
         //does this seem stupid to anybody else?
         mtc.setMeasureTool(mt);
         mt.setController(mtc);
+
+        mt.getLayer().setName("Annotation Editor");
     }
 
-    public static void newAnnotation(SurfaceShape shape) {
-        mt.clear();
-        mt.setMeasureShape(shape);
-        mt.setArmed(true);
-    }
-
-    public static void enableEdit(SurfaceShape shape) {
+    public static void modify(SurfaceShape shape) {
         if (isEditing(shape)) {
             return;
         }
-
+        isEditing = true;
         mt.setArmed(true);
         mt.setMeasureShape(shape);
+        mt.getLayer().setEnabled(true);
     }
 
-    public static void disableEdit(SurfaceShape shape) {
-        if (!isEditing(shape)) {
-            return;
-        }
-
+    public static void commit() {
         mt.setArmed(false);
+        mt.getLayer().setEnabled(false);
+        mt.getControlPoints().clear();
+
+        isEditing = false;
+    }
+
+    public static void commit(SurfaceShape shape) {
+        if (isEditing(shape)) {
+            commit();
+        }
+    }
+
+    public static boolean isEditing() {
+        return isEditing;
     }
 
     public static boolean isEditing(SurfaceShape shape) {
-        return (mt.isArmed() && mt.getSurfaceShape().equals(shape));
+        return (isEditing() && mt.getSurfaceShape().equals(shape));
     }
 }

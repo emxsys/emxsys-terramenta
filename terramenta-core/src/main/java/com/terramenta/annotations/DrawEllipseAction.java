@@ -36,18 +36,18 @@ displayName = "#CTL_DrawEllipseAction")
 })
 @Messages("CTL_DrawEllipseAction=Ellipse")
 public final class DrawEllipseAction implements ActionListener {
-    
+
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final ShapeAttributes attr = new BasicShapeAttributes();
     private static final ShapeAttributes highattr = new BasicShapeAttributes();
-    
+
     static {
         attr.setInteriorMaterial(new Material(Color.yellow));
         attr.setInteriorOpacity(0.2);
         attr.setOutlineMaterial(new Material(Color.yellow));
         attr.setOutlineOpacity(0.6);
         attr.setOutlineWidth(2);
-        
+
         highattr.copy(attr);
         highattr.setInteriorOpacity(0.4);
         highattr.setOutlineOpacity(1.0);
@@ -65,12 +65,24 @@ public final class DrawEllipseAction implements ActionListener {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("SELECT")) {
-                    AnnotationEditor.enableEdit(shape);
+                    AnnotationEditor.modify(shape);
                 }
             }
         });
-        
+
+        if (AnnotationEditor.isEditing()) {
+            AnnotationEditor.commit();
+        }
+
         AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
+        builder.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("armed") && evt.getNewValue().equals(false)) {
+                    AnnotationEditor.modify(shape);
+                }
+            }
+        });
         builder.setArmed(true);
     }
 }

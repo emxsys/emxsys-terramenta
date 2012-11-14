@@ -13,8 +13,6 @@ import gov.nasa.worldwind.render.SurfacePolyline;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -59,14 +57,14 @@ public final class DrawDistanceAction implements ActionListener {
         shape.setValue(AVKey.DISPLAY_NAME, "Distance Measurement");
         shape.setValue(AVKey.DISPLAY_ICON, "images/measurements.png");
         shape.setEnableBatchPicking(false);
-        shape.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("SELECT")) {
-                    AnnotationEditor.enableEdit(shape);
-                }
-            }
-        });
+//        shape.addPropertyChangeListener(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                if (evt.getPropertyName().equals("SELECT")) {
+//                    AnnotationEditor.enableEdit(shape);
+//                }
+//            }
+//        });
 
         AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
         builder.setShowLabel(true);
