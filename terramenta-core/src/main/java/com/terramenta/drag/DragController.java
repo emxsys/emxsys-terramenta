@@ -4,6 +4,7 @@
  */
 package com.terramenta.drag;
 
+import gov.nasa.worldwind.Disposable;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.DragSelectEvent;
@@ -20,19 +21,49 @@ import java.awt.Point;
  *
  * @author Chris.Heidt
  */
-public class DragController implements SelectListener {
+public class DragController implements SelectListener, Disposable {
 
     private final WorldWindow wwd;
     private boolean dragging = false;
     private Point dragRefCursorPoint;
     private Vec4 dragRefObjectPoint;
     private double dragRefAltitude;
+    private boolean armed = false;
 
     public DragController(WorldWindow wwd) {
         if (wwd == null) {
             throw new IllegalArgumentException("nullValue.WorldWindow");
         }
         this.wwd = wwd;
+    }
+
+    @Override
+    public void dispose() {
+        setArmed(false);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isArmed() {
+        return armed;
+    }
+
+    /**
+     *
+     * @param armed
+     */
+    public void setArmed(boolean armed) {
+        if (this.armed == armed) {
+            return;
+        }
+        this.armed = armed;
+        if (armed) {
+            this.wwd.addSelectListener(this);
+        } else {
+            this.wwd.removeSelectListener(this);
+        }
     }
 
     public boolean isDragging() {
@@ -59,19 +90,24 @@ public class DragController implements SelectListener {
                 return;
             }
 
-            Draggable dragObject = (Draggable) topObject;
+            Draggable dragMe = (Draggable) topObject;
+
+            if (!dragMe.isDraggable()) {
+                return;
+            }
+
             View view = wwd.getView();
             Globe globe = wwd.getModel().getGlobe();
 
             // Compute dragged object ref-point in model coordinates.
             // Use the Icon and Annotation logic of elevation as offset above ground when below max elevation.
-            if (dragObject.getPosition() == null) {
+            if (dragMe.getPosition() == null) {
                 return;
             }
 
 
             if (!this.isDragging()) {
-                Vec4 refPoint = globe.computePointFromPosition(dragObject.getPosition());
+                Vec4 refPoint = globe.computePointFromPosition(dragMe.getPosition());
 
                 // Save initial reference points for object and cursor in screen coordinates
                 // Note: y is inverted for the object point.
@@ -101,8 +137,8 @@ public class DragController implements SelectListener {
             if (pickPos != null) {
                 // Intersection with globe. Move reference point to the intersection point,
                 // but maintain current altitude.
-                Position p = new Position(pickPos, dragObject.getPosition().getElevation());
-                dragObject.setPosition(p);
+                Position p = new Position(pickPos, dragMe.getPosition().getElevation());
+                dragMe.setPosition(p);
             }
 
             this.dragging = true;

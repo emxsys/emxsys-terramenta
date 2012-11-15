@@ -127,6 +127,7 @@
                         <publicPackage>com.terramenta.actions</publicPackage>
                         <publicPackage>com.terramenta.annotations</publicPackage>
                         <publicPackage>com.terramenta.beans</publicPackage>
+                        <publicPackage>com.terramenta.drag</publicPackage>
                         <publicPackage>com.terramenta.globe.*</publicPackage>
                         <publicPackage>com.terramenta.interfaces</publicPackage>
                         <publicPackage>com.terramenta.layermanager.*</publicPackage>

@@ -29,26 +29,53 @@ public class SelectController implements SelectListener, Disposable {
     private static AVList lastHover = null;
     private static AVList lastRollover = null;
     private final WorldWindow wwd;
+    private boolean armed = false;
 
     /**
      *
      * @param wwd
      */
     public SelectController(WorldWindow wwd) {
+        if (wwd == null) {
+            throw new IllegalArgumentException("nullValue.WorldWindow");
+        }
         this.wwd = wwd;
-        this.wwd.addSelectListener(this);
     }
 
     /**
-     * 
+     *
      */
     @Override
     public void dispose() {
-        this.wwd.removeSelectListener(this);
+        setArmed(false);
     }
 
     /**
-     * 
+     *
+     * @return
+     */
+    public boolean isArmed() {
+        return armed;
+    }
+
+    /**
+     *
+     * @param armed
+     */
+    public void setArmed(boolean armed) {
+        if (this.armed == armed) {
+            return;
+        }
+        this.armed = armed;
+        if (armed) {
+            this.wwd.addSelectListener(this);
+        } else {
+            this.wwd.removeSelectListener(this);
+        }
+    }
+
+    /**
+     *
      * @param e
      */
     @Override
@@ -137,14 +164,14 @@ public class SelectController implements SelectListener, Disposable {
     }
 
     /**
-     * 
+     *
      */
     public static class ContextMenuItemAction extends AbstractAction {
 
         private final Object sel;
 
         /**
-         * 
+         *
          * @param name
          * @param icon
          * @param sel

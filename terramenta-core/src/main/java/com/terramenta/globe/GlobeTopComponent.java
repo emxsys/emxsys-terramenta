@@ -4,6 +4,7 @@
  */
 package com.terramenta.globe;
 
+import com.terramenta.drag.DragController;
 import com.terramenta.globe.dnd.RenderableDropTargetListener;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.time.DateProvider;
@@ -91,7 +92,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
 
         // Add controllers to manage selection, highlighting, tool tips, kml, etc.
         quickTipController.setArmed(Boolean.parseBoolean(prefs.get("options.globe.quickTips", "true")));
-        new SelectController(wwm.getWorldWindow());
+        new SelectController(wwm.getWorldWindow()).setArmed(true);
+        new DragController(wwm.getWorldWindow()).setArmed(true);
         new HighlightController(wwm.getWorldWindow(), SelectEvent.ROLLOVER);
         //new HotSpotController(wwm.getWorldWindow());
         //new KMLApplicationController(wwm.getWorldWindow());
