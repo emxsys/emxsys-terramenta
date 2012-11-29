@@ -201,7 +201,7 @@ public class TimeActionToolbar {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeIncrementAction")
-    @ActionRegistration(displayName = "#CTL_TimeIncrementAction")
+    @ActionRegistration(displayName = "#CTL_TimeIncrementAction", lazy = false)
     @ActionReferences({
         @ActionReference(path = "Toolbars/Time", position = 6)
     })
@@ -241,7 +241,7 @@ public class TimeActionToolbar {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.Spacer")
-    @ActionRegistration(displayName = "#CTL_Spacer")
+    @ActionRegistration(displayName = "#CTL_Spacer", lazy = false)
     @ActionReferences({
         @ActionReference(path = "Toolbars/Time", position = 7)
     })
@@ -268,7 +268,7 @@ public class TimeActionToolbar {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeDisplayAction")
-    @ActionRegistration(displayName = "#CTL_TimeDisplayAction")
+    @ActionRegistration(displayName = "#CTL_TimeDisplayAction", lazy = false)
     @ActionReferences({
         @ActionReference(path = "Toolbars/Time", position = 8)
     })
@@ -323,7 +323,7 @@ public class TimeActionToolbar {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeLingerAction")
-    @ActionRegistration(displayName = "#CTL_TimeLingerAction")
+    @ActionRegistration(displayName = "#CTL_TimeLingerAction", lazy = false)
     @ActionReferences({
         @ActionReference(path = "Toolbars/Time", position = 9)
     })
@@ -347,10 +347,11 @@ public class TimeActionToolbar {
         @Override
         public Component getToolbarPresenter() {
             if (comp == null) {
-                comp = new JSlider(JSlider.HORIZONTAL, 1, 50, 10);
+                comp = new JSlider(JSlider.HORIZONTAL, 1, 50, 50);
                 comp.setMaximumSize(new Dimension(50, maxHeight));
                 comp.setPreferredSize(new Dimension(50, prefHeight));
                 comp.setMinimumSize(new Dimension(50, minHeight));
+                comp.setToolTipText(Bundle.HINT_TimeLingerAction());
                 comp.addChangeListener(new ChangeListener() {
                     @Override
                     public void stateChanged(ChangeEvent e) {
