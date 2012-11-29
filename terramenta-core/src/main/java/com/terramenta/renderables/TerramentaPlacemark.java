@@ -4,7 +4,7 @@
  */
 package com.terramenta.renderables;
 
-import com.terramenta.time.DateInterval;
+import com.terramenta.utilities.DateBasedVisibilitySupport;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
@@ -66,16 +66,7 @@ public class TerramentaPlacemark extends PointPlacemark implements PreRenderable
 
     @Override
     public void preRender(DrawContext dc) {
-        //the drawcontext contains the currect display date as well as
-        //the date interval derived from the current linger setting
-        if (dc != null && this.hasKey("DISPLAY_DATE") && dc.hasKey("DISPLAY_DATEINTERVAL")) {
-            Date displayDate = (Date) this.getValue("DISPLAY_DATE");
-            DateInterval displayDateInterval = (DateInterval) dc.getValue("DISPLAY_DATEINTERVAL");
-
-            //does this renderable exist within the interval?
-            long displayDateMillis = displayDate.getTime();
-            boolean isWithin = (displayDateMillis >= displayDateInterval.getStartMillis() && displayDateMillis <= displayDateInterval.getEndMillis()) ? true : false;
-            setVisible(isWithin);
-        }
+        boolean isVisible = DateBasedVisibilitySupport.determineVisibility(dc, this);
+        setVisible(isVisible);
     }
 }
