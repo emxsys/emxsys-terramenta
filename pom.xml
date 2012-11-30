@@ -91,7 +91,7 @@
     </modules>
 
     <properties>
-        <netbeans.version>RELEASE72</netbeans.version>
+        <netbeans.version>RELEASE721</netbeans.version>
         <brandingToken>terramenta</brandingToken>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
