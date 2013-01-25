@@ -237,7 +237,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      */
     public void setECI(boolean state) {
         this.eci = state;
-        if (isECI()) {
+        if (state) {
             starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg())); // update stars
         } else {
             starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal

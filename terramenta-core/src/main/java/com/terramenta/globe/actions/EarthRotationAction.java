@@ -28,24 +28,9 @@ public final class EarthRotationAction extends BooleanStateAction implements Pro
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
 
-    @Override
-    protected void initialize() {
-        super.initialize();
-        setBooleanState(false);
+    public EarthRotationAction() {
+        setBooleanState(prefs.getBoolean("options.globe.isECI", false));
         addPropertyChangeListener(this);
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(BooleanStateAction.PROP_BOOLEAN_STATE)) {
-            boolean selected = (Boolean) evt.getNewValue();
-            prefs.putBoolean("options.globe.isECI", selected);
-        }
-    }
-
-    @Override
-    protected String iconResource() {
-        return getBooleanState() ? "images/tick.png" : "";//"org/netbeans/modules/form/resources/selection_mode.png";
     }
 
     @Override
@@ -56,5 +41,13 @@ public final class EarthRotationAction extends BooleanStateAction implements Pro
     @Override
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(PROP_BOOLEAN_STATE)) {
+            Boolean state = (Boolean) evt.getNewValue();
+            prefs.putBoolean("options.globe.isECI", state);
+        }
     }
 }
