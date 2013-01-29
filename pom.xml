@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.terramenta</groupId>
     <artifactId>terramenta</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Terramenta</name>
     <repositories>
@@ -17,12 +17,12 @@
             <name>Repository for library Library[beans-binding]</name>
             <url>http://download.java.net/maven/2/</url>
         </repository>
-        <repository>
-            <!-- internal artifactory -->
+        <!--internal repository-->
+        <!--<repository>
             <id>codeforge</id>
             <name>codeforge-releases</name>
             <url>http://codeforge/artifactory/ext-release-local</url>
-        </repository>
+        </repository>-->
     </repositories>
 
     <dependencies>
@@ -88,6 +88,7 @@
 
     <modules>
         <module>terramenta-core</module>
+        <!--<module>terramenta-ribbon</module>-->
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
     </modules>
