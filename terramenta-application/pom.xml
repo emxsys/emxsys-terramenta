@@ -35,6 +35,11 @@
             <artifactId>terramenta-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>terramenta-ribbon</artifactId>
+            <version>${project.version}</version>
+        </dependency>-->
     </dependencies>
 
     <build>

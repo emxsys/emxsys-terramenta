@@ -6,10 +6,8 @@
         <artifactId>terramenta</artifactId>
         <version>1.2.2</version>
     </parent>
-    <groupId>com.terramenta</groupId>
     <artifactId>terramenta-core</artifactId>
     <packaging>nbm</packaging>
-
     <name>Terramenta Core</name>
 
     <properties>
