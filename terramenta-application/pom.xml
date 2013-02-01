@@ -35,11 +35,11 @@
             <artifactId>terramenta-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--        <dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-ribbon</artifactId>
             <version>${project.version}</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>
@@ -49,7 +49,9 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <etcConfFile>src/main/resources/terramenta.conf</etcConfFile>
+                    <licenseName>CDDL, Version 1.0</licenseName>
+                    <licenseFile>src/main/nbm/license.txt</licenseFile>
+                    <etcConfFile>src/main/nbm/terramenta.conf</etcConfFile>
                 </configuration>
             </plugin>
             <plugin>

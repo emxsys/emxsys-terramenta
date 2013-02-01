@@ -27,7 +27,6 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.spi.RibbonComponentProvider;
@@ -42,20 +41,20 @@ import org.pushingpixels.flamingo.api.common.RichToolTipManager;
 
 /**
  * Installer to start the Office look and feel
+ *
  * @author merijn
  */
 public class Installer extends ModuleInstall {
-    
+
     private static int INITIALDELAY = 100;
 
     /**
-     * Installer will disable Netbeans default toolBar. Build the office look and feel toolBar and speed up the popupManger 
+     * Installer will disable Netbeans default toolBar. Build the ribbon and speed up the popupManger
      */
     @Override
     public void restored() {
         System.setProperty("netbeans.winsys.no_toolbars", "true");
         SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
                 initLAF();
@@ -69,7 +68,7 @@ public class Installer extends ModuleInstall {
                 //of the main frame on layer 0:
                 toolbar.putClientProperty(JLayeredPane.LAYER_PROPERTY, 0);
                 frame.getRootPane().getLayeredPane().add(toolbar, 0);
-                
+
                 //Set the toolTipDelay faster
                 RichToolTipManager.sharedInstance().setInitialDelay(INITIALDELAY);
             }

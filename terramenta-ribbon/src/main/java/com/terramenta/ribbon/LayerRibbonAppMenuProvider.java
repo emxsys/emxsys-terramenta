@@ -35,14 +35,15 @@ import com.terramenta.ribbon.spi.RibbonDefaultRolloverProvider;
 import java.util.ArrayList;
 import java.util.List;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle.Messages;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenuEntryFooter;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenuEntryPrimary.PrimaryRolloverCallback;
 
-/**
- * Provider for the ApplicationMenu for the office look and feel.
- * @author Chris
- */
+@Messages({
+    "LBL_AppMenuTitle=Application Menu",
+    "HINT_AppMenu=Application Menu"
+})
 public class LayerRibbonAppMenuProvider extends RibbonAppMenuProvider {
 
     /**

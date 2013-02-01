@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.0//EN" "http://www.netbeans.org/dtds/filesystem-1_0.dtd">
+<filesystem>
+    <folder name="Ribbon">
+        <folder name="AppMenu">
+            <file name="SaveAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/org-openide-actions-SaveAction.instance"/>
+                <attr name="position" intvalue="100"/>
+            </file>
+            <folder name="Print">
+                <attr name="position" intvalue="200"/>
+                <!--<attr name="iconBase" stringvalue="org/netbeans/paint/resources/Print.png"/>-->
+                <folder name="Print Actions">
+                    <file name="org-netbeans-modules-print-action-PageSetupAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PageSetupAction.instance"/>
+                        <attr name="position" intvalue="100"/>
+                        <!--<attr name="iconBase" stringvalue="org/netbeans/paint/resources/Config.png"/>-->
+                    </file>
+                    <file name="org-netbeans-modules-print-action-PrintAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PrintAction.instance"/>
+                        <attr name="position" intvalue="600"/>
+                        <!--<attr name="iconBase" stringvalue="org/netbeans/paint/resources/Print.png"/>-->
+                    </file>
+                </folder>
+            </folder>
+            <file name="org-netbeans-modules-options-OptionsWindowAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-modules-options-OptionsWindowAction.instance"/>
+                <attr name="position" intvalue="200"/>
+                <!--<attr name="iconBase" stringvalue="org/netbeans/paint/resources/Tools.png"/>-->
+            </file>
+            <file name="org-netbeans-core-actions-SystemExit.shadow">
+                <attr name="position" intvalue="300"/>
+                <attr name="originalFile" stringvalue="Actions/File/org-netbeans-core-actions-SystemExit.instance"/>
+                <!--<attr name="iconBase" stringvalue="org/netbeans/paint/resources/Exit.png"/>-->
+            </file>
+        </folder>
+        <folder name="AppMenuFooter">
+            <file name="org-netbeans-core-actions-SystemExit.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/org-netbeans-core-actions-SystemExit.instance"/>
+                <attr name="position" intvalue="100"/>
+                <attr name="iconBase" stringvalue="org/netbeans/paint/resources/Exit.png"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

@@ -39,6 +39,7 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenuEntryPrimary;
 
 /**
  * Class which provides the application or start menu
+ *
  * @author Chris
  */
 public abstract class RibbonAppMenuProvider {
@@ -47,14 +48,15 @@ public abstract class RibbonAppMenuProvider {
 
     /**
      * Create the toolTip for the application menu.
+     *
      * @return RichtoolTip for application menu
      */
     public RichTooltip createApplicationMenuTooltip() {
         RichTooltip tooltip = new RichTooltip();
         tooltip.setTitle(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "LBL_AppMenuTitle"));// NOI18N
         tooltip.addDescriptionSection(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "HINT_AppMenu"));// NOI18N
-        tooltip.setMainImage(ImageUtilities.loadImage("images/app-menu.png", true));// NOI18N
-        tooltip.setFooterImage(ImageUtilities.loadImage("images/help.png", true));// NOI18N
+        tooltip.setMainImage(ImageUtilities.loadImage("com/terramenta/ribbon/images/terramenta.png", true));// NOI18N
+        tooltip.setFooterImage(ImageUtilities.loadImage("com/terramenta/ribbon/images/help.png", true));// NOI18N
         tooltip.addFooterSection(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "HINT_AppMenuHelp"));// NOI18N
         return tooltip;
     }
@@ -65,6 +67,7 @@ public abstract class RibbonAppMenuProvider {
 
     /**
      * Finds the default RibbonAppMenuProvider
+     *
      * @return the default RibbonAppMenuProvider
      */
     public static RibbonAppMenuProvider getDefault() {

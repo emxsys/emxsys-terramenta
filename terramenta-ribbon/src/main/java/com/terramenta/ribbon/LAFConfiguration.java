@@ -37,8 +37,6 @@ package com.terramenta.ribbon;
 class LAFConfiguration {
 
     public static Object[] getClassDefaults() {
-        return new Object[]{
-                    "RibbonApplicationMenuButtonUI", "com.terramanta.ribbon.NbRibbonApplicationMenuButtonUI"
-                };
+        return new Object[]{"RibbonApplicationMenuButtonUI", "com.terramanta.ribbon.NbRibbonApplicationMenuButtonUI"};
     }
 }

@@ -29,7 +29,6 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon;
 
 import java.awt.Graphics;
@@ -54,7 +53,7 @@ import org.pushingpixels.flamingo.internal.ui.ribbon.appmenu.JRibbonApplicationM
 public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuButtonUI {
 
     public static ComponentUI createUI(JComponent c) {
-        return new NbRibbonApplicationMenuButtonUI();
+        return new BasicRibbonApplicationMenuButtonUI();
     }
 
     @Override
@@ -63,7 +62,6 @@ public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuB
 
         final JRibbonApplicationMenuButton appMenuButton = (JRibbonApplicationMenuButton) this.commandButton;
         appMenuButton.setPopupCallback(new PopupPanelCallback() {
-
             @Override
             public JPopupPanel getPopupPanel(final JCommandButton commandButton) {
                 if (appMenuButton.getParent() instanceof JRibbon) {
@@ -73,7 +71,6 @@ public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuB
                             appMenuButton, ribbonMenu);
                     menuPopupPanel.applyComponentOrientation(appMenuButton.getComponentOrientation());
                     menuPopupPanel.setCustomizer(new JPopupPanel.PopupPanelCustomizer() {
-
                         @Override
                         public Rectangle getScreenBounds() {
                             boolean ltr = commandButton.getComponentOrientation().isLeftToRight();
@@ -131,15 +128,14 @@ public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuB
 
     private boolean hasButtonImage() {
         if (_hasButtonImage == null) {
-            
-            _normal = ImageUtilities.loadImageIcon("images/app-button.png", true);
+            _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
             if (_normal == null) {
                 _hasButtonImage = Boolean.FALSE;
-                _normal = ImageUtilities.loadImageIcon("images/app-button-icon24.png", true);
+                _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
             } else {
                 _hasButtonImage = Boolean.TRUE;
-                _over = ImageUtilities.loadImageIcon("images/app-button-over.png", true);
-                _down = ImageUtilities.loadImageIcon("images/app-button-down.png", true);
+                _over = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
+                _down = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
             }
         }
         return _hasButtonImage;
