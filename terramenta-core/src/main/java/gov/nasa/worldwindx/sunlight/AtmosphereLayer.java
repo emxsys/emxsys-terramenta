@@ -1,35 +1,28 @@
 package gov.nasa.worldwindx.sunlight;
 
 import gov.nasa.worldwind.View;
-import gov.nasa.worldwind.layers.AbstractLayer;
 import gov.nasa.worldwind.geom.*;
+import gov.nasa.worldwind.layers.AbstractLayer;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.util.*;
-
-import javax.media.opengl.*;
 import java.awt.*;
+import javax.media.opengl.*;
 
 /**
- * Renders an atmosphere around the globe and a sky dome at low altitude.
- * Uses atmospheric scattering as color source.
- * <p>
- * Issue : Ellipsoidal globe doesnt match the spherical atmosphere everywhere.
- * <p>
- * TODO: Find a way to get a blue sky at ground level
- * TODO: Increase dome geometry resolution and implement partial sphere
+ * Renders an atmosphere around the globe and a sky dome at low altitude. Uses atmospheric scattering as color source.
+ * <p> Issue : Ellipsoidal globe doesnt match the spherical atmosphere everywhere. <p> TODO: Find a way to get a blue
+ * sky at ground level TODO: Increase dome geometry resolution and implement partial sphere
  *
  * @author Patrick Murris
  * @version $Id: AtmosphereLayer.java 13704 2010-09-03 07:16:58Z tgaskins $
  */
-public class AtmosphereLayer extends AbstractLayer
-{
+public class AtmosphereLayer extends AbstractLayer {
+
     protected final static int STACKS = 24;
     protected final static int SLICES = 64;
-
     protected int glListId = -1;        // GL list id
     protected double thickness = 60e3; // Atmosphere thickness
     protected double lastRebuildHorizon = 0;
-
     protected AtmosphericScatteringComputer asc;
     protected Vec4 sunDirection;
     protected boolean update = true;
@@ -42,21 +35,20 @@ public class AtmosphereLayer extends AbstractLayer
 
     /**
      * Get the atmosphere thickness in meter
+     *
      * @return the atmosphere thickness in meter
      */
-    public double getAtmosphereThickness()
-    {
+    public double getAtmosphereThickness() {
         return this.thickness;
     }
 
     /**
      * Set the atmosphere thickness in meter
+     *
      * @param thickness the atmosphere thickness in meter
      */
-    public void setAtmosphereThickness(double thickness)
-    {
-        if (thickness < 0)
-        {
+    public void setAtmosphereThickness(double thickness) {
+        if (thickness < 0) {
             String msg = Logging.getMessage("generic.ArgumentOutOfRange");
             Logging.logger().severe(msg);
             throw new IllegalArgumentException(msg);
@@ -66,20 +58,17 @@ public class AtmosphereLayer extends AbstractLayer
         this.update = true;
     }
 
-    public Vec4 getSunDirection()
-    {
+    public Vec4 getSunDirection() {
         return this.sunDirection;
     }
 
-    public void setSunDirection(Vec4 direction)
-    {
+    public void setSunDirection(Vec4 direction) {
         this.sunDirection = direction;
         this.update = true;
     }
 
     @Override
-    public void doRender(DrawContext dc)
-    {
+    public void doRender(DrawContext dc) {
         GL gl = dc.getGL();
         boolean attribsPushed = false;
         boolean modelviewPushed = false;
@@ -110,15 +99,15 @@ public class AtmosphereLayer extends AbstractLayer
             }
 
             // Build or rebuild sky dome if horizon distance changed more then 100m
-             if (this.update || this.glListId == -1 || Math.abs(this.lastRebuildHorizon - tangentalDistance) > 100)
-             {
-                 if (this.glListId != -1)
-                     gl.glDeleteLists(this.glListId, 1);
+            if (this.update || this.glListId == -1 || Math.abs(this.lastRebuildHorizon - tangentalDistance) > 100) {
+                if (this.glListId != -1) {
+                    gl.glDeleteLists(this.glListId, 1);
+                }
 
-                 this.makeSkyDome(dc, (float) (domeRadius), horizonLat, zenithLat, SLICES, STACKS);
-                 this.lastRebuildHorizon = tangentalDistance;
-                 this.update = false;
-             }
+                this.makeSkyDome(dc, (float) (domeRadius), horizonLat, zenithLat, SLICES, STACKS);
+                this.lastRebuildHorizon = tangentalDistance;
+                this.update = false;
+            }
 
             // GL set up
             gl.glPushAttrib(GL.GL_POLYGON_BIT); // Temporary hack around aliased sky.
@@ -133,8 +122,8 @@ public class AtmosphereLayer extends AbstractLayer
             gl.glDepthMask(false);
 
             Matrix projection = Matrix.fromPerspective(view.getFieldOfView(),
-                            view.getViewport().getWidth(), view.getViewport().getHeight(),
-                            10e3, 2 * distToCenterOfPlanet + 10e3);
+                    view.getViewport().getWidth(), view.getViewport().getHeight(),
+                    10e3, 2 * distToCenterOfPlanet + 10e3);
             double[] matrixArray = new double[16];
             projection.toArray(matrixArray, 0, false);
             gl.glMatrixMode(GL.GL_PROJECTION);
@@ -150,25 +139,24 @@ public class AtmosphereLayer extends AbstractLayer
             Matrix modelView = view.getModelviewMatrix().multiply(skyTransform);
             modelView.toArray(matrixArray, 0, false);
             gl.glLoadMatrixd(matrixArray, 0);
-             // Draw sky
-             if (this.glListId != -1)
-                 gl.glCallList(this.glListId);
+            // Draw sky
+            if (this.glListId != -1) {
+                gl.glCallList(this.glListId);
+            }
 
-        }
-        finally {
+        } finally {
             // Restore GL state
-            if (modelviewPushed)
-            {
+            if (modelviewPushed) {
                 gl.glMatrixMode(GL.GL_MODELVIEW);
                 gl.glPopMatrix();
             }
-            if (projectionPushed)
-            {
+            if (projectionPushed) {
                 gl.glMatrixMode(GL.GL_PROJECTION);
                 gl.glPopMatrix();
             }
-            if (attribsPushed)
+            if (attribsPushed) {
                 gl.glPopAttrib();
+            }
         }
     }
 
@@ -183,11 +171,11 @@ public class AtmosphereLayer extends AbstractLayer
      * @param stacks the number of latitude divisions used for the dome geometry.
      */
     protected void makeSkyDome(DrawContext dc, float radius, double startLat, double endLat,
-                                int slices, int stacks)
-    {
-        if (this.sunDirection == null)
+            int slices, int stacks) {
+        if (this.sunDirection == null) {
             return;
-        
+        }
+
         GL gl = dc.getGL();
         this.glListId = gl.glGenLists(1);
         gl.glNewList(this.glListId, GL.GL_COMPILE);
@@ -198,19 +186,19 @@ public class AtmosphereLayer extends AbstractLayer
     /**
      * Draws the sky dome
      *
-     * @param dc       the current DrawContext
-     * @param radius   the sky dome radius
+     * @param dc the current DrawContext
+     * @param radius the sky dome radius
      * @param startLat the horizon latitude
-     * @param endLat   the zenith latitude
-     * @param slices   the number of slices - vertical divisions
-     * @param stacks   the nuber os stacks - horizontal divisions
+     * @param endLat the zenith latitude
+     * @param slices the number of slices - vertical divisions
+     * @param stacks the nuber os stacks - horizontal divisions
      */
     protected void drawSkyGradient(DrawContext dc, float radius, double startLat, double endLat,
-                                int slices, int stacks)
-    {
+            int slices, int stacks) {
         // Init atmospheric scattering computer
-        if (this.asc == null)
+        if (this.asc == null) {
             this.asc = new AtmosphericScatteringComputer(dc.getGlobe().getRadius(), this.thickness);
+        }
 
         // Get sky dome transform
         Matrix skyTransform = computeSkyTransform(dc);
@@ -231,8 +219,7 @@ public class AtmosphereLayer extends AbstractLayer
         // bottom fade
         latitude = startLat - Math.max((endLat - startLat) / 4, 2);
         gl.glBegin(GL.GL_QUAD_STRIP);
-        for (int slice = 0; slice <= slices; slice++)
-        {
+        for (int slice = 0; slice <= slices; slice++) {
             longitude = 180 - ((float) slice / slices * (float) 360);
             Vec4 v1 = SphericalToCartesian(latitude, longitude, radius);
             Vec4 v2 = SphericalToCartesian(startLat, longitude, radius);
@@ -246,8 +233,7 @@ public class AtmosphereLayer extends AbstractLayer
         gl.glEnd();
 
         // stacks and slices
-        for (int stack = 1; stack < stacks - 1; stack++)
-        {
+        for (int stack = 1; stack < stacks - 1; stack++) {
             // bottom vertex
             linear = (float) (stack - 1) / (stacks - 1f);
             k = 1 - Math.cos(linear * Math.PI / 2);
@@ -258,8 +244,7 @@ public class AtmosphereLayer extends AbstractLayer
             latitudeTop = startLat + Math.pow(kTop, 3) * (endLat - startLat);
             // Draw stack
             gl.glBegin(GL.GL_QUAD_STRIP);
-            for (int slice = 0; slice <= slices; slice++)
-            {
+            for (int slice = 0; slice <= slices; slice++) {
                 longitude = 180 - ((float) slice / slices * (float) 360);
                 Vec4 v = SphericalToCartesian(latitude, longitude, radius);
                 color = stackColors[slice];
@@ -275,8 +260,7 @@ public class AtmosphereLayer extends AbstractLayer
         }
 
         // Top fade
-        if (endLat < 90)
-        {
+        if (endLat < 90) {
             gl.glBegin(GL.GL_QUAD_STRIP);
             for (int slice = 0; slice <= slices; slice++) {
                 longitude = 180 - ((float) slice / slices * (float) 360);
@@ -295,8 +279,7 @@ public class AtmosphereLayer extends AbstractLayer
         gl.glDisable(GL.GL_BLEND);
     }
 
-    protected Matrix computeSkyTransform(DrawContext dc)
-    {
+    protected Matrix computeSkyTransform(DrawContext dc) {
         Matrix transform = Matrix.IDENTITY;
         transform = transform.multiply(dc.getGlobe().computeModelCoordinateOriginTransform(dc.getView().getEyePosition()));
         transform = transform.multiply(Matrix.fromRotationX(Angle.POS90));
@@ -304,12 +287,11 @@ public class AtmosphereLayer extends AbstractLayer
     }
 
     /**
-     * Converts position in spherical coordinates (lat/lon/altitude)
-     * to cartesian (XYZ) coordinates.
+     * Converts position in spherical coordinates (lat/lon/altitude) to cartesian (XYZ) coordinates.
      *
-     * @param latitude  Latitude in decimal degrees
+     * @param latitude Latitude in decimal degrees
      * @param longitude Longitude in decimal degrees
-     * @param radius    Radius
+     * @param radius Radius
      * @return the corresponding Point
      */
     protected static Vec4 SphericalToCartesian(double latitude, double longitude, double radius) {
@@ -324,14 +306,15 @@ public class AtmosphereLayer extends AbstractLayer
                 radCosLat * Math.cos(longitude));
     }
 
-    public void dispose()
-    {
-        if (this.glListId < 0)
+    public void dispose() {
+        if (this.glListId < 0) {
             return;
+        }
 
         GLContext glc = GLContext.getCurrent();
-        if (glc == null)
+        if (glc == null) {
             return;
+        }
 
         glc.getGL().glDeleteLists(this.glListId, 1);
         this.glListId = -1;

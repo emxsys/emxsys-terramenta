@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.4" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
@@ -39,7 +39,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="settingsPanel" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="metricsPanel" min="-2" max="-2" attributes="0"/>
@@ -54,7 +54,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Metrics">
+            <TitledBorder title="&lt;MeasurementsTopComponent.metricsPanel.border.title&gt;">
               <ResourceString PropertyName="titleX" bundle="com/qna/terramenta/measurements/Bundle.properties" key="MeasurementsTopComponent.metricsPanel.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
@@ -214,7 +214,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Position Log">
+            <TitledBorder title="&lt;MeasurementsTopComponent.jScrollPane1.border.title&gt;">
               <ResourceString PropertyName="titleX" bundle="com/qna/terramenta/measurements/Bundle.properties" key="MeasurementsTopComponent.jScrollPane1.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
@@ -297,7 +297,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Settings">
+            <TitledBorder title="&lt;MeasurementsTopComponent.settingsPanel.border.title&gt;">
               <ResourceString PropertyName="titleX" bundle="com/qna/terramenta/measurements/Bundle.properties" key="MeasurementsTopComponent.settingsPanel.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
@@ -454,7 +454,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Colors">
+            <TitledBorder title="&lt;MeasurementsTopComponent.jPanel1.border.title&gt;">
               <ResourceString PropertyName="titleX" bundle="com/qna/terramenta/measurements/Bundle.properties" key="MeasurementsTopComponent.jPanel1.border.title" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </TitledBorder>
           </Border>
@@ -468,8 +468,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="tooltipsColorButton" alignment="0" min="-2" max="-2" attributes="1"/>
                       <Group type="103" alignment="1" groupAlignment="1" attributes="0">
-                          <Component id="lineColorButton" alignment="0" pref="77" max="32767" attributes="1"/>
-                          <Component id="pointsColorButton" alignment="1" pref="77" max="32767" attributes="1"/>
+                          <Component id="lineColorButton" alignment="0" max="32767" attributes="1"/>
+                          <Component id="pointsColorButton" alignment="1" max="32767" attributes="1"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -482,7 +482,7 @@
                   <Component id="lineColorButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="pointsColorButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="11" max="32767" attributes="0"/>
                   <Component id="tooltipsColorButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

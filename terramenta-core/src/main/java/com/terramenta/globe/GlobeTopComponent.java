@@ -27,6 +27,7 @@ import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
+import gov.nasa.worldwindx.sunlight.SunController;
 import gov.nasa.worldwindx.sunlight.SunLayer;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
@@ -68,9 +69,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
     private boolean eci = false;// use Earth-centered inertial or Earth-centered, Earth-fixed
     private String flatProjection = FlatGlobe.PROJECTION_MERCATOR;
-    private SunLayer sunLayer = new SunLayer();
     private StarsLayer starLayer;
-    private ViewControlsLayer viewControlsLayer;
+    private SunController sunController;
 
     /**
      *
@@ -98,10 +98,6 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         //new HotSpotController(wwm.getWorldWindow());
         //new KMLApplicationController(wwm.getWorldWindow());
         //new BalloonController(wwm.getWorldWindow());
-
-        //listeners
-        wwm.getWorldWindow().addSelectListener(new ViewControlsSelectListener(wwm.getWorldWindow(), viewControlsLayer));
-        wwm.getWorldWindow().addSelectListener(new ClickAndGoSelectListener(wwm.getWorldWindow(), WorldMapLayer.class));
 
         prefs.addPreferenceChangeListener(this);
 
@@ -140,27 +136,23 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
                 CompassLayer compassLayer = (CompassLayer) layer;
                 compassLayer.setIconScale(2 / 10d);
                 compassLayer.setLocationOffset(new Vec4(18, 5));
+            } else if (layer instanceof WorldMapLayer) {
+                wwm.getWorldWindow().addSelectListener(new ClickAndGoSelectListener(wwm.getWorldWindow(), WorldMapLayer.class));
             } else if (layer instanceof ViewControlsLayer) {
-                viewControlsLayer = (ViewControlsLayer) layer;
+                ViewControlsLayer viewControlsLayer = (ViewControlsLayer) layer;
                 viewControlsLayer.setLayout(AVKey.VERTICAL);
                 viewControlsLayer.setScale(6 / 10d);
                 viewControlsLayer.setPosition(AVKey.NORTHEAST);
                 viewControlsLayer.setLocationOffset(new Vec4(11, -45));
                 //viewControlsLayer.setShowFovControls(true); //these controls confuse people...
                 viewControlsLayer.setShowLookControls(true);
+                wwm.getWorldWindow().addSelectListener(new ViewControlsSelectListener(wwm.getWorldWindow(), viewControlsLayer));
             } else if (layer instanceof StarsLayer) {
                 this.starLayer = (StarsLayer) layer; //Save a reference for rotation
+            } else if (layer instanceof SunLayer) {
+                this.sunController = new SunController((SunLayer) layer);
             }
         }
-
-        if (starLayer == null) {
-            this.starLayer = new StarsLayer();
-            ll.add(1, starLayer);
-        }
-
-        //Sun
-        sunLayer.setEnabled(false);
-        ll.add(1, sunLayer);
     }
 
     /**
@@ -219,8 +211,13 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
             eciController.setCurrentMJD(JulianConversions.convertToMJD(date));
         }
 
-        starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg()));
-        sunLayer.update(date);
+        if (starLayer != null) {
+            starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg()));
+        }
+
+        if (sunController != null) {
+            sunController.update(date);
+        }
     }
 
     /**
@@ -237,10 +234,12 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
      */
     public void setECI(boolean state) {
         this.eci = state;
-        if (state) {
-            starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg())); // update stars
-        } else {
-            starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal
+        if (starLayer != null) {
+            if (state) {
+                starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg())); // update stars
+            } else {
+                starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal
+            }
         }
     }
 

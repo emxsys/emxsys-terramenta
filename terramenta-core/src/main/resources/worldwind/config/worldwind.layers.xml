@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LayerList>
-    <Layer className="gov.nasa.worldwind.layers.StarsLayer">
-        <!--Individual properties can be specified within Layer entries, like this:-->
+    <Layer className="gov.nasa.worldwind.layers.StarsLayer" actuate="onRequest">
         <Property name="Name" value="Stars"/>
     </Layer>
+    <Layer className="gov.nasa.worldwindx.sunlight.SunLayer" actuate="onRequest" />
     <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
-    <Layer className="gov.nasa.worldwind.layers.Earth.BMNGOneImage"/>
-    <Layer href="config/Earth/BMNGWMSLayer.xml" actuate="onLoad"/>
-    <Layer href="config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad"/>
+    <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage"/>
+    <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad"/>
+    <!--<Layer href="config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad"/>
     <Layer href="config/Earth/USDANAIPWMSImageLayer.xml" actuate="onRequest"/>
     <Layer href="config/Earth/USDANAIPUSGSWMSImageLayer.xml" actuate="onRequest"/>
     <Layer href="config/Earth/MSVirtualEarthAerialLayer.xml" actuate="onRequest"/>
@@ -18,11 +18,12 @@
     <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer" actuate="onRequest"/>
     <Layer className="gov.nasa.worldwind.layers.LatLonGraticuleLayer" title="LatLon Graticule" actuate="onRequest" />
     <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />
-    <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>
+    <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>-->
     <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ViewControlsLayer"/>
-    <Layer className="gov.nasa.worldwind.layers.CompassLayer"/>
+    <Layer className="gov.nasa.worldwind.layers.CompassLayer">
+        <Property name="IconFilePath" value="images/notched-compass.png"/>
+    </Layer>
     <Layer className="com.terramenta.globe.layers.ClassificationBannerLayer"/>
-    <!--<Layer className="com.terramenta.globe.layers.TimeControlsLayer"/>-->
 </LayerList>

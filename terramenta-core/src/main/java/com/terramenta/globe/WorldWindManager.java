@@ -34,6 +34,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = WorldWindManager.class)
 public class WorldWindManager implements Serializable {
 
+    public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
@@ -44,9 +45,15 @@ public class WorldWindManager implements Serializable {
     static {
         //System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");// set the TransformFactory to use the Saxon TransformerFactoryImpl method
         System.setProperty("sun.awt.noerasebackground", "true"); // prevents flashing during window resizing
-        System.setProperty("gov.nasa.worldwind.app.config.document", prefs.get("options.globe.worldwindConfig", "worldwind/worldwind.xml"));
+
+        //load configuration
+        String config = prefs.get("options.globe.worldwindConfig", DEFAULT_CONFIG);
+        if (config.isEmpty()) {
+            config = DEFAULT_CONFIG;
+        }
+        System.setProperty("gov.nasa.worldwind.app.config.document", config);
     }
-    private static final WorldWindowGLJPanel wwd = new WorldWindowGLJPanel();
+    private final WorldWindowGLJPanel wwd;
     private Observer dateProviderObserver = new Observer() {
         @Override
         public void update(Observable o, Object arg) {
@@ -86,19 +93,15 @@ public class WorldWindManager implements Serializable {
     };
 
     public WorldWindManager() {
+        wwd = new WorldWindowGLJPanel();
+        wwd.setModel((Model) WorldWind.createConfigurationComponent(AVKey.MODEL_CLASS_NAME));
+        
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
         asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(prefs.get("options.globe.focusAngle", "0")) / 10));
         asc.setDeepPickEnabled(true);
         asc.getDrawContext().setValue("DISPLAY_DATE", dateProvider.getDate());
-
-        //Model
-        Model model = (Model) WorldWind.createConfigurationComponent(AVKey.MODEL_CLASS_NAME);
-        model.setShowWireframeExterior(false);
-        model.setShowWireframeInterior(false);
-        model.setShowTessellationBoundingVolumes(false);
-        wwd.setModel(model);
 
         dateProvider.addObserver(dateProviderObserver);
     }
@@ -112,6 +115,7 @@ public class WorldWindManager implements Serializable {
     }
 
     /**
+     * Convenience function
      *
      * @return
      */
