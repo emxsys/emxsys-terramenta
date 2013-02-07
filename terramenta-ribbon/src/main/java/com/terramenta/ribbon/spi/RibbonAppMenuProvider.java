@@ -55,7 +55,7 @@ public abstract class RibbonAppMenuProvider {
         RichTooltip tooltip = new RichTooltip();
         tooltip.setTitle(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "LBL_AppMenuTitle"));// NOI18N
         tooltip.addDescriptionSection(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "HINT_AppMenu"));// NOI18N
-        tooltip.setMainImage(ImageUtilities.loadImage("com/terramenta/ribbon/images/terramenta.png", true));// NOI18N
+        tooltip.setMainImage(ImageUtilities.loadImage("com/terramenta/ribbon/images/app-button.png", true));// NOI18N
         tooltip.setFooterImage(ImageUtilities.loadImage("com/terramenta/ribbon/images/help.png", true));// NOI18N
         tooltip.addFooterSection(NbBundle.getMessage(LayerRibbonAppMenuProvider.class, "HINT_AppMenuHelp"));// NOI18N
         return tooltip;

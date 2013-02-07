@@ -24,7 +24,7 @@ import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Tools",
 id = "com.terramenta.actions.ScreenShotAction")
-@ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction")
+@ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
 @ActionReferences({
     @ActionReference(path = "Menu/Tools", position = 9)
 })

@@ -12,15 +12,16 @@ import org.openide.util.NbBundle.Messages;
  *
  * @author R. Wathelet, April 2012
  */
-@ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawTextAction")
-@ActionRegistration(iconBase = "images/textbox.png",
-displayName = "#CTL_DrawTextAction")
+@ActionID(category = "Tools", id = "com.terramenta.annotations.DrawTextAction")
+@ActionRegistration(iconBase = "images/textAdd.png", displayName = "#CTL_DrawTextAction", popupText="#HINT_DrawTextAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Tools/Annotations", position = 7),
     @ActionReference(path = "Toolbars/Annotations", position = 7)
 })
-@Messages("CTL_DrawTextAction=Text")
+@Messages({
+    "CTL_DrawTextAction=Text",
+    "HINT_DrawTextAction=Add a textual annotation to the globe."
+})
 public class DrawTextAction implements ActionListener {
 
     @Override

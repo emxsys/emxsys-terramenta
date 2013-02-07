@@ -27,7 +27,6 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.spi.RibbonAppMenuProvider;
@@ -35,19 +34,15 @@ import com.terramenta.ribbon.spi.RibbonDefaultRolloverProvider;
 import java.util.ArrayList;
 import java.util.List;
 import org.openide.util.Lookup;
-import org.openide.util.NbBundle.Messages;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenuEntryFooter;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenuEntryPrimary.PrimaryRolloverCallback;
 
-@Messages({
-    "LBL_AppMenuTitle=Application Menu",
-    "HINT_AppMenu=Application Menu"
-})
 public class LayerRibbonAppMenuProvider extends RibbonAppMenuProvider {
 
     /**
      * Creates the application menu. Will scan the layer.xml from actions within Ribbon/AppMenu folder
+     *
      * @return RibbonApplicationMenu created based on layer.xml
      */
     @Override
@@ -73,7 +68,9 @@ public class LayerRibbonAppMenuProvider extends RibbonAppMenuProvider {
     }
 
     /**
-     * Creates the footer of the application menu. scans the layer.xml for actions within the Ribbon/AppMenuFooter folder
+     * Creates the footer of the application menu. scans the layer.xml for actions within the Ribbon/AppMenuFooter
+     * folder
+     *
      * @return Array of created RibbonApplicationMenuEntryFooter items
      */
     public RibbonApplicationMenuEntryFooter[] createApplicationMenuFooter() {
@@ -92,5 +89,4 @@ public class LayerRibbonAppMenuProvider extends RibbonAppMenuProvider {
     protected PrimaryRolloverCallback createPrimaryRolloverCallback() {
         return Lookup.getDefault().lookup(RibbonDefaultRolloverProvider.class);
     }
-
 }

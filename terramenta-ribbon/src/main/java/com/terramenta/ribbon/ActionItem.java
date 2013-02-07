@@ -51,6 +51,7 @@ import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
 abstract class ActionItem {
 
     public static final String MENU_TEXT = "menuText";
+    public static final String POPUP_TEXT = "popupText";
     public static final String DESCRIPTION = "description";
     public static final String DISPLAY_NAME = "displayName";
     public static final String ICON_BASE = "iconBase";
@@ -124,6 +125,8 @@ abstract class ActionItem {
         String s;
         if (getValue(MENU_TEXT) != null) {
             s = getValue(MENU_TEXT).toString();
+        } else if (getValue(DISPLAY_NAME) != null) {
+            s = getValue(DISPLAY_NAME).toString();
         } else {
             s = String.valueOf(getValue(Action.NAME));
         }
@@ -140,23 +143,24 @@ abstract class ActionItem {
             s = getValue(DESCRIPTION).toString();
         } else if (getValue(Action.SHORT_DESCRIPTION) != null) {
             s = String.valueOf(getValue(Action.SHORT_DESCRIPTION));
+        } else if (getValue(POPUP_TEXT) != null) {
+            s = getValue(POPUP_TEXT).toString();
         }
         return s;
     }
 
     public RichTooltip createTooltip() {
-        String body = (String) getValue(DISPLAY_NAME);
-        if (body == null) {
-            body = (String) getValue(Action.LONG_DESCRIPTION);
-        }
-        if (body == null) {
-            body = getDescription();
-        }
-        if (body == null) {
+        String name = getText();
+        if (name == null) {
             return null;
         }
 
-        RichTooltip tooltip = new RichTooltip(body, body);
+        String desc = getDescription();
+        if (desc == null) {
+            desc = name;
+        }
+
+        RichTooltip tooltip = new RichTooltip(name, desc);
         tooltip.setMainImage(getLargeImage());
 
         return tooltip;

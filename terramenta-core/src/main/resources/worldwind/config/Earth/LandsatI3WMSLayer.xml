@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Blue Marble Next generation 2004 + Bathymetry imagery, using the default month (May).-->
-<!--$Id: BMNGWMSLayer.xml 47 2011-09-02 14:59:13Z tgaskins $-->
+<!--$Id: LandsatI3WMSLayer.xml 47 2011-09-02 14:59:13Z tgaskins $-->
 <Layer version="1" layerType="TiledImageLayer">
-    <DisplayName>Blue Marble (WMS) 2004</DisplayName>
+    <DisplayName>i-cubed Landsat</DisplayName>
     <Service serviceName="OGC:WMS" version="1.3">
         <GetCapabilitiesURL>http://data.worldwind.arc.nasa.gov/wms</GetCapabilitiesURL>
         <GetMapURL>http://data.worldwind.arc.nasa.gov/wms</GetMapURL>
-        <LayerNames>bmng200405</LayerNames>
+        <LayerNames>esat</LayerNames>
     </Service>
     <RetrievePropertiesFromService>true</RetrievePropertiesFromService>
     <!-- day month year hours:minutes:seconds timezone -->
     <LastUpdate>26 03 2009 00:00:00 GMT</LastUpdate>
-    <DataCacheName>Earth/BMNGWMS/BMNG(Shaded + Bathymetry) Tiled - Version 1.1 - 5.2004</DataCacheName>
+    <DataCacheName>Earth/NASA LandSat I3 WMS</DataCacheName>
     <ImageFormat>image/png</ImageFormat>
     <AvailableImageFormats>
         <ImageFormat>image/png</ImageFormat>
         <!--<ImageFormat>image/dds</ImageFormat>-->
     </AvailableImageFormats>
     <FormatSuffix>.png</FormatSuffix>
-    <NumLevels count="5" numEmpty="0"/>
+    <NumLevels count="10" numEmpty="4"/>
     <TileOrigin>
         <LatLon units="degrees" latitude="-90" longitude="-180"/>
     </TileOrigin>
@@ -36,12 +35,10 @@
             <LatLon units="degrees" latitude="90" longitude="180"/>
         </NorthEast>
     </Sector>
-    <ForceLevelZeroLoads>true</ForceLevelZeroLoads>
-    <RetainLevelZeroTiles>true</RetainLevelZeroTiles>
-    <UseTransparentTextures>false</UseTransparentTextures>
+    <UseTransparentTextures>true</UseTransparentTextures>
     <RetrievalTimeouts>
         <ReadTimeout>
-            <Time units="milliseconds" value="30000"/>
+            <Time units="milliseconds" value="20000"/>
         </ReadTimeout>
     </RetrievalTimeouts>
 </Layer>

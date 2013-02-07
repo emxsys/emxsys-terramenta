@@ -30,7 +30,7 @@ import org.openide.util.actions.SystemAction;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.LayerAddAction")
-@ActionRegistration(displayName = "#CTL_LayerAddAction")
+@ActionRegistration(iconBase = "images/layerAdd.png", displayName = "#CTL_LayerAddAction", popupText = "Add a layer to the globe.")
 @Messages("CTL_LayerAddAction=Add Layer")
 @ActionReference(path = "Menu/Tools")
 public class LayerAddAction extends SystemAction {

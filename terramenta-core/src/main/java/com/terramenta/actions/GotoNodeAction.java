@@ -18,7 +18,7 @@ import org.openide.util.actions.NodeAction;
  * @author heidtmare
  */
 @ActionID(id = "com.terramenta.actions.GotoNodeAction", category = "Other")
-@ActionRegistration(displayName = "#CTL_GotoNodeAction")
+@ActionRegistration(displayName = "#CTL_GotoNodeAction", lazy=true)
 @Messages("CTL_GotoNodeAction=Go To")
 public class GotoNodeAction extends NodeAction {
 

@@ -50,7 +50,7 @@ import org.openide.windows.TopComponent;
  * Top component which displays something.
  */
 @ConvertAsProperties(dtd = "-//com.terramenta.globe//Globe//EN", autostore = false)
-@TopComponent.Description(preferredID = "GlobeTopComponent", iconBase = "images/globe.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Description(preferredID = "GlobeTopComponent", iconBase = "images/globeBlue.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.globe.GlobeTopComponent")
 @ActionReference(path = "Menu/Window" /*

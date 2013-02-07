@@ -15,8 +15,7 @@ import org.openide.util.Lookup;
  *
  * @author heidtmare
  */
-@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe",
-iconBase = "images/globe_options.png",
+@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe", iconBase = "images/globeBlue32.png",
 keywords = "#OptionsCategory_Keywords_Globe",
 keywordsCategory = "Globe",
 position = 1000,

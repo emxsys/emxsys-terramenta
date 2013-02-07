@@ -6,19 +6,35 @@
     <Layer className="gov.nasa.worldwindx.sunlight.SunLayer" actuate="onRequest" />
     <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
     <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage"/>
-    <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad"/>
-    <!--<Layer href="config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad"/>
-    <Layer href="config/Earth/USDANAIPWMSImageLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/USDANAIPUSGSWMSImageLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/MSVirtualEarthAerialLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/USGSTopoLowResLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/USGSTopoMedResLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/USGSTopoHighResLayer.xml" actuate="onRequest"/>
-    <Layer href="config/Earth/USGSUrbanAreaOrthoLayer.xml" actuate="onRequest"/>
-    <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer" actuate="onRequest"/>
+    <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <Layer href="worldwind/config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <!--<Layer href="config/Earth/USDANAIPWMSImageLayer.xml" actuate="onRequest"/>-->    
+    <!--<Layer href="config/Earth/USDANAIPUSGSWMSImageLayer.xml" actuate="onRequest"/>-->
+    <!--<Layer href="config/Earth/MSVirtualEarthAerialLayer.xml" actuate="onRequest"/>-->
+    <!--<Layer href="config/Earth/USGSUrbanAreaOrthoLayer.xml" actuate="onRequest"/>-->   
+    <Layer href="config/Earth/USGSTopoLowResLayer.xml" actuate="onRequest">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <Layer href="config/Earth/USGSTopoMedResLayer.xml" actuate="onRequest">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <Layer href="config/Earth/USGSTopoHighResLayer.xml" actuate="onRequest">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <Layer href="config/Earth/OpenStreetMap.xml" actuate="onRequest">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
     <Layer className="gov.nasa.worldwind.layers.LatLonGraticuleLayer" title="LatLon Graticule" actuate="onRequest" />
-    <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />
-    <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>-->
+    <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />  
+    <!--    <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer"/>-->
+    <Layer href="worldwind/config/Earth/CountryBoundariesLayer.xml" actuate="onLoad">
+        <Property name="UseMipMaps" value="false"/>
+    </Layer>
+    <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>
     <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ViewControlsLayer"/>

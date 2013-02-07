@@ -25,12 +25,15 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
-@ActionRegistration(iconBase = "images/measurements.png", displayName = "#CTL_DrawDistanceAction")
+@ActionRegistration(iconBase = "images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#HINT_DrawDistanceAction")
 @ActionReferences({
     @ActionReference(path = "Menu/Tools/Annotations", position = 8),
     @ActionReference(path = "Toolbars/Annotations", position = 8)
 })
-@Messages("CTL_DrawDistanceAction=Distance Measurement")
+@Messages({
+    "CTL_DrawDistanceAction=Distance Measurement",
+    "HINT_DrawDistanceAction=Point to point distance measurement."
+})
 public final class DrawDistanceAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

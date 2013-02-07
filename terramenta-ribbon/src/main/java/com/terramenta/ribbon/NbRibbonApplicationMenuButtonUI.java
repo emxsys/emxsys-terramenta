@@ -53,7 +53,7 @@ import org.pushingpixels.flamingo.internal.ui.ribbon.appmenu.JRibbonApplicationM
 public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuButtonUI {
 
     public static ComponentUI createUI(JComponent c) {
-        return new BasicRibbonApplicationMenuButtonUI();
+        return new NbRibbonApplicationMenuButtonUI();
     }
 
     @Override
@@ -128,14 +128,14 @@ public class NbRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuB
 
     private boolean hasButtonImage() {
         if (_hasButtonImage == null) {
-            _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
+            _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/app-button.png", true);
             if (_normal == null) {
                 _hasButtonImage = Boolean.FALSE;
-                _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
+                _normal = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/app-button-icon24.png", true);
             } else {
                 _hasButtonImage = Boolean.TRUE;
-                _over = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
-                _down = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/terramenta.png", true);
+                _over = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/app-button-over.png", true);
+                _down = ImageUtilities.loadImageIcon("com/terramenta/ribbon/images/app-button-down.png", true);
             }
         }
         return _hasButtonImage;
