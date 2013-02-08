@@ -47,7 +47,7 @@ public class TimeActions {
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepBackwardAction")
     @ActionRegistration(iconBase = "images/controlStepBackward.png", displayName = "#CTL_TimeStepBackwardAction", popupText = "Step backwards one frame in time.")
     @ActionReferences({
-        @ActionReference(path = "Menu/Tools/Time", position = 1),
+        @ActionReference(path = "Menu/Animate/Time", position = 1),
         @ActionReference(path = "Toolbars/Time", position = 1)
     })
     @Messages("CTL_TimeStepBackwardAction=Step Backward")
@@ -65,7 +65,7 @@ public class TimeActions {
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeRewindAction")
     @ActionRegistration(iconBase = "images/controlRewind.png", displayName = "#CTL_TimeRewindAction", popupText = "Play backwards through time.")
     @ActionReferences({
-        @ActionReference(path = "Menu/Tools/Time", position = 2),
+        @ActionReference(path = "Menu/Animate/Time", position = 2),
         @ActionReference(path = "Toolbars/Time", position = 2)
     })
     @Messages("CTL_TimeRewindAction=Rewind")
@@ -105,7 +105,7 @@ public class TimeActions {
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStopAction")
     @ActionRegistration(iconBase = "images/controlStop.png", displayName = "#CTL_TimeStopAction", popupText = "Stop time animation.")
     @ActionReferences({
-        @ActionReference(path = "Menu/Tools/Time", position = 3),
+        @ActionReference(path = "Menu/Animate/Time", position = 3),
         @ActionReference(path = "Toolbars/Time", position = 3)
     })
     @Messages("CTL_TimeStopAction=Stop")
@@ -145,7 +145,7 @@ public class TimeActions {
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimePlayAction")
     @ActionRegistration(iconBase = "images/controlPlay.png", displayName = "#CTL_TimePlayAction", popupText = "Play through time.")
     @ActionReferences({
-        @ActionReference(path = "Menu/Tools/Time", position = 4),
+        @ActionReference(path = "Menu/Animate/Time", position = 4),
         @ActionReference(path = "Toolbars/Time", position = 4)
     })
     @Messages("CTL_TimePlayAction=Play")
@@ -185,7 +185,7 @@ public class TimeActions {
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepForwardAction")
     @ActionRegistration(iconBase = "images/controlStepForward.png", displayName = "#CTL_TimeStepForwardAction", popupText = "Step forward one frame in time.")
     @ActionReferences({
-        @ActionReference(path = "Menu/Tools/Time", position = 5),
+        @ActionReference(path = "Menu/Animate/Time", position = 5),
         @ActionReference(path = "Toolbars/Time", position = 5)
     })
     @Messages("CTL_TimeStepForwardAction=Step Forward")

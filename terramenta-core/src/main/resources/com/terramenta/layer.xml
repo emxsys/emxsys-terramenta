@@ -40,9 +40,6 @@
             </folder>
             <file name="Separator1.instance_hidden"/>
             <file name="Separator2.instance_hidden"/>
-            <folder name="Time">
-                <attr name="position" intvalue="200"/>
-            </folder>
             <file name="org-netbeans-modules-options-OptionsWindowAction-separatorBefore.instance_hidden"/>
             <file name="org-openide-actions-ToolsAction.shadow_hidden"/>
             <file name="org-netbeans-modules-options-OptionsWindowAction.shadow">
@@ -51,25 +48,32 @@
                 <attr name="iconBase" stringvalue="images/options.png"/>
             </file>
         </folder>
-        <folder name="Window">
+        <folder name="Animate">
             <attr name="position" intvalue="200"/>
+            <folder name="Time">
+                <attr name="position" intvalue="200"/>
+            </folder>
+        </folder>
+        <folder name="Window">
+            <attr name="position" intvalue="300"/>
             <file name="CloneDocumentAction.shadow_hidden"/>
             <file name="CloseAllButThisAction.shadow_hidden"/>
             <file name="CloseAllDocumentsAction.shadow_hidden"/>
             <file name="DocumentsAction.shadow_hidden"/>
-            <file name="GlobalPropertiesAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-GlobalPropertiesAction.instance"/>
-                <attr name="position" intvalue="800"/>
-                <attr name="iconBase" stringvalue="images/properties.png"/>
-            </file>
             <file name="Output_hidden"/>
             <file name="ProgressListAction.shadow_hidden"/>
-            <file name="Separator5.instance_hidden"/>
+            <file name="Separator4.instance_hidden"/>
             <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
-            <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow_hidden"/>
         </folder>
         <folder name="View">
-            <attr name="position" intvalue="300"/>
+            <attr name="position" intvalue="400"/>
+            <file name="Separator3.instance_hidden"/>
+            <file name="ToggleFullScreenAction.shadow_hidden"/>
+            <file name="org-netbeans-core-windows-actions-ToggleFullScreenAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ToggleFullScreenAction.instance"/>
+                <attr name="iconBase" stringvalue="images/fullscreen.png"/>
+            </file>
+            <file name="org-netbeans-core-windows-actions-ToolbarsListAction.instance_hidden"/>
         </folder>
     </folder>
     <folder name="Windows2">

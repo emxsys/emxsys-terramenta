@@ -17,13 +17,16 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
 import org.openide.util.actions.BooleanStateAction;
 
-@ActionID(category = "View", id = "com.terramenta.globe.actions.EarthRotationAction")
-@ActionRegistration(displayName = "#CTL_EarthRotationAction", lazy = true)
+@ActionID(category = "Other", id = "com.terramenta.globe.actions.EarthRotationAction")
+@ActionRegistration(displayName = "#CTL_EarthRotationAction", popupText = "#HINT_EarthRotationAction", lazy = true)
 @ActionReferences({
-    @ActionReference(path = "Menu/View", position = 1000),
+    @ActionReference(path = "Menu/Animate", position = 1000),
     @ActionReference(path = "Shortcuts", name = "DS-E")
 })
-@Messages("CTL_EarthRotationAction=Earth-centered inertial (ECI)")
+@Messages({
+    "CTL_EarthRotationAction=ECI/ECEF",
+    "HINT_EarthRotationAction=Toggle between \"Earth-centered inertial\" and \"Earth-centered, Earth-fixed(ECEF)\" views."
+})
 public final class EarthRotationAction extends BooleanStateAction implements PropertyChangeListener {
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
