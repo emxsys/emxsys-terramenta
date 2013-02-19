@@ -31,17 +31,16 @@ package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.spi.RibbonAppMenuProvider;
 import com.terramenta.ribbon.spi.RibbonComponentProvider;
-import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
-import org.pushingpixels.flamingo.api.ribbon.AbstractRibbonBand;
 import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu;
-import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
 
 /**
  * Provider for the Components on the Ribbon. The AppMenu, TaskBarand taskPanes
+ *
  * @author Chris
  */
 public class LayerRibbonComponentProvider extends RibbonComponentProvider {
@@ -56,8 +55,9 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
     }
 
     /**
-     * For the application menu 
-     * @param ribbon 
+     * For the application menu
+     *
+     * @param ribbon
      */
     private static void addAppMenu(JRibbon ribbon) {
         RibbonAppMenuProvider appMenuProvider = RibbonAppMenuProvider.getDefault();
@@ -69,17 +69,26 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
 
     /**
      * For the taskBar on the right side of the menu button. Scans the layer.xml for entries in the Toolbars folder.
+     *
      * @param ribbon the ribbon to add the TaskBar ActionItems too.
      */
     private static void addTaskBar(JRibbon ribbon) {
-        List<? extends ActionItem> actions = ActionItems.forPath("Actions/TaskBar");
         RibbonComponentFactory factory = new RibbonComponentFactory();
-        for (ActionItem action : actions) {
-            for (ActionItem actionChild : action.getChildren()) {
-                if (actionChild.isSeparator()) {
+
+        for (ActionItem item : ActionItems.forPath("Ribbon/TaskBar")) {
+            if (item == null) {
+                continue;
+            }
+
+            for (ActionItem child : item.getChildren()) {
+                if (child == null) {
+                    continue;
+                }
+
+                if (child.isSeparator()) {
                     ribbon.addTaskbarComponent(new JSeparator(JSeparator.VERTICAL));
                 } else {
-                    ribbon.addTaskbarComponent(factory.createTaskBarPresenter(actionChild));
+                    ribbon.addTaskbarComponent(factory.createTaskBarPresenter(child));
                 }
             }
         }
@@ -87,17 +96,19 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
 
     /**
      * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder
-     * @param ribbon the JRibbon to add the tabbed menu items to 
+     *
+     * @param ribbon the JRibbon to add the tabbed menu items to
      */
     private void addTaskPanes(JRibbon ribbon) {
         RibbonComponentFactory factory = new RibbonComponentFactory();
-        for (ActionItem item : ActionItems.forPath("Menu")) {
-            RibbonTask rt = factory.createRibbonTask(item);
-            List<AbstractRibbonBand<?>> bands = rt.getBands();
-            for (AbstractRibbonBand arb : bands) {
-                arb.setPreferredSize(new Dimension(40, 65));
+        List<ActionItem> items = new ArrayList<ActionItem>();
+        items.addAll(ActionItems.forPath("Ribbon/TaskPanes"));
+        items.addAll(ActionItems.forPath("Menu"));
+        for (ActionItem item : items) {
+            if (item == null) {
+                continue;
             }
-            ribbon.addTask(rt);
-        }       
+            ribbon.addTask(factory.createRibbonTask(item));
+        }
     }
 }

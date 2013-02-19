@@ -64,6 +64,10 @@ abstract class ActionItem {
     public static ActionItem actions(Action action) {
         return new Actions(action);
     }
+
+    public static ActionItem component(JComponent component) {
+        return new Component(component);
+    }
     private Map<String, Object> properties;
 
     public Action getAction() {
@@ -234,6 +238,20 @@ abstract class ActionItem {
         @Override
         public boolean isSeparator() {
             return true;
+        }
+    }
+
+    private static class Component extends ActionItem {
+
+        private JComponent _component;
+
+        public Component(JComponent component) {
+            _component = component;
+        }
+
+        @Override
+        public JComponent getComponent() {
+            return _component;
         }
     }
 

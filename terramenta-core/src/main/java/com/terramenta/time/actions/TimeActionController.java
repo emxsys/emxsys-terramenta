@@ -45,7 +45,7 @@ public class TimeActionController {
     private static final int animationRefreshRateMs = 100;//~10 frames per second
     private final PropertyChangeSupport pcs;
     private Timer playTimer = null;
-    private int stepIncrement = 1000;
+    private int stepIncrement = AnimationSpeed.SLOW.getMilliseconds();
     private int linger = 0;
     private int dir = 0;
 

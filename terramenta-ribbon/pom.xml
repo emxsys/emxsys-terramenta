@@ -69,6 +69,21 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
+                <configuration>
+                    <publicPackages>
+                        <publicPackage>com.terramenta.ribbon.api.*</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.*</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.internal.ui.ribbon.*</publicPackage>
+                        <publicPackage>org.w3c.dom</publicPackage>
+                        <publicPackage>org.xml.sax</publicPackage>
+                        <publicPackage>org.xml.sax.helpers</publicPackage>
+                        <publicPackage>javax.xml.namespace</publicPackage>
+                        <publicPackage>javax.xml.parsers</publicPackage>
+                        <publicPackage>javax.xml.transform</publicPackage>
+                        <publicPackage>javax.xml.transform.dom</publicPackage>
+                        <publicPackage>javax.xml.transform.stream</publicPackage>
+                    </publicPackages>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

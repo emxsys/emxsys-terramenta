@@ -28,6 +28,15 @@
                 <attr name="iconBase" stringvalue="images/cross.png"/>
             </file>
         </folder>
+        <folder name="TaskBar">
+            <file name="org-netbeans-modules-print-action-PrintAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PrintAction.instance"/>
+                <attr name="position" intvalue="100"/>
+                <attr name="iconBase" stringvalue="images/printer.png"/>
+                <attr name="description" bundlevalue="com.terramenta.actions.Bundle#HINT_PrintAction"/>
+            </file>
+        </folder>
+        <folder name="TaskPanes"/>
     </folder>
     <folder name="Menu">
         <folder name="File_hidden"/>
@@ -50,9 +59,15 @@
         </folder>
         <folder name="Animate">
             <attr name="position" intvalue="200"/>
-            <folder name="Time">
-                <attr name="position" intvalue="200"/>
+            <folder name="Controls">
+                <attr name="position" intvalue="100"/>
             </folder>
+            <file name="com-terramenta-time-actions-DatetimeBand.instance">
+                <attr name="position" intvalue="200"/>
+            </file>
+            <file name="com-terramenta-time-actions-PerspectiveBand.instance">
+                <attr name="position" intvalue="300"/>
+            </file>
         </folder>
         <folder name="Window">
             <attr name="position" intvalue="300"/>

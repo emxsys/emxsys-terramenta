@@ -1,19 +1,15 @@
 /**
- * This file is part of AgroSense.
- * Copyright (C) 2008-2012 AgroSense Foundation.
+ * This file is part of AgroSense. Copyright (C) 2008-2012 AgroSense Foundation.
  *
- * AgroSense is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * AgroSense is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  *
- * AgroSense is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * AgroSense is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with AgroSense.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with AgroSense. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 package com.terramenta.ribbon;
 
@@ -24,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -38,7 +35,7 @@ class ActionItems {
 
     private static FileObject fileObjectRoot = FileUtil.getConfigRoot();
     private static Map<String, FileObject> fileObjectMap = new TreeMap<String, FileObject>();
-    
+
     private ActionItems() {
     }
 
@@ -63,6 +60,7 @@ class ActionItems {
 
     /**
      * creates a map of <String, FileObject> in which the file represents the path to the FileObject
+     *
      * @param rootPath the rootPath from which the map is created
      * @return the created fileObjectMap
      */
@@ -78,8 +76,9 @@ class ActionItems {
 
     /**
      * Adds a fileObject folder to the fileObjectMap. Will also add all the children of the folder to the map
+     *
      * @param path the path of the FileObject folder
-     * @param folder the FileObject who and who's children are added to the map 
+     * @param folder the FileObject who and who's children are added to the map
      */
     static Map<String, FileObject> addFolderToMap(String path, FileObject folder) {
         StringBuilder absolutePath = new StringBuilder("");
@@ -159,6 +158,11 @@ class ActionItems {
             } else if (JSeparator.class.isAssignableFrom(item.getType())) {
                 actionItem = ActionItem.separator();
                 actionItem.setText(foMap.get(name).getName());
+            } else if (JComponent.class.isAssignableFrom(item.getType())) {
+                JComponent instance = (JComponent) item.getInstance();
+                if (instance != null) {
+                    actionItem = ActionItem.component((JComponent) instance);
+                }
             } else {
                 System.err.println("Unknown item: " + item.getType());
             }
@@ -172,6 +176,7 @@ class ActionItems {
 
     /**
      * Adds the attributes of fileObject to the actionItem
+     *
      * @param action the ActionItem to add the attributes to
      * @param fo the fileObject which contains the attributes
      */
@@ -191,7 +196,8 @@ class ActionItems {
 
     /**
      * Gets the path of the parent of item with path param itemPath
-     * @param itemPath the path of the item for which the parent must be found 
+     *
+     * @param itemPath the path of the item for which the parent must be found
      * @return String parentPath or null if path is not valid
      */
     static FileObject getRoot(FileObject fo) {
@@ -206,8 +212,10 @@ class ActionItems {
     }
 
     /**
-     * Removes the rootPath from the fileObjectPath. If the rootPath is Menu/Tools and fileObjectPath is Menu/Tools/someAction it will return someAction 
-     * @param fileObjectPath the path of the fileObject 
+     * Removes the rootPath from the fileObjectPath. If the rootPath is Menu/Tools and fileObjectPath is
+     * Menu/Tools/someAction it will return someAction
+     *
+     * @param fileObjectPath the path of the fileObject
      * @param rootPath the path of the rootObject
      * @return fileObjectPath - rootPath
      */

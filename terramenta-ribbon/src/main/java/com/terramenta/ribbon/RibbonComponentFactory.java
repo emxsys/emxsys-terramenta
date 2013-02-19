@@ -32,6 +32,7 @@ package com.terramenta.ribbon;
 import com.terramenta.ribbon.api.ResizableIcons;
 import com.terramenta.ribbon.api.RibbonPresenter;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.Action;
+import javax.swing.JComponent;
 import org.pushingpixels.flamingo.api.common.AbstractCommandButton;
 import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.common.JCommandButton.CommandButtonKind;
@@ -143,8 +145,7 @@ class RibbonComponentFactory {
     private AbstractCommandButton createCommandButton(ActionItem item) {
         //Determine if the icon is set. If so only display icon otherwise display text
         String text = (item.getActionDelegate().getIcon() == null ? item.getActionDelegate().getText() : "");
-        ActionCommandButton button = new ActionCommandButton(item.getActionDelegate().getIcon(),
-                text, item.getActionDelegate().getAction(), CommandButtonKind.ACTION_ONLY);
+        ActionCommandButton button = new ActionCommandButton(item.getActionDelegate().getIcon(), text, item.getActionDelegate().getAction(), CommandButtonKind.ACTION_ONLY);
         RichTooltip toolTip = item.getActionDelegate().createTooltip();
         button.setActionRichTooltip(toolTip);
         return button;
@@ -158,7 +159,6 @@ class RibbonComponentFactory {
      */
     public RibbonTask createRibbonTask(ActionItem actionItem) {
         List<AbstractRibbonBand> bands = createRibbonBands(actionItem);
-
         return new RibbonTask(actionItem.getText(), bands.toArray(new AbstractRibbonBand[bands.size()]));
     }
 
@@ -172,20 +172,25 @@ class RibbonComponentFactory {
      */
     public List<AbstractRibbonBand> createRibbonBands(ActionItem actionItem) {
         List<AbstractRibbonBand> bands = new ArrayList<AbstractRibbonBand>();
+
         for (ActionItem item : actionItem.getChildren()) {
-            if (item.getChildren().size() > 0) {
-                bands.addAll(createRibbonBands(item));
+            bands.addAll(createRibbonBands(item));
+        }
+
+        JComponent component = actionItem.getComponent();
+        if (component != null && AbstractRibbonBand.class.isAssignableFrom(component.getClass())) {
+            bands.add((AbstractRibbonBand) component);
+        } else {
+            if (actionItem.getChildren().size() > 0) {
+                bands.add(createRibbonBand(actionItem));
             }
         }
-        bands.add(createRibbonBand(actionItem));
 
         return bands;
     }
 
     public AbstractRibbonBand createRibbonBand(ActionItem item) {
-        ResizableIcon icon = ResizableIcons.empty();
-
-        JRibbonBand band = new JRibbonBand(item.getText(), icon, getDefaultAction(item));
+        JRibbonBand band = new JRibbonBand(item.getText(), ResizableIcons.empty(), getDefaultAction(item));
         for (ActionItem child : item.getChildren()) {
             if (child.getChildren().isEmpty()) {
                 if (child.isSeparator()) {
@@ -195,8 +200,8 @@ class RibbonComponentFactory {
                 }
             }
         }
-        band.setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(
-                new Mid2Mid(band.getControlPanel())));
+        band.setPreferredSize(new Dimension(40, 60));
+        band.setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(new Mid2Mid(band.getControlPanel())));
         return band;
     }
 
@@ -212,7 +217,11 @@ class RibbonComponentFactory {
 
     private void addRibbonBandAction(JRibbonBand band, ActionItem item) {
         Action action = item.getAction();
-        if (action != null && RibbonPresenter.Component.class.isAssignableFrom(action.getClass())) {
+        if (action == null) {
+            return;
+        }
+
+        if (RibbonPresenter.Component.class.isAssignableFrom(action.getClass())) {
             band.addRibbonComponent(((RibbonPresenter.Component) action).getRibbonBarComponentPresenter(), 3);
         } else {
             band.addCommandButton(createCommandButton(item), getPriority(item));
