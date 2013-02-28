@@ -16,22 +16,24 @@ import org.openide.util.Lookup;
 
 /**
  *
- * @author R. Wathelet, April 2012
+ * @author R. Wathelet, April 2012. 
+ * 
+ * modified Feb 2013, replaced GlobeAnnotation with DraggableAnnotation and 
+ * show the dialog box at the mouse location
  */
 public class TextAnnotationEditor extends AVListImpl {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private AnnotationLayer layer;
-    private GlobeAnnotation text;
+    private DraggableAnnotation text;
     public static final String TEXT_ANNOTATION_LAYER = "Text Annotations";
     private boolean armed = false;
     //
     private final MouseAdapter ma = new MouseAdapter() {
-
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             if (armed && mouseEvent.getButton() == MouseEvent.BUTTON1) {
-                editText();
+                editText(mouseEvent);
                 setArmed(false);
                 mouseEvent.consume();
             }
@@ -59,37 +61,32 @@ public class TextAnnotationEditor extends AVListImpl {
         }
     }
 
-    private void editText() {
+    private void editText(MouseEvent mouseEvent) {
         final Position curPos = wwm.getWorldWindow().getCurrentPosition();
         if (curPos != null) {
-            String result = (String) JOptionPane.showInputDialog(new Frame(), "", "Add text",
-                    JOptionPane.PLAIN_MESSAGE, null, null, "some text");
-
-            // get the screen location
-//        Vec4 vecPoint = wwm.getWorldWindow().getView().project(wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(curPos));
-//        String result = (String) showJOptionPaneAt(new Point((int) vecPoint.x, (int) vecPoint.y));
-
-            if ((result != null) && !result.isEmpty()) {
+            Integer buttonType = 0;
+            JOptionPane optionPane = showJOptionPaneAt(mouseEvent.getLocationOnScreen());
+            String result = ((String) optionPane.getInputValue()).trim();
+            Object selectedValue = optionPane.getValue();
+            if (selectedValue instanceof Integer) {
+                buttonType = ((Integer) selectedValue).intValue();
+            }
+            if ((result != null) && !result.isEmpty() && (buttonType != JOptionPane.CANCEL_OPTION)) {
                 text.setText(result);
                 text.moveTo(curPos);
                 layer.addAnnotation(text);
             }
-
             wwm.getWorldWindow().redraw();
-        }        
+        }
     }
 
-    // trying to popup the dialog at the mouse click. Needs more work .... TODO
-    private Object showJOptionPaneAt(Point location) {
-        JOptionPane optionPane = new JOptionPane("",
-                JOptionPane.PLAIN_MESSAGE,
-                JOptionPane.OK_CANCEL_OPTION, null, null, "some text");
+    private JOptionPane showJOptionPaneAt(Point location) {
+        JOptionPane optionPane = new JOptionPane("", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, null, "");
         optionPane.setWantsInput(true);
-        optionPane.setInitialSelectionValue("some text");
         JDialog dialog = optionPane.createDialog(null, "Add text");
         dialog.setLocation(location);
         dialog.setVisible(true);
-        return optionPane.getInputValue();
+        return optionPane;
     }
 
     public AnnotationLayer getLayer() {
@@ -100,12 +97,12 @@ public class TextAnnotationEditor extends AVListImpl {
         return text;
     }
 
-    public void setTextAnnotation(GlobeAnnotation text) {
+    public void setTextAnnotation(DraggableAnnotation text) {
         this.text = text;
     }
 
-    private GlobeAnnotation getDefaultAnnotation() {
-        GlobeAnnotation theText = new GlobeAnnotation("", Position.ZERO);
+    private DraggableAnnotation getDefaultAnnotation() {
+        DraggableAnnotation theText = new DraggableAnnotation("", Position.ZERO);
 
         AnnotationAttributes attr = new AnnotationAttributes();
         attr.setAdjustWidthToText(AVKey.SIZE_FIT_TEXT);
@@ -115,7 +112,7 @@ public class TextAnnotationEditor extends AVListImpl {
 
         theText.setAttributes(attr);
         theText.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        theText.setValue(AVKey.DISPLAY_ICON, "images/textbox.png");        
+        theText.setValue(AVKey.DISPLAY_ICON, "images/textbox.png");
         theText.setPickEnabled(true);
         return theText;
     }
