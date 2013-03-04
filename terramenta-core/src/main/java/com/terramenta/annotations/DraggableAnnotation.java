@@ -13,6 +13,7 @@ import java.beans.PropertyChangeListener;
  * A draggable GlobeAnnotation
  *
  * @author Ringo Wathelet, Feb 2013
+ * @author heidtmare
  */
 public class DraggableAnnotation extends GlobeAnnotation implements Draggable {
 
@@ -22,16 +23,18 @@ public class DraggableAnnotation extends GlobeAnnotation implements Draggable {
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("SELECT") && evt.getNewValue().equals(Boolean.TRUE)) {
                 if (evt.getSource() instanceof DraggableAnnotation) {
-                    DraggableAnnotation anno = (DraggableAnnotation) evt.getSource();
-                    anno.getAttributes().setHighlighted(!anno.getAttributes().isHighlighted());
+                    TextAnnotationEditor.edit((DraggableAnnotation) evt.getSource());
                 }
             }
         }
     };
 
+    {
+        addPropertyChangeListener(selectionListener);
+    }
+
     public DraggableAnnotation(String string, Position pstn) {
         super(string, pstn);
-        addPropertyChangeListener(selectionListener);
     }
 
     public DraggableAnnotation(String string, Position pstn, Font font) {
@@ -54,13 +57,5 @@ public class DraggableAnnotation extends GlobeAnnotation implements Draggable {
     @Override
     public void setDraggable(boolean draggable) {
         this.draggable = draggable;
-    }
-
-    public boolean isVisible() {
-        return this.getAttributes().isVisible();
-    }
-
-    public void setVisible(boolean vis) {
-        this.getAttributes().setVisible(vis);
     }
 }
