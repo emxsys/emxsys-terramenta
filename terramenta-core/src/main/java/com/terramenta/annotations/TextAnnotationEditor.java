@@ -5,7 +5,7 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.avlist.AVListImpl;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.AnnotationLayer;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -16,17 +16,17 @@ import org.openide.util.Lookup;
 
 /**
  *
- * @author R. Wathelet, April 2012. 
- * 
- * modified Feb 2013, replaced GlobeAnnotation with DraggableAnnotation and 
- * show the dialog box at the mouse location
+ * @author R. Wathelet, April 2012.
+ *
+ * modified Feb 2013, replaced GlobeAnnotation with DraggableAnnotation, show the dialog box at the mouse location and
+ * add the text annotation in the "User Annotations" layer.
  */
 public class TextAnnotationEditor extends AVListImpl {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-    private AnnotationLayer layer;
+    private RenderableLayer userLayer;
     private DraggableAnnotation text;
-    public static final String TEXT_ANNOTATION_LAYER = "Text Annotations";
+    public static final String USER_ANNOTATION_LAYER = "User Annotations";
     private boolean armed = false;
     //
     private final MouseAdapter ma = new MouseAdapter() {
@@ -42,11 +42,11 @@ public class TextAnnotationEditor extends AVListImpl {
 
     public TextAnnotationEditor() {
         this.text = getDefaultAnnotation();
-        this.layer = (AnnotationLayer) wwm.getWorldWindow().getModel().getLayers().getLayerByName(TEXT_ANNOTATION_LAYER);
-        if (layer == null) {
-            layer = new AnnotationLayer();
-            layer.setName(TEXT_ANNOTATION_LAYER);
-            wwm.getWorldWindow().getModel().getLayers().add(layer);
+        userLayer = (RenderableLayer) wwm.getWorldWindow().getModel().getLayers().getLayerByName(USER_ANNOTATION_LAYER);
+        if (userLayer == null) {
+            userLayer = new RenderableLayer();
+            userLayer.setName(USER_ANNOTATION_LAYER);
+            wwm.getWorldWindow().getModel().getLayers().add(userLayer);
         }
     }
 
@@ -74,7 +74,8 @@ public class TextAnnotationEditor extends AVListImpl {
             if ((result != null) && !result.isEmpty() && (buttonType != JOptionPane.CANCEL_OPTION)) {
                 text.setText(result);
                 text.moveTo(curPos);
-                layer.addAnnotation(text);
+                text.setValue(AVKey.DISPLAY_NAME, text.getText());
+                userLayer.addRenderable(text);
             }
             wwm.getWorldWindow().redraw();
         }
@@ -89,11 +90,11 @@ public class TextAnnotationEditor extends AVListImpl {
         return optionPane;
     }
 
-    public AnnotationLayer getLayer() {
-        return layer;
+    public RenderableLayer getLayer() {
+        return userLayer;
     }
 
-    public GlobeAnnotation getTextAnnotation() {
+    public DraggableAnnotation getTextAnnotation() {
         return text;
     }
 
@@ -112,7 +113,9 @@ public class TextAnnotationEditor extends AVListImpl {
 
         theText.setAttributes(attr);
         theText.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        theText.setValue(AVKey.DISPLAY_ICON, "images/textbox.png");
+        theText.setValue(AVKey.DISPLAY_ICON, "images/textAdd.png");
+        theText.setValue(AVKey.HOVER_TEXT, "");
+        theText.setValue(AVKey.ROLLOVER_TEXT, "");
         theText.setPickEnabled(true);
         return theText;
     }
