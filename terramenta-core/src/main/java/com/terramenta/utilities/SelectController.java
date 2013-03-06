@@ -114,6 +114,8 @@ public class SelectController implements SelectListener, Disposable {
         } else if (e.isRollover() && e.hasObjects()) {
             doRollover(e.getTopObject());
         }
+
+        e.consume();
     }
 
     private static void doSelect(Object obj) {
