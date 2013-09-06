@@ -6,84 +6,89 @@
     <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Terramenta</name>
+    
+    <properties>
+        <project.build.sourceVersion>1.7</project.build.sourceVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.version>RELEASE731</netbeans.version>
+        <brandingToken>terramenta</brandingToken>
+        
+        <junit.version>4.10</junit.version>
+        <slf4j.version>1.6.4</slf4j.version>
+
+        <compiler.plugin.version>3.1</compiler.plugin.version>
+        <resources.plugin.version>2.6</resources.plugin.version>
+        <jar.plugin.version>2.4</jar.plugin.version>
+        <nbm.plugin.version>3.8</nbm.plugin.version>
+    </properties>
+    
     <repositories>
         <repository>
             <id>netbeans</id>
             <name>NetBeans</name>
             <url>http://bits.netbeans.org/maven2/</url>
         </repository>
-        <repository>
-            <id>beans-binding</id>
-            <name>Repository for library Library[beans-binding]</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-        <!--internal repository-->
-        <!--<repository>
-            <id>codeforge</id>
-            <name>codeforge-releases</name>
-            <url>http://codeforge/artifactory/ext-release-local</url>
-        </repository>-->
     </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency> 
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <build>
         <pluginManagement>
             <plugins>
+              
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler.plugin.version}</version>
+                    <configuration>
+                        <source>${project.build.sourceVersion}</source>
+                        <target>${project.build.sourceVersion}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${resources.plugin.version}</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${jar.plugin.version}</version>
+                    <configuration>
+                        <!-- to have the jar plugin pickup the nbm generated manifest -->
+                        <useDefaultManifestFile>true</useDefaultManifestFile>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>nbm-maven-plugin</artifactId>
-                    <version>3.8</version>
+                    <version>3.10.1</version>
                     <extensions>true</extensions>
                     <configuration>
                         <brandingToken>${brandingToken}</brandingToken>
                         <cluster>${brandingToken}</cluster>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <!-- NetBeans 6.9+ requires JDK 6 -->
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.5.1</version>
-                    <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.4</version>
-                </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
     <modules>
@@ -92,10 +97,4 @@
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
     </modules>
-
-    <properties>
-        <netbeans.version>RELEASE721</netbeans.version>
-        <brandingToken>terramenta</brandingToken>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>

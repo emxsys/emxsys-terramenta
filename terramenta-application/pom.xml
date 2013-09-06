@@ -10,14 +10,8 @@
 
     <artifactId>terramenta-application</artifactId>
     <packaging>nbm-application</packaging>
-
     <name>Terramenta Application</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.run.params.ide/>
-        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
