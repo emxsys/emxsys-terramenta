@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author chris.heidt
  */
-public interface TemporalObject {
+public interface DateProvider {
 
     public void setDate(Date date);
 

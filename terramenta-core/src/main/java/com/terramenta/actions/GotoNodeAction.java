@@ -1,7 +1,8 @@
 package com.terramenta.actions;
 
 import com.terramenta.globe.WorldWindManager;
-import com.terramenta.interfaces.Position;
+import com.terramenta.interfaces.PositionProvider;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.awt.ActionID;
@@ -18,7 +19,7 @@ import org.openide.util.actions.NodeAction;
  * @author heidtmare
  */
 @ActionID(id = "com.terramenta.actions.GotoNodeAction", category = "Other")
-@ActionRegistration(displayName = "#CTL_GotoNodeAction", lazy=true)
+@ActionRegistration(displayName = "#CTL_GotoNodeAction", lazy = true)
 @Messages("CTL_GotoNodeAction=Go To")
 public class GotoNodeAction extends NodeAction {
 
@@ -34,13 +35,13 @@ public class GotoNodeAction extends NodeAction {
         for (Node node : nodes) {
             try {
                 Object instance = node.getLookup().lookup(InstanceCookie.class).instanceCreate();
-                if (instance instanceof Position.Provider) {
-                    gov.nasa.worldwind.geom.Position position = ((Position.Provider) instance).getPosition();
+                if (instance instanceof PositionProvider) {
+                    gov.nasa.worldwind.geom.Position position = ((PositionProvider) instance).getPosition();
                     if (position != null) {
                         wwm.gotoPosition(position);
                     }
                 }
-            } catch (Exception ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 logger.log(Level.SEVERE, "Goto Error", ex);
             }
         }
@@ -56,7 +57,7 @@ public class GotoNodeAction extends NodeAction {
         if (nodes.length == 1) {
             try {
                 Object instance = nodes[0].getLookup().lookup(InstanceCookie.class).instanceCreate();
-                if (instance instanceof Position.Provider) {
+                if (instance instanceof PositionProvider) {
                     return true;
                 }
             } catch (Exception ex) {
