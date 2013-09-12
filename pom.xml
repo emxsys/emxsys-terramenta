@@ -8,7 +8,7 @@
     <name>Terramenta</name>
     
     <properties>
-        <project.build.sourceVersion>1.7</project.build.sourceVersion>
+        <project.build.sourceVersion>1.6</project.build.sourceVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.version>RELEASE731</netbeans.version>
         <brandingToken>terramenta</brandingToken>

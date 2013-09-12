@@ -2,7 +2,6 @@ package com.terramenta.actions;
 
 import com.terramenta.globe.WorldWindManager;
 import com.terramenta.interfaces.PositionProvider;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openide.awt.ActionID;
@@ -41,7 +40,7 @@ public class GotoNodeAction extends NodeAction {
                         wwm.gotoPosition(position);
                     }
                 }
-            } catch (IOException | ClassNotFoundException ex) {
+            } catch (Exception ex) {
                 logger.log(Level.SEVERE, "Goto Error", ex);
             }
         }
