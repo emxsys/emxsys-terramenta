@@ -44,8 +44,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <licenseName>CDDL, Version 1.0</licenseName>
-                    <licenseFile>src/main/nbm/license.txt</licenseFile>
-                    <etcConfFile>src/main/nbm/terramenta.conf</etcConfFile>
+                    <licenseFile>license.txt</licenseFile>
+                    <etcConfFile>terramenta.conf</etcConfFile>
                 </configuration>
             </plugin>
             <plugin>
