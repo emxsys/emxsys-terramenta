@@ -8,14 +8,20 @@
     <name>Terramenta</name>
     
     <properties>
+        <brandingToken>terramenta</brandingToken>
         <project.build.sourceVersion>1.6</project.build.sourceVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.version>RELEASE731</netbeans.version>
-        <brandingToken>terramenta</brandingToken>
         
+        <!-- DEPENDENCY VERSIONS -->
+        <netbeans.version>RELEASE731</netbeans.version>
+        <worldwind.version>1.5.1</worldwind.version>
+        <jogl.version>1.1.2</jogl.version>
+        <gluegen.version>1.0</gluegen.version>
         <junit.version>4.10</junit.version>
         <slf4j.version>1.6.4</slf4j.version>
+        <beansbinding.version>1.2.1</beansbinding.version>
 
+        <!-- PLUGIN VERSIONS -->
         <compiler.plugin.version>3.1</compiler.plugin.version>
         <resources.plugin.version>2.6</resources.plugin.version>
         <jar.plugin.version>2.4</jar.plugin.version>
@@ -33,6 +39,26 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.sun</groupId>
+                <artifactId>jogl</artifactId>
+                <version>${jogl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun</groupId>
+                <artifactId>gluegen-rt</artifactId>
+                <version>${gluegen.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>gov.nasa</groupId>
+                <artifactId>worldwind</artifactId>
+                <version>${worldwind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>gov.nasa</groupId>
+                <artifactId>worldwindx</artifactId>
+                <version>${worldwind.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -43,13 +69,17 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jdesktop</groupId>
+                <artifactId>beansbinding</artifactId>
+                <version>${beansbinding.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     
     <build>
         <pluginManagement>
             <plugins>
-              
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
