@@ -1,0 +1,4 @@
+mvn install:install-file "-Dfile=D:\repositories\World Wind\worldwind-1.5.1\jogl.jar" "-DgroupId=com.sun" "-DartifactId=jogl" "-Dversion=1.1.2" "-Dpackaging=jar"
+mvn install:install-file "-Dfile=D:\repositories\World Wind\worldwind-1.5.1\gluegen-rt.jar" "-DgroupId=com.sun" "-DartifactId=gluegen-rt" "-Dversion=1.0" "-Dpackaging=jar"
+mvn install:install-file "-Dfile=D:\repositories\World Wind\worldwind-1.5.1\worldwind.jar" "-DgroupId=gov.nasa" "-DartifactId=worldwind" "-Dversion=1.5.1" "-Dpackaging=jar"
+mvn install:install-file "-Dfile=D:\repositories\World Wind\worldwind-1.5.1\worldwindx.jar" "-DgroupId=gov.nasa" "-DartifactId=worldwindx" "-Dversion=1.5.1" "-Dpackaging=jar"
