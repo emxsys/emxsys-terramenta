@@ -96,5 +96,6 @@
         <module>terramenta-ribbon</module>
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
+        <module>terramenta-javafx</module>
     </modules>
 </project>

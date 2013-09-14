@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.terramenta</groupId>
+        <artifactId>terramenta</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.terramenta</groupId>
+    <artifactId>terramenta-javafx</artifactId>
+    <packaging>nbm</packaging>
+    <name>Terramenta JavaFX</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx</artifactId>
+            <version>2.2.3</version>
+            <scope>system</scope>
+            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>javafx.scene.layout</publicPackage>
+                        <publicPackage>javafx.application</publicPackage>
+                        <publicPackage>javafx.collections</publicPackage>
+                        <publicPackage>javafx.scene.control</publicPackage>
+                        <publicPackage>javafx.event</publicPackage>
+                        <publicPackage>javafx.geometry</publicPackage>
+                        <publicPackage>javafx.beans.property</publicPackage>
+                        <publicPackage>javafx.beans.value</publicPackage>
+                        <publicPackage>javafx.concurrent</publicPackage>
+                        <publicPackage>javafx.scene.web</publicPackage>
+                        <publicPackage>javafx.fxml</publicPackage>
+                    </publicPackages>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
