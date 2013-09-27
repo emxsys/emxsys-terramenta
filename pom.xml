@@ -122,10 +122,14 @@
     </build>
 
     <modules>
-        <module>terramenta-core</module>
+        <module>terramenta-javafx</module>
         <module>terramenta-ribbon</module>
+        <module>terramenta-core</module>
+        <module>terramenta-globe</module>
+        <module>terramenta-layermanager</module>
+        <module>terramenta-annotations</module>
         <module>terramenta-branding</module>
         <module>terramenta-application</module>
-        <module>terramenta-javafx</module>
+        <module>terramenta-time</module>
     </modules>
 </project>

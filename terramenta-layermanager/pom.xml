@@ -2,70 +2,95 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.terramenta</groupId>
         <artifactId>terramenta</artifactId>
+        <groupId>com.terramenta</groupId>
         <version>1.3.0-SNAPSHOT</version>
     </parent>
-    <artifactId>terramenta-core</artifactId>
+
+    <artifactId>terramenta-layermanager</artifactId>
     <packaging>nbm</packaging>
-    <name>Terramenta Core</name>
+    <name>Terramenta Layer Manager</name>
+
 
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-awt</artifactId>
-            <version>${netbeans.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>terramenta-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <artifactId>org-openide-nodes</artifactId>
-            <groupId>org.netbeans.api</groupId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>org-openide-dialogs</artifactId>
-            <groupId>org.netbeans.api</groupId>
-            <version>${netbeans.version}</version>
+            <groupId>com.terrementa</groupId>
+            <artifactId>terramenta-globe</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-util</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>org-netbeans-api-progress</artifactId>
-            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-util-lookup</artifactId>
             <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-windows</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-nodes</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-awt</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-dialogs</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-actions</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-explorer</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>com.terramenta.actions</publicPackage>
-                        <publicPackage>com.terramenta.beans</publicPackage>
-                        <publicPackage>com.terramenta.interfaces</publicPackage>
-                        <publicPackage>com.terramenta.message</publicPackage>
-                        <publicPackage>com.terramenta.utilities</publicPackage>
+                        <publicPackage>com.terramenta.layermanager.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -13,49 +13,45 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbeans.version}</version>
+            <groupId>org.pushingpixels</groupId>
+            <artifactId>flamengo</artifactId>
+            <version>5.0</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util</artifactId>
             <version>${netbeans.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-modules</artifactId>
             <version>${netbeans.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-windows</artifactId>
             <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>org-netbeans-api-progress</artifactId>
-            <groupId>org.netbeans.api</groupId>
-            <version>${netbeans.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <artifactId>org-openide-util-lookup</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>org-openide-awt</artifactId>
-            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-filesystems</artifactId>
             <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.pushingpixels</groupId>
-            <artifactId>flamengo</artifactId>
-            <version>5.0</version>
+            <artifactId>org-openide-awt</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <type>jar</type>
+            <version>${netbeans.version}</version>
         </dependency>
     </dependencies>
 
@@ -64,7 +60,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <extensions>true</extensions>
                 <configuration>
                     <publicPackages>
                         <publicPackage>com.terramenta.ribbon</publicPackage>
@@ -78,16 +73,11 @@
                         <publicPackage>org.w3c.dom</publicPackage>
                         <publicPackage>org.xml.sax</publicPackage>
                         <publicPackage>org.xml.sax.helpers</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.ribbon.resize</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.internal.ui.ribbon</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>
-                        <publicPackage>org.eclipse.swt.widgets</publicPackage>
-                        <publicPackage>org.eclipse.swt.layout</publicPackage>
-                        <publicPackage>org.eclipse.swt.events</publicPackage>
-                        <publicPackage>org.eclipse.swt.graphics</publicPackage>
-                        <publicPackage>com.jgoodies.forms.layout</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

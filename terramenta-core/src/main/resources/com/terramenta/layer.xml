@@ -57,18 +57,6 @@
                 <attr name="iconBase" stringvalue="images/options.png"/>
             </file>
         </folder>
-        <folder name="Animate">
-            <attr name="position" intvalue="200"/>
-            <folder name="Controls">
-                <attr name="position" intvalue="100"/>
-            </folder>
-            <file name="com-terramenta-time-actions-DatetimeBand.instance">
-                <attr name="position" intvalue="200"/>
-            </file>
-            <file name="com-terramenta-time-actions-PerspectiveBand.instance">
-                <attr name="position" intvalue="300"/>
-            </file>
-        </folder>
         <folder name="Window">
             <attr name="position" intvalue="300"/>
             <file name="CloneDocumentAction.shadow_hidden"/>
