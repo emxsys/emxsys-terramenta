@@ -10,6 +10,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import java.util.prefs.Preferences;
 import javax.swing.ButtonModel;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.openide.util.NbPreferences;
 
@@ -17,7 +18,7 @@ import org.openide.util.NbPreferences;
  *
  * @author heidtmare
  */
-public final class GlobeOptions extends javax.swing.JPanel {
+public final class GlobeOptions extends JPanel {
 
     private Preferences pref = NbPreferences.forModule(GlobeOptions.class);
 
@@ -215,7 +216,7 @@ public final class GlobeOptions extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(quickTipsCheckBox)
-                .addContainerGap(429, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,11 +229,11 @@ public final class GlobeOptions extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 164, Short.MAX_VALUE)
+            .addGap(0, 451, Short.MAX_VALUE)
         );
 
         add(jPanel3);

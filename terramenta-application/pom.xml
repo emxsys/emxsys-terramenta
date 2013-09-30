@@ -34,11 +34,11 @@
             <artifactId>terramenta-ribbon</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-globe</artifactId>
             <version>${project.version}</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-time</artifactId>
