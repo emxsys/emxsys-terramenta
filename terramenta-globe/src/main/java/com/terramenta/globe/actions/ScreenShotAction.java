@@ -4,6 +4,7 @@
  */
 package com.terramenta.globe.actions;
 
+import com.sun.opengl.util.Screenshot;
 import com.terramenta.globe.WorldWindManager;
 import gov.nasa.worldwind.event.RenderingEvent;
 import gov.nasa.worldwind.event.RenderingListener;
@@ -23,7 +24,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Tools",
-id = "com.terramenta.actions.ScreenShotAction")
+        id = "com.terramenta.actions.ScreenShotAction")
 @ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
 @ActionReferences({
     @ActionReference(path = "Menu/Tools", position = 9)
@@ -77,7 +78,7 @@ public final class ScreenShotAction extends AbstractAction implements RenderingL
                 GLAutoDrawable glad = (GLAutoDrawable) event.getSource();
                 int[] viewport = new int[4];
                 glad.getGL().glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
-                com.sun.opengl.util.Screenshot.writeToFile(this.snapFile, viewport[2] + 10, viewport[3], false);
+                Screenshot.writeToFile(this.snapFile, viewport[2] + 10, viewport[3], false);
                 glad.getGL().glViewport(0, 0, glad.getWidth(), glad.getHeight());
                 System.out.printf("Image saved to file %s\n", this.snapFile.getCanonicalPath());
             } catch (IOException e) {

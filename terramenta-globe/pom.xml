@@ -106,6 +106,7 @@
                         <publicPackage>gov.nasa.worldwindx.examples.util</publicPackage>
                         <publicPackage>gov.nasa.worldwind.ogc.kml.impl</publicPackage>
                         <publicPackage>gov.nasa.worldwindx.examples</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.examples.analytics</publicPackage>
                         <publicPackage>gov.nasa.worldwind.event</publicPackage>
                         <publicPackage>gov.nasa.worldwind.util.measure</publicPackage>
                         <publicPackage>gov.nasa.worldwind</publicPackage>
