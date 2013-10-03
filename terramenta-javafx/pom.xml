@@ -31,6 +31,7 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
+                        <publicPackage>com.terramenta.fx.utilities</publicPackage>
                         <publicPackage>javafx.scene.layout</publicPackage>
                         <publicPackage>javafx.application</publicPackage>
                         <publicPackage>javafx.collections</publicPackage>
