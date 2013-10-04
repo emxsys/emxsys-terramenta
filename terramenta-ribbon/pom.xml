@@ -79,6 +79,8 @@
                         <publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>
                         <publicPackage>com.jgoodies.forms.layout</publicPackage>
+                        <publicPackage>org.eclipse.swt</publicPackage>
+                        <publicPackage>org.eclipse.swt.dnd</publicPackage>
                         <publicPackage>org.eclipse.swt.widgets</publicPackage>
                         <publicPackage>org.eclipse.swt.events</publicPackage>
                         <publicPackage>org.eclipse.swt.layout</publicPackage>
