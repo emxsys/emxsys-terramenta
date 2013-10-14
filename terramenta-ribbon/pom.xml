@@ -73,6 +73,7 @@
                         <publicPackage>org.w3c.dom</publicPackage>
                         <publicPackage>org.xml.sax</publicPackage>
                         <publicPackage>org.xml.sax.helpers</publicPackage>
+                        <publicPackage>org.xml.sax.ext</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.ribbon.resize</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.internal.ui.ribbon</publicPackage>
