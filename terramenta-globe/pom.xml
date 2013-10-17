@@ -27,6 +27,24 @@
             <artifactId>terramenta-ribbon</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>           
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>        
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>        
+        </dependency>
+        
+        <!-- WORLD WIND-->
         <dependency>
             <groupId>com.sun</groupId>
             <artifactId>jogl</artifactId>
@@ -43,6 +61,8 @@
             <groupId>gov.nasa</groupId>
             <artifactId>worldwindx</artifactId>
         </dependency>
+        
+        
         <dependency>
             <artifactId>beansbinding</artifactId>
             <groupId>org.jdesktop</groupId>
@@ -86,6 +106,11 @@
             <artifactId>org-openide-nodes</artifactId>
             <groupId>org.netbeans.api</groupId>
             <type>jar</type>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-modules</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
     </dependencies>

@@ -1,2 +1,3 @@
 Manifest-Version: 1.0
+OpenIDE-Module-Install: com/terramenta/globe/Installer.class
 OpenIDE-Module-Localizing-Bundle: com/terramenta/globe/Bundle.properties

@@ -18,6 +18,7 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.render.DrawContext;
+import gov.nasa.worldwindx.examples.util.SessionState;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Observable;
@@ -26,6 +27,8 @@ import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -35,24 +38,11 @@ import org.openide.util.lookup.ServiceProvider;
 public class WorldWindManager implements Serializable {
 
     public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
+    private static final Logger logger = LoggerFactory.getLogger(WorldWindManager.class);
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-
-    /**
-     * WorldWind Configuration Settings
-     */
-    static {
-        //System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");// set the TransformFactory to use the Saxon TransformerFactoryImpl method
-        System.setProperty("sun.awt.noerasebackground", "true"); // prevents flashing during window resizing
-
-        //load configuration
-        String config = prefs.get("options.globe.worldwindConfig", DEFAULT_CONFIG);
-        if (config.isEmpty()) {
-            config = DEFAULT_CONFIG;
-        }
-        System.setProperty("gov.nasa.worldwind.app.config.document", config);
-    }
+    private final SessionState sessionState = new SessionState(WorldWindManager.class.getName());
     private final WorldWindowGLJPanel wwd;
     private Observer dateProviderObserver = new Observer() {
         @Override
@@ -92,10 +82,25 @@ public class WorldWindManager implements Serializable {
         }
     };
 
+    /**
+     * WorldWind Configuration Settings
+     */
+    static {
+        //System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");// set the TransformFactory to use the Saxon TransformerFactoryImpl method
+        System.setProperty("sun.awt.noerasebackground", "true"); // prevents flashing during window resizing
+
+        //load configuration
+        String config = prefs.get("options.globe.worldwindConfig", DEFAULT_CONFIG);
+        if (config.isEmpty()) {
+            config = DEFAULT_CONFIG;
+        }
+        System.setProperty("gov.nasa.worldwind.app.config.document", config);
+    }
+
     public WorldWindManager() {
         wwd = new WorldWindowGLJPanel();
         wwd.setModel((Model) WorldWind.createConfigurationComponent(AVKey.MODEL_CLASS_NAME));
-        
+
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
@@ -140,55 +145,26 @@ public class WorldWindManager implements Serializable {
         }
     }
 
-    public void saveState() {
-        System.out.println("WorldWindManager.saveState");
-//        File dir = new File(System.getProperty("user.home") + File.separator + ".terramenta");
-//        if (!dir.exists()) {
-//            dir.mkdir();
-//        }
-//        File file = new File(dir, this.getClass().getName());
-//        try {
-//            file.createNewFile();
-//        } catch (IOException ex) {
-//            Exceptions.printStackTrace(ex);
-//        }
-//        if (file != null) {
-//            ObjectOutputStream out = null;
-//            try {
-//                out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-//                out.writeObject(getLayers());
-//                out.flush();
-//            } catch (IOException ex) {
-//                Exceptions.printStackTrace(ex);
-//            } finally {
-//                try {
-//                    out.close();
-//                } catch (IOException ex) {
-//                    //...
-//                }
-//            }
-//        }
+    public void saveSessionState() {
+        logger.info("Saving Session...");
+        try {
+            sessionState.saveSessionState(wwd);
+        } catch (Exception e) {
+            logger.error("Failed to save session state!", e);
+            return;
+        }
+        logger.info("Session has been saved.");
     }
 
-    public void restoreState() {
-        System.out.println("WorldWindManager.restoreState");
-//        File file = new File(System.getProperty("user.home") + File.separator + ".terramenta" + File.separator + this.getClass().getName());
-//        if (file != null && file.exists()) {
-//            ObjectInputStream in = null;
-//            try {
-//                in = new ObjectInputStream(new GZIPInputStream(new FileInputStream(file)));
-//                getLayers().addAll((LayerList) in.readObject());
-//            } catch (ClassNotFoundException ex) {
-//                Exceptions.printStackTrace(ex);
-//            } catch (IOException ex) {
-//                Exceptions.printStackTrace(ex);
-//            } finally {
-//                try {
-//                    in.close();
-//                } catch (IOException ex) {
-//                    //...
-//                }
-//            }
-//        }
+    public void restoreSessionState() {
+        logger.info("Restoring Session...");
+        try {
+            sessionState.restoreSessionState(wwd);
+            wwd.redraw();
+        } catch (Exception e) {
+            logger.error("Failed to restore session state!", e);
+            return;
+        }
+        logger.info("Session has been restored.");
     }
 }
