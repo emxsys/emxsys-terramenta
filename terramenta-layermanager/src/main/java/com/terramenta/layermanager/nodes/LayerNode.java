@@ -17,12 +17,13 @@ import org.openide.actions.MoveUpAction;
 import org.openide.actions.PropertiesAction;
 import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
+import org.openide.nodes.Children;
 import org.openide.util.Lookup;
 import org.openide.util.WeakListeners;
 import org.openide.util.actions.SystemAction;
 
 /**
- * 
+ *
  * @author heidtmare
  */
 public class LayerNode extends BeanNode implements BooleanState.Provider, Destroyable, PropertyChangeListener {
@@ -32,7 +33,7 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
 
     /**
      *
-     * @param layer 
+     * @param layer
      * @throws IntrospectionException
      */
     public LayerNode(Layer layer) throws IntrospectionException {
@@ -42,22 +43,24 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
         if (layer instanceof KMLLayer) {
             this.setChildren(new KMLFeatureChildren(((KMLLayer) layer).getKmlController().getKmlRoot().getFeature()));
         } else if (layer instanceof RenderableLayer) {
-            this.setChildren(new LayerChildren((RenderableLayer) layer));
+            //this.setChildren(new LayerChildren((RenderableLayer) layer));
+            this.setChildren(Children.create(new RenderableChildFactory((RenderableLayer) layer), false));
         }
+
         layer.addPropertyChangeListener(WeakListeners.propertyChange(this, layer));
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override
     public String getHtmlDisplayName() {
-        Layer layer = (Layer) this.getBean();
+        Layer layer = (Layer) getBean();
         if (layer.isEnabled()) {
-            return this.getName();
+            return getChildren().getNodesCount() != 0 ? getName() + " [" + getChildren().getNodesCount() + "]" : getName();
         } else {
-            return "<font color='AAAAAA'><i>" + this.getName() + "</i></font>";
+            return "<font color='AAAAAA'><i>" + getName() + "</i></font>";
         }
     }
 
@@ -71,7 +74,7 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
     }
 
     /**
-     * 
+     *
      * @param bln
      * @return
      */
@@ -99,11 +102,13 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
                 this.setIconBaseWithExtension(DISABLED_ICON_BASE);
             }
             this.fireDisplayNameChange(null, getDisplayName());
+        } else if (evt.getPropertyName().equals("Renderables")) {
+            this.fireDisplayNameChange(null, getDisplayName());
         }
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override
@@ -112,7 +117,7 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override
