@@ -12,6 +12,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-awt</artifactId>
             <version>${netbeans.version}</version>
@@ -56,6 +71,8 @@
                         <publicPackage>com.terramenta.interfaces</publicPackage>
                         <publicPackage>com.terramenta.message</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
+                        <publicPackage>org.slf4j</publicPackage>
+                        <publicPackage>org.slf4j.impl</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

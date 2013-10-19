@@ -23,12 +23,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class WorldWindManager implements Serializable {
 
     public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
-    private static final Logger logger = LoggerFactory.getLogger(WorldWindManager.class);
+    private static final Logger logger = Logger.getLogger(WorldWindManager.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
@@ -150,7 +150,7 @@ public class WorldWindManager implements Serializable {
         try {
             sessionState.saveSessionState(wwd);
         } catch (Exception e) {
-            logger.error("Failed to save session state!", e);
+            logger.log(Level.SEVERE, "Failed to save session state!", e);
             return;
         }
         logger.info("Session has been saved.");
@@ -162,7 +162,7 @@ public class WorldWindManager implements Serializable {
             sessionState.restoreSessionState(wwd);
             wwd.redraw();
         } catch (Exception e) {
-            logger.error("Failed to restore session state!", e);
+            logger.log(Level.SEVERE, "Failed to restore session state!", e);
             return;
         }
         logger.info("Session has been restored.");
