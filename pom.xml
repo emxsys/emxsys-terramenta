@@ -126,7 +126,7 @@
                     <version>${nbm.plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <useOSGiDependencies>false</useOSGiDependencies>
+                        <useOSGiDependencies>true</useOSGiDependencies>
                         <brandingToken>${brandingToken}</brandingToken>
                         <cluster>${brandingToken}</cluster>
                     </configuration>
