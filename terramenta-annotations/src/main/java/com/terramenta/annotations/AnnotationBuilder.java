@@ -15,6 +15,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.*;
 import gov.nasa.worldwind.util.UnitsFormat;
+import gov.nasa.worldwind.util.measure.LengthMeasurer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -259,13 +260,15 @@ public class AnnotationBuilder extends AVListImpl {
 
     protected String formatLineMeasurements(Position pos) {
         StringBuilder sb = new StringBuilder();
-        sb.append(AnnotationBuilder.unitsFormat.lengthNL("Length", this.shape.getLength(wwd.getModel().getGlobe())));
+        double length = new LengthMeasurer(positions).getLength(wwd.getModel().getGlobe());
+        sb.append(AnnotationBuilder.unitsFormat.lengthNL("Length: ", length));
+        //sb.append(AnnotationBuilder.unitsFormat.lengthNL("Length", this.shape.getLength(wwd.getModel().getGlobe())));
         if (positions.size() > 1) {
             Angle greatCircleAzimuth = LatLon.greatCircleAzimuth(this.positions.get(0), this.positions.get(1));
-            sb.append(AnnotationBuilder.unitsFormat.angleNL("Orientation", greatCircleAzimuth));
+            sb.append(AnnotationBuilder.unitsFormat.angleNL("Orientation: ", greatCircleAzimuth));
         }
-        sb.append(AnnotationBuilder.unitsFormat.angleNL("Latitude", pos.getLatitude()));
-        sb.append(AnnotationBuilder.unitsFormat.angleNL("Longitude", pos.getLongitude()));
+        sb.append(AnnotationBuilder.unitsFormat.angleNL("Latitude: ", pos.getLatitude()));
+        sb.append(AnnotationBuilder.unitsFormat.angleNL("Longitude: ", pos.getLongitude()));
         return sb.toString();
     }
 
