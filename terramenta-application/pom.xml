@@ -68,28 +68,6 @@
             <artifactId>terramenta-layermanager</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
-        <!-- MOOS -->
-        <dependency>
-            <groupId>mil.af.aftac.moos.common.bindings</groupId>
-            <artifactId>moos-binding</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
-            <artifactId>terramenta-dasclient</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
-            <artifactId>terramenta-moosanalyst</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>        
-        <dependency>
-            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
-            <artifactId>terramenta-moosrta</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -128,8 +106,4 @@
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>
     </build>
-    <properties>
-        <netbeans.run.params.ide/>
-        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    </properties>
 </project>
