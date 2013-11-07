@@ -12,6 +12,7 @@ import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.pick.PickedObject;
 import gov.nasa.worldwind.pick.PickedObjectList;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -81,7 +82,7 @@ public class SelectController implements SelectListener, Disposable {
     @Override
     public void selected(SelectEvent e) {
         if (e.isLeftClick() && e.hasObjects()) {
-            doSelect(e.getTopObject());
+            doSelect(e.getPickPoint(), e.getTopObject());
         } else if (e.isRightClick() && e.hasObjects()) {
             PickedObjectList pickedObjects = e.getObjects();
             if (!pickedObjects.hasNonTerrainObjects()) {
@@ -106,27 +107,27 @@ public class SelectController implements SelectListener, Disposable {
                         icon = ImageUtilities.loadImageIcon(av.getStringValue(AVKey.DISPLAY_ICON), true);
                     }
                 }
-                popup.add(new JMenuItem(new ContextMenuItemAction(name, icon, userObject)));
+                popup.add(new JMenuItem(new ContextMenuItemAction(name, icon, e.getPickPoint(), userObject)));
             }
             popup.show((Component) e.getSource(), e.getMouseEvent().getX(), e.getMouseEvent().getY());
         } else if (e.isHover() && e.hasObjects()) {
-            doHover(e.getTopObject());
+            doHover(e.getPickPoint(), e.getTopObject());
         } else if (e.isRollover() && e.hasObjects()) {
-            doRollover(e.getTopObject());
+            doRollover(e.getPickPoint(), e.getTopObject());
         }
 
         e.consume();
     }
 
-    private static void doSelect(Object obj) {
+    private static void doSelect(Point point, Object obj) {
         if (lastSelect != null) {
-            lastSelect.firePropertyChange("SELECT", null, false);
+            lastSelect.firePropertyChange("SELECT", null, null);
             lastSelect = null;
         }
 
         if (obj instanceof AVList) {
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("SELECT", null, true);
+            avl.firePropertyChange("SELECT", null, point);
             lastSelect = avl;
         }
 //we use to open a properties sheet by default, but it sometimes opened at undesireble moments
@@ -139,28 +140,28 @@ public class SelectController implements SelectListener, Disposable {
 //        }
     }
 
-    private static void doHover(Object obj) {
+    private static void doHover(Point point, Object obj) {
         if (lastHover != null) {
-            lastHover.firePropertyChange("HOVER", null, false);
+            lastHover.firePropertyChange("HOVER", null, null);
             lastHover = null;
         }
 
         if (obj instanceof AVList) {
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("HOVER", null, true);
+            avl.firePropertyChange("HOVER", null, point);
             lastHover = avl;
         }
     }
 
-    private static void doRollover(Object obj) {
+    private static void doRollover(Point point, Object obj) {
         if (lastRollover != null) {
-            lastRollover.firePropertyChange("ROLLOVER", null, false);
+            lastRollover.firePropertyChange("ROLLOVER", null, null);
             lastRollover = null;
         }
 
         if (obj instanceof AVList) {
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("ROLLOVER", null, true);
+            avl.firePropertyChange("ROLLOVER", null, point);
             lastRollover = avl;
         }
     }
@@ -171,21 +172,24 @@ public class SelectController implements SelectListener, Disposable {
     public static class ContextMenuItemAction extends AbstractAction {
 
         private final Object sel;
+        private final Point pnt;
 
         /**
          *
          * @param name
          * @param icon
+         * @param pnt
          * @param sel
          */
-        public ContextMenuItemAction(String name, Icon icon, Object sel) {
+        public ContextMenuItemAction(String name, Icon icon, Point pnt, Object sel) {
             super(name, icon);
+            this.pnt = pnt;
             this.sel = sel;
         }
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            doSelect(sel);
+            doSelect(pnt, sel);
         }
     }
 }

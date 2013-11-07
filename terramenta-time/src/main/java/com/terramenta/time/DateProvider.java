@@ -14,7 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class DateProvider extends Observable {
 
     //utc
-    private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+    private final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 
     /**
      * get the date

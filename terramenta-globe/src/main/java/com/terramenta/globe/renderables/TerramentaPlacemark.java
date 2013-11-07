@@ -11,6 +11,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PreRenderable;
+import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -25,11 +26,11 @@ public class TerramentaPlacemark extends PointPlacemark implements PreRenderable
     private static final PropertyChangeListener selectionListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue().equals(Boolean.TRUE)) {
+            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue() != null) {
+                Point pnt = (Point) evt.getNewValue();
+            } else if (evt.getPropertyName().equals("HOVER") && evt.getNewValue() != null) {
                 //...
-            } else if (evt.getPropertyName().equals("HOVER") && evt.getNewValue().equals(Boolean.TRUE)) {
-                //...
-            } else if (evt.getPropertyName().equals("ROLLOVER") && evt.getNewValue().equals(Boolean.TRUE)) {
+            } else if (evt.getPropertyName().equals("ROLLOVER") && evt.getNewValue() != null) {
                 //...
             }
         }

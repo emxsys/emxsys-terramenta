@@ -51,7 +51,7 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
      *
      */
     public void start() {
-        LOGGER.log(Level.INFO, "Starting Task {0}", runnable);
+        LOGGER.log(Level.FINE, "Starting Task {0}", runnable);
 
         if (handle != null) {
             handle.start();
@@ -71,7 +71,7 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
                     handle.finish();
                 }
 
-                LOGGER.log(Level.INFO, "Completed Task {0}", runnable);
+                LOGGER.log(Level.FINE, "Completed Task {0}", runnable);
                 setChanged();
                 notifyObservers(runnable);
             }
@@ -80,6 +80,7 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
 
     /**
      *
+     * @return
      */
     @Override
     public boolean cancel() {

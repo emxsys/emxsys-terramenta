@@ -9,13 +9,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import javax.xml.bind.DatatypeConverter;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author chris.heidt
  */
-@ServiceProvider(service = DateUtilities.class)
 public class DateUtilities {
 
     /**
@@ -24,7 +22,7 @@ public class DateUtilities {
      * @param s
      * @return
      */
-    public Calendar toCalendar(String s) {
+    public static Calendar toCalendar(String s) {
         return DatatypeConverter.parseDateTime(s);
     }
 
@@ -34,7 +32,7 @@ public class DateUtilities {
      * @param s
      * @return
      */
-    public Date toDate(String s) {
+    public static Date toDate(String s) {
         return toCalendar(s).getTime();
     }
 
@@ -44,7 +42,7 @@ public class DateUtilities {
      * @param c
      * @return
      */
-    public String toString(Calendar c) {
+    public static String toString(Calendar c) {
         return DatatypeConverter.printDateTime(c);
     }
 
@@ -54,7 +52,7 @@ public class DateUtilities {
      * @param d
      * @return
      */
-    public String toString(Date d) {
+    public static String toString(Date d) {
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(d);
         return toString(c);
@@ -67,7 +65,7 @@ public class DateUtilities {
      * @param tz
      * @return
      */
-    public String toString(Date d, TimeZone tz) {
+    public static String toString(Date d, TimeZone tz) {
         Calendar c = GregorianCalendar.getInstance(tz);
         c.setTime(d);
         return toString(c);
