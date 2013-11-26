@@ -68,6 +68,11 @@
             <artifactId>terramenta-layermanager</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>terramenta-javafx</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -106,4 +111,8 @@
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>
     </build>
+    <properties>
+        <netbeans.run.params.ide/>
+        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
+    </properties>
 </project>

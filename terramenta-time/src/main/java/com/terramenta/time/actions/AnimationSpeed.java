@@ -13,8 +13,8 @@ public enum AnimationSpeed {
     SLOW("Slow: 30 seconds", 30000),
     MEDIUM("Medium: 10 minutes", 600000),
     FAST("Fast: 30 minutes", 1800000);
-    private String label;
-    private int increment;
+    private final String label;
+    private final int increment;
 
     AnimationSpeed(String label, int increment) {
         this.label = label;

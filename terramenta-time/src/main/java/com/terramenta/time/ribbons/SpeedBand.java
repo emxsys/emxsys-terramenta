@@ -2,17 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.terramenta.time.actions;
+package com.terramenta.time.ribbons;
 
 //import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.ribbon.api.ResizableIcons;
+import com.terramenta.time.actions.AnimationSpeed;
+import com.terramenta.time.actions.TimeActionController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
-import org.openide.util.NbPreferences;
 import org.pushingpixels.flamingo.api.common.CommandToggleButtonGroup;
 import org.pushingpixels.flamingo.api.common.JCommandToggleButton;
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand;
@@ -24,7 +24,7 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  *
  * @author Chris.Heidt
  */
-public class PerspectiveBand extends JRibbonBand {
+public class SpeedBand extends JRibbonBand {
 
     //private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
@@ -41,8 +41,8 @@ public class PerspectiveBand extends JRibbonBand {
         }
     };
 
-    public PerspectiveBand() {
-        super("Perspective", ResizableIcons.fromResource("images/controlSpeedSlow.png"));
+    public SpeedBand() {
+        super("Speed", ResizableIcons.fromResource("images/controlSpeedSlow.png"));
 
         setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(
                 new CoreRibbonResizePolicies.None(getControlPanel()),
@@ -50,7 +50,6 @@ public class PerspectiveBand extends JRibbonBand {
                 new CoreRibbonResizePolicies.High2Mid(getControlPanel()),
                 new CoreRibbonResizePolicies.Mid2Low(getControlPanel()),
                 new CoreRibbonResizePolicies.High2Low(getControlPanel())));
-
 
         setPreferredSize(new Dimension(40, 60));
 
@@ -82,11 +81,9 @@ public class PerspectiveBand extends JRibbonBand {
 //        ecefBtn.getActionModel().setSelected(!isEci);
 //        ecefBtn.getActionModel().setActionCommand("ECEF");
 //        ecefBtn.addActionListener(eciListener);
-
 //        CommandToggleButtonGroup perspectiveGroup = new CommandToggleButtonGroup();
 //        perspectiveGroup.add(eciBtn);
 //        perspectiveGroup.add(ecefBtn);
-
         //layout
         addCommandButton(slowButton, RibbonElementPriority.MEDIUM);
         addCommandButton(mediumButton, RibbonElementPriority.MEDIUM);
