@@ -10,8 +10,19 @@ package com.terramenta.time.actions;
  */
 public enum AnimationSpeed {
 
+    /**
+     *
+     */
     SLOW("Slow: 30 seconds", 30000),
+
+    /**
+     *
+     */
     MEDIUM("Medium: 10 minutes", 600000),
+
+    /**
+     *
+     */
     FAST("Fast: 30 minutes", 1800000);
     private final String label;
     private final int increment;
@@ -21,6 +32,10 @@ public enum AnimationSpeed {
         this.increment = increment;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMilliseconds() {
         return increment;
     }

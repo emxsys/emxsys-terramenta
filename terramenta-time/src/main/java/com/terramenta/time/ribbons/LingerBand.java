@@ -32,6 +32,9 @@ public class LingerBand extends JFlowRibbonBand implements ActionListener, Chang
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
     private final JSlider slider;
 
+    /**
+     *
+     */
     public LingerBand() {
         super(Bundle.LBL_TimeLingerAction(), null);
 

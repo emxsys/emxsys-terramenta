@@ -14,6 +14,11 @@ import java.util.TimeZone;
  */
 public class JulianConversions {
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static double convertToJD(Date date) {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         cal.set(-4713, 0, 1, 12, 0, 0);

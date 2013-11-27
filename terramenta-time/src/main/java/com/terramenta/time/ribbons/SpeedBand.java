@@ -41,6 +41,9 @@ public class SpeedBand extends JRibbonBand {
         }
     };
 
+    /**
+     *
+     */
     public SpeedBand() {
         super("Speed", ResizableIcons.fromResource("images/controlSpeedSlow.png"));
 
