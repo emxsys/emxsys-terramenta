@@ -114,6 +114,10 @@ public class AnnotationBuilder extends AVListImpl {
             wwd.getModel().getLayers().add(layer);
         }
         layer.addRenderable(shape);
+        
+        //USECASE: signals layer manager that the layer has modified children
+        //         and the count in the display name should be updated
+        layer.firePropertyChange("Renderables", null, layer.getRenderables());
     }
 
     public AnnotationBuilder(final WorldWindow wwd, SurfaceShape shape, RenderableLayer layer) {

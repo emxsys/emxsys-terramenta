@@ -44,7 +44,7 @@ public class WorldWindManager implements Serializable {
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
     private final SessionState sessionState = new SessionState(WorldWindManager.class.getName());
     private final WorldWindowGLJPanel wwd;
-    private Observer dateProviderObserver = new Observer() {
+    private final Observer dateProviderObserver = new Observer() {
         @Override
         public void update(Observable o, Object arg) {
             Date date;
