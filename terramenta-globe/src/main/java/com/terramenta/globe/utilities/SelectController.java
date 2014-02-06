@@ -110,13 +110,17 @@ public class SelectController implements SelectListener, Disposable {
                 popup.add(new JMenuItem(new ContextMenuItemAction(name, icon, e.getPickPoint(), userObject)));
             }
             popup.show((Component) e.getSource(), e.getMouseEvent().getX(), e.getMouseEvent().getY());
+
+            //assuming its safe to consume after displaying a popup
+            e.consume();
         } else if (e.isHover() && e.hasObjects()) {
             doHover(e.getPickPoint(), e.getTopObject());
         } else if (e.isRollover() && e.hasObjects()) {
             doRollover(e.getPickPoint(), e.getTopObject());
         }
 
-        e.consume();
+        //Consuming the event was disabling the view controls
+        //e.consume();
     }
 
     private static void doSelect(Point point, Object obj) {
