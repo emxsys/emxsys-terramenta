@@ -5,7 +5,10 @@
  */
 package com.terramenta.time.options;
 
-import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.prefs.Preferences;
 import org.openide.util.NbPreferences;
@@ -14,9 +17,14 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
     private static final Preferences prefs = NbPreferences.forModule(TimeOptions.class);
     private final TimeOptionsPanelController controller;
+    private final List<String> languageTags = new ArrayList();
 
     TimeOptionsPanel(TimeOptionsPanelController controller) {
         this.controller = controller;
+        for (Locale locale : Calendar.getAvailableLocales()) {
+            languageTags.add(locale.toLanguageTag());
+        }
+
         initComponents();
         // TODO listen to changes in form fields and call controller.changed()
     }
@@ -44,7 +52,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(TimeOptionsPanel.class, "TimeOptionsPanel.jLabel2.text")); // NOI18N
 
-        localeCombo.setModel(new javax.swing.DefaultComboBoxModel(DateFormat.getAvailableLocales()));
+        localeCombo.setModel(new javax.swing.DefaultComboBoxModel(languageTags.toArray(new String[languageTags.size()])));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

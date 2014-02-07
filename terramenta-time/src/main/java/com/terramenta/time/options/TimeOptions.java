@@ -6,6 +6,8 @@
 
 package com.terramenta.time.options;
 
+import java.util.Locale;
+
 /**
  *
  * @author Chris.Heidt
@@ -15,5 +17,5 @@ public class TimeOptions {
     public static final String LOCALE = "tm.time.locale";
     
     public static final String DEFAULT_TIMEZONE = "UTC";
-    public static final String DEFAULT_LOCALE = "en_US";
+    public static final String DEFAULT_LOCALE = Locale.getDefault().toLanguageTag();
 }
