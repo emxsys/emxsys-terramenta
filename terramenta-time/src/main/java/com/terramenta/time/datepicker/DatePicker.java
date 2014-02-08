@@ -283,7 +283,7 @@ public class DatePicker extends TextField {
                 fields = new ArrayList<String>();
                 while (matcher.find()) {
                     String group = matcher.group();
-                    if (group.matches(".*[GWwFzZ]+.*")) {
+                    if (group.matches(".*[GWwFZ]+.*")) {
                         throw new IllegalArgumentException("The formatted string " + group + " is not supported");
                     } else {
                         fields.add(group);
