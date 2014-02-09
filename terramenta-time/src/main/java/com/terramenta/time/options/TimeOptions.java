@@ -15,7 +15,9 @@ import java.util.Locale;
 public class TimeOptions {
     public static final String TIMEZONE = "tm.time.timezone";
     public static final String LOCALE = "tm.time.locale";
+    public static final String FORMAT = "tm.time.format";
     
     public static final String DEFAULT_TIMEZONE = "UTC";
     public static final String DEFAULT_LOCALE = Locale.getDefault().toLanguageTag();
+    public static final String DEFAULT_FORMAT = "yyyy/MM/dd HH:mm:ss";
 }

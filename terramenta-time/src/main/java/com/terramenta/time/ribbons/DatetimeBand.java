@@ -58,7 +58,7 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
 
     private Scene createScene() {
         picker = new DatePicker(
-                "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+                prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT),
                 TimeZone.getTimeZone(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE)),
                 Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))
         );
