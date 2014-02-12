@@ -27,16 +27,21 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon;
 
 /**
+ * This class defines the UI implementations to use for various UI classes. It is used by the
+ * Installer.initLAF() method.
  *
- * @author Chris
+ * @see Installer
+ * @author Chris Böhme
  */
 class LAFConfiguration {
 
     public static Object[] getClassDefaults() {
-        return new Object[]{"RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.NbRibbonApplicationMenuButtonUI"};
+        return new Object[]{
+            "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
+            "RibbonUI", "com.terramenta.ribbon.FileRibbonUI",
+        };
     }
 }
