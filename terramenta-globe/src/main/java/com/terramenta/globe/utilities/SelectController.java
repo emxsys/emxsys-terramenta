@@ -19,6 +19,8 @@ import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import org.openide.util.ImageUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,6 +28,7 @@ import org.openide.util.ImageUtilities;
  */
 public class SelectController implements SelectListener, Disposable {
 
+    private static final Logger logger = LoggerFactory.getLogger(SelectController.class);
     private static AVList lastSelect = null;
     private static AVList lastHover = null;
     private static AVList lastRollover = null;
@@ -81,9 +84,20 @@ public class SelectController implements SelectListener, Disposable {
      */
     @Override
     public void selected(SelectEvent e) {
-        if (e.isLeftClick() && e.hasObjects()) {
+        if (!e.hasObjects()) {
+            return;
+        }
+
+        if (e.isLeftPress()) {
             doSelect(e.getPickPoint(), e.getTopObject());
-        } else if (e.isRightClick() && e.hasObjects()) {
+
+        } else if (e.isHover()) {
+            doHover(e.getPickPoint(), e.getTopObject());
+
+        } else if (e.isRollover()) {
+            doRollover(e.getPickPoint(), e.getTopObject());
+
+        } else if (e.isRightClick()) {
             PickedObjectList pickedObjects = e.getObjects();
             if (!pickedObjects.hasNonTerrainObjects()) {
                 return;
@@ -113,44 +127,44 @@ public class SelectController implements SelectListener, Disposable {
 
             //assuming its safe to consume after displaying a popup
             e.consume();
-        } else if (e.isHover() && e.hasObjects()) {
-            doHover(e.getPickPoint(), e.getTopObject());
-        } else if (e.isRollover() && e.hasObjects()) {
-            doRollover(e.getPickPoint(), e.getTopObject());
         }
-
-        //Consuming the event was disabling the view controls
-        //e.consume();
     }
 
     private static void doSelect(Point point, Object obj) {
+
+        //prevent multiple select events from a single item within a 10 millisecond window
+        if (obj.equals(lastSelect)) {
+            if (lastSelect.hasKey("selectionTimeMillis")) {
+                if ((System.currentTimeMillis() - (long) lastSelect.getValue("selectionTimeMillis")) < 10) {
+                    return;
+                }
+            }
+        }
+
         if (lastSelect != null) {
+            logger.info("Unselecting {}", lastSelect);
             lastSelect.firePropertyChange("SELECT", null, null);
             lastSelect = null;
         }
 
         if (obj instanceof AVList) {
+            logger.info("Selecting {}", obj);
             AVList avl = (AVList) obj;
+            avl.setValue("selectionTimeMillis", System.currentTimeMillis());
             avl.firePropertyChange("SELECT", null, point);
             lastSelect = avl;
         }
-//we use to open a properties sheet by default, but it sometimes opened at undesireble moments
-//        else {
-//            try {
-//                NodeOperation.getDefault().showProperties(new BeanNode(obj));
-//            } catch (IntrospectionException ex) {
-//                Exceptions.printStackTrace(ex);
-//            }
-//        }
     }
 
     private static void doHover(Point point, Object obj) {
         if (lastHover != null) {
+            logger.debug("Unhovering {}", lastHover);
             lastHover.firePropertyChange("HOVER", null, null);
             lastHover = null;
         }
 
         if (obj instanceof AVList) {
+            logger.debug("Hovering {}", obj);
             AVList avl = (AVList) obj;
             avl.firePropertyChange("HOVER", null, point);
             lastHover = avl;
@@ -159,11 +173,13 @@ public class SelectController implements SelectListener, Disposable {
 
     private static void doRollover(Point point, Object obj) {
         if (lastRollover != null) {
+            logger.debug("Unrollovering {}", lastRollover);
             lastRollover.firePropertyChange("ROLLOVER", null, null);
             lastRollover = null;
         }
 
         if (obj instanceof AVList) {
+            logger.debug("Rollovering {}", obj);
             AVList avl = (AVList) obj;
             avl.firePropertyChange("ROLLOVER", null, point);
             lastRollover = avl;
