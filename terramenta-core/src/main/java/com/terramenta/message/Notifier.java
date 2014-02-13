@@ -10,6 +10,14 @@ import org.openide.awt.NotificationDisplayer;
 
 public class Notifier {
 
+    // XML 1.1
+    // [#x1-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+    private static final String xml11pattern = "[^"
+            + "\u0001-\uD7FF"
+            + "\uE000-\uFFFD"
+            + "\ud800\udc00-\udbff\udfff"
+            + "]+";
+
     private Notifier() {
     }
 
@@ -17,7 +25,10 @@ public class Notifier {
      * Show message with the specified type and action listener
      */
     public static void show(String title, String message, MessageType type, ActionListener actionListener) {
-        NotificationDisplayer.getDefault().notify(title, type.getIcon(), message, actionListener);
+        String cleanTitle = title.replaceAll(xml11pattern, "");
+        String cleanMessage = message.replaceAll(xml11pattern, "");
+
+        NotificationDisplayer.getDefault().notify(cleanTitle, type.getIcon(), cleanMessage, actionListener);
     }
 
     /**
@@ -25,6 +36,9 @@ public class Notifier {
      * with the same message type
      */
     public static void show(String title, final String message, final MessageType type) {
+        String cleanTitle = title.replaceAll(xml11pattern, "");
+        String cleanMessage = message.replaceAll(xml11pattern, "");
+
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,7 +46,7 @@ public class Notifier {
             }
         };
 
-        show(title, message, type, actionListener);
+        NotificationDisplayer.getDefault().notify(cleanTitle, type.getIcon(), cleanMessage, actionListener);
     }
 
     /**
