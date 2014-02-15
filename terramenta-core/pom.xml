@@ -46,6 +46,11 @@
             <groupId>org.netbeans.api</groupId>
             <version>${netbeans.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-extbrowser</artifactId>
+            <version>RELEASE74</version>
+        </dependency>
     </dependencies>
 
     <build>
