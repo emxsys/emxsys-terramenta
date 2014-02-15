@@ -30,6 +30,7 @@
 package com.terramenta.ribbon.spi;
 
 import com.terramenta.ribbon.LayerRibbonComponentProvider;
+import java.awt.Dimension;
 import javax.swing.JComponent;
 import org.openide.util.Lookup;
 
@@ -40,6 +41,10 @@ import org.openide.util.Lookup;
 public abstract class RibbonComponentProvider {
 
     public abstract JComponent createRibbon();
+    
+    private static boolean usingPopupMenus = true;
+    
+    private static Dimension preferredBandSize = new Dimension(40, 60); // orginal is (40, 60);
 
     public static RibbonComponentProvider getDefault() {
         RibbonComponentProvider provider = Lookup.getDefault().lookup(RibbonComponentProvider.class);
@@ -48,4 +53,22 @@ public abstract class RibbonComponentProvider {
         }
         return provider;
     }
+
+    public static boolean isUsingPopupMenus() {
+        return usingPopupMenus;
+    }
+
+    public static void setUsePopupMenus(boolean usePopupMenus) {
+        RibbonComponentProvider.usingPopupMenus = usePopupMenus;
+    }
+
+    public static Dimension getPreferredBandSize() {
+        return preferredBandSize;
+    }
+
+    public static void setPreferredBandSize(Dimension preferredSize) {
+        RibbonComponentProvider.preferredBandSize = preferredSize;
+    }
+    
+    
 }
