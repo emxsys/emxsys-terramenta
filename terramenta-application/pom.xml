@@ -85,7 +85,11 @@
                     <licenseName>CDDL, Version 1.0</licenseName>
                     <licenseFile>license.txt</licenseFile>
                     <etcConfFile>terramenta.conf</etcConfFile>
-                </configuration>
+                    <installerOsWindows>true</installerOsWindows>
+                    <installerOsSolaris>false</installerOsSolaris>
+                    <installerLicenseFile>CDDL-1.0.txt</installerLicenseFile>
+                    <installerPack200Enable>true</installerPack200Enable>                 
+                </configuration>                
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -107,7 +111,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>            
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>
     </build>
