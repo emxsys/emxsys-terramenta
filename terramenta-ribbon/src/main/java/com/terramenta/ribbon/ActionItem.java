@@ -50,7 +50,7 @@ import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
  * 
  * @author Chris
  */
-abstract class ActionItem {
+public abstract class ActionItem {
 
     public static final String MENU_TEXT = "menuText";
     public static final String POPUP_TEXT = "popupText";
@@ -248,7 +248,7 @@ abstract class ActionItem {
      * Get the icon of the ActionItem.
      *
      * @return If not null: icon defined under ActionItem.ICON_BASE Otherwise If both not null:
-     * ResizableIcons.binary(Action.SMALL_ICON, Action.LARGE_ICON_KEY); Otherwise null
+     * ResizableIcons.binary(Action.SMALL_ICON, Action.LARGE_ICON_KEY); Otherwise an empty icon
      */
     public ResizableIcon getIcon() {
         String iconResource = (String) getValue(ICON_BASE);
@@ -260,7 +260,7 @@ abstract class ActionItem {
             if (small != null || large != null) {
                 return ResizableIcons.binary(small, large);
             } else {
-                return null;
+                return ResizableIcons.empty();
             }
         }
     }
