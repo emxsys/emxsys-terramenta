@@ -47,8 +47,8 @@ public class AnnotationBuilder extends AVListImpl {
         labelAttributes.setTextAlign(AVKey.CENTER);
         labelAttributes.setEffect(AVKey.TEXT_EFFECT_OUTLINE);
         labelAttributes.setFont(Font.decode("Arial-Bold-14"));
-        labelAttributes.setTextColor(Color.WHITE);
-        labelAttributes.setBackgroundColor(Color.BLACK);
+        labelAttributes.setTextColor(Color.BLACK);
+        labelAttributes.setBackgroundColor(Color.WHITE);
         labelAttributes.setSize(new Dimension(220, 0));
     }
     private final MouseAdapter ma = new MouseAdapter() {
