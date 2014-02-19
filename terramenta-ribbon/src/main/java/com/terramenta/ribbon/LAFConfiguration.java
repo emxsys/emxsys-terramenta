@@ -29,6 +29,8 @@
  */
 package com.terramenta.ribbon;
 
+import com.terramenta.ribbon.spi.RibbonPreferencesProvider;
+
 /**
  * This class defines the UI implementations to use for various UI classes. It is used by the
  * Installer.initLAF() method.
@@ -39,9 +41,11 @@ package com.terramenta.ribbon;
 class LAFConfiguration {
 
     public static Object[] getClassDefaults() {
-        return new Object[]{
-            "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
-            "RibbonUI", "com.terramenta.ribbon.FileRibbonUI",
-        };
+        Object[] lafClassDefaults = RibbonPreferencesProvider.getDefault().getLafClassDefaults();
+        return lafClassDefaults == null
+                ? new Object[]{
+                    "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
+                    "RibbonUI", "com.terramenta.ribbon.FileRibbonUI"}
+                : lafClassDefaults;
     }
 }

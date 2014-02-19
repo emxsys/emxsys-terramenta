@@ -31,7 +31,7 @@ package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.api.ResizableIcons;
 import com.terramenta.ribbon.api.RibbonPresenter;
-import com.terramenta.ribbon.spi.RibbonComponentProvider;
+import com.terramenta.ribbon.spi.RibbonPreferencesProvider;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -64,20 +64,18 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  * @author Chris Böhme
  * @author Bruce Schubert (contributor)
  */
-class RibbonComponentFactory {
+public class RibbonComponentFactory {
 
-    public final static Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());
-    // BTW, the default size is Dimmension(width=6,height=96)
-    public final Dimension BAND_PREFERRED_SIZE = RibbonComponentProvider.getPreferredBandSize();
-
-    // A Dimmension(width=6,height=88) will accomodate a 32x32 icon with small fonts
-    public final static Dimension BAND_PREFERRED_SIZE_32x32_SMALLFONT = new Dimension(60, 90);
-    // A Dimmension(width=60,height=82) will accomodates 24x24 icons (vs 32x32) 
-    public final static Dimension BAND_PREFERRED_SIZE_24x24_WIDE = new Dimension(60, 82);
+    public final static Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());   
+    // Default ribbon band size used if not provided in preferences
+    public final Dimension BAND_PREFERRED_SIZE_DEFAULT = new Dimension(40, 60);
     // Maximun number of rows in a JCommandButtonPanel before a scroll bar is activated
     public final static int BUTTON_PANEL_MAX_ROWS = 8;
     // Maximun number of columns in a JCommandButtonPanel 
     public final static int BUTTON_PANEL_MAX_COLS = 6;
+    
+    // Ribbon preferences
+    RibbonPreferencesProvider preferences = RibbonPreferencesProvider.getDefault();
 
     /**
      * Creates an entry for the application menu (e.g., the FILE menu).
@@ -85,7 +83,7 @@ class RibbonComponentFactory {
      * @param item
      * @return
      */
-    public RibbonApplicationMenuEntryPrimary createAppMenuPresenter(ActionItem item) {
+     RibbonApplicationMenuEntryPrimary createAppMenuPresenter(ActionItem item) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.AppMenu.class.isAssignableFrom(action.getClass())) {
             return ((RibbonPresenter.AppMenu) action).getPrimaryMenuEntry();
@@ -119,7 +117,7 @@ class RibbonComponentFactory {
      * @param item
      * @return
      */
-    private RibbonApplicationMenuEntrySecondary createAppMenuSecondaryPresenter(ActionItem item) {
+     RibbonApplicationMenuEntrySecondary createAppMenuSecondaryPresenter(ActionItem item) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.AppMenuSecondary.class.isAssignableFrom(action.getClass())) {
             return ((RibbonPresenter.AppMenuSecondary) action).getSecondaryMenuEntry();
@@ -255,7 +253,7 @@ class RibbonComponentFactory {
      * @return a new RibbonTask
      */
     public RibbonTask createRibbonTask(ActionItem actionItem) {
-        boolean usingPopupMenus = RibbonComponentProvider.getDefault().isUsingPopupMenus();
+        boolean usingPopupMenus = preferences.getUsePopupMenus();
         List<AbstractRibbonBand> bands = usingPopupMenus ? createRibbonBandsWithPopups(actionItem) : createRibbonBands(actionItem);
         return new RibbonTask(actionItem.getText(), bands.toArray(new AbstractRibbonBand[bands.size()]));
     }
@@ -306,7 +304,7 @@ class RibbonComponentFactory {
         }
         if (!tasks.isEmpty()) {
             String title = NbBundle.getMessage(RibbonComponentFactory.class, "LBL_TasksBandTitle"); // NOI18N
-            if (title.isEmpty()) {
+            if (title.isEmpty() || RibbonPreferencesProvider.getDefault().getUseTabNameForTasksBand()) {
                 title = actionItem.getText();  // use the task pane tab name as the band name
             }
             bands.add(createRibbonBand(title, tasks));
@@ -377,9 +375,10 @@ class RibbonComponentFactory {
      */
     private JRibbonBand createRibbonBand(String name, List<ActionItem> actionItems) {
         //TODO icon
-        boolean usingPopupMenus = RibbonComponentProvider.getDefault().isUsingPopupMenus();
+        boolean usingPopupMenus = preferences.getUsePopupMenus();
         JRibbonBand band = new JRibbonBand(name, ResizableIcons.empty(), getDefaultAction(actionItems));
-        band.setPreferredSize(BAND_PREFERRED_SIZE);
+        Dimension preferredBandSize = preferences.getPreferredBandSize();
+        band.setPreferredSize(preferredBandSize != null ? preferredBandSize : BAND_PREFERRED_SIZE_DEFAULT);
         for (ActionItem child : actionItems) {
             if (child.isSeparator()) {
                 band.startGroup();
