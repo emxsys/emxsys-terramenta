@@ -8,7 +8,6 @@ package com.terramenta.ribbon.spi;
 import java.awt.Dimension;
 import org.openide.util.Lookup;
 
-
 /**
  * RibbonPreferencesProvider is an service provider interface used by the application for injecting
  * its ribbon configuration into the RibbonCompontentProvider.
@@ -16,8 +15,7 @@ import org.openide.util.Lookup;
  * @author Bruce Schubert
  * @version $Id$
  */
-public abstract class RibbonPreferencesProvider
-{
+public abstract class RibbonPreferencesProvider {
 
     /**
      * Get the LAF class defaults for the Ribbon. The following UI classes can be defined:
@@ -34,15 +32,21 @@ public abstract class RibbonPreferencesProvider
      */
     public abstract Object[] getLafClassDefaults();
 
-
     /**
      * Gets the preferred width and height of a Ribbon Band, which controls the overall height of
      * the Ribbon menu.
      *
+     * A Dimension(width=60,height=96) will support a 32x32 icon with two lines of text.
+     *
+     * A Dimension(width=60,height=88) will accommodate a 32x32 icon with small fonts.
+     *
+     * A Dimension(width=60,height=82) will accommodates 24x24 icons with text (vs 32x32)
+     *
+     * A Dimension(width=40,height=60) will accommodates 32x32 icons without text.
+     * 
      * @return preferred width and height of a band.
      */
     public abstract Dimension getPreferredBandSize();
-
 
     /**
      * Determines whether sub-menus are placed in a ribbon band or in a pop-up menu.
@@ -51,7 +55,6 @@ public abstract class RibbonPreferencesProvider
      */
     public abstract boolean getUsePopupMenus();
 
-
     /**
      * Determines the name of the band used for root level menu items.
      *
@@ -59,53 +62,58 @@ public abstract class RibbonPreferencesProvider
      */
     public abstract boolean getUseTabNameForTasksBand();
 
+    /**
+     * Determines whether the button text is displayed with the button icon.
+     *
+     * @return true to always display the button text.
+     */
+    public abstract boolean getAlwaysDisplayButtonText();
 
-    public static RibbonPreferencesProvider getDefault()
-    {
+    /**
+     * Service provider interface for the ribbon preferences.
+     *
+     * @return the provider found on the the global lookup; if not found, the default Terramenta
+     * preferences provider is returned.
+     */
+    public static RibbonPreferencesProvider getDefault() {
         RibbonPreferencesProvider provider = Lookup.getDefault().lookup(RibbonPreferencesProvider.class);
-        if (provider == null)
-        {
+        if (provider == null) {
             provider = new DefaultRibbonPreferencesProvider();
         }
         return provider;
     }
 
-
     /**
      * Creates the preferences for the Terramenta application.
      */
-    private final static class DefaultRibbonPreferencesProvider extends RibbonPreferencesProvider
-    {
+    private final static class DefaultRibbonPreferencesProvider extends RibbonPreferencesProvider {
 
         @Override
-        public Object[] getLafClassDefaults()
-        {
-            return new Object[]
-            {
+        public Object[] getLafClassDefaults() {
+            return new Object[]{
                 "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
-                "RibbonUI", "com.terramenta.ribbon.FileRibbonUI",
-            };
+                "RibbonUI", "com.terramenta.ribbon.FileRibbonUI",};
         }
 
-
         @Override
-        public Dimension getPreferredBandSize()
-        {
+        public Dimension getPreferredBandSize() {
+//            return new Dimension(40, 90); // Full size supports buttons with two lines of text
             return new Dimension(40, 60);
         }
 
-
         @Override
-        public boolean getUsePopupMenus()
-        {
+        public boolean getUsePopupMenus() {
             return true;
         }
 
+        @Override
+        public boolean getUseTabNameForTasksBand() {
+            return true;
+        }
 
         @Override
-        public boolean getUseTabNameForTasksBand()
-        {
-            return true;
+        public boolean getAlwaysDisplayButtonText() {
+            return false;
         }
 
     }

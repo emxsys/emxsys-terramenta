@@ -66,14 +66,14 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  */
 public class RibbonComponentFactory {
 
-    public final static Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());   
+    public final static Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());
     // Default ribbon band size used if not provided in preferences
     public final Dimension BAND_PREFERRED_SIZE_DEFAULT = new Dimension(40, 60);
     // Maximun number of rows in a JCommandButtonPanel before a scroll bar is activated
     public final static int BUTTON_PANEL_MAX_ROWS = 8;
     // Maximun number of columns in a JCommandButtonPanel 
     public final static int BUTTON_PANEL_MAX_COLS = 6;
-    
+
     // Ribbon preferences
     RibbonPreferencesProvider preferences = RibbonPreferencesProvider.getDefault();
 
@@ -83,7 +83,7 @@ public class RibbonComponentFactory {
      * @param item
      * @return
      */
-     RibbonApplicationMenuEntryPrimary createAppMenuPresenter(ActionItem item) {
+    RibbonApplicationMenuEntryPrimary createAppMenuPresenter(ActionItem item) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.AppMenu.class.isAssignableFrom(action.getClass())) {
             return ((RibbonPresenter.AppMenu) action).getPrimaryMenuEntry();
@@ -117,7 +117,7 @@ public class RibbonComponentFactory {
      * @param item
      * @return
      */
-     RibbonApplicationMenuEntrySecondary createAppMenuSecondaryPresenter(ActionItem item) {
+    RibbonApplicationMenuEntrySecondary createAppMenuSecondaryPresenter(ActionItem item) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.AppMenuSecondary.class.isAssignableFrom(action.getClass())) {
             return ((RibbonPresenter.AppMenuSecondary) action).getSecondaryMenuEntry();
@@ -188,8 +188,15 @@ public class RibbonComponentFactory {
         //TODO
         //button.setDisabledIcon(disabledIcon);
         ActionCommandButton button;
-        //Determine if the icon is set. If so only display icon otherwise display text
-        String text = (actionItem.getActionDelegate().getIcon() == null ? actionItem.getActionDelegate().getText() : "");
+        String text;
+        if (RibbonPreferencesProvider.getDefault().getAlwaysDisplayButtonText()) {
+            text = actionItem.getActionDelegate().getText();
+        } else {
+            //Determine if the icon is set. If so only display icon, otherwise display text
+            ResizableIcon icon = actionItem.getActionDelegate().getIcon();
+            text = (icon == null || icon.equals(ResizableIcons.EMPTY)) ? actionItem.getActionDelegate().getText() : "";
+        }
+
         switch (getButtonKind(actionItem)) {
             case ACTION_AND_POPUP_MAIN_ACTION:
             case ACTION_AND_POPUP_MAIN_POPUP:
