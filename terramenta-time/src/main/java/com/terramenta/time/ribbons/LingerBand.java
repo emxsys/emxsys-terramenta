@@ -8,12 +8,12 @@ import com.terramenta.time.actions.TimeActionController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.pushingpixels.flamingo.api.ribbon.JFlowRibbonBand;
@@ -47,12 +47,12 @@ public class LingerBand extends JFlowRibbonBand implements ActionListener, Chang
 //        slider.setToolTipText(Bundle.HINT_TimeLingerAction());
         slider.addChangeListener(this);
 
-        JButton never = new JButton(new ImageIcon(getClass().getResource("/images/zero.png")));
+        JButton never = new JButton(ImageUtilities.loadImageIcon("/images/zero.png", false));
         never.setPreferredSize(new Dimension(24, 24));
         never.setActionCommand("NEVER");
         never.addActionListener(this);
 
-        JButton always = new JButton(new ImageIcon(getClass().getResource("/images/infinity.png")));
+        JButton always = new JButton(ImageUtilities.loadImageIcon("/images/infinity.png", false));
         always.setPreferredSize(new Dimension(24, 24));
         always.setActionCommand("ALWAYS");
         always.addActionListener(this);
