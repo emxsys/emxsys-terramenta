@@ -31,7 +31,7 @@ import org.openide.util.lookup.Lookups;
  *
  * @author Merijn Zengers
  */
-class ActionItems {
+public class ActionItems {
 
     private static FileObject fileObjectRoot = FileUtil.getConfigRoot();
     private static Map<String, FileObject> fileObjectMap = new TreeMap<>();
