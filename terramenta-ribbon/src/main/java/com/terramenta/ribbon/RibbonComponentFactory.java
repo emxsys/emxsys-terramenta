@@ -30,6 +30,7 @@
 package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.api.ResizableIcons;
+import com.terramenta.ribbon.api.RibbonPreferences;
 import com.terramenta.ribbon.api.RibbonPresenter;
 import com.terramenta.ribbon.spi.RibbonPreferencesProvider;
 import java.awt.Component;
@@ -75,7 +76,7 @@ public class RibbonComponentFactory {
     public final static int BUTTON_PANEL_MAX_COLS = 6;
 
     // Ribbon preferences
-    RibbonPreferencesProvider preferences = RibbonPreferencesProvider.getDefault();
+    RibbonPreferences preferences = RibbonPreferencesProvider.getDefault().getPreferences();
 
     /**
      * Creates an entry for the application menu (e.g., the FILE menu).
@@ -189,7 +190,7 @@ public class RibbonComponentFactory {
         //button.setDisabledIcon(disabledIcon);
         ActionCommandButton button;
         String text;
-        if (RibbonPreferencesProvider.getDefault().getAlwaysDisplayButtonText()) {
+        if (preferences.getAlwaysDisplayButtonText()) {
             text = actionItem.getActionDelegate().getText();
         } else {
             //Determine if the icon is set. If so only display icon, otherwise display text
@@ -311,7 +312,7 @@ public class RibbonComponentFactory {
         }
         if (!tasks.isEmpty()) {
             String title = NbBundle.getMessage(RibbonComponentFactory.class, "LBL_TasksBandTitle"); // NOI18N
-            if (title.isEmpty() || RibbonPreferencesProvider.getDefault().getUseTabNameForTasksBand()) {
+            if (title.isEmpty() || preferences.getUseTabNameForTasksBand()) {
                 title = actionItem.getText();  // use the task pane tab name as the band name
             }
             bands.add(createRibbonBand(title, tasks));

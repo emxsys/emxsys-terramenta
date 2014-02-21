@@ -37,15 +37,16 @@ import com.terramenta.ribbon.spi.RibbonPreferencesProvider;
  *
  * @see Installer
  * @author Chris Böhme
+ * @author Bruce Schubert
  */
 class LAFConfiguration {
 
     public static Object[] getClassDefaults() {
-        Object[] lafClassDefaults = RibbonPreferencesProvider.getDefault().getLafClassDefaults();
-        return lafClassDefaults == null
-                ? new Object[]{
+        Object[] lafClassDefaults = RibbonPreferencesProvider.getDefault().getPreferences().getLafClassDefaults();
+        return lafClassDefaults != null
+                ? lafClassDefaults
+                : new Object[]{
                     "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
-                    "RibbonUI", "com.terramenta.ribbon.FileRibbonUI"}
-                : lafClassDefaults;
+                    "RibbonUI", "com.terramenta.ribbon.FileRibbonUI"};
     }
 }
