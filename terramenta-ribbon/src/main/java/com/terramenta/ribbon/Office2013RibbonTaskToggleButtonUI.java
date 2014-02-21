@@ -77,9 +77,15 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
     @Override
     protected void paintText(Graphics g) {
 
-        // TODO: Get colors from UIManager
+        // Get colors from UIManager
         ActionButtonModel actionModel = this.commandButton.getActionModel();
-        g.setColor(actionModel.isSelected() || actionModel.isRollover() ? Color.blue.brighter() : Color.black); // BDS
+        Color textColor = FlamingoUtilities.getColor(Color.black,  "Panel.foreground");
+        if ((actionModel.isSelected() || actionModel.isRollover()))
+        {
+            textColor = ColorUtil.blend(textColor, FlamingoUtilities.getColor(new Color(0,128,255), 
+                "TaskButton.highlight"));
+        }
+        g.setColor(textColor);
 
         FontMetrics fm = g.getFontMetrics();
         String toPaint = this.commandButton.getText().toUpperCase();    // BDS
@@ -123,6 +129,12 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
         JRibbon ribbon = (JRibbon) SwingUtilities.getAncestorOfClass(
                 JRibbon.class, this.commandButton);
 
+        // Selected task toggle button should not have any background if
+        // the ribbon is minimized and it is not shown in a popup
+        if (ribbon.isMinimized()) {
+            return;
+        }
+        
         this.buttonRendererPane.setBounds(toFill.x, toFill.y, toFill.width, toFill.height);
         ButtonModel model = this.rendererButton.getModel();
         model.setEnabled(this.commandButton.isEnabled());
@@ -130,13 +142,6 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
         // System.out.println(toggleTabButton.getText() + ":"
         // + toggleTabButton.isSelected());
 
-        // selected task toggle button should not have any background if
-        // the ribbon is minimized and it is not shown in a popup
-        if (ribbon.isMinimized()) {
-            return;
-        }
-            
-        
         boolean displayAsSelected = this.commandButton.getActionModel().isSelected();
         //model.setRollover(displayAsSelected);
         //in Office2013, background doesn't change on rollover, foreground does.
@@ -165,7 +170,7 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
                 // Draw the clipped border
                 g2d.setColor(FlamingoUtilities.getBorderColor().darker());
                 g2d.draw(FlamingoUtilities.getRibbonTaskToggleButtonOutline(
-                        toFill.width-1, toFill.height, radius));
+                        toFill.width, toFill.height, radius));
 
             } else {
                 // draw to an offscreen image, colorize and draw the colorized image

@@ -50,7 +50,9 @@ public abstract class RibbonPreferencesProvider {
         @Override
         public RibbonPreferences getPreferences() {
             if (preferences == null) {
-                preferences = new DefaultRibbonPreferences();
+                //preferences = new BasicRibbonPreferences();       // Test
+                //preferences = new Office2013RibbonPreferences();  // Test
+                preferences = new DefaultRibbonPreferences(); 
             }
             return preferences;
         }

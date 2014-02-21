@@ -7,7 +7,6 @@
  */
 package com.terramenta.ribbon.spi;
 
-import com.terramenta.ribbon.api.RibbonPreferences;
 import java.awt.Dimension;
 
 /**
@@ -15,35 +14,22 @@ import java.awt.Dimension;
  * 
  * @author Bruce Schubert
  */
-public class DefaultRibbonPreferences implements RibbonPreferences {
+public class DefaultRibbonPreferences extends Office2013RibbonPreferences {
 
-    @Override
-    public Object[] getLafClassDefaults() {
-        return new Object[]{
-            // UI Classes
-            "RibbonUI", "com.terramenta.ribbon.FileRibbonUI",
-            "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.FileRibbonApplicationMenuButtonUI",
-        };
+
+    /**
+     * Use the Office 2013 LAF class defaults and colors, but override the size and text settings.
+     */
+    public DefaultRibbonPreferences()
+    {
+        super();
+        setPreferredBandSize(new Dimension(40, 60));// Shorter size supports buttons without text
+        setAlwaysDisplayButtonText(false);
+        setUsePopupMenus(true);
+        setUseTabNameForTasksBand(false);
+        
     }
 
-    @Override
-    public Dimension getPreferredBandSize() {
-        return new Dimension(40, 60); // Shorter ribbon without text
-    }
-
-    @Override
-    public boolean getUsePopupMenus() {
-        return true;
-    }
-
-    @Override
-    public boolean getUseTabNameForTasksBand() {
-        return true;
-    }
-
-    @Override
-    public boolean getAlwaysDisplayButtonText() {
-        return false;
-    }
+    
 
 }

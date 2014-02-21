@@ -54,7 +54,7 @@ public class Office2013RibbonUI extends BasicRibbonUI {
         tabsPanel.setBackground(FlamingoUtilities.getColor(Color.lightGray,
                 "Ribbon.background", "Panel.background"));
         tabsPanel.setForeground(FlamingoUtilities.getColor(Color.black,
-                "RibbonTabs.foreground", "Panel.foreground"));
+                "Panel.foreground"));
 
         // BDS - Office 2013: Override the color of the unoccupied area of the Ribbon Band,
         // make it the same color as the active RibbonBands.

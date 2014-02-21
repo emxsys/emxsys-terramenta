@@ -9,13 +9,14 @@ package com.terramenta.ribbon.api;
 
 import java.awt.Dimension;
 
+
 /**
  * Interface defining the preferences used to configure the Ribbon.
- * 
+ *
  * @author Bruce Schubert
- * @version $Id$
  */
-public interface RibbonPreferences {
+public interface RibbonPreferences
+{
 
     /**
      * Get the LAF class defaults for the Ribbon. The following UI classes can be defined:
@@ -31,6 +32,7 @@ public interface RibbonPreferences {
      *
      */
     public Object[] getLafClassDefaults();
+
 
     /**
      * Gets the preferred width and height of a Ribbon Band, which controls the overall height of
@@ -48,19 +50,6 @@ public interface RibbonPreferences {
      */
     public Dimension getPreferredBandSize();
 
-    /**
-     * Determines whether sub-menus are placed in a ribbon band or in a pop-up menu.
-     *
-     * @return true to use pop-up menus
-     */
-    public boolean getUsePopupMenus();
-
-    /**
-     * Determines the name of the band used for root level menu items.
-     *
-     * @return true to use the ribbon tab (task pane) name for the "Tasks" band.
-     */
-    public boolean getUseTabNameForTasksBand();
 
     /**
      * Determines whether the button text is displayed with the button icon.
@@ -68,5 +57,29 @@ public interface RibbonPreferences {
      * @return true to always display the button text.
      */
     public boolean getAlwaysDisplayButtonText();
+
+
+    /**
+     * Determines whether to display the Task Bar (mini-buttons next to application button).
+     *
+     * @return true to display the Task Bar (if configured).
+     */
+    public boolean getShouldDisplayTaskBar();
+
+
+    /**
+     * Determines whether sub-menus are placed in a ribbon band or in a pop-up menu.
+     *
+     * @return true to use pop-up menus
+     */
+    public boolean getUsePopupMenus();
+
+
+    /**
+     * Determines the name of the band used for root level menu items.
+     *
+     * @return true to use the ribbon tab (task pane) name for the "Tasks" band.
+     */
+    public boolean getUseTabNameForTasksBand();
 
 }
