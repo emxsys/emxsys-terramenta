@@ -11,7 +11,7 @@ import com.terramenta.ribbon.api.RibbonPreferences;
 import java.awt.Dimension;
 
 /**
- * Default Terramenta ribbon prefernces providing a shorter ribbon without button labels.
+ * Default Terramenta ribbon preferences providing a shorter ribbon without button labels.
  * 
  * @author Bruce Schubert
  */
@@ -28,7 +28,7 @@ public class DefaultRibbonPreferences implements RibbonPreferences {
 
     @Override
     public Dimension getPreferredBandSize() {
-        return new Dimension(40, 60); // Full size supports buttons with two lines of text
+        return new Dimension(40, 60); // Shorter ribbon without text
     }
 
     @Override
@@ -38,7 +38,7 @@ public class DefaultRibbonPreferences implements RibbonPreferences {
 
     @Override
     public boolean getUseTabNameForTasksBand() {
-        return false;
+        return true;
     }
 
     @Override
