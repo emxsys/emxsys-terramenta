@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -45,17 +46,25 @@ import org.pushingpixels.flamingo.api.common.RichTooltip;
 import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
 
 /**
- *
+ * The elements of an Action that can be represented in a Ribbon button.
+ * 
  * @author Chris
  */
-abstract class ActionItem {
+public abstract class ActionItem {
 
     public static final String MENU_TEXT = "menuText";
     public static final String POPUP_TEXT = "popupText";
     public static final String DESCRIPTION = "description";
     public static final String DISPLAY_NAME = "displayName";
     public static final String ICON_BASE = "iconBase";
+    public static final String TOOLTIP_BODY = "tooltipBody";
+    public static final String TOOLTIP_TITLE = "tooltipTitle";
+    public static final String TOOLTIP_ICON = "tooltipIcon";
+    public static final String TOOLTIP_FOOTER = "tooltipFooter";
+    public static final String TOOLTIP_FOOTER_ICON = "tooltipFooterIcon";
     public static final String DEFAULT_ACTION = "defaultAction";
+    public static final String BUTTON_STYLE = "buttonStyle";
+    public static final String AUTO_REPEAT_ACTION = "autoRepeatAction";
 
     public static ActionItem separator() {
         return new Separator();
@@ -125,6 +134,19 @@ abstract class ActionItem {
         }
     }
 
+    /**
+     *
+     * @return the displayName
+     */
+    public String getName() {
+        String s = String.valueOf(getValue(Action.NAME));
+        return s != null ? org.openide.awt.Actions.cutAmpersand(s) : null;
+    }
+
+    /**
+     *
+     * @return the menuText if defined, otherwise the displayName
+     */
     public String getText() {
         String s;
         if (getValue(MENU_TEXT) != null) {
@@ -154,19 +176,50 @@ abstract class ActionItem {
     }
 
     public RichTooltip createTooltip() {
-        String name = getText();
-        if (name == null) {
+        String body = (String) getValue(TOOLTIP_BODY);
+        if (body == null) {
+            body = (String) getValue(Action.LONG_DESCRIPTION);
+        }
+        if (body == null) {
+            body = getDescription();
+        }
+        if (body == null) {
             return null;
         }
-
-        String desc = getDescription();
-        if (desc == null) {
-            desc = name;
+        // Parse the body for multi-line descriptions
+        final String DELIM = "\n";
+        StringTokenizer st = new StringTokenizer(body, DELIM, false);
+        ArrayList<String> lines = new ArrayList<String>();
+        while (st.hasMoreTokens()) {
+            lines.add(st.nextToken());
         }
 
-        RichTooltip tooltip = new RichTooltip(name, desc);
-        tooltip.setMainImage(getLargeImage());
+        String title = (String) getValue(TOOLTIP_TITLE);
+        if (title == null) {
+            title = getText();
+        }
 
+        // Create the tooltip
+        RichTooltip tooltip = new RichTooltip(title, lines.get(0));
+        for (int i = 1; i < lines.size(); i++) {
+            tooltip.addDescriptionSection(lines.get(i));
+        }
+
+        String titleIcon = (String) getValue(TOOLTIP_ICON);
+        if (titleIcon != null) {
+            tooltip.setMainImage(ImageUtilities.loadImage(titleIcon));
+        } else {
+            tooltip.setMainImage(getLargeImage());
+        }
+
+        String footer = (String) getValue(TOOLTIP_FOOTER);
+        if (footer != null) {
+            tooltip.addFooterSection(footer);
+            String footerIcon = (String) getValue(TOOLTIP_FOOTER_ICON);
+            if (footerIcon != null) {
+                tooltip.setFooterImage(ImageUtilities.loadImage(footerIcon));
+            }
+        }
         return tooltip;
     }
 
@@ -192,10 +245,10 @@ abstract class ActionItem {
     }
 
     /**
-     * get the icon of the ActionItem.
+     * Get the icon of the ActionItem.
      *
      * @return If not null: icon defined under ActionItem.ICON_BASE Otherwise If both not null:
-     * ResizableIcons.binary(Action.SMALL_ICON, Action.LARGE_ICON_KEY); Otherwise null
+     * ResizableIcons.binary(Action.SMALL_ICON, Action.LARGE_ICON_KEY); Otherwise an empty icon
      */
     public ResizableIcon getIcon() {
         String iconResource = (String) getValue(ICON_BASE);
@@ -207,13 +260,34 @@ abstract class ActionItem {
             if (small != null || large != null) {
                 return ResizableIcons.binary(small, large);
             } else {
-                return null;
+                return ResizableIcons.empty();
             }
         }
     }
 
     public boolean isSeparator() {
         return false;
+    }
+
+    public boolean isFolder()
+    {
+        return !isSeparator() && getActionDelegate().getAction()==null;
+    }
+    
+    @Override
+    public String toString() {
+        return toString("");
+    }
+
+    private String toString(String prefix) {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(prefix);
+        buffer.append(getText());
+        buffer.append('\n');
+        for (ActionItem child : getChildren()) {
+            buffer.append(child.toString(prefix + "---"));
+        }
+        return buffer.toString();
     }
 
     public static class Actions extends ActionItem {
@@ -232,7 +306,7 @@ abstract class ActionItem {
 
     private static class Separator extends ActionItem {
 
-        public Separator() {
+        Separator() {
         }
 
         @Override
@@ -245,7 +319,7 @@ abstract class ActionItem {
 
         private JComponent _component;
 
-        public Component(JComponent component) {
+        Component(JComponent component) {
             _component = component;
         }
 
@@ -263,6 +337,7 @@ abstract class ActionItem {
             _children = null;
         }
 
+        @SuppressWarnings("unchecked")
         public Compound(Collection<ActionItem> children) {
             _children = new ArrayList(children);
         }
@@ -280,7 +355,7 @@ abstract class ActionItem {
         @Override
         public List<ActionItem> getChildren() {
             if (_children == null) {
-                _children = new ArrayList<ActionItem>();
+                _children = new ArrayList<>();
             }
             return _children;
         }

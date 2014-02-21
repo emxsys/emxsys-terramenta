@@ -31,18 +31,18 @@ import org.openide.util.lookup.Lookups;
  *
  * @author Merijn Zengers
  */
-class ActionItems {
+public class ActionItems {
 
     private static FileObject fileObjectRoot = FileUtil.getConfigRoot();
-    private static Map<String, FileObject> fileObjectMap = new TreeMap<String, FileObject>();
+    private static Map<String, FileObject> fileObjectMap = new TreeMap<>();
 
     private ActionItems() {
     }
 
     public static List<? extends ActionItem> forPath(String path) {
-        List<ActionItem> actions = new ArrayList<ActionItem>();
+        List<ActionItem> actions = new ArrayList<>();
         Map<String, FileObject> foMap = createFileObjectMap(path);
-        Map<String, ActionItem> actionMap = new TreeMap<String, ActionItem>();
+        Map<String, ActionItem> actionMap = new TreeMap<>();
 
         Collection<? extends Lookup.Item<Object>> items =
                 Lookups.forPath(path).lookupResult(Object.class).allItems();
@@ -135,7 +135,12 @@ class ActionItems {
             item = new ActionItem.Compound();
             actionMap.put(name, item);
             addProperties(item, foMap.get(name));
-            item.setText(foMap.get(name).getName());
+            //BDS -- added conditional so as to ensure menuText properties are not overwritten
+            // and that TaskPanes do have names.
+            String menuText = item.getText();
+            if (menuText == null || menuText.equals("null")) {
+                item.setText(foMap.get(name).getName());
+            }
             String parentName = getParentName(name);
             if (parentName != null) {
                 ActionItem parent = getOrCreateFolderItem(parentName, actionMap, foMap);

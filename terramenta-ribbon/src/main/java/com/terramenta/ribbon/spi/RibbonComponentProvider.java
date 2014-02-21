@@ -34,12 +34,14 @@ import javax.swing.JComponent;
 import org.openide.util.Lookup;
 
 /**
- *
- * @author Chris
+ * Service provider interface for creating the Ribbon.
+ * 
+ * @author Chris Böhme
  */
 public abstract class RibbonComponentProvider {
 
     public abstract JComponent createRibbon();
+    
 
     public static RibbonComponentProvider getDefault() {
         RibbonComponentProvider provider = Lookup.getDefault().lookup(RibbonComponentProvider.class);
@@ -48,4 +50,5 @@ public abstract class RibbonComponentProvider {
         }
         return provider;
     }
+    
 }

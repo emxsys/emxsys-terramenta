@@ -96,6 +96,8 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
 
     /**
      * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder
+     * and the Ribbon/TaskPanes.  A tabbed TaskPane is created for each child folder, and a 
+     * RibbonBand is created for each grandchild folder.
      *
      * @param ribbon the JRibbon to add the tabbed menu items to
      */
