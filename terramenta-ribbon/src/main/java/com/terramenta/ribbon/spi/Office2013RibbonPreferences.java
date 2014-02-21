@@ -40,7 +40,7 @@ public class Office2013RibbonPreferences implements RibbonPreferences {
 
     @Override
     public Dimension getPreferredBandSize() {
-        return new Dimension(40, 90); // Full size supports buttons with two lines of text
+        return new Dimension(40, 96); // Full size supports buttons with two lines of text
     }
 
     @Override
