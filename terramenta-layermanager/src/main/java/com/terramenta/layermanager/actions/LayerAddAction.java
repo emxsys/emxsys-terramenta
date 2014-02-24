@@ -6,6 +6,7 @@ package com.terramenta.layermanager.actions;
 import com.terramenta.globe.WorldWindManager;
 import com.terramenta.globe.layers.KMLLayer;
 import com.terramenta.layermanager.layerselector.LayerSelectorWizardIterator;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.SurfaceImageLayer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
@@ -17,7 +18,6 @@ import java.text.MessageFormat;
 import org.openide.DialogDisplayer;
 import org.openide.WizardDescriptor;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
@@ -31,8 +31,8 @@ import org.openide.util.actions.SystemAction;
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.LayerAddAction")
 @ActionRegistration(iconBase = "images/layerAdd.png", displayName = "#CTL_LayerAddAction", popupText = "Add a layer to the globe.")
+@RibbonActionReference(path = "Menu/Home/Manage")
 @Messages("CTL_LayerAddAction=Add Layer")
-@ActionReference(path = "Menu/Tools")
 public class LayerAddAction extends SystemAction {
 
     @Override

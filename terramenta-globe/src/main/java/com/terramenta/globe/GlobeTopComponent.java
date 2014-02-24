@@ -12,6 +12,7 @@ import com.terramenta.time.JulianConversions;
 import com.terramenta.globe.utilities.EciController;
 import com.terramenta.globe.utilities.QuickTipController;
 import com.terramenta.globe.utilities.SelectController;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.StereoSceneController;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -39,24 +40,41 @@ import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
+import org.openide.explorer.ExplorerManager;
+import org.openide.explorer.ExplorerUtils;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
+import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
-@TopComponent.Description(preferredID = "GlobeTopComponent", iconBase = "images/globeBlue.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Description(preferredID = "GlobeTopComponent", 
+        iconBase = "images/globeBlue.png", 
+        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.globe.GlobeTopComponent")
-@ActionReference(path = "Menu/Window")
-@Messages({
-    "CTL_GlobeAction=Globe",
-    "CTL_GlobeTopComponent=Globe",
-    "HINT_GlobeTopComponent=This is a Globe window"
-})
+@RibbonActionReference(path = "Menu/Window/Show",
+        position = 1,
+        priority = "top",
+        description = "#CTL_GlobeAction_Hint",
+        tooltipTitle = "#CTL_GlobeAction_TooltipTitle",
+        tooltipBody = "#CTL_GlobeAction_TooltipBody",
+        tooltipIcon = "images/globeBlue32.png",
+        tooltipFooter = "#CTL_GlobeAction_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_GlobeTopComponent=Globe",
+            "CTL_GlobeTopComponent_Hint=This is the Globe window.",
+            "CTL_GlobeAction=Globe",
+            "CTL_GlobeAction_Hint=Show the Globe window.",
+            "CTL_GlobeAction_TooltipTitle=Show Globe",
+            "CTL_GlobeAction_TooltipBody=Activates the Globe window and displays the 3D virtual earth.",
+            "CTL_GlobeAction_TooltipFooter=Press F1 for more help."
+        })
 @TopComponent.OpenActionRegistration(displayName = "#CTL_GlobeAction", preferredID = "GlobeTopComponent")
-public final class GlobeTopComponent extends TopComponent implements PreferenceChangeListener {
+public final class GlobeTopComponent extends TopComponent implements PreferenceChangeListener, ExplorerManager.Provider {
 
     private static final Logger logger = Logger.getLogger(GlobeTopComponent.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
@@ -70,13 +88,15 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private String flatProjection = FlatGlobe.PROJECTION_MERCATOR;
     private StarsLayer starLayer;
     private SunController sunController;
+    private ExplorerManager explorerManager;
+    private Lookup explorerLookup;
 
     /**
      *
      */
     public GlobeTopComponent() {
         setName(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent"));
-        setToolTipText(NbBundle.getMessage(GlobeTopComponent.class, "HINT_GlobeTopComponent"));
+        setToolTipText(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent_Hint"));
 
         //setup DnD
         initDnD();
@@ -118,6 +138,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         dateProvider.setDate(dateProvider.getDate()); //trigger the above listener
 
         initComponents();
+        
+        //setup lookups
+        initExplorerManager();
+        
     }
 
     private void initDnD() {
@@ -152,6 +176,17 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
                 this.sunController = new SunController((SunLayer) layer);
             }
         }
+    }
+
+    private void initExplorerManager() {
+        // Standard boilerplate to setup an explorer manager
+        explorerManager = new ExplorerManager();
+        explorerLookup = ExplorerUtils.createLookup(explorerManager, getActionMap());
+        // Associate our WW Mananger lookup(s) with the top component's lookup.
+        associateLookup(new ProxyLookup(
+                explorerLookup,
+                wwm.getLookup()
+        ));
     }
 
     /**
@@ -340,8 +375,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     }
 
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-     * content of this method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT
+     * modify this code. The content of this method is always regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -365,5 +400,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     protected void componentActivated() {
         super.componentActivated();
         wwm.getWorldWindow().requestFocusInWindow();
+    }
+
+    @Override
+    public ExplorerManager getExplorerManager() {
+        return explorerManager;
     }
 }

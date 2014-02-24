@@ -65,6 +65,7 @@ public abstract class ActionItem {
     public static final String DEFAULT_ACTION = "defaultAction";
     public static final String BUTTON_STYLE = "buttonStyle";
     public static final String AUTO_REPEAT_ACTION = "autoRepeatAction";
+    public static final String CONTEXTUAL_TASK_GROUP = "contextualTaskGroup";
 
     public static ActionItem separator() {
         return new Separator();
@@ -121,7 +122,7 @@ public abstract class ActionItem {
 
     public void putValue(String key, Object value) {
         if (properties == null) {
-            properties = new TreeMap<String, Object>();
+            properties = new TreeMap<>();
         }
         properties.put(key, value);
     }
@@ -175,6 +176,14 @@ public abstract class ActionItem {
         return s;
     }
 
+    public String getContextualTaskGroup() {
+        String s = null;
+        if (getValue(CONTEXTUAL_TASK_GROUP) != null) {
+            s = getValue(CONTEXTUAL_TASK_GROUP).toString();
+        }
+        return s;
+    }
+
     public RichTooltip createTooltip() {
         String body = (String) getValue(TOOLTIP_BODY);
         if (body == null) {
@@ -189,7 +198,7 @@ public abstract class ActionItem {
         // Parse the body for multi-line descriptions
         final String DELIM = "\n";
         StringTokenizer st = new StringTokenizer(body, DELIM, false);
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         while (st.hasMoreTokens()) {
             lines.add(st.nextToken());
         }
@@ -273,7 +282,8 @@ public abstract class ActionItem {
     {
         return !isSeparator() && getActionDelegate().getAction()==null;
     }
-    
+
+
     @Override
     public String toString() {
         return toString("");

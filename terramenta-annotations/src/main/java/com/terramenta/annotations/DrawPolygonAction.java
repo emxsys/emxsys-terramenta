@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -27,14 +27,27 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawPolygonAction")
+        id = "com.terramenta.annotations.DrawPolygonAction")
 @ActionRegistration(iconBase = "images/polygon.png",
-displayName = "#CTL_DrawPolygonAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 6),
-    @ActionReference(path = "Toolbars/Annotations", position = 6)
-})
-@Messages("CTL_DrawPolygonAction=Polygon")
+        displayName = "#CTL_DrawPolygonAction")
+@ActionReference(path = "Toolbars/Annotations", position = 6)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 6,
+        priority = "top",
+        description = "#CTL_DrawPolygonAction_Hint",
+        tooltipTitle = "#CTL_DrawPolygonAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawPolygonAction_TooltipBody",
+        tooltipIcon = "images/polygon32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawPolygonAction=Polygon",
+            "CTL_DrawPolygonAction_Hint=Draw a polygon.",
+            "CTL_DrawPolygonAction_TooltipTitle=Draw Polygon",
+            "CTL_DrawPolygonAction_TooltipBody=Draws a polygon annotation on the surface of the globe."
+        })
+
 public final class DrawPolygonAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

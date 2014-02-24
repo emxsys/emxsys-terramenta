@@ -6,6 +6,7 @@ package com.terramenta.globe.actions;
 
 import com.sun.opengl.util.Screenshot;
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.event.RenderingEvent;
 import gov.nasa.worldwind.event.RenderingListener;
 import java.awt.event.ActionEvent;
@@ -26,9 +27,7 @@ import org.openide.util.NbBundle.Messages;
 @ActionID(category = "Tools",
         id = "com.terramenta.actions.ScreenShotAction")
 @ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools", position = 9)
-})
+@RibbonActionReference(path = "Menu/Home/Create", position = 9)
 @Messages("CTL_ScreenShotAction=Screen Shot")
 /**
  * @author tag

@@ -5,6 +5,7 @@
 package com.terramenta.measurements;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
@@ -31,7 +32,28 @@ import org.openide.windows.TopComponent;
 @TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "images/measurements.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
 @TopComponent.Registration(mode = "leftSlidingSide", openAtStartup = false)
 @ActionID(category = "Window", id = "com.terramenta.measurements.MeasurementsTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+@RibbonActionReference(path = "Menu/Window/Show",
+        position = 3,
+        priority = "top",
+        description = "#CTL_MeasurementsAction_Hint",
+        tooltipTitle = "#CTL_MeasurementsAction_TooltipTitle",
+        tooltipBody = "#CTL_MeasurementsAction_TooltipBody",
+        tooltipIcon = "images/measurements32.png",
+        tooltipFooter = "#CTL_MeasurementsAction_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@NbBundle.Messages(
+        {
+            "CTL_MeasurementsTopComponent=Measurements",
+            "CTL_MeasurementsTopComponent_Hint=This is the Measurements window.",
+            "CTL_MeasurementsAction=Measurements",
+            "CTL_MeasurementsAction_Hint=Show the Measurements window.",
+            "CTL_MeasurementsAction_TooltipTitle=Show Measurements",
+            "CTL_MeasurementsAction_TooltipBody=Activates the Measurements window "
+                    + "used for measuring areas and point to point distances on the Globe./n/n"
+                    + "Measurements will also display a Terrain Profile on the Globe.",
+            "CTL_MeasurementsAction_TooltipFooter=Press F1 for more help."
+        })
+
 @TopComponent.OpenActionRegistration(displayName = "#CTL_MeasurementsAction", preferredID = "MeasurementsTopComponent")
 public final class MeasurementsTopComponent extends TopComponent {
 
@@ -41,7 +63,7 @@ public final class MeasurementsTopComponent extends TopComponent {
 
     public MeasurementsTopComponent() {
         setName(NbBundle.getMessage(MeasurementsTopComponent.class, "CTL_MeasurementsTopComponent"));
-        setToolTipText(NbBundle.getMessage(MeasurementsTopComponent.class, "HINT_MeasurementsTopComponent"));
+        setToolTipText(NbBundle.getMessage(MeasurementsTopComponent.class, "CTL_MeasurementsTopComponent_Hint"));
     }
 
     private void initProfiler() {

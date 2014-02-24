@@ -50,7 +50,7 @@ public class RenderableChildFactory extends ChildFactory.Detachable<Renderable> 
     protected Node createNodeForKey(Renderable renderable) {
         BeanNode node;
         try {
-            node = new BeanNode(renderable);
+            node = new RenderableNode(renderable);
         } catch (IntrospectionException ex) {
             return null;
         }

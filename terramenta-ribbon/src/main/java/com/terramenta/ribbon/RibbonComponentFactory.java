@@ -262,7 +262,9 @@ public class RibbonComponentFactory {
      */
     public RibbonTask createRibbonTask(ActionItem actionItem) {
         boolean usingPopupMenus = preferences.getUsePopupMenus();
-        List<AbstractRibbonBand> bands = usingPopupMenus ? createRibbonBandsWithPopups(actionItem) : createRibbonBands(actionItem);
+        List<AbstractRibbonBand> bands = usingPopupMenus 
+                ? createRibbonBandsWithPopups(actionItem) 
+                : createRibbonBands(actionItem);
         return new RibbonTask(actionItem.getText(), bands.toArray(new AbstractRibbonBand[bands.size()]));
     }
 
@@ -398,9 +400,8 @@ public class RibbonComponentFactory {
             }
         }
         // BDS: We're supposed to suppress of title for bands with a single item.
-        if (actionItems.size() < 2) {
-            // BDS: while this is compliant with Windows guidelines, missing labels just dont' look as good
-            //band.setTitle("");
+        if (actionItems.size() < 2 && !preferences.getAlwaysDisplayGroupText()) {
+            band.setTitle("");
         }
         // Set default resize policies
         createResizePolicies(null, band);

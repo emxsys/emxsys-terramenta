@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -27,14 +27,26 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawRectangleAction")
+        id = "com.terramenta.annotations.DrawRectangleAction")
 @ActionRegistration(iconBase = "images/rectangle.png",
-displayName = "#CTL_DrawRectangleAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 5),
-    @ActionReference(path = "Toolbars/Annotations", position = 5)
-})
-@Messages("CTL_DrawRectangleAction=Rectangle")
+        displayName = "#CTL_DrawRectangleAction")
+@ActionReference(path = "Toolbars/Annotations", position = 5)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 5,
+        priority = "top",
+        description = "#CTL_DrawRectangleAction_Hint",
+        tooltipTitle = "#CTL_DrawRectangleAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawRectangleAction_TooltipBody",
+        tooltipIcon = "images/rectangle32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawRectangleAction=Rectangle",
+            "CTL_DrawRectangleAction_Hint=Draw a rectangle annotation.",
+            "CTL_DrawRectangleAction_TooltipTitle=Draw Rectangle",
+            "CTL_DrawRectangleAction_TooltipBody=Draws a rectanglular annotation on the surface of the globe."
+        })
 public final class DrawRectangleAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

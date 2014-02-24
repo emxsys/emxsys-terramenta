@@ -20,6 +20,8 @@ import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwindx.examples.util.SessionState;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,6 +30,9 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
+import org.openide.util.lookup.ProxyLookup;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -35,13 +40,16 @@ import org.openide.util.lookup.ServiceProvider;
  * @author heidtmare
  */
 @ServiceProvider(service = WorldWindManager.class)
-public class WorldWindManager implements Serializable {
+public class WorldWindManager implements Serializable, Lookup.Provider {
 
     public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
     private static final Logger logger = Logger.getLogger(WorldWindManager.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+    private final InstanceContent content = new InstanceContent();
+    private final Lookup internalLookup = new AbstractLookup(content);
+    private ExpandableLookup masterLookup;
     private final SessionState sessionState = new SessionState(WorldWindManager.class.getName());
     private final WorldWindowGLJPanel wwd;
     private final Observer dateProviderObserver = new Observer() {
@@ -166,5 +174,38 @@ public class WorldWindManager implements Serializable {
             return;
         }
         logger.info("Session has been restored.");
+    }
+
+    @Override
+    public Lookup getLookup() {
+        if (masterLookup == null) {
+            masterLookup = new ExpandableLookup(internalLookup);
+        }
+        return masterLookup;
+    }
+
+    public Lookup addLookup(Lookup newLookup) {
+        ExpandableLookup master = (ExpandableLookup) getLookup(); 
+        master.addLookup(newLookup);
+        return master;
+    }
+
+    private class ExpandableLookup extends ProxyLookup {
+
+        ExpandableLookup(Lookup... lookups) {
+            super(lookups);
+        }
+
+        
+        public void addLookup(Lookup lookup) {
+            synchronized (ExpandableLookup.this) {
+                ArrayList<Lookup> list = new ArrayList<>();
+                Collections.addAll(list, getLookups());
+                list.add(lookup);
+                Lookup[] array = list.toArray(new Lookup[list.size()]);
+                setLookups(array);
+            }
+        }
+
     }
 }

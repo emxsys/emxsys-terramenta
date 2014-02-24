@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -15,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -25,14 +25,27 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawLineAction")
+        id = "com.terramenta.annotations.DrawLineAction")
 @ActionRegistration(iconBase = "images/line.png",
-displayName = "#CTL_DrawLineAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 1),
-    @ActionReference(path = "Toolbars/Annotations", position = 1)
-})
-@Messages("CTL_DrawLineAction=Line")
+        displayName = "#CTL_DrawLineAction")
+@ActionReference(path = "Toolbars/Annotations", position = 1)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 1,
+        priority = "top",
+        description = "#CTL_DrawLineAction_Hint",
+        tooltipTitle = "#CTL_DrawLineAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawLineAction_TooltipBody",
+        tooltipIcon = "images/line32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawLineAction=Line",
+            "CTL_DrawLineAction_Hint=Draw a straight line.",
+            "CTL_DrawLineAction_TooltipTitle=Draw Line",
+            "CTL_DrawLineAction_TooltipBody=Draws a straight line annotation on the surface of the globe."
+        })
+
 public final class DrawLineAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

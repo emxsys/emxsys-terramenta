@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -15,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -25,14 +25,27 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawFreehandAction")
+        id = "com.terramenta.annotations.DrawFreehandAction")
 @ActionRegistration(iconBase = "images/pencil.png",
-displayName = "#CTL_DrawFreehandAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 0),
-    @ActionReference(path = "Toolbars/Annotations", position = 0)
-})
-@Messages("CTL_DrawFreehandAction=Free Hand")
+        displayName = "#CTL_DrawFreehandAction")
+@ActionReference(path = "Toolbars/Annotations", position = 0)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 0,
+        priority = "top",
+        description = "#CTL_DrawFreehandAction_Hint",
+        tooltipTitle = "#CTL_DrawFreehandAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawFreehandAction_TooltipBody",
+        tooltipIcon = "images/pencil32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawFreehandAction=Free Hand",
+            "CTL_DrawFreehandAction_Hint=Draw a free hand shape.",
+            "CTL_DrawFreehandAction_TooltipTitle=Draw Free Hand",
+            "CTL_DrawFreehandAction_TooltipBody=Draws a free hand shape annotation on the surface of the globe."
+        })
+
 public final class DrawFreehandAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

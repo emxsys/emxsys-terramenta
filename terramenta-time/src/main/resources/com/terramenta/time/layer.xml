@@ -3,7 +3,6 @@
 <filesystem>
     <folder name="Menu">
         <folder name="Animate">
-            <attr name="position" intvalue="200"/>
             <folder name="Controls">
                 <attr name="position" intvalue="100"/>
             </folder>

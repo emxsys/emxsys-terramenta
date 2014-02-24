@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Ribbon">
+        <folder name="TaskPanes"> 
+            <!-- Layer Tools - CONTEXTUAL TAB -->
+            <folder name="LayerTools">
+                <attr name="menuText" stringvalue="Layer"/>
+                <attr name="position" intvalue="1000"/> 
+                <attr name="contextualTaskGroup" stringvalue="Layer Tools"/>
+                    
+                <folder name="Edit">
+                    <attr name="position" intvalue="200"/>
+                    <attr name="menuText" stringvalue="Edit"/>
+                </folder> 
+                <folder name="Adjust">
+                    <attr name="position" intvalue="200"/>
+                    <attr name="menuText" stringvalue="Adjust"/>
+                </folder> 
+                <folder name="Arrange">
+                    <attr name="position" intvalue="300"/>
+                    <attr name="menuText" stringvalue="Arrange"/>
+                </folder> 
+            </folder>
+            
+            <!-- Annotation Tools - CONTEXTUAL TAB -->
+            <folder name="AnnotationTools">
+                <attr name="menuText" stringvalue="Annotation"/>
+                <attr name="position" intvalue="1000"/> 
+                <attr name="contextualTaskGroup" stringvalue="Annotation Tools"/>
+                    
+                <folder name="Edit">
+                    <attr name="position" intvalue="100"/>
+                    <attr name="menuText" stringvalue="Edit"/>
+                </folder> 
+                <folder name="Adjust">
+                    <attr name="position" intvalue="200"/>
+                    <attr name="menuText" stringvalue="Adjust"/>
+                </folder> 
+            </folder>            
+        </folder>                
+    </folder>
+</filesystem>

@@ -31,15 +31,22 @@ package com.terramenta.ribbon;
 
 import com.terramenta.ribbon.spi.RibbonAppMenuProvider;
 import com.terramenta.ribbon.spi.RibbonComponentProvider;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu;
+import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
+import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
 
 /**
- * Provider for the Components on the Ribbon. The AppMenu, TaskBarand taskPanes
+ * Provider for the Components on the Ribbon defined in the XML Layer: the AppMenu, TaskBar and
+ * TaskPanes.
  *
  * @author Chris
  */
@@ -51,6 +58,7 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
         addAppMenu(ribbon);
         addTaskBar(ribbon);
         addTaskPanes(ribbon);
+        addHelpButton(ribbon);
         return ribbon;
     }
 
@@ -68,7 +76,8 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
     }
 
     /**
-     * For the taskBar on the right side of the menu button. Scans the layer.xml for entries in the Toolbars folder.
+     * For the taskBar on the right side of the menu button. Scans the layer.xml for entries in the
+     * Toolbars folder.
      *
      * @param ribbon the ribbon to add the TaskBar ActionItems too.
      */
@@ -93,24 +102,55 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
             }
         }
     }
+    
 
+    private void addHelpButton(JRibbon ribbon)
+    {
+        List<? extends ActionItem> actions = ActionItems.forPath("Ribbon/HelpButton");// NOI18N
+        if (actions.size() > 0)
+        {
+            ribbon.configureHelp(actions.get(0).getIcon(), actions.get(0).getAction());
+        }
+    }
     /**
-     * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder
-     * and the Ribbon/TaskPanes.  A tabbed TaskPane is created for each child folder, and a 
-     * RibbonBand is created for each grandchild folder.
+     * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder and the
+     * Ribbon/TaskPanes. A tabbed TaskPane is created for each child folder, and a RibbonBand is
+     * created for each grandchild folder.
      *
      * @param ribbon the JRibbon to add the tabbed menu items to
      */
     private void addTaskPanes(JRibbon ribbon) {
         RibbonComponentFactory factory = new RibbonComponentFactory();
-        List<ActionItem> items = new ArrayList<ActionItem>();
+        HashMap<String, ArrayList<RibbonTask>> contextualGroups = new HashMap<>();
+        List<ActionItem> items = new ArrayList<>();
         items.addAll(ActionItems.forPath("Ribbon/TaskPanes"));
         items.addAll(ActionItems.forPath("Menu"));
         for (ActionItem item : items) {
             if (item == null) {
                 continue;
             }
-            ribbon.addTask(factory.createRibbonTask(item));
+            RibbonTask ribbonTask = factory.createRibbonTask(item);
+            // Ferret out the contextual task groups
+            String taskGroupName = item.getContextualTaskGroup();
+            if (taskGroupName != null) {
+                ArrayList<RibbonTask> groupTasks = contextualGroups.get(taskGroupName);
+                if (groupTasks == null) {
+                    groupTasks = new ArrayList<>();
+                }
+                groupTasks.add(ribbonTask);
+                contextualGroups.put(taskGroupName, groupTasks);
+            } else {
+                // Add a normal task pane to the ribbon
+                ribbon.addTask(ribbonTask);
+            }
+        }
+        // Add the contextual task panes
+        for (Map.Entry<String, ArrayList<RibbonTask>> entry : contextualGroups.entrySet()) {
+            String key = entry.getKey();
+            ArrayList<RibbonTask> tasks = entry.getValue();
+            RibbonContextualTaskGroup taskGroup = new RibbonContextualTaskGroup(
+                    key, Color.yellow, tasks.toArray(new RibbonTask[tasks.size()]));
+            ribbon.addContextualTaskGroup(taskGroup);
         }
     }
 }
