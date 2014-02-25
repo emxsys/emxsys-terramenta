@@ -11,8 +11,8 @@
     <packaging>nbm</packaging>
     <name>Terramenta Layer Manager</name>
 
-
     <dependencies>
+        <!-- TERRAMENTA -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-core</artifactId>
@@ -24,58 +24,51 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.terramenta</groupId>
+            <artifactId>terramenta-ribbon</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <!-- NETBEANS PLATFORM -->
+        <dependency>
             <artifactId>org-openide-util</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-util-lookup</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-windows</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-nodes</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-awt</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-dialogs</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-actions</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-explorer</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>terramenta-ribbon</artifactId>
-            <groupId>com.terramenta</groupId>
-            <type>jar</type>
-            <version>1.3.1-EMXSYS</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
