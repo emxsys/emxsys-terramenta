@@ -131,23 +131,9 @@
                 <configuration>
                     <publicPackages>
                         <publicPackage>com.terramenta.globe.*</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.sunlight</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.ogc.kml</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.layers</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.avlist</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.render</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.examples.util</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.ogc.kml.impl</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.examples</publicPackage>
-                        <publicPackage>gov.nasa.worldwindx.examples.analytics</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.event</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.util.measure</publicPackage>
-                        <publicPackage>gov.nasa.worldwind</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.geom</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.util</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.globes</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.awt</publicPackage>
-                        <publicPackage>gov.nasa.worldwind.view.orbit</publicPackage>
+                        <publicPackage>gov.nasa.worldwind.*</publicPackage>
+                        <publicPackage>gov.nasa.worldwindx.*</publicPackage>
+                        <publicPackage>javax.media.opengl.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
