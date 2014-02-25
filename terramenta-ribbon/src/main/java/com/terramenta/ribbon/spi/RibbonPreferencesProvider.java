@@ -27,19 +27,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon.spi;
 
 import com.terramenta.ribbon.api.RibbonPreferences;
+import com.terramenta.ribbon.options.RibbonOptions;
+import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
+import org.openide.util.NbPreferences;
 
 /**
- * RibbonPreferencesProvider is a service provider interface used by the application for injecting
- * its own ribbon configuration into the lookup for discovery a RibbonComponentProvider.
+ * RibbonPreferencesProvider is a service provider interface used by the
+ * application for injecting its own ribbon configuration into the lookup for
+ * discovery a RibbonComponentProvider.
  *
  * @author Bruce Schubert
  */
 public abstract class RibbonPreferencesProvider {
+
+    private static final Preferences prefs = NbPreferences.forModule(RibbonOptions.class);
 
     /**
      * Gets the preferences and settings used to configure the ribbon bar.
@@ -51,12 +56,17 @@ public abstract class RibbonPreferencesProvider {
     /**
      * Service provider interface for the ribbon preferences.
      *
-     * @return the provider found on the the global lookup; if not found, the default Terramenta
-     * preferences provider is returned.
+     * @return the provider found on the the global lookup; if not found, or 
+     * if the user has not selected "Other" in the RibbonOptions then a 
+     * default Terramenta preferences provider is returned.
      */
     public static RibbonPreferencesProvider getDefault() {
+        // Check for a 3rd party provider
         RibbonPreferencesProvider provider = Lookup.getDefault().lookup(RibbonPreferencesProvider.class);
-        if (provider == null) {
+        String sytleOption = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
+
+        // Use the default provider if none provided or if user doesn't want to use it.
+        if (provider == null || !sytleOption.equals(RibbonOptions.OTHER_STYLE)) {
             provider = new DefaultRibbonPreferencesProvider();
         }
         return provider;
@@ -71,12 +81,21 @@ public abstract class RibbonPreferencesProvider {
 
         @Override
         public RibbonPreferences getPreferences() {
-            if (preferences == null) {
-                //preferences = new BasicRibbonPreferences();       // Test
-                //preferences = new Office2013RibbonPreferences();  // Test
-                preferences = new DefaultRibbonPreferences(); 
+            // Set the style based on the user's selected ribbon option
+            if (this.preferences == null) {
+                String style = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
+                switch (style) {
+                    case RibbonOptions.COMPACT_STYLE:
+                        this.preferences = new Office2013CompactRibbonPreferences();
+                        break;
+                    case RibbonOptions.FULLSIZE_STYLE:
+                        this.preferences = new Office2013FullSizeRibbonPreferences();
+                        break;
+                    default:
+                        this.preferences = new BasicRibbonPreferences();      
+                }
             }
-            return preferences;
+            return this.preferences;
         }
 
     }
