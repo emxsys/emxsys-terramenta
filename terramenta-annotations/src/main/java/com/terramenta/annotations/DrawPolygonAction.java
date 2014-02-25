@@ -28,7 +28,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawPolygonAction")
-@ActionRegistration(iconBase = "images/polygon.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/polygon.png",
         displayName = "#CTL_DrawPolygonAction")
 @ActionReference(path = "Toolbars/Annotations", position = 6)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -39,7 +39,7 @@ import org.openide.util.NbBundle.Messages;
         tooltipBody = "#CTL_DrawPolygonAction_TooltipBody",
         tooltipIcon = "images/polygon32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
         {
             "CTL_DrawPolygonAction=Polygon",
@@ -72,7 +72,7 @@ public final class DrawPolygonAction implements ActionListener {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Polygon");
-        shape.setValue(AVKey.DISPLAY_ICON, "images/polygon.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/polygon.png");
         shape.setEnableBatchPicking(false);
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

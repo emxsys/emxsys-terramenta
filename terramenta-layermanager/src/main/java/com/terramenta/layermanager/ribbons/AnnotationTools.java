@@ -63,7 +63,7 @@ public class AnnotationTools implements LookupListener {
         RibbonContextualTaskGroup group = getTaskGroup();
         if (group != null) {
             JRibbon ribbon = Lookup.getDefault().lookup(RibbonManager.class).getRibbon();
-            // Don't enable the tools if more that one layer is selected
+            // Don't enable the tools if more that one renderable is selected
             ribbon.setVisible(group, this.lookupResult.allInstances().size() == 1);
         }
     }

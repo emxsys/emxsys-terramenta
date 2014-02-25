@@ -28,8 +28,8 @@ import org.openide.util.actions.SystemAction;
  */
 public class LayerNode extends BeanNode implements BooleanState.Provider, Destroyable, PropertyChangeListener {
 
-    private String ENABLED_ICON_BASE = "images/bulletGreen.png";
-    private String DISABLED_ICON_BASE = "images/bulletBlack.png";
+    private String ENABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletGreen.png";
+    private String DISABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletBlack.png";
 
     /**
      *

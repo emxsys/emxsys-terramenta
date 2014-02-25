@@ -24,7 +24,6 @@ public class BoxSelector extends SectorSelector {
         this.setInteriorColor(new Color(1f, 1f, 1f, 0f));
         this.setBorderColor(new Color(1f, 1f, 0f, 0.5f));
         this.setBorderWidth(2);
-        this.getShape().setValue(AVKey.DISPLAY_ICON, "images/square.png");
         this.getShape().setValue(AVKey.DISPLAY_NAME, "Bounding Box");
         this.getShape().setHighlightAttributes(getShape().getAttributes());
     }

@@ -47,12 +47,12 @@ public class LingerBand extends JFlowRibbonBand implements ActionListener, Chang
 //        slider.setToolTipText(Bundle.HINT_TimeLingerAction());
         slider.addChangeListener(this);
 
-        JButton never = new JButton(ImageUtilities.loadImageIcon("/images/zero.png", false));
+        JButton never = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/zero.png", false));
         never.setPreferredSize(new Dimension(24, 24));
         never.setActionCommand("NEVER");
         never.addActionListener(this);
 
-        JButton always = new JButton(ImageUtilities.loadImageIcon("/images/infinity.png", false));
+        JButton always = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/infinity.png", false));
         always.setPreferredSize(new Dimension(24, 24));
         always.setActionCommand("ALWAYS");
         always.addActionListener(this);

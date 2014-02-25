@@ -14,7 +14,7 @@ import org.openide.util.Lookup;
 
 @OptionsPanelController.TopLevelRegistration(
         categoryName = "#OptionsCategory_Name_Time",
-        iconBase = "images/clock32.png",
+        iconBase = "com/terramenta/time/images/clock32.png",
         keywords = "#OptionsCategory_Keywords_Time",
         keywordsCategory = "Time"
 )

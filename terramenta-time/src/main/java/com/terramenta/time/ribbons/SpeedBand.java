@@ -45,7 +45,7 @@ public class SpeedBand extends JRibbonBand {
      *
      */
     public SpeedBand() {
-        super("Speed", ResizableIcons.fromResource("images/controlSpeedSlow.png"));
+        super("Speed", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedSlow.png"));
 
         setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(
                 new CoreRibbonResizePolicies.None(getControlPanel()),
@@ -56,16 +56,16 @@ public class SpeedBand extends JRibbonBand {
 
         setPreferredSize(new Dimension(40, 60));
 
-        JCommandToggleButton slowButton = new JCommandToggleButton("Slow", ResizableIcons.fromResource("images/controlSpeedSlow.png"));
+        JCommandToggleButton slowButton = new JCommandToggleButton("Slow", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedSlow.png"));
         slowButton.getActionModel().setSelected(true);
         slowButton.getActionModel().setActionCommand("SLOW");
         slowButton.addActionListener(speedListener);
 
-        JCommandToggleButton mediumButton = new JCommandToggleButton("Medium", ResizableIcons.fromResource("images/controlSpeedMedium.png"));
+        JCommandToggleButton mediumButton = new JCommandToggleButton("Medium", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedMedium.png"));
         mediumButton.getActionModel().setActionCommand("MEDIUM");
         mediumButton.addActionListener(speedListener);
 
-        JCommandToggleButton fastButton = new JCommandToggleButton("Fast", ResizableIcons.fromResource("images/controlSpeedFast.png"));
+        JCommandToggleButton fastButton = new JCommandToggleButton("Fast", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedFast.png"));
         fastButton.getActionModel().setActionCommand("FAST");
         fastButton.addActionListener(speedListener);
 

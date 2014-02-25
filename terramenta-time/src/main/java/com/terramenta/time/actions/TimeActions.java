@@ -30,7 +30,7 @@ public class TimeActions {
      * @author Chris.Heidt
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepBackwardAction")
-    @ActionRegistration(iconBase = "images/controlStepBackward.png", displayName = "#CTL_TimeStepBackwardAction", popupText = "Step backwards one frame in time.")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/controlStepBackward.png", displayName = "#CTL_TimeStepBackwardAction", popupText = "Step backwards one frame in time.")
     @ActionReferences({
         @ActionReference(path = "Menu/Animate/Controls", position = 1)
     })
@@ -47,7 +47,7 @@ public class TimeActions {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeRewindAction")
-    @ActionRegistration(iconBase = "images/controlRewind.png", displayName = "#CTL_TimeRewindAction", popupText = "Play backwards through time.")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/controlRewind.png", displayName = "#CTL_TimeRewindAction", popupText = "Play backwards through time.")
     @ActionReferences({
         @ActionReference(path = "Menu/Animate/Controls", position = 2)
     })
@@ -86,7 +86,7 @@ public class TimeActions {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStopAction")
-    @ActionRegistration(iconBase = "images/controlStop.png", displayName = "#CTL_TimeStopAction", popupText = "Stop time animation.")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/controlStop.png", displayName = "#CTL_TimeStopAction", popupText = "Stop time animation.")
     @ActionReferences({
         @ActionReference(path = "Menu/Animate/Controls", position = 3)
     })
@@ -125,7 +125,7 @@ public class TimeActions {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimePlayAction")
-    @ActionRegistration(iconBase = "images/controlPlay.png", displayName = "#CTL_TimePlayAction", popupText = "Play through time.")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/controlPlay.png", displayName = "#CTL_TimePlayAction", popupText = "Play through time.")
     @ActionReferences({
         @ActionReference(path = "Menu/Animate/Controls", position = 4)
     })
@@ -164,7 +164,7 @@ public class TimeActions {
      *
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepForwardAction")
-    @ActionRegistration(iconBase = "images/controlStepForward.png", displayName = "#CTL_TimeStepForwardAction", popupText = "Step forward one frame in time.")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/controlStepForward.png", displayName = "#CTL_TimeStepForwardAction", popupText = "Step forward one frame in time.")
     @ActionReferences({
         @ActionReference(path = "Menu/Animate/Controls", position = 5)
     })
@@ -176,54 +176,4 @@ public class TimeActions {
             tac.step(1);
         }
     }
-    /**
-     *
-     */
-//    @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeLingerAction")
-//    @ActionRegistration(displayName = "#CTL_TimeLingerAction", lazy = false)
-//    @ActionReferences({
-//        @ActionReference(path = "Toolbars/Time", position = 9)
-//    })
-//    @Messages({
-//        "CTL_TimeLingerAction=Adjust Linger Time",
-//        "HINT_TimeLingerAction=Linger Time"
-//    })
-//    public static final class TimeLingerAction extends AbstractAction implements Presenter.Toolbar {
-//
-//        private JSlider comp = null;
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            //...
-//        }
-//
-//        /**
-//         *
-//         * @return
-//         */
-//        @Override
-//        public Component getToolbarPresenter() {
-//            if (comp == null) {
-//                comp = new JSlider(JSlider.HORIZONTAL, 1, 50, 50);
-////                comp.setMaximumSize(new Dimension(50, maxHeight));
-////                comp.setPreferredSize(new Dimension(50, prefHeight));
-////                comp.setMinimumSize(new Dimension(50, minHeight));
-//                comp.setToolTipText(Bundle.HINT_TimeLingerAction());
-//                comp.addChangeListener(new ChangeListener() {
-//                    @Override
-//                    public void stateChanged(ChangeEvent e) {
-//                        JSlider source = (JSlider) e.getSource();
-//                        int linger = 0;
-//                        int multiplier = (int) source.getValue();
-//                        if (multiplier < 50) {
-//                            linger = tac.getStepIncrement() * multiplier;
-//                        }
-//                        tac.setLingerDuration(linger);
-//                        tac.step(0);//force refresh
-//                    }
-//                });
-//            }
-//            return comp;
-//        }
-//    }
 }

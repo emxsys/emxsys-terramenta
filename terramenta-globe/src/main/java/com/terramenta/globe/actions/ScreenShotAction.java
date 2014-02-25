@@ -26,7 +26,7 @@ import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Tools",
         id = "com.terramenta.actions.ScreenShotAction")
-@ActionRegistration(iconBase = "images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
+@ActionRegistration(iconBase = "com/terramenta/globe/images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
 @RibbonActionReference(path = "Menu/Home/Create", position = 9)
 @Messages("CTL_ScreenShotAction=Screen Shot")
 /**

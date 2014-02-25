@@ -185,7 +185,7 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     }
 
     public Lookup addLookup(Lookup newLookup) {
-        ExpandableLookup master = (ExpandableLookup) getLookup(); 
+        ExpandableLookup master = (ExpandableLookup) getLookup();
         master.addLookup(newLookup);
         return master;
     }
@@ -196,7 +196,6 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
             super(lookups);
         }
 
-        
         public void addLookup(Lookup lookup) {
             synchronized (ExpandableLookup.this) {
                 ArrayList<Lookup> list = new ArrayList<>();

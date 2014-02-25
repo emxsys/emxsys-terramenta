@@ -24,12 +24,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 
-@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "images/measurements.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
+@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "com/terramenta/measurements/images/measurements.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
 @TopComponent.Registration(mode = "leftSlidingSide", openAtStartup = false)
 @ActionID(category = "Window", id = "com.terramenta.measurements.MeasurementsTopComponent")
 @RibbonActionReference(path = "Menu/Window/Show",
@@ -49,8 +48,8 @@ import org.openide.windows.TopComponent;
             "CTL_MeasurementsAction_Hint=Show the Measurements window.",
             "CTL_MeasurementsAction_TooltipTitle=Show Measurements",
             "CTL_MeasurementsAction_TooltipBody=Activates the Measurements window "
-                    + "used for measuring areas and point to point distances on the Globe./n/n"
-                    + "Measurements will also display a Terrain Profile on the Globe.",
+            + "used for measuring areas and point to point distances on the Globe./n/n"
+            + "Measurements will also display a Terrain Profile on the Globe.",
             "CTL_MeasurementsAction_TooltipFooter=Press F1 for more help."
         })
 

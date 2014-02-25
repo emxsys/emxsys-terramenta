@@ -18,7 +18,7 @@ import org.openide.util.actions.NodeAction;
  * @author bdschubert
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.DestroyNodeAction")
-@ActionRegistration(iconBase = "images/delete.png",displayName = "#CTL_DestroyNodeAction", lazy = true)
+@ActionRegistration(iconBase = "com/terramenta/images/delete.png",displayName = "#CTL_DestroyNodeAction", lazy = true)
 // Registered in a contextual task groups only, not in the general menu system.
 @RibbonActionReferences({
     @RibbonActionReference(path = "Ribbon/TaskPanes/LayerTools/Edit",
@@ -28,9 +28,9 @@ import org.openide.util.actions.NodeAction;
             autoRepeatAction = false,
             tooltipTitle = "#CTL_DestroyLayerNodeAction_TooltipTitle",
             tooltipBody = "#CTL_DestroyLayerNodeAction_TooltipBody",
-            tooltipIcon = "images/delete32.png",
+            tooltipIcon = "com/terramenta/images/delete32.png",
             //tooltipFooter = "com.terramenta.Bundle#CTL_Default_TooltipFooter",
-            tooltipFooterIcon = "images/help.png"),
+            tooltipFooterIcon = "com/terramenta/images/help.png"),
     @RibbonActionReference(path = "Ribbon/TaskPanes/AnnotationTools/Edit",
             position = 300,
             priority = "top",
@@ -38,9 +38,9 @@ import org.openide.util.actions.NodeAction;
             autoRepeatAction = false,
             tooltipTitle = "#CTL_DestroyRenderableNodeAction_TooltipTitle",
             tooltipBody = "#CTL_DestroyRenderableNodeAction_TooltipBody",
-            tooltipIcon = "images/delete32.png",
+            tooltipIcon = "com/terramenta/images/delete32.png",
             //tooltipFooter = "com.terramenta.Bundle#CTL_Default_TooltipFooter",
-            tooltipFooterIcon = "images/help.png")
+            tooltipFooterIcon = "com/terramenta/images/help.png")
 })
 
 @Messages(

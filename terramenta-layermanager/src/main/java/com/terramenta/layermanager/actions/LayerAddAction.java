@@ -30,7 +30,7 @@ import org.openide.util.actions.SystemAction;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.LayerAddAction")
-@ActionRegistration(iconBase = "images/layerAdd.png", displayName = "#CTL_LayerAddAction", popupText = "Add a layer to the globe.")
+@ActionRegistration(iconBase = "com/terramenta/layermanager/images/layerAdd.png", displayName = "#CTL_LayerAddAction", popupText = "Add a layer to the globe.")
 @RibbonActionReference(path = "Menu/Home/Manage")
 @Messages("CTL_LayerAddAction=Add Layer")
 public class LayerAddAction extends SystemAction {
@@ -77,18 +77,18 @@ public class LayerAddAction extends SystemAction {
     }
 
     /**
-         *
-         * @return
-         */
+     *
+     * @return
+     */
     @Override
     public String getName() {
         return Bundle.CTL_LayerAddAction();
     }
 
     /**
-         *
-         * @return
-         */
+     *
+     * @return
+     */
     @Override
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;

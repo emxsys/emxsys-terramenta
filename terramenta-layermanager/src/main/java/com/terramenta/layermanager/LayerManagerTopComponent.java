@@ -6,7 +6,6 @@ package com.terramenta.layermanager;
 import com.terramenta.layermanager.nodes.RootChildren;
 import com.terramenta.layermanager.nodes.RootNode;
 import com.terramenta.layermanager.ribbons.LayerTools;
-import com.terramenta.layermanager.ribbons.AnnotationTools;
 import com.terramenta.ribbon.RibbonActionReference;
 import org.openide.awt.ActionID;
 import org.openide.explorer.ExplorerManager;
@@ -16,7 +15,7 @@ import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "images/layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "com/terramenta/layermanager/images/layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "rightSide", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.layermanager.LayerManagerTopComponent")
 @RibbonActionReference(path = "Menu/Window/Show",
@@ -36,7 +35,7 @@ import org.openide.windows.WindowManager;
             "CTL_LayerManagerAction_Hint=Show the Layer Manager.",
             "CTL_LayerManagerAction_TooltipTitle=Show Layer Manager",
             "CTL_LayerManagerAction_TooltipBody=Activates the Layer Manager window used for managing "
-                    + "the layers displayed on the Globe.",
+            + "the layers displayed on the Globe.",
             "CTL_LayerManagerAction_TooltipFooter=Press F1 for more help."
         })
 
@@ -62,7 +61,6 @@ public final class LayerManagerTopComponent extends TopComponent implements Expl
             public void run() {
                 // Initialize contextual ribbon task groups
                 LayerTools.getInstance();
-                AnnotationTools.getInstance();
             }
         });
     }

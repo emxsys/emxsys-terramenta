@@ -7,7 +7,7 @@
             <!-- Open Project actions -->
             <folder name="Open">
                 <attr name="position" intvalue="100"/>
-                <attr name="iconBase" stringvalue="images/folder_accept.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/folder_accept.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Open"/>
             
                 <file name="org-netbeans-modules-project-ui-OpenProject.shadow">
@@ -41,7 +41,7 @@
             <!-- New Project and File actions -->
             <folder name="New">
                 <attr name="position" intvalue="101"/>
-                <attr name="iconBase" stringvalue="images/folder_add.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/folder_add.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_New"/>
             
                 <file name="org-netbeans-modules-project-ui-NewProject.shadow">
@@ -76,13 +76,13 @@
             <file name="org-openide-actions-SaveAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAction.instance"/>
                 <attr name="position" intvalue="1000"/>
-                <attr name="iconBase" stringvalue="images/save.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/save.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Save"/>
             </file>
             <file name="org-openide-actions-SaveAllAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAllAction.instance"/>
                 <attr name="position" intvalue="1100"/>
-                <attr name="iconBase" stringvalue="images/save_all.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/save_all.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_SaveAll"/>
             </file>
             <file name="org-openide-actions-SaveAsAction.shadow">
@@ -97,18 +97,18 @@
             <!-- Print actions -->
             <folder name="Print">
                 <attr name="position" intvalue="1600"/>
-                <attr name="iconBase" stringvalue="images/print.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/print.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Print"/>
                 <file name="org-netbeans-modules-print-action-PageSetupAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PageSetupAction.instance"/>
                     <attr name="position" intvalue="100"/>
                     <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_PageSetup_Hint"/>
-                    <attr name="iconBase" stringvalue="images/pageSetup.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/pageSetup.png"/>
                 </file>
                 <file name="org-netbeans-modules-print-action-PrintAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PrintAction.instance"/>
                     <attr name="position" intvalue="600"/>
-                    <attr name="iconBase" stringvalue="images/printer.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/printer.png"/>
                     <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_Print_Hint"/>
                 </file>
             </folder>
@@ -119,7 +119,7 @@
             
             <file name="org-netbeans-core-actions-AboutAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Help/org-netbeans-core-actions-AboutAction.instance"/>
-                <attr name="iconBase" stringvalue="images/info.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/info.png"/>
                 <attr name="position" intvalue="2000"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_About"/>
             </file>
@@ -128,33 +128,33 @@
             <file name="org-netbeans-modules-options-OptionsWindowAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-modules-options-OptionsWindowAction.instance"/>
                 <attr name="position" intvalue="100"/>
-                <attr name="iconBase" stringvalue="images/options.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/options.png"/>
             </file>
             <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow">
                 <!--org.netbeans.modules.autoupdate.ui.actions.CheckForUpdatesAction-->
                 <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.instance"/>
                 <attr name="position" intvalue="200"/>
-                <attr name="iconBase" stringvalue="images/cd_down.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/cd_down.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CheckForUpdates"/>
             </file>
             <file name="org-netbeans-modules-autoupdate-ui-actions-PluginManagerAction.shadow">
                 <!--org.netbeans.modules.autoupdate.ui.actions.PluginManagerAction-->
                 <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-autoupdate-ui-actions-PluginManagerAction.instance"/>
                 <attr name="position" intvalue="300"/>
-                <attr name="iconBase" stringvalue="images/plugin.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/plugin.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_PluginManager"/>
             </file>
             <file name="org-netbeans-core-actions-SystemExit.shadow">
                 <attr name="originalFile" stringvalue="Actions/System/org-netbeans-core-actions-SystemExit.instance"/>
                 <attr name="position" intvalue="400"/>
-                <attr name="iconBase" stringvalue="images/cross.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/cross.png"/>
             </file>
         </folder>
         <folder name="TaskBar">
             <file name="org-netbeans-modules-print-action-PrintAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-print-action-PrintAction.instance"/>
                 <attr name="position" intvalue="100"/>
-                <attr name="iconBase" stringvalue="images/printer.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/printer.png"/>
                 <attr name="description" bundlevalue="com.terramenta.actions.Bundle#HINT_PrintAction"/>
             </file>
         </folder>
@@ -162,7 +162,7 @@
         <folder name="HelpButton">
             <file name="org-netbeans-modules-javahelp-HelpAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Help/org-netbeans-modules-javahelp-HelpAction.instance"/>
-                <attr name="iconBase" stringvalue="images/help.png"/>
+                <attr name="iconBase" stringvalue="com/terramenta/images/help.png"/>
             </file>
         </folder>
    
@@ -270,8 +270,8 @@
                     <attr name="description" stringvalue="Toggles full screen model."/>
                     <attr name="tooltipTitle" stringvalue="Toggle Full Screen"/>
                     <attr name="tooltipBody" stringvalue="Toggles the full screen display of the application."/>
-                    <attr name="tooltipIcon" stringvalue="images/fullscreen32.png"/>
-                    <attr name="iconBase" stringvalue="images/fullscreen.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/fullscreen32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/fullscreen.png"/>
                 </file>
                 <file name="ShowEditorOnlyAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ShowEditorOnlyAction.instance"/>
@@ -279,8 +279,8 @@
                     <attr name="description" stringvalue="Show just the Globe window"/>
                     <attr name="tooltipTitle" stringvalue="Show Full Globe"/>
                     <attr name="tooltipBody" stringvalue="Shows the only the Globe. Minimizes other windows."/>
-                    <attr name="tooltipIcon" stringvalue="images/fullGlobe32.png"/>
-                    <attr name="iconBase" stringvalue="images/fullGlobe.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/fullGlobe32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/fullGlobe.png"/>
                 </file>
             </folder>
             <folder name="Show">
@@ -316,8 +316,8 @@
                     <attr name="description" stringvalue="Display the Projects window."/>
                     <attr name="tooltipTitle" stringvalue="Show Projects"/>
                     <attr name="tooltipBody" stringvalue="Shows the Projects window which displays the open projects. This is a logical view of the projects' files."/>
-                    <attr name="tooltipIcon" stringvalue="images/folder_info32.png"/>
-                    <attr name="iconBase" stringvalue="images/folder_info.png"/>                
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/folder_info32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/folder_info.png"/>                
                     <attr name="position" intvalue="2100"/>
                     <attr name="priority" stringvalue="medium"/>
                 </file>
@@ -327,8 +327,8 @@
                     <attr name="description" stringvalue="Display the Files window."/>
                     <attr name="tooltipTitle" stringvalue="Show Files"/>
                     <attr name="tooltipBody" stringvalue="Shows the Files window which displays the physical files in the open projects. This view may differ from the view in the Projects window."/>
-                    <attr name="tooltipIcon" stringvalue="images/folder_full32.png"/>
-                    <attr name="iconBase" stringvalue="images/folder_full.png"/>                
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/folder_full32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/folder_full.png"/>                
                     <attr name="position" intvalue="2200"/>
                     <attr name="priority" stringvalue="medium"/>
                 </file>
@@ -351,8 +351,8 @@
                     <attr name="description" stringvalue="Close the current window."/>
                     <attr name="tooltipTitle" stringvalue="Close Current Window"/>
                     <attr name="tooltipBody" stringvalue="Closes the current window."/>
-                    <attr name="tooltipIcon" stringvalue="images/window_delete32.png"/>
-                    <attr name="iconBase" stringvalue="images/window_delete.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window_delete32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/window_delete.png"/>
                 </file>
                 <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ResetWindowsAction.instance"/>
@@ -360,8 +360,8 @@
                     <attr name="description" stringvalue="Reset the window layout."/>
                     <attr name="tooltipTitle" stringvalue="Reset Window Layout"/>
                     <attr name="tooltipBody" stringvalue="Resets the window layout to the application's default layout."/>
-                    <attr name="tooltipIcon" stringvalue="images/windows32.png"/>
-                    <attr name="iconBase" stringvalue="images/windows.png"/>                
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/windows32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/windows.png"/>                
                 </file>
             </folder>               
             <folder name="Tasks">

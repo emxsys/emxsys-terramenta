@@ -190,7 +190,7 @@ public class NavigationToolbar {
     }
 
     @ActionID(category = "Tools", id = "com.terramenta.navigation.NavigationGoButton")
-    @ActionRegistration(iconBase = "images/bulletGo.png", displayName = "#CTL_NavigationGoButton")
+    @ActionRegistration(iconBase = "com/terramenta/globe/images/bulletGo.png", displayName = "#CTL_NavigationGoButton")
     @ActionReferences({
         @ActionReference(path = "Toolbars/Navigation", position = 4)
     })

@@ -49,8 +49,8 @@ import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
-@TopComponent.Description(preferredID = "GlobeTopComponent", 
-        iconBase = "images/globeBlue.png", 
+@TopComponent.Description(preferredID = "GlobeTopComponent",
+        iconBase = "com/terramenta/globe/images/globeBlue.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.globe.GlobeTopComponent")
@@ -60,9 +60,9 @@ import org.openide.windows.TopComponent;
         description = "#CTL_GlobeAction_Hint",
         tooltipTitle = "#CTL_GlobeAction_TooltipTitle",
         tooltipBody = "#CTL_GlobeAction_TooltipBody",
-        tooltipIcon = "images/globeBlue32.png",
+        tooltipIcon = "com/terramenta/globe/images/globeBlue32.png",
         tooltipFooter = "#CTL_GlobeAction_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
         {
             "CTL_GlobeTopComponent=Globe",
@@ -138,10 +138,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
         dateProvider.setDate(dateProvider.getDate()); //trigger the above listener
 
         initComponents();
-        
+
         //setup lookups
         initExplorerManager();
-        
+
     }
 
     private void initDnD() {

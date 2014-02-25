@@ -28,7 +28,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawEllipseAction")
-@ActionRegistration(iconBase = "images/ellipse.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/ellipse.png",
         displayName = "#CTL_DrawEllipseAction")
 @ActionReference(path = "Toolbars/Annotations", position = 3)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -39,7 +39,7 @@ import org.openide.util.NbBundle.Messages;
         tooltipBody = "#CTL_DrawEllipseAction_TooltipBody",
         tooltipIcon = "images/ellipse32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
         {
             "CTL_DrawEllipseAction=Ellipse",
@@ -71,7 +71,7 @@ public final class DrawEllipseAction implements ActionListener {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Ellipse");
-        shape.setValue(AVKey.DISPLAY_ICON, "images/ellipse.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/ellipse.png");
         shape.setEnableBatchPicking(false);
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

@@ -15,14 +15,14 @@ import org.openide.util.Lookup;
  *
  * @author heidtmare
  */
-@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe", iconBase = "images/globeBlue32.png",
+@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe", iconBase = "com/terramenta/globe/images/globeBlue32.png",
         keywords = "#OptionsCategory_Keywords_Globe",
         keywordsCategory = "Globe",
         position = 1000,
         id = "Globe")
-public final class GlobeOptionsController extends OptionsPanelController {
+public final class GlobeOptionsPanelController extends OptionsPanelController {
 
-    private GlobeOptions panel;
+    private GlobeOptionsPanel panel;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean changed;
 
@@ -107,9 +107,9 @@ public final class GlobeOptionsController extends OptionsPanelController {
         pcs.removePropertyChangeListener(l);
     }
 
-    private GlobeOptions getPanel() {
+    private GlobeOptionsPanel getPanel() {
         if (panel == null) {
-            panel = new GlobeOptions();
+            panel = new GlobeOptionsPanel();
         }
         return panel;
     }

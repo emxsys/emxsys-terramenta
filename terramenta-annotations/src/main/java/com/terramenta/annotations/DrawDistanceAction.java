@@ -26,7 +26,7 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
-@ActionRegistration(iconBase = "images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
 @ActionReference(path = "Toolbars/Annotations", position = 8)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
         position = 8,
@@ -36,7 +36,7 @@ import org.openide.util.NbBundle.Messages;
         tooltipBody = "#CTL_DrawDistanceAction_TooltipBody",
         tooltipIcon = "images/measure32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
         {
             "CTL_DrawDistanceAction=Distance Measurement",
@@ -69,7 +69,7 @@ public final class DrawDistanceAction implements ActionListener {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "Distance Measurement");
-        shape.setValue(AVKey.DISPLAY_ICON, "images/measurements.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/measurements.png");
         shape.setEnableBatchPicking(false);
 //        shape.addPropertyChangeListener(new PropertyChangeListener() {
 //            @Override

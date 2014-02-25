@@ -15,12 +15,12 @@ import org.openide.util.actions.NodeAction;
  * @author heidtmare
  */
 @ActionID(category = "Other", id = "com.terramenta.layermanager.actions.DestroyNodeAction")
-@ActionRegistration(displayName = "#CTL_DestroyNodeAction")
+@ActionRegistration(displayName = "#CTL_DestroyNodeAction", lazy = true)
 @Messages("CTL_DestroyNodeAction=Remove")
 public class DestroyNodeAction extends NodeAction {
 
     /**
-     * 
+     *
      * @param nodes
      */
     @Override
@@ -37,6 +37,7 @@ public class DestroyNodeAction extends NodeAction {
 
     /**
      * reiterative node deletion
+     *
      * @param nodes
      */
     private void deleteNodes(Node[] nodes) {
@@ -50,7 +51,7 @@ public class DestroyNodeAction extends NodeAction {
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override

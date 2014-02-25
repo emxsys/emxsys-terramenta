@@ -38,7 +38,7 @@ public class AnnotationBuilder extends AVListImpl {
     private boolean active = false;
     private boolean freehand = false;
     private boolean showLabel = false;
-    private ArrayList<Position> positions = new ArrayList<Position>();
+    private ArrayList<Position> positions = new ArrayList<>();
 
     static {
         labelAttributes.setFrameShape(AVKey.SHAPE_NONE);
@@ -101,7 +101,7 @@ public class AnnotationBuilder extends AVListImpl {
      * Construct a new line builder using the specified polyline and layer and drawing events from the specified world
      * window. Either or both the polyline and the layer may be null, in which case the necessary object is created.
      *
-     * @param wwd the world window to draw events from.
+     * @param wwd   the world window to draw events from.
      * @param shape
      */
     public AnnotationBuilder(final WorldWindow wwd, SurfaceShape shape) {
@@ -114,7 +114,7 @@ public class AnnotationBuilder extends AVListImpl {
             wwd.getModel().getLayers().add(layer);
         }
         layer.addRenderable(shape);
-        
+
         //USECASE: signals layer manager that the layer has modified children
         //         and the count in the display name should be updated
         layer.firePropertyChange("Renderables", null, layer.getRenderables());
@@ -309,7 +309,7 @@ public class AnnotationBuilder extends AVListImpl {
 
     /**
      *
-     * @param freehand
+     * @param measurement
      */
     public void setShowLabel(boolean measurement) {
         this.showLabel = measurement;

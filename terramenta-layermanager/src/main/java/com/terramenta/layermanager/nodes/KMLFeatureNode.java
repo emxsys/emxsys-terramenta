@@ -18,8 +18,8 @@ import org.openide.util.actions.SystemAction;
  */
 public class KMLFeatureNode extends BeanNode implements BooleanState.Provider {
 
-    public static final String ENABLED_ICON_BASE = "images/bulletGreen.png";
-    public static final String DISABLED_ICON_BASE = "images/bulletBlack.png";
+    public static final String ENABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletGreen.png";
+    public static final String DISABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletBlack.png";
 
     public KMLFeatureNode(KMLAbstractFeature feature, Children children) throws IntrospectionException {
         super(feature, children);

@@ -26,7 +26,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawFreehandAction")
-@ActionRegistration(iconBase = "images/pencil.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/pencil.png",
         displayName = "#CTL_DrawFreehandAction")
 @ActionReference(path = "Toolbars/Annotations", position = 0)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
         tooltipBody = "#CTL_DrawFreehandAction_TooltipBody",
         tooltipIcon = "images/pencil32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
         {
             "CTL_DrawFreehandAction=Free Hand",
@@ -70,7 +70,7 @@ public final class DrawFreehandAction implements ActionListener {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Freehand");
-        shape.setValue(AVKey.DISPLAY_ICON, "images/pencil.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/pencil.png");
         shape.setEnableBatchPicking(false);
 //        shape.addPropertyChangeListener(new PropertyChangeListener() {
 //            @Override
