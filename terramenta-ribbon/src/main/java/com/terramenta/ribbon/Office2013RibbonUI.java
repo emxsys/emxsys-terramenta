@@ -1,10 +1,33 @@
 /*
- * The contents of this file are subject to the terms of the Common Development
- * and Distribution License 1.0 (the "License"). You may not use this file except
- * in compliance with the License. You can obtain a copy of the License at
- * http://opensource.org/licenses/CDDL-1.0. See the License for the specific
- * language governing permissions and limitations under the License. 
+ * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * - Neither the name of the Emxsys company nor the names of its 
+ *   contributors may be used to endorse or promote products derived
+ *   from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.terramenta.ribbon;
 
 import java.awt.*;
@@ -54,7 +77,7 @@ public class Office2013RibbonUI extends BasicRibbonUI {
         tabsPanel.setBackground(FlamingoUtilities.getColor(Color.lightGray,
                 "Ribbon.background", "Panel.background"));
         tabsPanel.setForeground(FlamingoUtilities.getColor(Color.black,
-                "RibbonTabs.foreground", "Panel.foreground"));
+                "Panel.foreground"));
 
         // BDS - Office 2013: Override the color of the unoccupied area of the Ribbon Band,
         // make it the same color as the active RibbonBands.

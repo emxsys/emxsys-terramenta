@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -26,15 +26,25 @@ import org.openide.util.NbBundle.Messages;
  *
  * @author heidtmare
  */
-@ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawCircleAction")
-@ActionRegistration(iconBase = "images/circle.png",
-displayName = "#CTL_DrawCircleAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 2),
-    @ActionReference(path = "Toolbars/Annotations", position = 2)
-})
-@Messages("CTL_DrawCircleAction=Circle")
+@ActionID(category = "Tools", id = "com.terramenta.annotations.DrawCircleAction")
+@ActionRegistration(iconBase = "images/circle.png", displayName = "#CTL_DrawCircleAction")
+@ActionReference(path = "Toolbars/Annotations", position = 2)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 2,
+        priority = "top",
+        description = "#CTL_DrawCircleAction_Hint",
+        tooltipTitle = "#CTL_DrawCircleAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawCircleAction_TooltipBody",
+        tooltipIcon = "images/circle32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawCircleAction=Circle",
+            "CTL_DrawCircleAction_Hint=Draw a circle annotation.",
+            "CTL_DrawCircleAction_TooltipTitle=Draw Circle",
+            "CTL_DrawCircleAction_TooltipBody=Draws a circular annotation on the surface of the globe."
+        })
 public final class DrawCircleAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

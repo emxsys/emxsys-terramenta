@@ -1,10 +1,33 @@
 /*
- * The contents of this file are subject to the terms of the Common Development
- * and Distribution License 1.0 (the "License"). You may not use this file except
- * in compliance with the License. You can obtain a copy of the License at
- * http://opensource.org/licenses/CDDL-1.0. See the License for the specific
- * language governing permissions and limitations under the License. 
+ * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * - Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * - Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * - Neither the name of the Emxsys company nor the names of its 
+ *   contributors may be used to endorse or promote products derived
+ *   from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package com.terramenta.ribbon;
 
 import java.awt.*;
@@ -77,9 +100,14 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
     @Override
     protected void paintText(Graphics g) {
 
-        // TODO: Get colors from UIManager
+        // Get colors from UIManager
         ActionButtonModel actionModel = this.commandButton.getActionModel();
-        g.setColor(actionModel.isSelected() || actionModel.isRollover() ? Color.blue.brighter() : Color.black); // BDS
+        Color textColor = FlamingoUtilities.getColor(Color.black, "Panel.foreground");
+        if ((actionModel.isSelected() || actionModel.isRollover())) {
+            textColor = ColorUtil.blend(textColor, FlamingoUtilities.getColor(new Color(0, 128, 255),
+                    "TaskButton.highlight"));
+        }
+        g.setColor(textColor);
 
         FontMetrics fm = g.getFontMetrics();
         String toPaint = this.commandButton.getText().toUpperCase();    // BDS
@@ -123,6 +151,12 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
         JRibbon ribbon = (JRibbon) SwingUtilities.getAncestorOfClass(
                 JRibbon.class, this.commandButton);
 
+        // Selected task toggle button should not have any background if
+        // the ribbon is minimized and it is not shown in a popup
+        if (ribbon.isMinimized()) {
+            return;
+        }
+
         this.buttonRendererPane.setBounds(toFill.x, toFill.y, toFill.width, toFill.height);
         ButtonModel model = this.rendererButton.getModel();
         model.setEnabled(this.commandButton.isEnabled());
@@ -130,44 +164,37 @@ public class Office2013RibbonTaskToggleButtonUI extends BasicRibbonTaskToggleBut
         // System.out.println(toggleTabButton.getText() + ":"
         // + toggleTabButton.isSelected());
 
-        // selected task toggle button should not have any background if
-        // the ribbon is minimized and it is not shown in a popup
-        if (ribbon.isMinimized()) {
-            return;
-        }
-            
-        
         boolean displayAsSelected = this.commandButton.getActionModel().isSelected();
         //model.setRollover(displayAsSelected);
         //in Office2013, background doesn't change on rollover, foreground does.
         //|| this.commandButton.getActionModel().isRollover());
         model.setPressed(false);
         final int radius = 0;
+        Graphics2D g2d = (Graphics2D) graphics.create();
+        g2d.translate(toFill.x, toFill.y);
         if (displayAsSelected) {
-            Graphics2D g2d = (Graphics2D) graphics.create();
-            g2d.translate(toFill.x, toFill.y);
 
+            // Allow our tab button to extend below the orginal clip region (into to band)
+            Shape clip = g2d.getClip();
+            Rectangle tabRect = new Rectangle(toFill.x, toFill.y, toFill.width, toFill.height);
+            g2d.setClip(tabRect);
+            // Draw the tab
+            Color backgroundColor = FlamingoUtilities.getColor(Color.lightGray,
+                    "ControlPanel.background", "Panel.background");
+            g2d.setColor(backgroundColor);
+            g2d.fill(tabRect);
+            // Restrict the height of the border to join with corners
+            g2d.setClip(clip);
+            // Draw the clipped border
+            g2d.setColor(FlamingoUtilities.getBorderColor().darker());
+            g2d.draw(FlamingoUtilities.getRibbonTaskToggleButtonOutline(
+                    toFill.width, toFill.height, radius));
+
+        } else {
             Color contextualGroupHueColor = ((JRibbonTaskToggleButton) this.commandButton).getContextualGroupHueColor();
             boolean isContextualTask = (contextualGroupHueColor != null);
-            if (!isContextualTask) {
+            if (isContextualTask) {
 
-                // Allow our tab button to extend below the orginal clip region (into to band)
-                Shape clip = g2d.getClip();
-                Rectangle tabRect = new Rectangle(toFill.x, toFill.y, toFill.width, toFill.height);
-                g2d.setClip(tabRect);
-                // Draw the tab
-                Color backgroundColor = FlamingoUtilities.getColor(Color.lightGray,
-                        "ControlPanel.background", "Panel.background");
-                g2d.setColor(backgroundColor);
-                g2d.fill(tabRect);
-                // Restrict the height of the border to join with corners
-                g2d.setClip(clip);
-                // Draw the clipped border
-                g2d.setColor(FlamingoUtilities.getBorderColor().darker());
-                g2d.draw(FlamingoUtilities.getRibbonTaskToggleButtonOutline(
-                        toFill.width-1, toFill.height, radius));
-
-            } else {
                 // draw to an offscreen image, colorize and draw the colorized image
                 BufferedImage offscreen = FlamingoUtilities.getBlankImage(
                         toFill.width, toFill.height);

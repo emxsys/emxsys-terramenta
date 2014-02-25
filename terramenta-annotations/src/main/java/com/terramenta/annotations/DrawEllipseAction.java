@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -27,14 +27,26 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawEllipseAction")
+        id = "com.terramenta.annotations.DrawEllipseAction")
 @ActionRegistration(iconBase = "images/ellipse.png",
-displayName = "#CTL_DrawEllipseAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 3),
-    @ActionReference(path = "Toolbars/Annotations", position = 3)
-})
-@Messages("CTL_DrawEllipseAction=Ellipse")
+        displayName = "#CTL_DrawEllipseAction")
+@ActionReference(path = "Toolbars/Annotations", position = 3)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 3,
+        priority = "top",
+        description = "#CTL_DrawEllipseAction_Hint",
+        tooltipTitle = "#CTL_DrawEllipseAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawEllipseAction_TooltipBody",
+        tooltipIcon = "images/ellipse32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawEllipseAction=Ellipse",
+            "CTL_DrawEllipseAction_Hint=Draw an ellipse.",
+            "CTL_DrawEllipseAction_TooltipTitle=Draw Ellipse",
+            "CTL_DrawEllipseAction_TooltipBody=Draws an elliptical annotation on surface of the globe."
+        })
 public final class DrawEllipseAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

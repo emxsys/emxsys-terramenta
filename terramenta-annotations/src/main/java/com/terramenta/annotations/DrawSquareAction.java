@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -17,7 +18,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -27,14 +27,26 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools",
-id = "com.terramenta.annotations.DrawSquareAction")
+        id = "com.terramenta.annotations.DrawSquareAction")
 @ActionRegistration(iconBase = "images/square.png",
-displayName = "#CTL_DrawSquareAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 4),
-    @ActionReference(path = "Toolbars/Annotations", position = 4)
-})
-@Messages("CTL_DrawSquareAction=Square")
+        displayName = "#CTL_DrawSquareAction")
+@ActionReference(path = "Toolbars/Annotations", position = 4)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 4,
+        priority = "top",
+        description = "#CTL_DrawSquareAction_Hint",
+        tooltipTitle = "#CTL_DrawSquareAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawSquareAction_TooltipBody",
+        tooltipIcon = "images/square32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawSquareAction=Square",
+            "CTL_DrawSquareAction_Hint=Draw a square annotation.",
+            "CTL_DrawSquareAction_TooltipTitle=Draw Square",
+            "CTL_DrawSquareAction_TooltipBody=Draws a square annotation on the surface of the globe."
+        })
 public final class DrawSquareAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

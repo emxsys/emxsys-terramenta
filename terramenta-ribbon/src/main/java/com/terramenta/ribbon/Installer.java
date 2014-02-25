@@ -36,8 +36,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import org.openide.modules.ModuleInstall;
+import org.openide.util.Lookup;
 import org.openide.windows.WindowManager;
 import org.pushingpixels.flamingo.api.common.RichToolTipManager;
+import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 
 /**
  * Installer to start the Office look and feel
@@ -46,7 +48,8 @@ import org.pushingpixels.flamingo.api.common.RichToolTipManager;
  */
 public class Installer extends ModuleInstall {
 
-    private static int INITIALDELAY = 100;
+    private static final RibbonManager ribbonMgr = Lookup.getDefault().lookup(RibbonManager.class);
+    private static final int INITIALDELAY = 100;
 
     /**
      * Installer will disable Netbeans default toolBar. Build the ribbon and speed up the popupManger
@@ -64,13 +67,15 @@ public class Installer extends ModuleInstall {
                 JComponent toolbar = RibbonComponentProvider.getDefault().createRibbon();
                 //Set the new layout of our root pane:
                 frame.getRootPane().setLayout(new RibbonRootPaneLayout(toolbar));
-                //Install a new toolbar component into the layered pane
-                //of the main frame on layer 0:
+                //Install a new toolbar component into the layered pane of the main frame on layer 0:
                 toolbar.putClientProperty(JLayeredPane.LAYER_PROPERTY, 0);
                 frame.getRootPane().getLayeredPane().add(toolbar, 0);
 
                 //Set the toolTipDelay faster
                 RichToolTipManager.sharedInstance().setInitialDelay(INITIALDELAY);
+                
+                // Make the ribbon available for adding contextual menus 
+                ribbonMgr.setRibbon((JRibbon) toolbar);
             }
         });
     }

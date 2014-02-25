@@ -5,6 +5,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.WorldWindManager;
+import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -25,15 +26,25 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
-@ActionRegistration(iconBase = "images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#HINT_DrawDistanceAction")
-@ActionReferences({
-    @ActionReference(path = "Menu/Tools/Annotations", position = 8),
-    @ActionReference(path = "Toolbars/Annotations", position = 8)
-})
-@Messages({
-    "CTL_DrawDistanceAction=Distance Measurement",
-    "HINT_DrawDistanceAction=Point to point distance measurement."
-})
+@ActionRegistration(iconBase = "images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
+@ActionReference(path = "Toolbars/Annotations", position = 8)
+@RibbonActionReference(path = "Menu/Insert/Annotations",
+        position = 8,
+        priority = "top",
+        description = "#CTL_DrawDistanceAction_Hint",
+        tooltipTitle = "#CTL_DrawDistanceAction_TooltipTitle",
+        tooltipBody = "#CTL_DrawDistanceAction_TooltipBody",
+        tooltipIcon = "images/measure32.png",
+        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "images/help.png")
+@Messages(
+        {
+            "CTL_DrawDistanceAction=Distance Measurement",
+            "CTL_DrawDistanceAction_Hint=Point to point distance measurement.",
+            "CTL_DrawDistanceAction_TooltipTitle=Distance Measurement Tool",
+            "CTL_DrawDistanceAction_TooltipBody=Measures point to point distances on the globe."
+        })
+
 public final class DrawDistanceAction implements ActionListener {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
