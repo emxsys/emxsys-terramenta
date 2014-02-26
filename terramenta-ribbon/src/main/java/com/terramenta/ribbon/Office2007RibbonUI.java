@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2012, Bruce Schubert. <bruce@emxsys.com>
+/* 
+ * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,32 +43,35 @@ import org.pushingpixels.flamingo.internal.ui.ribbon.JRibbonTaskToggleButton;
 import org.pushingpixels.flamingo.internal.ui.ribbon.RibbonBandUI;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 
+
 /**
- * This class provides an Office 2013 look and feel with a dynamically sized FILE tab application 
- * menu button.  This UI does not allocate screen real estate in the ribbon for the TaskBar 
- * (print, open, etc) which makes for a tighter UI.
  *
  * @author Bruce Schubert <bruce@emxsys.com>
- * @see FileRibbonApplicationMenuButtonUI
- * @version $Id$
+ * @version $Id: EmxsysRibbonUI.java 100 2012-02-29 14:41:51Z bdschubert $
  */
-public class FileRibbonUI extends BasicRibbonUI {
+public class Office2007RibbonUI extends BasicRibbonUI
+{
 
-    public static ComponentUI createUI(JComponent c) {
-        return new FileRibbonUI();
+    public static ComponentUI createUI(JComponent c)
+    {
+        return new Office2007RibbonUI();
     }
 
+
     @Override
-    protected void installDefaults() {
+    protected void installDefaults()
+    {
         super.installDefaults();
     }
 
+
     /**
-     * This override injects our custom Ribbon.background, RibbonTabs.foreground and
+     * This override injects our custom Ribbon.background, RibbonTabs.foreground and 
      * RibbonGroups.background colors into the JRibbon UI components.
      */
     @Override
-    protected void installComponents() {
+    protected void installComponents()
+    {
         super.installComponents();
 
         // BDS: Override the default color of the task pane tabs and the unoccupied region 
@@ -76,17 +79,18 @@ public class FileRibbonUI extends BasicRibbonUI {
         // TODO: try injecting a PanelUI delegate into the TaskToggleButtonHostPanel
         TaskToggleButtonsHostPanel tabsPanel = super.taskToggleButtonsScrollablePanel.getView();
         tabsPanel.setBackground(FlamingoUtilities.getColor(Color.lightGray,
-                "Ribbon.background", "Panel.background"));
+            "Ribbon.background", "Panel.background"));
         tabsPanel.setForeground(FlamingoUtilities.getColor(Color.black,
-                "RibbonTabs.foreground", "Panel.foreground"));
+            "RibbonTabs.foreground", "Panel.foreground"));
 
         // BDS: Override the color of the unoccupied area of the Ribbon Band -- make it the 
         // same color as the inactive Command Buttons (ControlPanel.background).
         // TODO: try injecting a PanelUI delegate into the BandHostPanel
         BandHostPanel groupsPanel = super.bandScrollablePanel.getView();
         groupsPanel.setBackground(FlamingoUtilities.getColor(Color.lightGray,
-                "RibbonGroups.background", "ControlPanel.background", "Panel.background"));
+            "RibbonGroups.background", "ControlPanel.background", "Panel.background"));
     }
+
 
     /**
      * We're not using the taskbar within the ribbon area, so we return zero to shift the task
@@ -95,31 +99,36 @@ public class FileRibbonUI extends BasicRibbonUI {
      * @return zero instead of the default value of 22.
      */
     @Override
-    public int getTaskbarHeight() {
+    public int getTaskbarHeight()
+    {
         return 0;
     }
 
+
     @Override
-    protected LayoutManager createLayoutManager() {
+    protected LayoutManager createLayoutManager()
+    {
         return new FileRibbonLayout();
     }
 
+
     /**
      * Layout for the ribbon with a dynamically sized application menu button. This is a modified
-     * copy of the BasicFileRibbonUI.RibbonLayout private class. It has been modified to accommodate
-     * a dynamically sized application menu button. See the layoutContainer method for
-     * modifications.
+     * copy of the BasicRibbonUI.RibbonLayout private class. It has been modified to accommodate a
+     * dynamically sized application menu button. See the layoutContainer method for modifications.
      *
      * @author Kirill Grouchnikov
      * @author Bruce Schubert
      */
-    private class FileRibbonLayout implements LayoutManager {
+    private class FileRibbonLayout implements LayoutManager
+    {
 
         /*
          * Copied.
          */
         @Override
-        public void addLayoutComponent(String name, Component c) {
+        public void addLayoutComponent(String name, Component c)
+        {
         }
 
 
@@ -127,36 +136,44 @@ public class FileRibbonUI extends BasicRibbonUI {
          * Copied.
          */
         @Override
-        public void removeLayoutComponent(Component c) {
+        public void removeLayoutComponent(Component c)
+        {
         }
+
+
 
         /*
          * Copied.
          */
         @Override
-        public Dimension preferredLayoutSize(Container c) {
+        public Dimension preferredLayoutSize(Container c)
+        {
             Insets ins = c.getInsets();
             int maxPrefBandHeight = 0;
             boolean isRibbonMinimized = ribbon.isMinimized();
-            if (!isRibbonMinimized) {
-                if (ribbon.getTaskCount() > 0) {
+            if (!isRibbonMinimized)
+            {
+                if (ribbon.getTaskCount() > 0)
+                {
                     RibbonTask selectedTask = ribbon.getSelectedTask();
-                    for (AbstractRibbonBand<?> ribbonBand : selectedTask.getBands()) {
+                    for (AbstractRibbonBand<?> ribbonBand : selectedTask.getBands())
+                    {
                         int bandPrefHeight = ribbonBand.getPreferredSize().height;
                         Insets bandInsets = ribbonBand.getInsets();
                         maxPrefBandHeight = Math.max(maxPrefBandHeight,
-                                bandPrefHeight + bandInsets.top
-                                + bandInsets.bottom);
+                            bandPrefHeight + bandInsets.top
+                            + bandInsets.bottom);
                     }
                 }
             }
 
             int extraHeight = getTaskToggleButtonHeight();
-            if (!isUsingTitlePane()) {
+            if (!isUsingTitlePane())
+            {
                 extraHeight += getTaskbarHeight();
             }
             int prefHeight = maxPrefBandHeight + extraHeight + ins.top
-                    + ins.bottom;
+                + ins.bottom;
             // System.out.println("Ribbon pref = " + prefHeight);
             return new Dimension(c.getWidth(), prefHeight);
         }
@@ -166,7 +183,8 @@ public class FileRibbonUI extends BasicRibbonUI {
          * Copied.
          */
         @Override
-        public Dimension minimumLayoutSize(Container c) {
+        public Dimension minimumLayoutSize(Container c)
+        {
             // go over all ribbon bands and sum the width
             // of ribbon buttons (of collapsed state)
             Insets ins = c.getInsets();
@@ -175,41 +193,49 @@ public class FileRibbonUI extends BasicRibbonUI {
             int gap = getBandGap();
 
             int extraHeight = getTaskToggleButtonHeight();
-            if (!isUsingTitlePane()) {
+            if (!isUsingTitlePane())
+            {
                 extraHeight += getTaskbarHeight();
             }
 
-            if (ribbon.getTaskCount() > 0) {
+            if (ribbon.getTaskCount() > 0)
+            {
                 boolean isRibbonMinimized = ribbon.isMinimized();
                 // minimum is when all the tasks are collapsed
                 RibbonTask selectedTask = ribbon.getSelectedTask();
-                for (AbstractRibbonBand ribbonBand : selectedTask.getBands()) {
+                for (AbstractRibbonBand ribbonBand : selectedTask.getBands())
+                {
                     int bandPrefHeight = ribbonBand.getMinimumSize().height;
                     Insets bandInsets = ribbonBand.getInsets();
                     RibbonBandUI bandUI = ribbonBand.getUI();
                     width += bandUI.getPreferredCollapsedWidth();
-                    if (!isRibbonMinimized) {
+                    if (!isRibbonMinimized)
+                    {
                         maxMinBandHeight = Math.max(maxMinBandHeight,
-                                bandPrefHeight + bandInsets.top
-                                + bandInsets.bottom);
+                            bandPrefHeight + bandInsets.top
+                            + bandInsets.bottom);
                     }
                 }
                 // add inter-band gaps
                 width += gap * (selectedTask.getBandCount() - 1);
-            } else {
+            }
+            else
+            {
                 // fix for issue 44 (empty ribbon)
                 width = 50;
             }
             return new Dimension(width, maxMinBandHeight + extraHeight
-                    + ins.top + ins.bottom);
+                + ins.top + ins.bottom);
         }
+
 
         /**
          * Modified. Customized so that the layout adapts to the actual size of the application menu
          * button.
          */
         @Override
-        public void layoutContainer(Container c) {
+        public void layoutContainer(Container c)
+        {
             // System.out.println("Ribbon real = " + c.getHeight());
 
             Insets ins = c.getInsets();
@@ -224,16 +250,20 @@ public class FileRibbonUI extends BasicRibbonUI {
 
             boolean isUsingTitlePane = isUsingTitlePane();
             // handle taskbar only if it is not marked
-            if (!isUsingTitlePane) {
+            if (!isUsingTitlePane)
+            {
                 taskBarPanel.removeAll();
-                for (Component regComp : ribbon.getTaskbarComponents()) {
+                for (Component regComp : ribbon.getTaskbarComponents())
+                {
                     taskBarPanel.add(regComp);
                 }
                 // taskbar takes all available width
                 taskBarPanel.setBounds(ins.left, ins.top, width - ins.left
-                        - ins.right, taskbarHeight);
+                    - ins.right, taskbarHeight);
                 y += taskbarHeight;
-            } else {
+            }
+            else
+            {
                 taskBarPanel.setBounds(0, 0, 0, 0);
             }
 
@@ -246,139 +276,164 @@ public class FileRibbonUI extends BasicRibbonUI {
             int appMenuButtonWidth = applicationMenuButton.getWidth();
             int appMenuButtonHeight = taskToggleButtonHeight; //applicationMenuButton.getHeight();
 
-            if (!isUsingTitlePane) {
+            if (!isUsingTitlePane)
+            {
                 applicationMenuButton.setVisible(ribbon.getApplicationMenu() != null);
-                if (ribbon.getApplicationMenu() != null) {
-                    if (ltr) {
+                if (ribbon.getApplicationMenu() != null)
+                {
+                    if (ltr)
+                    {
                         applicationMenuButton.setBounds(x, ins.top,
-                                appMenuButtonWidth, appMenuButtonHeight);
+                            appMenuButtonWidth, appMenuButtonHeight);
 // BDS                      applicationMenuButton.setBounds(x, ins.top,
 //                                appMenuButtonSize, appMenuButtonSize);
-                    } else {
+                    }
+                    else
+                    {
                         applicationMenuButton.setBounds(x - appMenuButtonWidth,
-                                ins.top, appMenuButtonWidth, appMenuButtonHeight);
+                            ins.top, appMenuButtonWidth, appMenuButtonHeight);
 // BDS                       applicationMenuButton.setBounds(x - appMenuButtonSize,
 //                                ins.top, appMenuButtonSize, appMenuButtonSize);
                     }
                 }
-            } else {
+            }
+            else
+            {
                 applicationMenuButton.setVisible(false);
             }
             x = ltr ? x + 2 : x - 2;
-            if (FlamingoUtilities.getApplicationMenuButton(SwingUtilities.getWindowAncestor(ribbon)) != null) {
+            if (FlamingoUtilities.getApplicationMenuButton(SwingUtilities.getWindowAncestor(ribbon)) != null)
+            {
                 x = ltr ? x + appMenuButtonWidth : x - appMenuButtonWidth;
 //BDS                x = ltr ? x + appMenuButtonSize : x - appMenuButtonSize;
             }
 
             // the help button
-            if (helpButton != null) {
+            if (helpButton != null)
+            {
                 Dimension preferred = helpButton.getPreferredSize();
-                if (ltr) {
+                if (ltr)
+                {
                     helpButton.setBounds(width - ins.right - preferred.width,
-                            y, preferred.width, preferred.height);
-                } else {
+                        y, preferred.width, preferred.height);
+                }
+                else
+                {
                     helpButton.setBounds(ins.left, y, preferred.width,
-                            preferred.height);
+                        preferred.height);
                 }
             }
 
             // task buttons
-            if (ltr) {
+            if (ltr)
+            {
                 int taskButtonsWidth = (helpButton != null) ? (helpButton.getX()
-                        - tabButtonGap - x) : (c.getWidth() - ins.right - x);
+                    - tabButtonGap - x) : (c.getWidth() - ins.right - x);
                 taskToggleButtonsScrollablePanel.setBounds(x, y,
-                        taskButtonsWidth, taskToggleButtonHeight);
-            } else {
+                    taskButtonsWidth, taskToggleButtonHeight);
+            }
+            else
+            {
                 int taskButtonsWidth = (helpButton != null) ? (x - tabButtonGap
-                        - helpButton.getX() - helpButton.getWidth())
-                        : (x - ins.left);
+                    - helpButton.getX() - helpButton.getWidth())
+                    : (x - ins.left);
                 taskToggleButtonsScrollablePanel.setBounds(
-                        x - taskButtonsWidth, y, taskButtonsWidth,
-                        taskToggleButtonHeight);
+                    x - taskButtonsWidth, y, taskButtonsWidth,
+                    taskToggleButtonHeight);
             }
 
             TaskToggleButtonsHostPanel taskToggleButtonsHostPanel = taskToggleButtonsScrollablePanel.getView();
             int taskToggleButtonsHostPanelMinWidth = taskToggleButtonsHostPanel.getMinimumSize().width;
             taskToggleButtonsHostPanel.setPreferredSize(new Dimension(
-                    taskToggleButtonsHostPanelMinWidth,
-                    taskToggleButtonsScrollablePanel.getBounds().height));
+                taskToggleButtonsHostPanelMinWidth,
+                taskToggleButtonsScrollablePanel.getBounds().height));
             taskToggleButtonsScrollablePanel.doLayout();
 
             y += taskToggleButtonHeight;
 
             int extraHeight = taskToggleButtonHeight;
-            if (!isUsingTitlePane) {
+            if (!isUsingTitlePane)
+            {
                 extraHeight += taskbarHeight;
             }
 
-            if (bandScrollablePanel.getParent() == ribbon) {
-                if (!ribbon.isMinimized() && (ribbon.getTaskCount() > 0)) {
+            if (bandScrollablePanel.getParent() == ribbon)
+            {
+                if (!ribbon.isMinimized() && (ribbon.getTaskCount() > 0))
+                {
                     // y += ins.top;
                     Insets bandInsets = (ribbon.getSelectedTask().getBandCount() == 0) ? new Insets(0, 0, 0, 0)
-                            : ribbon.getSelectedTask().getBand(0).getInsets();
+                        : ribbon.getSelectedTask().getBand(0).getInsets();
                     bandScrollablePanel.setBounds(1 + ins.left, y
-                            + bandInsets.top, c.getWidth() - 2 * ins.left - 2
-                            * ins.right - 1, c.getHeight() - extraHeight
-                            - ins.top - ins.bottom - bandInsets.top
-                            - bandInsets.bottom);
+                        + bandInsets.top, c.getWidth() - 2 * ins.left - 2
+                        * ins.right - 1, c.getHeight() - extraHeight
+                        - ins.top - ins.bottom - bandInsets.top
+                        - bandInsets.bottom);
                     // System.out.println("Scrollable : "
                     // + bandScrollablePanel.getBounds());
                     BandHostPanel bandHostPanel = bandScrollablePanel.getView();
                     int bandHostPanelMinWidth = bandHostPanel.getMinimumSize().width;
                     bandHostPanel.setPreferredSize(new Dimension(
-                            bandHostPanelMinWidth, bandScrollablePanel.getBounds().height));
+                        bandHostPanelMinWidth, bandScrollablePanel.getBounds().height));
                     bandScrollablePanel.doLayout();
                     bandHostPanel.doLayout();
-                } else {
+                }
+                else
+                {
                     bandScrollablePanel.setBounds(0, 0, 0, 0);
                 }
             }
         }
     }
 
+
     /**
      * We override to inject our Ribbon.background color.
      */
     @Override
-    protected void paintBackground(Graphics g) {
+    protected void paintBackground(Graphics g)
+    {
         //super.paintBackground(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
         g2d.setColor(FlamingoUtilities.getColor(Color.lightGray,
-                "Ribbon.background", "Panel.background"));
+            "Ribbon.background", "Panel.background"));
         g2d.fillRect(0, 0, this.ribbon.getWidth(), this.ribbon.getHeight());
         g2d.dispose();
     }
 
+
     @Override
-    protected void paintTaskArea(Graphics g, int x, int y, int width, int height) {
+    protected void paintTaskArea(Graphics g, int x, int y, int width, int height)
+    {
         //super.paintTaskArea(g, x, y, width, height);
-        if (ribbon.getTaskCount() == 0) {
+        if (ribbon.getTaskCount() == 0)
+        {
             return;
         }
 
         JRibbonTaskToggleButton selectedTaskButton = this.taskToggleButtons.get(this.ribbon.getSelectedTask());
         Rectangle selectedTaskButtonBounds = selectedTaskButton.getBounds();
         Point converted = SwingUtilities.convertPoint(selectedTaskButton.getParent(), selectedTaskButtonBounds.getLocation(),
-                this.ribbon);
+            this.ribbon);
         // System.out.println("Painted " + selectedTaskButtonBounds.x + "->" +
         // converted.x);
         Rectangle taskToggleButtonsViewportBounds = taskToggleButtonsScrollablePanel.getView().getParent().getBounds();
         taskToggleButtonsViewportBounds.setLocation(SwingUtilities.convertPoint(taskToggleButtonsScrollablePanel,
-                taskToggleButtonsViewportBounds.getLocation(),
-                this.ribbon));
+            taskToggleButtonsViewportBounds.getLocation(),
+            this.ribbon));
         int startSelectedX = Math.max(converted.x + 1,
-                (int) taskToggleButtonsViewportBounds.getMinX());
+            (int) taskToggleButtonsViewportBounds.getMinX());
         startSelectedX = Math.min(startSelectedX,
-                (int) taskToggleButtonsViewportBounds.getMaxX());
+            (int) taskToggleButtonsViewportBounds.getMaxX());
         int endSelectedX = Math.min(converted.x
-                + selectedTaskButtonBounds.width - 1,
-                (int) taskToggleButtonsViewportBounds.getMaxX());
+            + selectedTaskButtonBounds.width - 1,
+            (int) taskToggleButtonsViewportBounds.getMaxX());
         endSelectedX = Math.max(endSelectedX,
-                (int) taskToggleButtonsViewportBounds.getMinX());
+            (int) taskToggleButtonsViewportBounds.getMinX());
         Shape outerContour = FlamingoUtilities.getRibbonBorderOutline(x + 1, x
-                + width - 3, startSelectedX, endSelectedX, converted.y, y, y
-                + height, 2);
+            + width - 3, startSelectedX, endSelectedX, converted.y, y, y
+            + height, 2);
 
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(FlamingoUtilities.getBorderColor());
@@ -387,15 +442,16 @@ public class FileRibbonUI extends BasicRibbonUI {
         // check whether the currently selected task is a contextual task
         RibbonTask selected = this.ribbon.getSelectedTask();
         RibbonContextualTaskGroup contextualGroup = selected.getContextualGroup();
-        if (contextualGroup != null) {
+        if (contextualGroup != null)
+        {
             // paint a small gradient directly below the task area
             Insets ins = this.ribbon.getInsets();
             int topY = ins.top + getTaskbarHeight();
             int bottomY = topY + 5;
             Color hueColor = contextualGroup.getHueColor();
             Paint paint = new GradientPaint(0, topY, FlamingoUtilities.getAlphaColor(hueColor,
-                    (int) (255 * RibbonContextualTaskGroup.HUE_ALPHA)),
-                    0, bottomY, FlamingoUtilities.getAlphaColor(hueColor, 0));
+                (int) (255 * RibbonContextualTaskGroup.HUE_ALPHA)),
+                0, bottomY, FlamingoUtilities.getAlphaColor(hueColor, 0));
             g2d.setPaint(paint);
             g2d.clip(outerContour);
             g2d.fillRect(0, topY, width, bottomY - topY + 1);
@@ -403,5 +459,6 @@ public class FileRibbonUI extends BasicRibbonUI {
 
         g2d.dispose();
     }
+
 
 }

@@ -1,5 +1,4 @@
-/*
-/*
+/* 
  * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
  * All rights reserved.
  *
@@ -29,45 +28,49 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.terramenta.ribbon.spi;
+package com.terramenta.ribbon;
 
-import com.terramenta.ribbon.ColorUtil;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
+import javax.swing.JComponent;
+import javax.swing.plaf.ComponentUI;
+import org.pushingpixels.flamingo.internal.ui.ribbon.BasicBandControlPanelUI;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 
 
 /**
- * Office 2013 Ribbon Preferences.
+ * This class draws the bands (groups) of command buttons within a task.
  *
- * @author Bruce Schubert
+ * @author Bruce Schubert <bruce@emxsys.com>
+ * @version $Id: EmxsysBandControlPanelUI.java 100 2012-02-29 14:41:51Z bdschubert $
  */
-public class Office2013FullSizeRibbonPreferences extends BasicRibbonPreferences
+public class Office2007BandControlPanelUI extends BasicBandControlPanelUI
 {
 
-    public Office2013FullSizeRibbonPreferences()
+    public static ComponentUI createUI(JComponent c)
     {
-        setLafClassDefaults(
-            new Object[]
-            {
-                // UI Classes
-                "RibbonUI", "com.terramenta.ribbon.Office2013RibbonUI",
-                "RibbonBandUI", "com.terramenta.ribbon.Office2013RibbonBandUI",
-                "BandControlPanelUI", "com.terramenta.ribbon.Office2013BandControlPanelUI",
-                "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2013RibbonTaskToggleButtonUI",
-                "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2013RibbonApplicationMenuButtonUI",
-                // Colors
-                "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.darkGray, "Panel.background"), 0.20),
-                "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray, "Panel.background"),
-                "AppButton.background", Color.black,
-                "AppButton.foreground", Color.white,
-                "TaskButton.highlight", Color.cyan,
-            });
-        setPreferredBandSize(new Dimension(40, 96));// Full size supports buttons with two lines of text
-        setAlwaysDisplayButtonText(true);
-        setAlwaysDisplayGroupText(false);
-        setShouldDisplayTaskBar(false); // TODO: draw taskbar on glass pane.
-        setUsePopupMenus(true);
-        setUseTabNameForTasksBand(false);
+        return new Office2007BandControlPanelUI();
+    }
+
+
+
+    /**
+     * Override to paint the band background with a gradient.
+     *
+     * @param graphics
+     * @param toFill
+     */
+    @Override
+    protected void paintBandBackground(Graphics graphics, Rectangle toFill)
+    {
+        //super.paintBandBackground(graphics, toFill);
+
+        Graphics2D g2d = (Graphics2D) graphics.create();
+        Color backgroundColor = controlPanel.getBackground();
+        Paint paint = new GradientPaint(0, 0, FlamingoUtilities.getLighterColor(backgroundColor, 0.75),            
+            0, toFill.height, backgroundColor);
+        g2d.setPaint(paint);
+        g2d.fillRect(toFill.x, toFill.y, toFill.width, toFill.height);
+        g2d.dispose();
+
     }
 }

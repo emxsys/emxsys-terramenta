@@ -85,11 +85,17 @@ public abstract class RibbonPreferencesProvider {
             if (this.preferences == null) {
                 String style = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
                 switch (style) {
-                    case RibbonOptions.COMPACT_STYLE:
+                    case RibbonOptions.OFFICE2013_FULLSIZE_STYLE:
+                        this.preferences = new Office2013FullSizeRibbonPreferences();
+                        break;
+                    case RibbonOptions.OFFICE2013_COMPACT_STYLE:
                         this.preferences = new Office2013CompactRibbonPreferences();
                         break;
-                    case RibbonOptions.FULLSIZE_STYLE:
-                        this.preferences = new Office2013FullSizeRibbonPreferences();
+                    case RibbonOptions.OFFICE2007_FULLSIZE_STYLE:
+                        this.preferences = new Office2007FullSizeRibbonPreferences();
+                        break;
+                    case RibbonOptions.OFFICE2007_COMPACT_STYLE:
+                        this.preferences = new Office2007CompactRibbonPreferences();
                         break;
                     default:
                         this.preferences = new BasicRibbonPreferences();      

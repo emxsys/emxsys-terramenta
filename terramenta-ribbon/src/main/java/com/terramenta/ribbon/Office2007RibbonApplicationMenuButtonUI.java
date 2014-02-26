@@ -70,12 +70,12 @@ import org.pushingpixels.flamingo.internal.utils.RenderingUtils;
  *
  * @author Bruce Schubert <bruce@emxsys.com>
  */
-public class FileRibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuButtonUI {
+public class Office2007RibbonApplicationMenuButtonUI extends BasicRibbonApplicationMenuButtonUI {
 
     private Color buttonColor = new Color(0, 0, 128);   // Dark blue
 
     public static ComponentUI createUI(JComponent c) {
-        return new FileRibbonApplicationMenuButtonUI();
+        return new Office2007RibbonApplicationMenuButtonUI();
     }
 
     // TODO: Add custom layout manager to produce the proper sized rectangle for the button

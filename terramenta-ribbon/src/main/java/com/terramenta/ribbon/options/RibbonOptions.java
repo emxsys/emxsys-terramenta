@@ -37,8 +37,10 @@ package com.terramenta.ribbon.options;
 public class RibbonOptions {
     public static final String STYLE = "tm.ribbon.style";
     
-    public static final String FULLSIZE_STYLE = "FULLSIZE";
-    public static final String COMPACT_STYLE = "COMPACT";
+    public static final String OFFICE2013_FULLSIZE_STYLE = "FULLSIZE2013";
+    public static final String OFFICE2007_FULLSIZE_STYLE = "FULLSIZE2007";
+    public static final String OFFICE2013_COMPACT_STYLE = "COMPACT2013";
+    public static final String OFFICE2007_COMPACT_STYLE = "COMPACT2007";
     public static final String OTHER_STYLE = "OTHER";
-    public static final String DEFAULT_STYLE = COMPACT_STYLE;
+    public static final String DEFAULT_STYLE = OFFICE2013_COMPACT_STYLE;
 }

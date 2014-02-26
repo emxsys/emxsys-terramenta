@@ -1,5 +1,4 @@
 /*
-/*
  * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
  * All rights reserved.
  *
@@ -31,43 +30,30 @@
 
 package com.terramenta.ribbon.spi;
 
-import com.terramenta.ribbon.ColorUtil;
-import java.awt.Color;
 import java.awt.Dimension;
-import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
-
 
 /**
- * Office 2013 Ribbon Preferences.
- *
+ * Default Terramenta ribbon preferences providing a shorter ribbon without button labels.
+ * 
  * @author Bruce Schubert
  */
-public class Office2013FullSizeRibbonPreferences extends BasicRibbonPreferences
-{
+public class Office2007CompactRibbonPreferences extends Office2007FullSizeRibbonPreferences {
 
-    public Office2013FullSizeRibbonPreferences()
+
+    /**
+     * Use the Office 2013 LAF class defaults and colors, but override the size and text settings.
+     */
+    public Office2007CompactRibbonPreferences()
     {
-        setLafClassDefaults(
-            new Object[]
-            {
-                // UI Classes
-                "RibbonUI", "com.terramenta.ribbon.Office2013RibbonUI",
-                "RibbonBandUI", "com.terramenta.ribbon.Office2013RibbonBandUI",
-                "BandControlPanelUI", "com.terramenta.ribbon.Office2013BandControlPanelUI",
-                "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2013RibbonTaskToggleButtonUI",
-                "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2013RibbonApplicationMenuButtonUI",
-                // Colors
-                "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.darkGray, "Panel.background"), 0.20),
-                "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray, "Panel.background"),
-                "AppButton.background", Color.black,
-                "AppButton.foreground", Color.white,
-                "TaskButton.highlight", Color.cyan,
-            });
-        setPreferredBandSize(new Dimension(40, 96));// Full size supports buttons with two lines of text
-        setAlwaysDisplayButtonText(true);
-        setAlwaysDisplayGroupText(false);
-        setShouldDisplayTaskBar(false); // TODO: draw taskbar on glass pane.
+        super();
+        setPreferredBandSize(new Dimension(40, 60));// Shorter size supports buttons without text
+        setAlwaysDisplayButtonText(false);
+        setAlwaysDisplayGroupText(true);
         setUsePopupMenus(true);
         setUseTabNameForTasksBand(false);
+        
     }
+
+    
+
 }

@@ -56,41 +56,134 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
 
         styleButtonGroup = new javax.swing.ButtonGroup();
         stylePanel = new javax.swing.JPanel();
-        fullsizeRadioButton = new javax.swing.JRadioButton();
-        compactRadioButton = new javax.swing.JRadioButton();
+        jPanel1 = new javax.swing.JPanel();
+        style1RadioButton = new javax.swing.JRadioButton();
+        style1Label = new javax.swing.JLabel();
+        style2RadioButton = new javax.swing.JRadioButton();
+        style2Label = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        style3RadioButton = new javax.swing.JRadioButton();
+        style3Label = new javax.swing.JLabel();
+        style4RadioButton = new javax.swing.JRadioButton();
+        style4Label = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         otherRadioButton = new javax.swing.JRadioButton();
-        fullsizeLabel = new javax.swing.JLabel();
-        compactLabel = new javax.swing.JLabel();
         otherLabel = new javax.swing.JLabel();
 
         stylePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.stylePanel.border.title_1"))); // NOI18N
 
-        styleButtonGroup.add(fullsizeRadioButton);
-        org.openide.awt.Mnemonics.setLocalizedText(fullsizeRadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.fullsizeRadioButton.text")); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel1.border.title"))); // NOI18N
 
-        styleButtonGroup.add(compactRadioButton);
-        org.openide.awt.Mnemonics.setLocalizedText(compactRadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.compactRadioButton.text")); // NOI18N
+        styleButtonGroup.add(style1RadioButton);
+        org.openide.awt.Mnemonics.setLocalizedText(style1RadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style1RadioButton.text")); // NOI18N
+
+        style1Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2013-fullsize-example.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(style1Label, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style1Label.text")); // NOI18N
+        style1Label.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        style1Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                style1LabelMouseClicked(evt);
+            }
+        });
+
+        styleButtonGroup.add(style2RadioButton);
+        org.openide.awt.Mnemonics.setLocalizedText(style2RadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style2RadioButton.text")); // NOI18N
+
+        style2Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2007-full.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(style2Label, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style2Label.text")); // NOI18N
+        style2Label.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        style2Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                style2LabelMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(style2RadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(style1RadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(style1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(style2Label, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(style1Label)
+                    .addComponent(style1RadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(style2Label)
+                    .addComponent(style2RadioButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel2.border.border.border.title"))))); // NOI18N
+
+        styleButtonGroup.add(style3RadioButton);
+        org.openide.awt.Mnemonics.setLocalizedText(style3RadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style3RadioButton.text")); // NOI18N
+
+        style3Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2013-compact-example.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(style3Label, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style3Label.text")); // NOI18N
+        style3Label.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        style3Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                style3LabelMouseClicked(evt);
+            }
+        });
+
+        styleButtonGroup.add(style4RadioButton);
+        org.openide.awt.Mnemonics.setLocalizedText(style4RadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style4RadioButton.text")); // NOI18N
+
+        style4Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2007-compact.png"))); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(style4Label, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.style4Label.text")); // NOI18N
+        style4Label.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        style4Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                style4LabelMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(style3RadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(style4RadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(style3Label, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(style4Label, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(style3Label, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(style3RadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(style4Label, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(style4RadioButton)))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel3.border.title"))); // NOI18N
 
         styleButtonGroup.add(otherRadioButton);
         org.openide.awt.Mnemonics.setLocalizedText(otherRadioButton, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.otherRadioButton.text")); // NOI18N
-
-        fullsizeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2013-fullsize-example.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(fullsizeLabel, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.fullsizeLabel.text")); // NOI18N
-        fullsizeLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        fullsizeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fullsizeLabelMouseClicked(evt);
-            }
-        });
-
-        compactLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/terramenta/ribbon/images/office2013-compact-example.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(compactLabel, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.compactLabel.text")); // NOI18N
-        compactLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        compactLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                compactLabelMouseClicked(evt);
-            }
-        });
 
         otherLabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(otherLabel, org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.otherLabel.text")); // NOI18N
@@ -100,40 +193,42 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
             }
         });
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(otherRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(otherLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(otherLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(otherRadioButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout stylePanelLayout = new javax.swing.GroupLayout(stylePanel);
         stylePanel.setLayout(stylePanelLayout);
         stylePanelLayout.setHorizontalGroup(
             stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stylePanelLayout.createSequentialGroup()
-                .addComponent(fullsizeRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fullsizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(stylePanelLayout.createSequentialGroup()
-                .addGroup(stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(compactRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(otherRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(stylePanelLayout.createSequentialGroup()
-                        .addComponent(compactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(otherLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         stylePanelLayout.setVerticalGroup(
             stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(stylePanelLayout.createSequentialGroup()
-                .addGroup(stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fullsizeRadioButton)
-                    .addComponent(fullsizeLabel))
-                .addGap(12, 12, 12)
-                .addGroup(stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(compactRadioButton)
-                    .addComponent(compactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(stylePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(otherRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(otherLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -153,15 +248,15 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fullsizeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fullsizeLabelMouseClicked
+    private void style1LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_style1LabelMouseClicked
         // Select 
-        fullsizeRadioButton.setSelected(true);
-    }//GEN-LAST:event_fullsizeLabelMouseClicked
+        style1RadioButton.setSelected(true);
+    }//GEN-LAST:event_style1LabelMouseClicked
 
-    private void compactLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_compactLabelMouseClicked
+    private void style3LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_style3LabelMouseClicked
         // Select
-        compactRadioButton.setSelected(true);
-    }//GEN-LAST:event_compactLabelMouseClicked
+        style3RadioButton.setSelected(true);
+    }//GEN-LAST:event_style3LabelMouseClicked
 
     private void otherLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_otherLabelMouseClicked
         // TODO add your handling code here:
@@ -169,6 +264,14 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
             otherRadioButton.setSelected(true);
         }
     }//GEN-LAST:event_otherLabelMouseClicked
+
+    private void style2LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_style2LabelMouseClicked
+        style2RadioButton.setSelected(true);
+    }//GEN-LAST:event_style2LabelMouseClicked
+
+    private void style4LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_style4LabelMouseClicked
+        style4RadioButton.setSelected(true);
+    }//GEN-LAST:event_style4LabelMouseClicked
 
     void load() {
 
@@ -178,26 +281,36 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
         otherLabel.setText(provider != null ? provider.getPreferences().getClass().getSimpleName() : "");
         currentStyle = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
         switch (currentStyle) {
-            case RibbonOptions.COMPACT_STYLE:
-                compactRadioButton.setSelected(true);
+            case RibbonOptions.OFFICE2013_FULLSIZE_STYLE:
+                style1RadioButton.setSelected(true);
                 break;
-            case RibbonOptions.FULLSIZE_STYLE:
-                fullsizeRadioButton.setSelected(true);
+            case RibbonOptions.OFFICE2007_FULLSIZE_STYLE:
+                style2RadioButton.setSelected(true);
+                break;
+            case RibbonOptions.OFFICE2013_COMPACT_STYLE:
+                style3RadioButton.setSelected(true);
+                break;
+            case RibbonOptions.OFFICE2007_COMPACT_STYLE:
+                style4RadioButton.setSelected(true);
                 break;
             case RibbonOptions.OTHER_STYLE:
                 otherRadioButton.setSelected(true);
                 break;
             default:
-                compactRadioButton.setSelected(true);
+                style3RadioButton.setSelected(true);
         }
     }
 
     void store() {
         String newStyle;
-        if (fullsizeRadioButton.isSelected()) {
-            newStyle = RibbonOptions.FULLSIZE_STYLE;
-        } else if (compactRadioButton.isSelected()) {
-            newStyle = RibbonOptions.COMPACT_STYLE;
+        if (style1RadioButton.isSelected()) {
+            newStyle = RibbonOptions.OFFICE2013_FULLSIZE_STYLE;
+        } else if (style2RadioButton.isSelected()) {
+            newStyle = RibbonOptions.OFFICE2007_FULLSIZE_STYLE;
+        } else if (style3RadioButton.isSelected()) {
+            newStyle = RibbonOptions.OFFICE2013_COMPACT_STYLE;
+        } else if (style4RadioButton.isSelected()) {
+            newStyle = RibbonOptions.OFFICE2007_COMPACT_STYLE;
         } else {
             newStyle = RibbonOptions.OTHER_STYLE;
         }
@@ -214,12 +327,19 @@ final class RibbonOptionsPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel compactLabel;
-    private javax.swing.JRadioButton compactRadioButton;
-    private javax.swing.JLabel fullsizeLabel;
-    private javax.swing.JRadioButton fullsizeRadioButton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel otherLabel;
     private javax.swing.JRadioButton otherRadioButton;
+    private javax.swing.JLabel style1Label;
+    private javax.swing.JRadioButton style1RadioButton;
+    private javax.swing.JLabel style2Label;
+    private javax.swing.JRadioButton style2RadioButton;
+    private javax.swing.JLabel style3Label;
+    private javax.swing.JRadioButton style3RadioButton;
+    private javax.swing.JLabel style4Label;
+    private javax.swing.JRadioButton style4RadioButton;
     private javax.swing.ButtonGroup styleButtonGroup;
     private javax.swing.JPanel stylePanel;
     // End of variables declaration//GEN-END:variables
