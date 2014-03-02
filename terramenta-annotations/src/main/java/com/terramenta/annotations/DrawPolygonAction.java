@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawPolygonAction_Hint",
         tooltipTitle = "#CTL_DrawPolygonAction_TooltipTitle",
         tooltipBody = "#CTL_DrawPolygonAction_TooltipBody",
-        tooltipIcon = "images/polygon32.png",
+        tooltipIcon = "com/terramenta/annotations/images/polygon32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

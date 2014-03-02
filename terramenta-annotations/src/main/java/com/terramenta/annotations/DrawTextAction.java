@@ -21,7 +21,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawTextAction_Hint",
         tooltipTitle = "#CTL_DrawTextAction_TooltipTitle",
         tooltipBody = "#CTL_DrawTextAction_TooltipBody",
-        tooltipIcon = "images/textAdd32.png",
+        tooltipIcon = "com/terramenta/annotations/images/textAdd32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

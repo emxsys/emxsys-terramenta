@@ -35,7 +35,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawCircleAction_Hint",
         tooltipTitle = "#CTL_DrawCircleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawCircleAction_TooltipBody",
-        tooltipIcon = "images/circle32.png",
+        tooltipIcon = "com/terramenta/annotations/images/circle32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

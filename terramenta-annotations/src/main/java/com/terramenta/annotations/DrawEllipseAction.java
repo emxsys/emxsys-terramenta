@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawEllipseAction_Hint",
         tooltipTitle = "#CTL_DrawEllipseAction_TooltipTitle",
         tooltipBody = "#CTL_DrawEllipseAction_TooltipBody",
-        tooltipIcon = "images/ellipse32.png",
+        tooltipIcon = "com/terramenta/annotations/images/ellipse32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

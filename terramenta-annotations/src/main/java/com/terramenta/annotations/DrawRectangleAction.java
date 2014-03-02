@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawRectangleAction_Hint",
         tooltipTitle = "#CTL_DrawRectangleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawRectangleAction_TooltipBody",
-        tooltipIcon = "images/rectangle32.png",
+        tooltipIcon = "com/terramenta/annotations/images/rectangle32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
