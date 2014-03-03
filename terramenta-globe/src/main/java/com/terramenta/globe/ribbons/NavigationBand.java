@@ -38,7 +38,7 @@ public class NavigationBand extends JFlowRibbonBand implements ActionListener {
 
     public NavigationBand() {
         super("Navigation", null);
-        setPreferredSize(new Dimension(250, 48));
+        setPreferredSize(new Dimension(250, 60));
 
         JPanel panel = new JPanel();
 

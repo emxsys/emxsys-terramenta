@@ -40,7 +40,7 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
         super("Datetime", null);
 
         final JFXPanel jfxPanel = new JFXPanel();
-        jfxPanel.setPreferredSize(new Dimension(220, 48));
+        jfxPanel.setPreferredSize(new Dimension(220, 24));
         Platform.setImplicitExit(false);
         Platform.runLater(new Runnable() {
 

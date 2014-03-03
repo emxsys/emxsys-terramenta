@@ -2,7 +2,7 @@
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
     <folder name="Menu">
-        <folder name="Home">
+        <folder name="Tools">
             <file name="com-terramenta-globe-ribbons-NavigationBand.instance">
                 <attr name="position" intvalue="500"/>
             </file>
