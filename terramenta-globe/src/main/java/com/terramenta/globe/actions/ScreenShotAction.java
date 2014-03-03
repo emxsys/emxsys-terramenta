@@ -18,8 +18,6 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.swing.AbstractAction;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -27,8 +25,21 @@ import org.openide.util.NbBundle.Messages;
 @ActionID(category = "Tools",
         id = "com.terramenta.actions.ScreenShotAction")
 @ActionRegistration(iconBase = "com/terramenta/globe/images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
-@RibbonActionReference(path = "Menu/Home/Create", position = 9)
-@Messages("CTL_ScreenShotAction=Screen Shot")
+@RibbonActionReference(path = "Menu/Tools/Create",
+        position = 100,
+        priority = "top",
+        description = "#CTL_ScreenShotAction_Hint",
+        tooltipTitle = "#CTL_ScreenShotAction_TooltipTitle",
+        tooltipBody = "#CTL_ScreenShotAction_TooltipBody",
+        tooltipIcon = "com/terramenta/globe/images/camera32.png",
+        //tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "com/terramenta/images/help.png")
+@Messages({
+    "CTL_ScreenShotAction=Screen Shot",
+    "CTL_ScreenShotAction_Hint=Save an image of the current globe.",
+    "CTL_ScreenShotAction_TooltipTitle=Create Screen Shot",
+    "CTL_ScreenShotAction_TooltipBody=Creates a screen shot of the current globe in the user's home directory.",
+})
 /**
  * @author tag
  * @version $Id: ScreenShotAction.java 11809 2009-06-22 21:16:44Z tgaskins $

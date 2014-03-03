@@ -45,8 +45,8 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
 import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
 
 /**
- * Provider for the Components on the Ribbon defined in the XML Layer: the AppMenu, TaskBar and
- * TaskPanes.
+ * Provider for the Components on the Ribbon defined in the XML Layer: the
+ * AppMenu, TaskBar and TaskPanes.
  *
  * @author Chris
  */
@@ -76,8 +76,8 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
     }
 
     /**
-     * For the taskBar on the right side of the menu button. Scans the layer.xml for entries in the
-     * Toolbars folder.
+     * For the taskBar on the right side of the menu button. Scans the layer.xml
+     * for entries in the Toolbars folder.
      *
      * @param ribbon the ribbon to add the TaskBar ActionItems too.
      */
@@ -102,20 +102,19 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
             }
         }
     }
-    
 
-    private void addHelpButton(JRibbon ribbon)
-    {
+    private void addHelpButton(JRibbon ribbon) {
         List<? extends ActionItem> actions = ActionItems.forPath("Ribbon/HelpButton");// NOI18N
-        if (actions.size() > 0)
-        {
+        if (actions.size() > 0) {
             ribbon.configureHelp(actions.get(0).getIcon(), actions.get(0).getAction());
         }
     }
+
     /**
-     * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder and the
-     * Ribbon/TaskPanes. A tabbed TaskPane is created for each child folder, and a RibbonBand is
-     * created for each grandchild folder.
+     * For the actual tabbed menu items. Scans the layer.xml for entries in the
+     * Menu folder and the Ribbon/TaskPanes. A tabbed TaskPane is created for
+     * each child folder, and a RibbonBand is created for each grandchild
+     * folder.
      *
      * @param ribbon the JRibbon to add the tabbed menu items to
      */

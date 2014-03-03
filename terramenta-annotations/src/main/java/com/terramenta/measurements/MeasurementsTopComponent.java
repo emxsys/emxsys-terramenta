@@ -37,9 +37,9 @@ import org.openide.windows.TopComponent;
         description = "#CTL_MeasurementsAction_Hint",
         tooltipTitle = "#CTL_MeasurementsAction_TooltipTitle",
         tooltipBody = "#CTL_MeasurementsAction_TooltipBody",
-        tooltipIcon = "images/measurements32.png",
+        tooltipIcon = "com/terramenta/measurements/images/measurements32.png",
         tooltipFooter = "#CTL_MeasurementsAction_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @NbBundle.Messages(
         {
             "CTL_MeasurementsTopComponent=Measurements",

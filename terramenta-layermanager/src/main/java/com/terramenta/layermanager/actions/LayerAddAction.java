@@ -30,9 +30,24 @@ import org.openide.util.actions.SystemAction;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.LayerAddAction")
-@ActionRegistration(iconBase = "com/terramenta/layermanager/images/layerAdd.png", displayName = "#CTL_LayerAddAction", popupText = "Add a layer to the globe.")
-@RibbonActionReference(path = "Menu/Home/Manage")
-@Messages("CTL_LayerAddAction=Add Layer")
+@ActionRegistration(iconBase = "com/terramenta/layermanager/images/layerAdd.png", 
+            displayName = "#CTL_LayerAddAction", 
+            popupText = "Add a layer to the globe.")
+@RibbonActionReference(path = "Menu/Insert/Layers",
+        position = 100,
+        priority = "top",
+        description = "#CTL_LayerAddAction_Hint",
+        tooltipTitle = "#CTL_LayerAddAction_TooltipTitle",
+        tooltipBody = "#CTL_LayerAddAction_TooltipBody",
+        tooltipIcon = "com/terramenta/layermanager/images/layerAdd.png",
+        //tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooterIcon = "com/terramenta/images/help.png")
+@Messages({
+    "CTL_LayerAddAction=Add Layer",
+    "CTL_LayerAddAction_Hint=Add a layer to the globe.",
+    "CTL_LayerAddAction_TooltipTitle=Add a Layer",
+    "CTL_LayerAddAction_TooltipBody=Launches a wizard to add a KML, Shapefile, GeoTiff or WMS layer to the globe.",
+})
 public class LayerAddAction extends SystemAction {
 
     @Override

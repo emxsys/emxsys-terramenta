@@ -35,7 +35,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawLineAction_Hint",
         tooltipTitle = "#CTL_DrawLineAction_TooltipTitle",
         tooltipBody = "#CTL_DrawLineAction_TooltipBody",
-        tooltipIcon = "images/line32.png",
+        tooltipIcon = "com/terramenta/annotations/images/line32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
