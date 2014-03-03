@@ -30,13 +30,24 @@
 
 package com.terramenta.ribbon;
 
+import com.terramenta.ribbon.api.ResizableIcons;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
+import org.pushingpixels.flamingo.api.common.CommandButtonDisplayState;
+import org.pushingpixels.flamingo.api.common.JCommandButton;
+import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
 import org.pushingpixels.flamingo.api.ribbon.AbstractRibbonBand;
+import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
 import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
+import org.pushingpixels.flamingo.internal.ui.common.BasicCommandButtonUI;
 
 import org.pushingpixels.flamingo.internal.ui.ribbon.BasicRibbonUI;
 import org.pushingpixels.flamingo.internal.ui.ribbon.JRibbonTaskToggleButton;
@@ -52,6 +63,8 @@ import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 public class Office2007RibbonUI extends BasicRibbonUI
 {
 
+    JCommandButton minimizeButton;
+    
     public static ComponentUI createUI(JComponent c)
     {
         return new Office2007RibbonUI();
@@ -89,6 +102,25 @@ public class Office2007RibbonUI extends BasicRibbonUI
         BandHostPanel groupsPanel = super.bandScrollablePanel.getView();
         groupsPanel.setBackground(FlamingoUtilities.getColor(Color.lightGray,
             "RibbonGroups.background", "ControlPanel.background", "Panel.background"));
+    }
+
+    @Override
+    protected void syncRibbonState() {
+        super.syncRibbonState();
+        // Add a minimize button
+        this.minimizeButton = new MinimizeButton(this.ribbon);
+        this.minimizeButton.setDisplayState(CommandButtonDisplayState.SMALL);
+        this.minimizeButton.setCommandButtonKind(JCommandButton.CommandButtonKind.ACTION_ONLY);
+        this.ribbon.add(this.minimizeButton);
+    }
+
+    @Override
+    protected void uninstallComponents() {
+        super.uninstallComponents();
+        // BDS - remove custom minimize button
+        if (this.minimizeButton != null) {
+            this.ribbon.remove(this.minimizeButton);
+        }
     }
 
 
@@ -239,6 +271,7 @@ public class Office2007RibbonUI extends BasicRibbonUI
             // System.out.println("Ribbon real = " + c.getHeight());
 
             Insets ins = c.getInsets();
+            int top = c.getY();
             int tabButtonGap = getTabButtonGap();
 
             boolean ltr = ribbon.getComponentOrientation().isLeftToRight();
@@ -323,23 +356,34 @@ public class Office2007RibbonUI extends BasicRibbonUI
                         preferred.height);
                 }
             }
+// BDS - Added minimize button
+            // the minimize button - only valid for left-to-right
+            if (minimizeButton != null && ltr) {
+                Dimension preferred = minimizeButton.getPreferredSize();
+                int buttonX = (helpButton != null)
+                        ? helpButton.getX() - preferred.width
+                        : width - ins.right - preferred.width;
+                minimizeButton.setBounds(buttonX, y,
+                        preferred.width, preferred.height - ins.bottom);
+            }
 
             // task buttons
-            if (ltr)
-            {
-                int taskButtonsWidth = (helpButton != null) ? (helpButton.getX()
-                    - tabButtonGap - x) : (c.getWidth() - ins.right - x);
+            if (ltr) {
+                int buttonX = minimizeButton != null
+                        ? minimizeButton.getX()
+                        : helpButton != null ? helpButton.getX() : 0;
+                int taskButtonsWidth = (buttonX > 0)
+                        ? (buttonX - tabButtonGap - x)
+                        : (c.getWidth() - ins.right - x);
                 taskToggleButtonsScrollablePanel.setBounds(x, y,
-                    taskButtonsWidth, taskToggleButtonHeight);
-            }
-            else
-            {
-                int taskButtonsWidth = (helpButton != null) ? (x - tabButtonGap
-                    - helpButton.getX() - helpButton.getWidth())
-                    : (x - ins.left);
+                        taskButtonsWidth, taskToggleButtonHeight);
+            } else {
+                int taskButtonsWidth = (helpButton != null)
+                        ? (x - tabButtonGap - helpButton.getX() - helpButton.getWidth())
+                        : (x - ins.left);
                 taskToggleButtonsScrollablePanel.setBounds(
-                    x - taskButtonsWidth, y, taskButtonsWidth,
-                    taskToggleButtonHeight);
+                        x - taskButtonsWidth, y, taskButtonsWidth,
+                        taskToggleButtonHeight);
             }
 
             TaskToggleButtonsHostPanel taskToggleButtonsHostPanel = taskToggleButtonsScrollablePanel.getView();
@@ -460,5 +504,78 @@ public class Office2007RibbonUI extends BasicRibbonUI
         g2d.dispose();
     }
 
+    /**
+     * This class creates a Minimize/Maximize with a custom UI.
+     */
+    public static class MinimizeButton extends JCommandButton {
+
+        final ResizableIcon minimizeIcon = ResizableIcons.fromResource("com/terramenta/ribbon/images/minimize.png");
+        final ResizableIcon maximizeIcon = ResizableIcons.fromResource("com/terramenta/ribbon/images/maximize.png");
+        final JRibbon ribbon;
+
+        PropertyChangeListener pcl = new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("minimized")) {
+                    setIcon((boolean) (evt.getNewValue()) ? maximizeIcon : minimizeIcon);
+                }
+            }
+        };
+
+        ActionListener al = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ribbon.setMinimized(!ribbon.isMinimized());
+            }
+        };
+
+        public MinimizeButton(JRibbon ribbon) {
+            super("");
+            this.ribbon = ribbon;
+            this.ribbon.addPropertyChangeListener("minimized", pcl);
+            setUI(new MinimizeButtonUI());
+            setIcon(this.minimizeIcon);
+            getActionModel().addActionListener(al);
+        }
+
+        @Override
+        public void updateUI() {
+            // Do nothing - prevents the UI from being reset to the UIManager settings
+            //super.updateUI();
+        }
+
+        @Override
+        public ResizableIcon getIcon() {
+            return this.ribbon.isMinimized() ? this.maximizeIcon : this.minimizeIcon;
+        }
+
+    }
+
+    /**
+     * Test class for messing around with a custom button UI
+     */
+    static class MinimizeButtonUI extends BasicCommandButtonUI {
+
+        private static final MinimizeButtonUI buttonUI = new MinimizeButtonUI();
+
+        MinimizeButtonUI() {
+        }
+
+        public static ComponentUI createUI(JComponent c) {
+            return buttonUI;
+        }
+
+        /**
+         * Returns the current icon.
+         */
+        @Override
+        protected Icon getIconToPaint() {
+            return super.getIconToPaint(); //return this.commandButton.getIcon();
+        }
+
+    }
 
 }
+

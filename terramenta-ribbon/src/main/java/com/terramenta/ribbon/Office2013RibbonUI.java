@@ -27,16 +27,27 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon;
 
+import com.terramenta.ribbon.api.ResizableIcons;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ComponentUI;
+import org.pushingpixels.flamingo.api.common.CommandButtonDisplayState;
+import org.pushingpixels.flamingo.api.common.JCommandButton;
+import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
 import org.pushingpixels.flamingo.api.ribbon.AbstractRibbonBand;
+import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
 import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
+import org.pushingpixels.flamingo.internal.ui.common.BasicCommandButtonUI;
 
 import org.pushingpixels.flamingo.internal.ui.ribbon.BasicRibbonUI;
 import org.pushingpixels.flamingo.internal.ui.ribbon.JRibbonTaskToggleButton;
@@ -44,15 +55,18 @@ import org.pushingpixels.flamingo.internal.ui.ribbon.RibbonBandUI;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 
 /**
- * This class provides an Office 2013 look and feel with a dynamically sized FILE tab application
- * menu button. This UI does not allocate screen real estate in the ribbon for the TaskBar (print,
- * open, etc) which makes for a tighter UI.
+ * This class provides an Office 2013 look and feel with a dynamically sized
+ * FILE tab application menu button. This UI does not allocate screen real
+ * estate in the ribbon for the TaskBar (print, open, etc) which makes for a
+ * tighter UI.
  *
  * @author Bruce Schubert <bruce@emxsys.com>
  * @see FileRibbonApplicationMenuButtonUI
  * @version $Id$
  */
 public class Office2013RibbonUI extends BasicRibbonUI {
+
+    protected JCommandButton minimizeButton;
 
     public static ComponentUI createUI(JComponent c) {
         return new Office2013RibbonUI();
@@ -61,11 +75,12 @@ public class Office2013RibbonUI extends BasicRibbonUI {
     @Override
     protected void installDefaults() {
         super.installDefaults();
+        this.ribbon.setBorder(new BorderUIResource.EmptyBorderUIResource(1, 2, 1, 2));
     }
 
     /**
-     * This override injects our custom Ribbon.background, RibbonTabs.foreground and
-     * RibbonGroups.background colors into the JRibbon UI components.
+     * This override injects our custom Ribbon.background, RibbonTabs.foreground
+     * and RibbonGroups.background colors into the JRibbon UI components.
      */
     @Override
     protected void installComponents() {
@@ -86,11 +101,31 @@ public class Office2013RibbonUI extends BasicRibbonUI {
                 "ControlPanel.background", "Panel.background"));
     }
 
+    @Override
+    protected void syncRibbonState() {
+        super.syncRibbonState();
+        // Add a minimize button
+        this.minimizeButton = new MinimizeButton(this.ribbon);
+        this.minimizeButton.setDisplayState(CommandButtonDisplayState.SMALL);
+        this.minimizeButton.setCommandButtonKind(JCommandButton.CommandButtonKind.ACTION_ONLY);
+        this.ribbon.add(this.minimizeButton);
+    }
+
+    @Override
+    protected void uninstallComponents() {
+        super.uninstallComponents();
+        // BDS - added custom minimize button
+        if (this.minimizeButton != null) {
+            this.ribbon.remove(this.minimizeButton);
+        }
+    }
+
     /**
-     * We're not using the taskbar within the ribbon area, so we return zero to shift the task
-     * buttons upwards into the space normally reserved for the taskbar.
+     * We're not using the taskbar within the ribbon area, so we return zero to
+     * shift the task buttons upwards into the space normally reserved for the
+     * taskbar.
      *
-     * @return zero instead of the default value of 22.
+     * @return zero instead of the default value of 24.
      */
     @Override
     public int getTaskbarHeight() {
@@ -99,19 +134,20 @@ public class Office2013RibbonUI extends BasicRibbonUI {
 
     @Override
     protected LayoutManager createLayoutManager() {
-        return new FileRibbonLayout();
+        return new EmxsysRibbonLayout();
     }
 
     /**
-     * Layout for the ribbon with a dynamically sized application menu button. This is a modified
-     * copy of the BasicFileRibbonUI.RibbonLayout private class. It has been modified to accommodate
-     * a dynamically sized application menu button. See the layoutContainer method for
+     * Layout for the ribbon with a dynamically sized application menu button.
+     * This is a modified copy of the BasicFileRibbonUI.RibbonLayout private
+     * class. It has been modified to accommodate a dynamically sized
+     * application menu button. See the layoutContainer method for
      * modifications.
      *
      * @author Kirill Grouchnikov
      * @author Bruce Schubert
      */
-    private class FileRibbonLayout implements LayoutManager {
+    private class EmxsysRibbonLayout implements LayoutManager {
 
         /*
          * Copied.
@@ -203,8 +239,8 @@ public class Office2013RibbonUI extends BasicRibbonUI {
         }
 
         /**
-         * Modified. Customized so that the layout adapts to the actual size of the application menu
-         * button.
+         * Modified. Customized so that the layout adapts to the actual size of
+         * the application menu button.
          */
         @Override
         public void layoutContainer(Container c) {
@@ -217,6 +253,7 @@ public class Office2013RibbonUI extends BasicRibbonUI {
 
             // the top row - task bar components
             int width = c.getWidth();
+            int top = c.getY();
             int taskbarHeight = getTaskbarHeight();
             int y = ins.top;
 
@@ -272,23 +309,39 @@ public class Office2013RibbonUI extends BasicRibbonUI {
             if (helpButton != null) {
                 Dimension preferred = helpButton.getPreferredSize();
                 if (ltr) {
-                    helpButton.setBounds(width - ins.right - preferred.width,
-                            y, preferred.width, preferred.height);
+                    helpButton.setBounds(
+                            width - ins.right - preferred.width, top,
+                            preferred.width, preferred.height);
                 } else {
-                    helpButton.setBounds(ins.left, y, preferred.width,
-                            preferred.height);
+                    helpButton.setBounds(ins.left, y,
+                            preferred.width, preferred.height);
                 }
+            }
+
+// BDS - Added minimize button
+            // the minimize button - only valid for left-to-right
+            if (minimizeButton != null && ltr) {
+                Dimension preferred = minimizeButton.getPreferredSize();
+                int buttonX = (helpButton != null)
+                        ? helpButton.getX() - preferred.width
+                        : width - ins.right - preferred.width;
+                minimizeButton.setBounds(buttonX, y,
+                        preferred.width, preferred.height - ins.bottom);
             }
 
             // task buttons
             if (ltr) {
-                int taskButtonsWidth = (helpButton != null) ? (helpButton.getX()
-                        - tabButtonGap - x) : (c.getWidth() - ins.right - x);
+                int buttonX = minimizeButton != null
+                        ? minimizeButton.getX()
+                        : helpButton != null ? helpButton.getX() : 0;
+                int taskButtonsWidth = (buttonX > 0)
+                        ? (buttonX - tabButtonGap - x)
+                        : (c.getWidth() - ins.right - x);
                 taskToggleButtonsScrollablePanel.setBounds(x, y,
                         taskButtonsWidth, taskToggleButtonHeight);
             } else {
-                int taskButtonsWidth = (helpButton != null) ? (x - tabButtonGap
-                        - helpButton.getX() - helpButton.getWidth())
+                int taskButtonsWidth = (helpButton != null)
+                        ? (x - tabButtonGap - helpButton.getX() - helpButton.getWidth())
                         : (x - ins.left);
                 taskToggleButtonsScrollablePanel.setBounds(
                         x - taskButtonsWidth, y, taskButtonsWidth,
@@ -400,6 +453,79 @@ public class Office2013RibbonUI extends BasicRibbonUI {
         }
 
         g2d.dispose();
+    }
+
+    /**
+     * This class creates a Minimize/Maximize with a custom UI.
+     */
+    public static class MinimizeButton extends JCommandButton {
+
+        final ResizableIcon minimizeIcon = ResizableIcons.fromResource("com/terramenta/ribbon/images/minimize.png");
+        final ResizableIcon maximizeIcon = ResizableIcons.fromResource("com/terramenta/ribbon/images/maximize.png");
+        final JRibbon ribbon;
+
+        PropertyChangeListener pcl = new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("minimized")) {
+                    setIcon((boolean) (evt.getNewValue()) ? maximizeIcon : minimizeIcon);
+                }
+            }
+        };
+
+        ActionListener al = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ribbon.setMinimized(!ribbon.isMinimized());
+            }
+        };
+
+        public MinimizeButton(JRibbon ribbon) {
+            super("");
+            this.ribbon = ribbon;
+            this.ribbon.addPropertyChangeListener("minimized", pcl);
+            setUI(new MinimizeButtonUI());
+            setIcon(this.minimizeIcon);
+            getActionModel().addActionListener(al);
+        }
+
+        @Override
+        public void updateUI() {
+            // Do nothing - prevents the UI from being reset to the UIManager settings
+            //super.updateUI();
+        }
+
+        @Override
+        public ResizableIcon getIcon() {
+            return this.ribbon.isMinimized() ? this.maximizeIcon : this.minimizeIcon;
+        }
+
+    }
+
+    /**
+     * Test class for messing around with a custom button UI
+     */
+    static class MinimizeButtonUI extends BasicCommandButtonUI {
+
+        private static final MinimizeButtonUI buttonUI = new MinimizeButtonUI();
+
+        MinimizeButtonUI() {
+        }
+
+        public static ComponentUI createUI(JComponent c) {
+            return buttonUI;
+        }
+
+        /**
+         * Returns the current icon.
+         */
+        @Override
+        protected Icon getIconToPaint() {
+            return super.getIconToPaint(); //return this.commandButton.getIcon();
+        }
+
     }
 
 }
