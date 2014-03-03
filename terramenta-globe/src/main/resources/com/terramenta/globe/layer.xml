@@ -2,6 +2,11 @@
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
     <folder name="Menu">
+        <folder name="Home">
+            <file name="com-terramenta-globe-ribbons-NavigationBand.instance">
+                <attr name="position" intvalue="500"/>
+            </file>
+        </folder>
         <folder name="Animate">
             <file name="com-terramenta-globe-ribbons-EciBand.instance">
                 <attr name="position" intvalue="500"/>
