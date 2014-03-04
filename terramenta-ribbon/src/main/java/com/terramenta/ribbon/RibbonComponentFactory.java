@@ -166,15 +166,19 @@ public class RibbonComponentFactory {
     }
 
     public AbstractCommandButton createButtonPresenter(ActionItem item) {
+        return createButtonPresenter(item, preferences.getAlwaysDisplayButtonText());
+    }
+    
+    public AbstractCommandButton createButtonPresenter(ActionItem item, boolean showText) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.Button.class.isAssignableFrom(action.getClass())) {
             return ((RibbonPresenter.Button) action).getRibbonButtonPresenter();
         } else {
             String value = (String) item.getValue(ActionItem.BUTTON_STYLE);
             if (value != null && value.equalsIgnoreCase("toggle")) {
-                return createCommandToggleButton(item);
+                return createCommandToggleButton(item, showText);
             } else {
-                return createCommandButton(item);
+                return createCommandButton(item, showText);
             }
         }
     }
@@ -185,12 +189,12 @@ public class RibbonComponentFactory {
      * @param actionItem the action item for which the CommandButton must be created
      * @return The created AbstractCommandButton
      */
-    private AbstractCommandButton createCommandButton(ActionItem actionItem) {
+    private AbstractCommandButton createCommandButton(ActionItem actionItem, boolean showText) {
         //TODO
         //button.setDisabledIcon(disabledIcon);
         ActionCommandButton button;
         String text;
-        if (preferences.getAlwaysDisplayButtonText()) {
+        if (showText) {
             text = actionItem.getActionDelegate().getText();
         } else {
             //Determine if the icon is set. If so only display icon, otherwise display text
@@ -238,12 +242,17 @@ public class RibbonComponentFactory {
         return button;
     }
 
-    private AbstractCommandButton createCommandToggleButton(ActionItem actionItem) {
+    private AbstractCommandButton createCommandToggleButton(ActionItem actionItem, boolean showText) {
         //TODO
         //button.setDisabledIcon(disabledIcon);
-
-        //logger.fine("Creating ActionCommandToggleButton for " + item.getActionDelegate().getAction().toString());
-        String text = (actionItem.getActionDelegate().getIcon() == null ? actionItem.getActionDelegate().getText() : "");
+        String text;
+        if (showText) {
+            text = actionItem.getActionDelegate().getText();
+        } else {
+            //Determine if the icon is set. If so only display icon, otherwise display text
+            ResizableIcon icon = actionItem.getActionDelegate().getIcon();
+            text = (icon == null || icon.equals(ResizableIcons.EMPTY)) ? actionItem.getActionDelegate().getText() : "";
+        }
         ActionCommandToggleButton button = new ActionCommandToggleButton(
                 actionItem.getActionDelegate().getIcon(),
                 text,
@@ -449,7 +458,7 @@ public class RibbonComponentFactory {
                 panel.addButtonGroup(child.getText()); // TODO: getAction().getValue()
                 int numButtons = 0;
                 for (ActionItem grandchild : child.getChildren()) {
-                    panel.addButtonToLastGroup(createButtonPresenter(grandchild));
+                    panel.addButtonToLastGroup(createButtonPresenter(grandchild, true)); // true = showText
                     ++numButtons;
                 }
                 maxButtonsInGroup = Math.max(numButtons, maxButtonsInGroup);
@@ -483,7 +492,7 @@ public class RibbonComponentFactory {
         JCommandButtonPanel panel = new JCommandButtonPanel(CommandButtonDisplayState.TILE);
         panel.addButtonGroup(actionItem.getText());
         for (ActionItem child : actionItem.getChildren()) {
-            panel.addButtonToLastGroup(createButtonPresenter(child));
+            panel.addButtonToLastGroup(createButtonPresenter(child, true)); // true = show text
         }
         return panel;
     }
