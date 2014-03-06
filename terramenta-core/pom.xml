@@ -46,18 +46,6 @@
             <groupId>org.netbeans.api</groupId>
             <version>${netbeans.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.netbeans.modules</groupId>
-            <artifactId>org-netbeans-modules-extbrowser</artifactId>
-            <version>${netbeans.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.modules</groupId>
-            <artifactId>org-netbeans-modules-projectui</artifactId>
-            <version>${netbeans.version}</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -73,8 +61,6 @@
                         <publicPackage>com.terramenta.interfaces</publicPackage>
                         <publicPackage>com.terramenta.message</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
-<!--                        <publicPackage>org.slf4j</publicPackage>
-                        <publicPackage>org.slf4j.impl</publicPackage>-->
                     </publicPackages>
                 </configuration>
             </plugin>

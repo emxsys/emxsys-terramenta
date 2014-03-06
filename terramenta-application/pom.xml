@@ -25,11 +25,24 @@
             <version>${slf4j.version}</version>
         </dependency>
         
+        <!-- NetBeans Modules -->
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
             <version>${netbeans.version}</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-extbrowser</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-projectui</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
         </dependency>
         
         <!-- Terramenta Modules -->
