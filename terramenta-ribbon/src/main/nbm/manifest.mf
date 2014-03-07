@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 OpenIDE-Module-Install: com/terramenta/ribbon/Installer.class
 OpenIDE-Module-Localizing-Bundle: com/terramenta/ribbon/Bundle.properties
+OpenIDE-Module-Display-Category: Core

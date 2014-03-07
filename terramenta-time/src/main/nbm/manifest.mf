@@ -1,2 +1,3 @@
 Manifest-Version: 1.0
 OpenIDE-Module-Layer: com/terramenta/time/layer.xml
+OpenIDE-Module-Display-Category: Temporal

@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 OpenIDE-Module-Layer: com/terramenta/layermanager/layer.xml
 OpenIDE-Module-Localizing-Bundle: com/terramenta/layermanager/Bundle.properties
+OpenIDE-Module-Display-Category: Geospatial
