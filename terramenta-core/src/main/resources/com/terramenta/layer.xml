@@ -273,15 +273,6 @@
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/fullscreen32.png"/>
                     <attr name="iconBase" stringvalue="com/terramenta/images/fullscreen.png"/>
                 </file>
-                <file name="ShowEditorOnlyAction.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ShowEditorOnlyAction.instance"/>
-                    <attr name="displayName" stringvalue="Full Globe"/>
-                    <attr name="description" stringvalue="Show just the Globe window"/>
-                    <attr name="tooltipTitle" stringvalue="Show Full Globe"/>
-                    <attr name="tooltipBody" stringvalue="Shows the only the Globe. Minimizes other windows."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/fullGlobe32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/fullGlobe.png"/>
-                </file>
             </folder>
             <folder name="Show">
                 <attr name="position" intvalue="1200"/>
