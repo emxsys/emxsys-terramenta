@@ -61,8 +61,6 @@
                         <publicPackage>com.terramenta.interfaces</publicPackage>
                         <publicPackage>com.terramenta.message</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
-<!--                        <publicPackage>org.slf4j</publicPackage>
-                        <publicPackage>org.slf4j.impl</publicPackage>-->
                     </publicPackages>
                 </configuration>
             </plugin>

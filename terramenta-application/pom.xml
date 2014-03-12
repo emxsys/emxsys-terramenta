@@ -25,11 +25,24 @@
             <version>${slf4j.version}</version>
         </dependency>
         
+        <!-- NetBeans Modules -->
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
             <version>${netbeans.version}</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-extbrowser</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-projectui</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
         </dependency>
         
         <!-- Terramenta Modules -->
@@ -85,11 +98,7 @@
                     <licenseName>CDDL, Version 1.0</licenseName>
                     <licenseFile>license.txt</licenseFile>
                     <etcConfFile>terramenta.conf</etcConfFile>
-                    <installerOsWindows>true</installerOsWindows>
-                    <installerOsSolaris>false</installerOsSolaris>
-                    <installerLicenseFile>CDDL-1.0.txt</installerLicenseFile>
-                    <installerPack200Enable>true</installerPack200Enable>                 
-                </configuration>                
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -111,7 +120,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>            
+            </plugin>
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>
     </build>
