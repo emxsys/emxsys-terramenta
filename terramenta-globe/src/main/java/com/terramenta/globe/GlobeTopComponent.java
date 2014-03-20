@@ -50,7 +50,7 @@ import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 
 @TopComponent.Description(preferredID = "GlobeTopComponent",
-        iconBase = "com/terramenta/globe/images/globeBlue.png",
+        iconBase = "com/terramenta/globe/images/globe.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.globe.GlobeTopComponent")
@@ -60,7 +60,7 @@ import org.openide.windows.TopComponent;
         description = "#CTL_GlobeAction_Hint",
         tooltipTitle = "#CTL_GlobeAction_TooltipTitle",
         tooltipBody = "#CTL_GlobeAction_TooltipBody",
-        tooltipIcon = "com/terramenta/globe/images/globeBlue32.png",
+        tooltipIcon = "com/terramenta/globe/images/globe32.png",
         tooltipFooter = "#CTL_GlobeAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

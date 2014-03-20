@@ -15,7 +15,7 @@ import org.openide.util.Lookup;
  *
  * @author heidtmare
  */
-@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe", iconBase = "com/terramenta/globe/images/globeBlue32.png",
+@OptionsPanelController.TopLevelRegistration(categoryName = "#OptionsCategory_Name_Globe", iconBase = "com/terramenta/globe/images/globe32.png",
         keywords = "#OptionsCategory_Keywords_Globe",
         keywordsCategory = "Globe",
         position = 1000,

@@ -46,12 +46,12 @@ public class EciBand extends JRibbonBand {
         setPreferredSize(new Dimension(40, 60));
 
         boolean isEci = prefs.getBoolean("options.globe.isECI", false);
-        JCommandToggleButton eciBtn = new JCommandToggleButton("ECI", ResizableIcons.fromResource("com/terramenta/globe/images/tick.png"));
+        JCommandToggleButton eciBtn = new JCommandToggleButton("ECI", ResizableIcons.fromResource("com/terramenta/globe/images/globeECI.png"));
         eciBtn.getActionModel().setSelected(isEci);
         eciBtn.getActionModel().setActionCommand("ECI");
         eciBtn.addActionListener(eciListener);
 
-        JCommandToggleButton ecefBtn = new JCommandToggleButton("ECEF", ResizableIcons.fromResource("com/terramenta/globe/images/tick.png"));
+        JCommandToggleButton ecefBtn = new JCommandToggleButton("ECEF", ResizableIcons.fromResource("com/terramenta/globe/images/globeECEF.png"));
         ecefBtn.getActionModel().setSelected(!isEci);
         ecefBtn.getActionModel().setActionCommand("ECEF");
         ecefBtn.addActionListener(eciListener);

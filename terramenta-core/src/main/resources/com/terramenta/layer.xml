@@ -270,8 +270,8 @@
                     <attr name="description" stringvalue="Toggles full screen model."/>
                     <attr name="tooltipTitle" stringvalue="Toggle Full Screen"/>
                     <attr name="tooltipBody" stringvalue="Toggles the full screen display of the application."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/fullscreen32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/fullscreen.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/windowFullscreen32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/windowFullscreen.png"/>
                 </file>
             </folder>
             <folder name="Show">

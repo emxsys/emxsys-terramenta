@@ -51,7 +51,7 @@ public class NavigationBand extends JFlowRibbonBand implements ActionListener {
         positionField.addActionListener(this);
         panel.add(positionField);
 
-        JButton submitBtn = new JButton(ImageUtilities.loadImageIcon("com/terramenta/globe/images/bulletGo.png", false));
+        JButton submitBtn = new JButton(ImageUtilities.loadImageIcon("com/terramenta/globe/images/locate.png", false));
         submitBtn.setPreferredSize(new Dimension(24, 24));
         submitBtn.addActionListener(this);
         panel.add(submitBtn);
