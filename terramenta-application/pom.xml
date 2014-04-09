@@ -86,6 +86,48 @@
             <artifactId>terramenta-javafx</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        <!-- MOOS Modules -->
+<!--        <dependency>
+            <groupId>mil.af.aftac.moos.common.bindings</groupId>
+            <artifactId>moos-binding</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-common</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-dasclient</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-analyst</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-rta</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-coverage</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-ephemeris</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mil.af.aftac.moos.hi.terramenta</groupId>
+            <artifactId>terramenta-moos-weather</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>-->
     </dependencies>
 
     <build>

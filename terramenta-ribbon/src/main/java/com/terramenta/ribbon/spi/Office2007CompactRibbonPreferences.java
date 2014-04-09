@@ -37,7 +37,7 @@ import java.awt.Dimension;
  * 
  * @author Bruce Schubert
  */
-public class Office2007CompactRibbonPreferences extends Office2007FullSizeRibbonPreferences {
+public class Office2007CompactRibbonPreferences extends Office2007RibbonPreferences {
 
 
     /**

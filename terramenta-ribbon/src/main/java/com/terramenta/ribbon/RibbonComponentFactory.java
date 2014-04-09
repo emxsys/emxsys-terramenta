@@ -67,16 +67,15 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  */
 public class RibbonComponentFactory {
 
-    public final static Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());
-    // Default ribbon band size used if not provided in preferences
-    public final Dimension BAND_PREFERRED_SIZE_DEFAULT = new Dimension(40, 60);
-    // Maximun number of rows in a JCommandButtonPanel before a scroll bar is activated
-    public final static int BUTTON_PANEL_MAX_ROWS = 8;
-    // Maximun number of columns in a JCommandButtonPanel 
-    public final static int BUTTON_PANEL_MAX_COLS = 6;
-
+    private static final Logger logger = Logger.getLogger(RibbonComponentFactory.class.getName());
     // Ribbon preferences
-    RibbonPreferences preferences = RibbonPreferencesProvider.getDefault().getPreferences();
+    private static final RibbonPreferences preferences = RibbonPreferencesProvider.getDefault().getPreferences();
+    // Default ribbon band size used if not provided in preferences
+    private static final Dimension BAND_PREFERRED_SIZE_DEFAULT = new Dimension(40, 60);
+    // Maximun number of rows in a JCommandButtonPanel before a scroll bar is activated
+    private static final int BUTTON_PANEL_MAX_ROWS = 8;
+    // Maximun number of columns in a JCommandButtonPanel 
+    private static final int BUTTON_PANEL_MAX_COLS = 6;
 
     /**
      * Creates an entry for the application menu (e.g., the FILE menu).
@@ -168,7 +167,7 @@ public class RibbonComponentFactory {
     public AbstractCommandButton createButtonPresenter(ActionItem item) {
         return createButtonPresenter(item, preferences.getAlwaysDisplayButtonText());
     }
-    
+
     public AbstractCommandButton createButtonPresenter(ActionItem item, boolean showText) {
         Action action = item.getAction();
         if (action != null && RibbonPresenter.Button.class.isAssignableFrom(action.getClass())) {
@@ -271,8 +270,8 @@ public class RibbonComponentFactory {
      */
     public RibbonTask createRibbonTask(ActionItem actionItem) {
         boolean usingPopupMenus = preferences.getUsePopupMenus();
-        List<AbstractRibbonBand> bands = usingPopupMenus 
-                ? createRibbonBandsWithPopups(actionItem) 
+        List<AbstractRibbonBand> bands = usingPopupMenus
+                ? createRibbonBandsWithPopups(actionItem)
                 : createRibbonBands(actionItem);
         return new RibbonTask(actionItem.getText(), bands.toArray(new AbstractRibbonBand[bands.size()]));
     }
@@ -388,7 +387,7 @@ public class RibbonComponentFactory {
     /**
      * Creates a named RibbonBand from a collection of action items.
      *
-     * @param name for the ribbon band
+     * @param name        for the ribbon band
      * @param actionItems populate the ribbon band
      * @return a JRibbonBand
      */

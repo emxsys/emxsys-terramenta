@@ -29,18 +29,16 @@
  */
 package com.terramenta.ribbon.options;
 
+import com.terramenta.ribbon.spi.Office2013CompactRibbonPreferencesProvider;
+
 /**
  * Ribbon Option Key/Values for the Ribbon Options.
- * 
+ *
  * @author Bruce Schubert <bruce@emxsys.com>
  */
 public class RibbonOptions {
+
     public static final String STYLE = "tm.ribbon.style";
-    
-    public static final String OFFICE2013_FULLSIZE_STYLE = "FULLSIZE2013";
-    public static final String OFFICE2007_FULLSIZE_STYLE = "FULLSIZE2007";
-    public static final String OFFICE2013_COMPACT_STYLE = "COMPACT2013";
-    public static final String OFFICE2007_COMPACT_STYLE = "COMPACT2007";
-    public static final String OTHER_STYLE = "OTHER";
-    public static final String DEFAULT_STYLE = OFFICE2013_COMPACT_STYLE;
+
+    public static final String DEFAULT_STYLE = Office2013CompactRibbonPreferencesProvider.class.getName();
 }

@@ -1,5 +1,4 @@
-/*
-/*
+/* 
  * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
  * All rights reserved.
  *
@@ -28,7 +27,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon.spi;
 
 import com.terramenta.ribbon.ColorUtil;
@@ -36,36 +34,38 @@ import java.awt.Color;
 import java.awt.Dimension;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 
-
 /**
- * Office 2013 Ribbon Preferences.
+ * Office 2007 Ribbon Preferences.
  *
  * @author Bruce Schubert
  */
-public class Office2013FullSizeRibbonPreferences extends BasicRibbonPreferences
-{
+public class Office2007RibbonPreferences extends BasicRibbonPreferences {
 
-    public Office2013FullSizeRibbonPreferences()
-    {
+    public Office2007RibbonPreferences() {
         setLafClassDefaults(
-            new Object[]
-            {
-                // UI Classes
-                "RibbonUI", "com.terramenta.ribbon.Office2013RibbonUI",
-                "RibbonBandUI", "com.terramenta.ribbon.Office2013RibbonBandUI",
-                "BandControlPanelUI", "com.terramenta.ribbon.Office2013BandControlPanelUI",
-                "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2013RibbonTaskToggleButtonUI",
-                "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2013RibbonApplicationMenuButtonUI",
-                // Colors
-                "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.darkGray, "Panel.background"), 0.20),
-                "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray, "Panel.background"),
-                "AppButton.background", Color.black,
-                "AppButton.foreground", Color.white,
-                "TaskButton.highlight", Color.cyan,
-            });
+                new Object[]{
+                    // UI Classes
+                    "RibbonUI", "com.terramenta.ribbon.Office2007RibbonUI",
+                    "RibbonBandUI", "com.terramenta.ribbon.Office2007RibbonBandUI",
+                    "BandControlPanelUI", "com.terramenta.ribbon.Office2007BandControlPanelUI",
+                    "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2007RibbonTaskToggleButtonUI",
+                    "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2007RibbonApplicationMenuButtonUI",
+                    "CommandButtonUI", "com.terramenta.ribbon.Office2007CommandButtonUI",
+                    "CommandToggleButtonUI", "com.terramenta.ribbon.Office2007CommandToggleButtonUI",
+                    // Colors
+                    "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.lightGray/*, "Panel.background"*/), 0.20),
+                    "RibbonBand.background",  FlamingoUtilities.getColor(Color.darkGray/*, "Panel.background"*/),
+                    "RibbonBand.foreground",  FlamingoUtilities.getColor(Color.white/*, "Panel.background"*/),
+                    "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray/*, "Panel.background"*/),
+                    "RibbonGroups.background",  FlamingoUtilities.getColor(Color.lightGray/*, "Button.background"*/),
+                    "RibbonTabs.foreground", FlamingoUtilities.getColor(Color.white/*, "Panel.foreground"*/),
+                    "AppButton.background", new Color(0,0,128),
+                    "AppButton.foreground", Color.white,
+                    "TaskButton.highlight", Color.cyan,});
+        
         setPreferredBandSize(new Dimension(40, 96));// Full size supports buttons with two lines of text
         setAlwaysDisplayButtonText(true);
-        setAlwaysDisplayGroupText(false);
+        setAlwaysDisplayGroupText(true);
         setShouldDisplayTaskBar(false); // TODO: draw taskbar on glass pane.
         setUsePopupMenus(true);
         setUseTabNameForTasksBand(false);

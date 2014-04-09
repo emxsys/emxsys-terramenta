@@ -31,6 +31,8 @@ package com.terramenta.ribbon.spi;
 
 import com.terramenta.ribbon.api.RibbonPreferences;
 import com.terramenta.ribbon.options.RibbonOptions;
+import java.net.URL;
+import java.util.Collection;
 import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
@@ -47,6 +49,27 @@ public abstract class RibbonPreferencesProvider {
     private static final Preferences prefs = NbPreferences.forModule(RibbonOptions.class);
 
     /**
+     * A short name used to identify the preference
+     *
+     * @return
+     */
+    public abstract String getName();
+
+    /**
+     * Description of the preferences
+     *
+     * @return
+     */
+    public abstract String getDescription();
+
+    /**
+     * An image thumbnail to be used as a preview for this set of preferences
+     *
+     * @return
+     */
+    public abstract URL getPreview();
+
+    /**
      * Gets the preferences and settings used to configure the ribbon bar.
      *
      * @return the RibbonPreferences instance used to configure the ribbon bar.
@@ -56,54 +79,26 @@ public abstract class RibbonPreferencesProvider {
     /**
      * Service provider interface for the ribbon preferences.
      *
-     * @return the provider found on the the global lookup; if not found, or 
-     * if the user has not selected "Other" in the RibbonOptions then a 
-     * default Terramenta preferences provider is returned.
+     * @return the preferred provider found on the the global lookup; if not found then a
+     *         default Terramenta preferences provider is returned.
      */
     public static RibbonPreferencesProvider getDefault() {
-        // Check for a 3rd party provider
-        RibbonPreferencesProvider provider = Lookup.getDefault().lookup(RibbonPreferencesProvider.class);
-        String sytleOption = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
+        Collection<? extends RibbonPreferencesProvider> providers = Lookup.getDefault().lookupAll(RibbonPreferencesProvider.class);
 
-        // Use the default provider if none provided or if user doesn't want to use it.
-        if (provider == null || !sytleOption.equals(RibbonOptions.OTHER_STYLE)) {
-            provider = new DefaultRibbonPreferencesProvider();
-        }
-        return provider;
-    }
-
-    /**
-     * Creates the default preferences for the Terramenta application.
-     */
-    private final static class DefaultRibbonPreferencesProvider extends RibbonPreferencesProvider {
-
-        private RibbonPreferences preferences;
-
-        @Override
-        public RibbonPreferences getPreferences() {
-            // Set the style based on the user's selected ribbon option
-            if (this.preferences == null) {
-                String style = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
-                switch (style) {
-                    case RibbonOptions.OFFICE2013_FULLSIZE_STYLE:
-                        this.preferences = new Office2013FullSizeRibbonPreferences();
-                        break;
-                    case RibbonOptions.OFFICE2013_COMPACT_STYLE:
-                        this.preferences = new Office2013CompactRibbonPreferences();
-                        break;
-                    case RibbonOptions.OFFICE2007_FULLSIZE_STYLE:
-                        this.preferences = new Office2007FullSizeRibbonPreferences();
-                        break;
-                    case RibbonOptions.OFFICE2007_COMPACT_STYLE:
-                        this.preferences = new Office2007CompactRibbonPreferences();
-                        break;
-                    default:
-                        this.preferences = new BasicRibbonPreferences();      
-                }
+        //the the preferred provider
+        String style = prefs.get(RibbonOptions.STYLE, RibbonOptions.DEFAULT_STYLE);
+        for (RibbonPreferencesProvider provider : providers) {
+            if (provider.getClass().getName().equals(style)) {
+                return provider;
             }
-            return this.preferences;
         }
 
-    }
+        //not there? then get ANY provider
+        if (!providers.isEmpty()) {
+            return providers.iterator().next();
+        }
 
+        //no providers!?! default to this one i guess...
+        return new Office2013CompactRibbonPreferencesProvider();
+    }
 }

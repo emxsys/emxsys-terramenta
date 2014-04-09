@@ -37,7 +37,7 @@ import java.awt.Dimension;
  * 
  * @author Bruce Schubert
  */
-public class Office2013CompactRibbonPreferences extends Office2013FullSizeRibbonPreferences {
+public class Office2013CompactRibbonPreferences extends Office2013RibbonPreferences {
 
 
     /**

@@ -21,42 +21,35 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util</artifactId>
             <version>${netbeans.version}</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-modules</artifactId>
             <version>${netbeans.version}</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-windows</artifactId>
             <version>${netbeans.version}</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <artifactId>org-openide-util-lookup</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-filesystems</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>org-openide-awt</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <artifactId>x86_64</artifactId>
             <groupId>org.eclipse.swt.gtk.linux</groupId>
-            <type>jar</type>
             <version>3.3.0-v3346</version>
         </dependency>
         <dependency>
@@ -72,8 +65,21 @@
         <dependency>
             <artifactId>org-openide-dialogs</artifactId>
             <groupId>org.netbeans.api</groupId>
-            <type>jar</type>
-            <version>RELEASE74</version>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-explorer</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>org-openide-nodes</artifactId>
+            <groupId>org.netbeans.api</groupId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
 
@@ -87,27 +93,11 @@
                         <publicPackage>com.terramenta.ribbon</publicPackage>
                         <publicPackage>com.terramenta.ribbon.api</publicPackage>
                         <publicPackage>com.terramenta.ribbon.spi</publicPackage>
-<!--                        <publicPackage>javax.xml.namespace</publicPackage>
-                        <publicPackage>javax.xml.parsers</publicPackage>
-                        <publicPackage>javax.xml.transform</publicPackage>
-                        <publicPackage>javax.xml.transform.dom</publicPackage>
-                        <publicPackage>javax.xml.transform.stream</publicPackage>
-                        <publicPackage>org.w3c.dom</publicPackage>
-                        <publicPackage>org.xml.sax</publicPackage>
-                        <publicPackage>org.xml.sax.helpers</publicPackage>
-                        <publicPackage>org.xml.sax.ext</publicPackage>-->
                         <publicPackage>org.pushingpixels.flamingo.api.ribbon.resize</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.internal.ui.ribbon</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>
-<!--                        <publicPackage>com.jgoodies.forms.layout</publicPackage>
-                        <publicPackage>org.eclipse.swt</publicPackage>
-                        <publicPackage>org.eclipse.swt.dnd</publicPackage>
-                        <publicPackage>org.eclipse.swt.widgets</publicPackage>
-                        <publicPackage>org.eclipse.swt.events</publicPackage>
-                        <publicPackage>org.eclipse.swt.layout</publicPackage>
-                        <publicPackage>org.eclipse.swt.graphics</publicPackage>-->
                     </publicPackages>
                 </configuration>
             </plugin>
