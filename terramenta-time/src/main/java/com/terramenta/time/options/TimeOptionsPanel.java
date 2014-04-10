@@ -8,22 +8,20 @@ package com.terramenta.time.options;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.Vector;
 import java.util.prefs.Preferences;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingWorker;
 import org.openide.util.NbPreferences;
 
 final class TimeOptionsPanel extends javax.swing.JPanel {
 
     private static final Preferences prefs = NbPreferences.forModule(TimeOptions.class);
     private final TimeOptionsPanelController controller;
-    private ComboBoxModel<TimeZoneProxy> timeZoneModel;
-    private ComboBoxModel<LocaleProxy> localeModel;
-    private ComboBoxModel<FormatProxy> formatModel;
+    private final SortableComboBoxModel<TimeZoneProxy> timeZoneModel = new SortableComboBoxModel<>();
+    private final SortableComboBoxModel<LocaleProxy> localeModel = new SortableComboBoxModel<>();
+    private final SortableComboBoxModel<FormatProxy> formatModel = new SortableComboBoxModel<>();
 
     /**
      * TimeZoneProxy makes a TimeZone compatible with a ComboBoxModel.
@@ -163,57 +161,101 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
     }
 
+    private class TimeZoneLoader extends SwingWorker<SortableComboBoxModel, TimeZoneProxy> {
+
+        private final SortableComboBoxModel model;
+
+        public TimeZoneLoader(SortableComboBoxModel model) {
+            this.model = model;
+        }
+
+        @Override
+        protected SortableComboBoxModel doInBackground() throws Exception {
+            for (String id : TimeZone.getAvailableIDs()) {
+                TimeZoneProxy proxy = new TimeZoneProxy(id);
+                publish(proxy);
+            }
+            return model;
+        }
+
+        @Override
+        protected void process(List<TimeZoneProxy> proxies) {
+            for (TimeZoneProxy proxy : proxies) {
+                model.addElement(proxy);
+            }
+        }
+
+    }
+
+    private class LocaleLoader extends SwingWorker<SortableComboBoxModel, LocaleProxy> {
+
+        private final SortableComboBoxModel model;
+
+        public LocaleLoader(SortableComboBoxModel model) {
+            this.model = model;
+        }
+
+        @Override
+        protected SortableComboBoxModel doInBackground() throws Exception {
+            //List<TimeZoneProxy> proxies = new ArrayList<>();
+            for (Locale locale : DateFormat.getAvailableLocales()) {
+                LocaleProxy proxy = new LocaleProxy(locale);
+                //proxies.add(new TimeZoneProxy(id));
+                publish(proxy);
+            }
+
+            //Collections.sort(proxies);
+            return model;
+        }
+
+        @Override
+        protected void process(List<LocaleProxy> proxies) {
+            for (LocaleProxy proxy : proxies) {
+                model.addElement(proxy);
+            }
+        }
+    }
+
+    private class FormatLoader extends SwingWorker<SortableComboBoxModel, FormatProxy> {
+
+        private final SortableComboBoxModel model;
+
+        public FormatLoader(SortableComboBoxModel model) {
+            this.model = model;
+        }
+
+        @Override
+        protected SortableComboBoxModel doInBackground() throws Exception {
+            String[] patterns = {
+                "yyyy/MM/dd HH:mm:ss",
+                "yyyy/MM/dd HH:mm:ss z",
+                "yyyy/MM/dd HH:mm:ss XXX",
+                getDefaultPattern(getSelectedLocale())};
+
+            for (String pattern : patterns) {
+                FormatProxy proxy = new FormatProxy(pattern);
+                publish(proxy);
+            }
+
+            return model;
+        }
+
+        @Override
+        protected void process(List<FormatProxy> proxies) {
+            for (FormatProxy proxy : proxies) {
+                model.addElement(proxy);
+            }
+        }
+    }
+
     TimeOptionsPanel(TimeOptionsPanelController controller) {
         this.controller = controller;
-        initTimeZones();
-        initLocales();
-        initFormats();
+
+        new TimeZoneLoader(timeZoneModel).run();
+        new LocaleLoader(localeModel).run();
+        new FormatLoader(formatModel).run();
+
         initComponents();
-        // TODO listen to changes in form fields and call controller.changed()
-    }
-
-    private void initTimeZones() {
-        @SuppressWarnings("UseOfObsoleteCollectionType")
-        Vector<TimeZoneProxy> proxies = new Vector<>();
-        String[] availableIDs = TimeZone.getAvailableIDs();
-        for (String id : availableIDs) {
-            proxies.add(new TimeZoneProxy(id));
-        }
-        Collections.sort(proxies);
-        timeZoneModel = new DefaultComboBoxModel<>(proxies);
-    }
-
-    private void initLocales() {
-        @SuppressWarnings("UseOfObsoleteCollectionType")
-        Vector<LocaleProxy> proxies = new Vector<>();
-        Locale[] locales = DateFormat.getAvailableLocales();
-        for (Locale locale : locales) {
-            proxies.add(new LocaleProxy(locale));
-        }
-        Collections.sort(proxies);
-        localeModel = new DefaultComboBoxModel<>(proxies);
-    }
-
-    private void initFormats() {
-        String[] patterns = {
-            "yyyy/MM/dd HH:mm:ss",
-            "yyyy/MM/dd HH:mm:ss z",
-            "yyyy/MM/dd HH:mm:ss XXX",
-            getDefaultPattern(getSelectedLocale())};
-
-        @SuppressWarnings("UseOfObsoleteCollectionType")
-        Vector<FormatProxy> proxies = new Vector<>();
-        for (String pattern : patterns) {
-            proxies.add(new FormatProxy(pattern));
-        }
-        formatModel = new DefaultComboBoxModel<>(proxies);
-
-        // Handle reinitization of control after a change in the Locale combobox
-        if (formatCombo != null) {
-            int index = formatCombo.getSelectedIndex();
-            formatCombo.setModel(formatModel);
-            formatCombo.setSelectedIndex(index);
-        }
     }
 
     private Locale getSelectedLocale() {
@@ -323,7 +365,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
     private void localeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeComboActionPerformed
         // Reinitialize formats to reflect locale specific format
-        initFormats();
+        //initFormats();
     }//GEN-LAST:event_localeComboActionPerformed
 
     void load() {
