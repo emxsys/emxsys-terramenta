@@ -63,10 +63,21 @@
                 <attr name="position" intvalue="475"/>
             </file>
             <!--Close actions-->
-            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
+<!--            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
                 <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-CloseProject.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
+            </file>-->
+            <file name="com-terramenta-actions-CloseProjectAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/com-terramenta-actions-CloseProjectAction.instance"/>
+                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
+                <attr name="position" intvalue="700"/>
+            </file>            
+            <file name="org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.shadow">
+                <!--NetBeans 8.0 Action-->
+                <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.instance"/>
+                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseAllProjects"/>
+                <attr name="position" intvalue="750"/>
             </file>
             <file name="SeparatorOpen.instance">
                 <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>                 
