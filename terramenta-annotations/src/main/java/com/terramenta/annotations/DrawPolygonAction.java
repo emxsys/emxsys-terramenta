@@ -4,6 +4,8 @@
  */
 package com.terramenta.annotations;
 
+import com.terramenta.actions.TopComponentContextAction;
+import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.globe.WorldWindManager;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -13,7 +15,6 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygon;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
@@ -48,7 +49,7 @@ import org.openide.util.NbBundle.Messages;
             "CTL_DrawPolygonAction_TooltipBody=Draws a polygon annotation on the surface of the globe."
         })
 
-public final class DrawPolygonAction implements ActionListener {
+public final class DrawPolygonAction extends TopComponentContextAction {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final ShapeAttributes attr = new BasicShapeAttributes();
@@ -66,8 +67,16 @@ public final class DrawPolygonAction implements ActionListener {
         highattr.setOutlineOpacity(1.0);
     }
 
+    private DrawPolygonAction() {
+        super(GlobeTopComponent.class);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (!GlobeTopComponent.hasOpenInstance()) {
+            return;
+        }
+
         final SurfacePolygon shape = new SurfacePolygon();
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);

@@ -5,14 +5,12 @@
  */
 package com.terramenta.globe.actions;
 
+import com.terramenta.actions.TopComponentContextAction;
 import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.ribbon.RibbonActionReference;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -41,25 +39,12 @@ import org.openide.windows.WindowManager;
     "CTL_ShowGlobeOnlyAction_Hint=Toggle Full Globe.",
     "CTL_ShowGlobeOnlyAction_TooltipTitle=Toggle Full Globe",
     "CTL_ShowGlobeOnlyAction_TooltipBody=Toggles the Globe between Maximized and Minimizes views.",})
-public class ShowGlobeOnlyAction extends AbstractAction implements PropertyChangeListener {
+public class ShowGlobeOnlyAction extends TopComponentContextAction {
 
     private Container originalContentPane = null;
 
     private ShowGlobeOnlyAction() {
-        TopComponent.getRegistry().addPropertyChangeListener(this);
-    }
-
-    /**
-     * Toggle enabled and disabled based on if globe window opens/closes
-     */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(TopComponent.Registry.PROP_TC_OPENED) || evt.getPropertyName().equals(TopComponent.Registry.PROP_TC_CLOSED)) {
-            if (evt.getNewValue() instanceof GlobeTopComponent) {
-                GlobeTopComponent gtc = (GlobeTopComponent) evt.getNewValue();
-                setEnabled(gtc.isOpened());
-            }
-        }
+        super(GlobeTopComponent.class);
     }
 
     /**

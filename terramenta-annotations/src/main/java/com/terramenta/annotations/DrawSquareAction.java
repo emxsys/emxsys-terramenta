@@ -4,6 +4,8 @@
  */
 package com.terramenta.annotations;
 
+import com.terramenta.actions.TopComponentContextAction;
+import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.globe.WorldWindManager;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -13,7 +15,6 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceSquare;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
@@ -47,7 +48,7 @@ import org.openide.util.NbBundle.Messages;
             "CTL_DrawSquareAction_TooltipTitle=Draw Square",
             "CTL_DrawSquareAction_TooltipBody=Draws a square annotation on the surface of the globe."
         })
-public final class DrawSquareAction implements ActionListener {
+public final class DrawSquareAction extends TopComponentContextAction {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final ShapeAttributes attr = new BasicShapeAttributes();
@@ -65,8 +66,16 @@ public final class DrawSquareAction implements ActionListener {
         highattr.setOutlineOpacity(1.0);
     }
 
+    private DrawSquareAction() {
+        super(GlobeTopComponent.class);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (!GlobeTopComponent.hasOpenInstance()) {
+            return;
+        }
+
         final SurfaceSquare shape = new SurfaceSquare();
 
         shape.setAttributes(attr);

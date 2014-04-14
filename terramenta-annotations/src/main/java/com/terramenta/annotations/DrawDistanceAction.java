@@ -4,6 +4,8 @@
  */
 package com.terramenta.annotations;
 
+import com.terramenta.actions.TopComponentContextAction;
+import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.globe.WorldWindManager;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -16,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -45,7 +46,7 @@ import org.openide.util.NbBundle.Messages;
             "CTL_DrawDistanceAction_TooltipBody=Measures point to point distances on the globe."
         })
 
-public final class DrawDistanceAction implements ActionListener {
+public final class DrawDistanceAction extends TopComponentContextAction {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final ShapeAttributes attr = new BasicShapeAttributes();
@@ -62,8 +63,16 @@ public final class DrawDistanceAction implements ActionListener {
         highattr.setOutlineOpacity(1.0);
     }
 
+    private DrawDistanceAction() {
+        super(GlobeTopComponent.class);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (!GlobeTopComponent.hasOpenInstance()) {
+            return;
+        }
+
         final SurfacePolyline shape = new SurfacePolyline();
 
         shape.setAttributes(attr);

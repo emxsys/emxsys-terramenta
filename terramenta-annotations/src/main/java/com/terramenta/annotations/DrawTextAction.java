@@ -1,8 +1,9 @@
 package com.terramenta.annotations;
 
+import com.terramenta.actions.TopComponentContextAction;
+import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.ribbon.RibbonActionReference;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -31,10 +32,18 @@ import org.openide.util.NbBundle.Messages;
             "CTL_DrawTextAction_TooltipTitle=Add Text",
             "CTL_DrawTextAction_TooltipBody=Add a textual annotation to the surface of the globe."
         })
-public class DrawTextAction implements ActionListener {
+public class DrawTextAction extends TopComponentContextAction {
+
+    private DrawTextAction() {
+        super(GlobeTopComponent.class);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (!GlobeTopComponent.hasOpenInstance()) {
+            return;
+        }
+
         new TextAnnotationEditor().setArmed(true);
     }
 }

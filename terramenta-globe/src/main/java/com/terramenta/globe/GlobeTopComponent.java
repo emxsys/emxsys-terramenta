@@ -48,6 +48,7 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 @TopComponent.Description(preferredID = "GlobeTopComponent",
         iconBase = "com/terramenta/globe/images/globe.png",
@@ -405,5 +406,10 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     @Override
     public ExplorerManager getExplorerManager() {
         return explorerManager;
+    }
+
+    public static boolean hasOpenInstance() {
+        TopComponent tc = WindowManager.getDefault().findTopComponent("GlobeTopComponent");
+        return (tc != null && tc.isOpened());
     }
 }
