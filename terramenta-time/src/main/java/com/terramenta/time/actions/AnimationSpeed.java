@@ -13,35 +13,40 @@ public enum AnimationSpeed {
     /**
      *
      */
-    SLOW("Slow: 30 seconds", 30000),
-
+    SLOW(30000, "Slow: 30 seconds", "com/terramenta/time/images/speed-slow.png"),
     /**
      *
      */
-    MEDIUM("Medium: 10 minutes", 600000),
-
+    MEDIUM(600000, "Medium: 10 minutes", "com/terramenta/time/images/speed-medium.png"),
     /**
      *
      */
-    FAST("Fast: 30 minutes", 1800000);
-    private final String label;
+    FAST(1800000, "Fast: 30 minutes", "com/terramenta/time/images/speed-fast.png");
+
     private final int increment;
+    private final String description;
+    private final String iconbase;
 
-    AnimationSpeed(String label, int increment) {
-        this.label = label;
+    AnimationSpeed(int increment, String description, String iconbase) {
         this.increment = increment;
+        this.description = description;
+        this.iconbase = iconbase;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getMilliseconds() {
         return increment;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getIconbase() {
+        return iconbase;
+    }
+
     @Override
     public String toString() {
-        return label;
+        return description;
     }
 }

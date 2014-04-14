@@ -29,7 +29,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawPolygonAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/polygon.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-polygon.png",
         displayName = "#CTL_DrawPolygonAction")
 @ActionReference(path = "Toolbars/Annotations", position = 6)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -38,7 +38,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawPolygonAction_Hint",
         tooltipTitle = "#CTL_DrawPolygonAction_TooltipTitle",
         tooltipBody = "#CTL_DrawPolygonAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/polygon32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-polygon32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -81,7 +81,7 @@ public final class DrawPolygonAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Polygon");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/polygon.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-polygon.png");
         shape.setEnableBatchPicking(false);
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

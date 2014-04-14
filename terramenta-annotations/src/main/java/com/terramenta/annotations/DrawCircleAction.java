@@ -28,7 +28,7 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawCircleAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/circle.png", displayName = "#CTL_DrawCircleAction")
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-circle.png", displayName = "#CTL_DrawCircleAction")
 @ActionReference(path = "Toolbars/Annotations", position = 2)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
         position = 2,
@@ -36,7 +36,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawCircleAction_Hint",
         tooltipTitle = "#CTL_DrawCircleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawCircleAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/circle32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-circle32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -78,7 +78,7 @@ public final class DrawCircleAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Circle");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/circle.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-circle.png");
         shape.setEnableBatchPicking(false);
 
         //edit on select

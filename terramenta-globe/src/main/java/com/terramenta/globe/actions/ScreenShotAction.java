@@ -21,14 +21,14 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(category = "Tools", id = "com.terramenta.globe.actions.ScreenShotAction")
-@ActionRegistration(iconBase = "com/terramenta/globe/images/camera.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
+@ActionRegistration(iconBase = "com/terramenta/globe/images/screenshot.png", displayName = "#CTL_ScreenShotAction", popupText = "Save an image of the current globe.")
 @RibbonActionReference(path = "Menu/Tools/Create",
         position = 100,
         priority = "top",
         description = "#CTL_ScreenShotAction_Hint",
         tooltipTitle = "#CTL_ScreenShotAction_TooltipTitle",
         tooltipBody = "#CTL_ScreenShotAction_TooltipBody",
-        tooltipIcon = "com/terramenta/globe/images/camera32.png",
+        tooltipIcon = "com/terramenta/globe/images/screenshot32.png",
         //tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages({

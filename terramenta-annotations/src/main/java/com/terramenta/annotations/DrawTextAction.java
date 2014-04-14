@@ -14,7 +14,7 @@ import org.openide.util.NbBundle.Messages;
  * @author R. Wathelet, April 2012
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawTextAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/textAdd.png", displayName = "#CTL_DrawTextAction", popupText = "#CTL_DrawTextAction_Hint")
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-text.png", displayName = "#CTL_DrawTextAction", popupText = "#CTL_DrawTextAction_Hint")
 @ActionReference(path = "Toolbars/Annotations", position = 7)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
         position = 7,
@@ -22,7 +22,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawTextAction_Hint",
         tooltipTitle = "#CTL_DrawTextAction_TooltipTitle",
         tooltipBody = "#CTL_DrawTextAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/textAdd32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-text32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(

@@ -78,7 +78,7 @@ public class TextAnnotationEditor {
 
         theText.setAttributes(attr);
         theText.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        theText.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/textAdd.png");
+        theText.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-text.png");
         theText.setPickEnabled(true);
         return theText;
     }

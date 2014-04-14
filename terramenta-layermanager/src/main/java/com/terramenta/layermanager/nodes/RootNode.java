@@ -18,7 +18,7 @@ import org.openide.util.lookup.Lookups;
  */
 public class RootNode extends AbstractNode {
 
-    private String ICON_PATH = "com/terramenta/layermanager/images/layers.png";
+    private String ICON_PATH = "com/terramenta/layermanager/images/show-layers.png";
 
     /**
      *

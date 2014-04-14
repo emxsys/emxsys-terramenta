@@ -15,7 +15,7 @@ import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "com/terramenta/layermanager/images/layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "com/terramenta/layermanager/images/show-layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "rightSide", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.layermanager.LayerManagerTopComponent")
 @RibbonActionReference(path = "Menu/Window/Show",
@@ -24,7 +24,7 @@ import org.openide.windows.WindowManager;
         description = "#CTL_LayerManagerAction_Hint",
         tooltipTitle = "#CTL_LayerManagerAction_TooltipTitle",
         tooltipBody = "#CTL_LayerManagerAction_TooltipBody",
-        tooltipIcon = "images/layers32.png",
+        tooltipIcon = "images/show-layers32.png",
         tooltipFooter = "#CTL_LayerManagerAction_TooltipFooter",
         tooltipFooterIcon = "images/help.png")
 @NbBundle.Messages(

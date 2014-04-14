@@ -63,7 +63,7 @@
                 <attr name="position" intvalue="475"/>
             </file>
             <!--Close actions-->
-<!--            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
+            <!--            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
                 <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-CloseProject.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
@@ -281,8 +281,8 @@
                     <attr name="description" stringvalue="Toggles full screen model."/>
                     <attr name="tooltipTitle" stringvalue="Toggle Full Screen"/>
                     <attr name="tooltipBody" stringvalue="Toggles the full screen display of the application."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/windowFullscreen32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/windowFullscreen.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/toggle-full-screen32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/toggle-full-screen.png"/>
                 </file>
             </folder>
             <folder name="Show">
@@ -299,6 +299,8 @@
                     <attr name="description" stringvalue="Display the Properties window."/>
                     <attr name="tooltipTitle" stringvalue="Show Properties Window"/>
                     <attr name="tooltipBody" stringvalue="Shows the properties window, which is used for getting or setting values for the currently selected object."/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-properties32.png"/>
+                    <!--<attr name="iconBase" stringvalue="com/terramenta/images/show-properties.png"/>-->                    
                 </file>
                 <file name="org-netbeans-core-actions-LogAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
@@ -306,6 +308,8 @@
                     <attr name="description" stringvalue="Display the applicataion log."/>
                     <attr name="tooltipTitle" stringvalue="Show Log Console"/>
                     <attr name="tooltipBody" stringvalue="Shows the application's output log, which is useful for troubleshooting application errors."/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-log32.png"/>
+                    <!--<attr name="iconBase" stringvalue="com/terramenta/images/show-log.png"/>-->     
                     <attr name="position" intvalue="1200"/>
                 </file>
                 <file name="Separator2.instance">
@@ -340,6 +344,7 @@
                     <attr name="description" stringvalue="Display the Favorites window."/>
                     <attr name="tooltipTitle" stringvalue="Show Favorites"/>
                     <attr name="tooltipBody" stringvalue="Shows the Favorites window, which contains shortcuts to the files you added to 'Favorites'."/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-favorite32.png"/>
                     <attr name="position" intvalue="2300"/>
                     <attr name="priority" stringvalue="medium"/>
                 </file>
@@ -353,8 +358,8 @@
                     <attr name="description" stringvalue="Close the current window."/>
                     <attr name="tooltipTitle" stringvalue="Close Current Window"/>
                     <attr name="tooltipBody" stringvalue="Closes the current window."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window_delete32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/window_delete.png"/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-close32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/window-close.png"/>
                 </file>
                 <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ResetWindowsAction.instance"/>
@@ -362,8 +367,8 @@
                     <attr name="description" stringvalue="Reset the window layout."/>
                     <attr name="tooltipTitle" stringvalue="Reset Window Layout"/>
                     <attr name="tooltipBody" stringvalue="Resets the window layout to the application's default layout."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/windows32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/windows.png"/>                
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-reset-all32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/window-reset-all.png"/>                
                 </file>
             </folder>               
             <folder name="Tasks">

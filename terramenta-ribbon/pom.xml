@@ -90,14 +90,16 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <configuration>
                     <publicPackages>
-                        <publicPackage>com.terramenta.ribbon</publicPackage>
-                        <publicPackage>com.terramenta.ribbon.api</publicPackage>
-                        <publicPackage>com.terramenta.ribbon.spi</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.ribbon.resize</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>
+                        <publicPackage>com.terramenta.ribbon.*</publicPackage>
+                        <!--<publicPackage>com.terramenta.ribbon.api</publicPackage>
+                        <publicPackage>com.terramenta.ribbon.spi</publicPackage>-->
+                        <publicPackage>org.pushingpixels.flamingo.api.*</publicPackage>
+                        <!--<publicPackage>org.pushingpixels.flamingo.api.ribbon.resize</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.ribbon</publicPackage>-->
                         <publicPackage>org.pushingpixels.flamingo.internal.ui.ribbon</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
-                        <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>
+                        <!--<publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.common.icon</publicPackage>
+                        <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>-->
                     </publicPackages>
                 </configuration>
             </plugin>

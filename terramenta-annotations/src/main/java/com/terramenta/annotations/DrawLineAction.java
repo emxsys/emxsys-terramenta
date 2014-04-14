@@ -27,7 +27,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawLineAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/line.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-line.png",
         displayName = "#CTL_DrawLineAction")
 @ActionReference(path = "Toolbars/Annotations", position = 1)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -36,7 +36,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawLineAction_Hint",
         tooltipTitle = "#CTL_DrawLineAction_TooltipTitle",
         tooltipBody = "#CTL_DrawLineAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/line32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-line32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -79,7 +79,7 @@ public final class DrawLineAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Line");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/line.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-line.png");
         shape.setEnableBatchPicking(false);
 //        shape.addPropertyChangeListener(new PropertyChangeListener() {
 //            @Override

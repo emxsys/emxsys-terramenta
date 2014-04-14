@@ -15,7 +15,6 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolyline;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -27,7 +26,7 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/measure.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/measure-distance.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
 @ActionReference(path = "Toolbars/Annotations", position = 8)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
         position = 8,
@@ -35,7 +34,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawDistanceAction_Hint",
         tooltipTitle = "#CTL_DrawDistanceAction_TooltipTitle",
         tooltipBody = "#CTL_DrawDistanceAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/measure32.png",
+        tooltipIcon = "com/terramenta/annotations/images/measure-distance32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -78,7 +77,7 @@ public final class DrawDistanceAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "Distance Measurement");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/measurements.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/measure-distance.png");
         shape.setEnableBatchPicking(false);
 //        shape.addPropertyChangeListener(new PropertyChangeListener() {
 //            @Override

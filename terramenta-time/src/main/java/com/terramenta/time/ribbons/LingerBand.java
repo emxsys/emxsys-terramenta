@@ -41,19 +41,19 @@ public class LingerBand extends JFlowRibbonBand implements ActionListener, Chang
         setPreferredSize(new Dimension(120, 60));
 
         slider = new JSlider(JSlider.HORIZONTAL, 1, 50, 50);
-        slider.setMaximumSize(new Dimension(50, 24));
-        slider.setPreferredSize(new Dimension(50, 24));
-        slider.setMinimumSize(new Dimension(50, 24));
+        slider.setMaximumSize(new Dimension(50, 32));
+        slider.setPreferredSize(new Dimension(50, 32));
+        slider.setMinimumSize(new Dimension(50, 32));
 //        slider.setToolTipText(Bundle.HINT_TimeLingerAction());
         slider.addChangeListener(this);
 
-        JButton never = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/zero.png", false));
-        never.setPreferredSize(new Dimension(24, 24));
+        JButton never = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/linger-min24.png", false));
+        never.setPreferredSize(new Dimension(32, 32));
         never.setActionCommand("NEVER");
         never.addActionListener(this);
 
-        JButton always = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/infinity.png", false));
-        always.setPreferredSize(new Dimension(24, 24));
+        JButton always = new JButton(ImageUtilities.loadImageIcon("com/terramenta/time/images/linger-max24.png", false));
+        always.setPreferredSize(new Dimension(32, 32));
         always.setActionCommand("ALWAYS");
         always.addActionListener(this);
 

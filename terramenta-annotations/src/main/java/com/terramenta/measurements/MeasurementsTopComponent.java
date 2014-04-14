@@ -28,7 +28,7 @@ import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 
-@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "com/terramenta/measurements/images/measurements.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
+@TopComponent.Description(preferredID = "MeasurementsTopComponent", iconBase = "com/terramenta/measurements/images/show-measure-tools.png", persistenceType = TopComponent.PERSISTENCE_NEVER)
 @TopComponent.Registration(mode = "leftSlidingSide", openAtStartup = false)
 @ActionID(category = "Window", id = "com.terramenta.measurements.MeasurementsTopComponent")
 @RibbonActionReference(path = "Menu/Window/Show",
@@ -37,7 +37,7 @@ import org.openide.windows.TopComponent;
         description = "#CTL_MeasurementsAction_Hint",
         tooltipTitle = "#CTL_MeasurementsAction_TooltipTitle",
         tooltipBody = "#CTL_MeasurementsAction_TooltipBody",
-        tooltipIcon = "com/terramenta/measurements/images/measurements32.png",
+        tooltipIcon = "com/terramenta/measurements/images/show-measure-tools32.png",
         tooltipFooter = "#CTL_MeasurementsAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @NbBundle.Messages(

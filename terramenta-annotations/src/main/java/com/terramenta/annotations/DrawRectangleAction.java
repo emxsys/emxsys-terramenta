@@ -29,7 +29,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawRectangleAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/rectangle.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-rectangle.png",
         displayName = "#CTL_DrawRectangleAction")
 @ActionReference(path = "Toolbars/Annotations", position = 5)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -38,7 +38,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawRectangleAction_Hint",
         tooltipTitle = "#CTL_DrawRectangleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawRectangleAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/rectangle32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-rectangle32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -80,7 +80,7 @@ public final class DrawRectangleAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Rectangle");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/rectangle.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-rectangle.png");
         shape.setEnableBatchPicking(false);
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

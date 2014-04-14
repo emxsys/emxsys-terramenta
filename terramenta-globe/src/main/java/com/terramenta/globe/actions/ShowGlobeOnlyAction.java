@@ -25,14 +25,14 @@ import org.openide.windows.WindowManager;
  * @author chris.heidt
  */
 @ActionID(category = "Tools", id = "com.terramenta.globe.actions.ShowGlobeOnlyAction")
-@ActionRegistration(iconBase = "com/terramenta/globe/images/fullGlobe.png", displayName = "#CTL_ShowGlobeOnlyAction", popupText = "Maximize the Globe.")
+@ActionRegistration(iconBase = "com/terramenta/globe/images/toggle-globe.png", displayName = "#CTL_ShowGlobeOnlyAction", popupText = "Maximize the Globe.")
 @RibbonActionReference(path = "Menu/Window/Layout",
         position = 100,
         priority = "top",
         description = "#CTL_ShowGlobeOnlyAction_Hint",
         tooltipTitle = "#CTL_ShowGlobeOnlyAction_TooltipTitle",
         tooltipBody = "#CTL_ShowGlobeOnlyAction_TooltipBody",
-        tooltipIcon = "com/terramenta/globe/images/fullGlobe32.png",
+        tooltipIcon = "com/terramenta/globe/images/toggle-globe32.png",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages({
     "CTL_ShowGlobeOnlyAction=Toggle Full Globe",

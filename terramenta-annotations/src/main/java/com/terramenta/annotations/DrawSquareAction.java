@@ -29,7 +29,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools",
         id = "com.terramenta.annotations.DrawSquareAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/square.png",
+@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-square.png",
         displayName = "#CTL_DrawSquareAction")
 @ActionReference(path = "Toolbars/Annotations", position = 4)
 @RibbonActionReference(path = "Menu/Insert/Annotations",
@@ -38,7 +38,7 @@ import org.openide.util.NbBundle.Messages;
         description = "#CTL_DrawSquareAction_Hint",
         tooltipTitle = "#CTL_DrawSquareAction_TooltipTitle",
         tooltipBody = "#CTL_DrawSquareAction_TooltipBody",
-        tooltipIcon = "com/terramenta/annotations/images/square32.png",
+        tooltipIcon = "com/terramenta/annotations/images/draw-square32.png",
         tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages(
@@ -81,7 +81,7 @@ public final class DrawSquareAction extends TopComponentContextAction {
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
         shape.setValue(AVKey.DISPLAY_NAME, "User Annotation: Square");
-        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/square.png");
+        shape.setValue(AVKey.DISPLAY_ICON, "com/terramenta/annotations/images/draw-square.png");
         shape.setEnableBatchPicking(false);
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.prefs.Preferences;
 import org.openide.util.NbPreferences;
-import org.pushingpixels.flamingo.api.common.CommandToggleButtonGroup;
-import org.pushingpixels.flamingo.api.common.JCommandToggleButton;
+import org.pushingpixels.flamingo.api.common.JCommandButton;
+import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand;
 import org.pushingpixels.flamingo.api.ribbon.RibbonElementPriority;
 import org.pushingpixels.flamingo.api.ribbon.resize.CoreRibbonResizePolicies;
@@ -26,10 +26,20 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 public class EciBand extends JRibbonBand {
 
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
-    private static final ActionListener eciListener = new ActionListener() {
+    private static final ResizableIcon[] icons = new ResizableIcon[]{
+        ResizableIcons.fromResource("com/terramenta/globe/images/perspective-eci.png"),
+        ResizableIcons.fromResource("com/terramenta/globe/images/perspective-ecef.png")
+    };
+
+    private final JCommandButton perspectiveButton = new JCommandButton(icons[0]);
+    private final ActionListener eciListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            prefs.putBoolean("options.globe.isECI", e.getActionCommand().equals("ECI"));
+            boolean isEci = e.getActionCommand().equals("ECI");
+            prefs.putBoolean("options.globe.isECI", isEci);
+
+            perspectiveButton.getActionModel().setActionCommand(isEci ? "ECEF" : "ECI");
+            perspectiveButton.setIcon(isEci ? icons[0] : icons[1]);
         }
     };
 
@@ -46,23 +56,9 @@ public class EciBand extends JRibbonBand {
         setPreferredSize(new Dimension(40, 60));
 
         boolean isEci = prefs.getBoolean("options.globe.isECI", false);
-        JCommandToggleButton eciBtn = new JCommandToggleButton("ECI", ResizableIcons.fromResource("com/terramenta/globe/images/globeECI.png"));
-        eciBtn.getActionModel().setSelected(isEci);
-        eciBtn.getActionModel().setActionCommand("ECI");
-        eciBtn.addActionListener(eciListener);
-
-        JCommandToggleButton ecefBtn = new JCommandToggleButton("ECEF", ResizableIcons.fromResource("com/terramenta/globe/images/globeECEF.png"));
-        ecefBtn.getActionModel().setSelected(!isEci);
-        ecefBtn.getActionModel().setActionCommand("ECEF");
-        ecefBtn.addActionListener(eciListener);
-
-        CommandToggleButtonGroup perspectiveGroup = new CommandToggleButtonGroup();
-        perspectiveGroup.add(eciBtn);
-        perspectiveGroup.add(ecefBtn);
-
-        //layout
-//        startGroup();
-        addCommandButton(eciBtn, RibbonElementPriority.MEDIUM);
-        addCommandButton(ecefBtn, RibbonElementPriority.MEDIUM);
+        perspectiveButton.setIcon(isEci ? icons[0] : icons[1]);
+        perspectiveButton.getActionModel().setActionCommand(isEci ? "ECEF" : "ECI");
+        perspectiveButton.addActionListener(eciListener);
+        addCommandButton(perspectiveButton, RibbonElementPriority.MEDIUM);
     }
 }

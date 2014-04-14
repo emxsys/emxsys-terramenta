@@ -4,7 +4,6 @@
  */
 package com.terramenta.time.ribbons;
 
-//import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.ribbon.api.ResizableIcons;
 import com.terramenta.time.actions.AnimationSpeed;
 import com.terramenta.time.actions.TimeActionController;
@@ -13,8 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import org.openide.util.Lookup;
-import org.pushingpixels.flamingo.api.common.CommandToggleButtonGroup;
-import org.pushingpixels.flamingo.api.common.JCommandToggleButton;
+import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand;
 import org.pushingpixels.flamingo.api.ribbon.RibbonElementPriority;
 import org.pushingpixels.flamingo.api.ribbon.resize.CoreRibbonResizePolicies;
@@ -26,18 +24,14 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  */
 public class SpeedBand extends JRibbonBand {
 
-    //private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-    private static final ActionListener speedListener = new ActionListener() {
+    private final JCommandButton speedButton = new JCommandButton("");
+    private final ActionListener speedListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            tac.setStepIncrement(AnimationSpeed.valueOf(e.getActionCommand()).getMilliseconds());
-        }
-    };
-    private static final ActionListener eciListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //prefs.putBoolean("options.globe.isECI", e.getActionCommand().equals("ECI"));
+            AnimationSpeed animationSpeed = AnimationSpeed.valueOf(e.getActionCommand());
+            tac.setStepIncrement(animationSpeed.getMilliseconds());
+            updateButton(animationSpeed);
         }
     };
 
@@ -45,7 +39,7 @@ public class SpeedBand extends JRibbonBand {
      *
      */
     public SpeedBand() {
-        super("Speed", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedSlow.png"));
+        super("Speed", null);
 
         setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(
                 new CoreRibbonResizePolicies.None(getControlPanel()),
@@ -56,43 +50,18 @@ public class SpeedBand extends JRibbonBand {
 
         setPreferredSize(new Dimension(40, 60));
 
-        JCommandToggleButton slowButton = new JCommandToggleButton("Slow", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedSlow.png"));
-        slowButton.getActionModel().setSelected(true);
-        slowButton.getActionModel().setActionCommand("SLOW");
-        slowButton.addActionListener(speedListener);
+        updateButton(AnimationSpeed.SLOW);
+        speedButton.addActionListener(speedListener);
+        addCommandButton(speedButton, RibbonElementPriority.MEDIUM);
+    }
 
-        JCommandToggleButton mediumButton = new JCommandToggleButton("Medium", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedMedium.png"));
-        mediumButton.getActionModel().setActionCommand("MEDIUM");
-        mediumButton.addActionListener(speedListener);
+    private void updateButton(AnimationSpeed animationSpeed) {
+        speedButton.setExtraText(animationSpeed.getDescription());
+        speedButton.setIcon(ResizableIcons.fromResource(animationSpeed.getIconbase()));
 
-        JCommandToggleButton fastButton = new JCommandToggleButton("Fast", ResizableIcons.fromResource("com/terramenta/time/images/controlSpeedFast.png"));
-        fastButton.getActionModel().setActionCommand("FAST");
-        fastButton.addActionListener(speedListener);
-
-        CommandToggleButtonGroup speedGroup = new CommandToggleButtonGroup();
-        speedGroup.add(slowButton);
-        speedGroup.add(mediumButton);
-        speedGroup.add(fastButton);
-
-        //boolean isEci = prefs.getBoolean("options.globe.isECI", false);
-//        JCommandToggleButton eciBtn = new JCommandToggleButton("ECI", ResizableIcons.fromResource("images/tick.png"));
-//        eciBtn.getActionModel().setSelected(isEci);
-//        eciBtn.getActionModel().setActionCommand("ECI");
-//        eciBtn.addActionListener(eciListener);
-//
-//        JCommandToggleButton ecefBtn = new JCommandToggleButton("ECEF", ResizableIcons.fromResource("images/tick.png"));
-//        ecefBtn.getActionModel().setSelected(!isEci);
-//        ecefBtn.getActionModel().setActionCommand("ECEF");
-//        ecefBtn.addActionListener(eciListener);
-//        CommandToggleButtonGroup perspectiveGroup = new CommandToggleButtonGroup();
-//        perspectiveGroup.add(eciBtn);
-//        perspectiveGroup.add(ecefBtn);
-        //layout
-        addCommandButton(slowButton, RibbonElementPriority.MEDIUM);
-        addCommandButton(mediumButton, RibbonElementPriority.MEDIUM);
-        addCommandButton(fastButton, RibbonElementPriority.MEDIUM);
-//        startGroup();
-//        addCommandButton(eciBtn, RibbonElementPriority.MEDIUM);
-//        addCommandButton(ecefBtn, RibbonElementPriority.MEDIUM);
+        //advance the action command to next speed
+        int nextSpeedOrdinal = animationSpeed.ordinal() + 1;
+        AnimationSpeed nextSpeed = (nextSpeedOrdinal < AnimationSpeed.values().length) ? AnimationSpeed.values()[nextSpeedOrdinal] : AnimationSpeed.values()[0];
+        speedButton.getActionModel().setActionCommand(nextSpeed.name());
     }
 }

@@ -43,16 +43,16 @@ public class NavigationBand extends JFlowRibbonBand implements ActionListener {
         JPanel panel = new JPanel();
 
         coordTypeComboBox = new JComboBox(CoordinateSystem.values());
-        coordTypeComboBox.setPreferredSize(new Dimension(65, 24));
+        coordTypeComboBox.setPreferredSize(new Dimension(65, 32));
         panel.add(coordTypeComboBox);
 
         positionField = new JTextField();
-        positionField.setPreferredSize(new Dimension(150, 24));
+        positionField.setPreferredSize(new Dimension(150, 32));
         positionField.addActionListener(this);
         panel.add(positionField);
 
-        JButton submitBtn = new JButton(ImageUtilities.loadImageIcon("com/terramenta/globe/images/locate.png", false));
-        submitBtn.setPreferredSize(new Dimension(24, 24));
+        JButton submitBtn = new JButton(ImageUtilities.loadImageIcon("com/terramenta/globe/images/navigation-goto24.png", false));
+        submitBtn.setPreferredSize(new Dimension(32, 32));
         submitBtn.addActionListener(this);
         panel.add(submitBtn);
 

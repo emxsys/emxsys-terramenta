@@ -30,7 +30,7 @@ import org.openide.util.actions.SystemAction;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.layermanager.actions.LayerAddAction")
-@ActionRegistration(iconBase = "com/terramenta/layermanager/images/layerAdd.png", 
+@ActionRegistration(iconBase = "com/terramenta/layermanager/images/add-layer.png", 
             displayName = "#CTL_LayerAddAction", 
             popupText = "Add a layer to the globe.")
 @RibbonActionReference(path = "Menu/Insert/Layers",
@@ -39,7 +39,7 @@ import org.openide.util.actions.SystemAction;
         description = "#CTL_LayerAddAction_Hint",
         tooltipTitle = "#CTL_LayerAddAction_TooltipTitle",
         tooltipBody = "#CTL_LayerAddAction_TooltipBody",
-        tooltipIcon = "com/terramenta/layermanager/images/layerAdd.png",
+        tooltipIcon = "com/terramenta/layermanager/images/add-layer32.png",
         //tooltipFooter = "#CTL_Default_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
 @Messages({
