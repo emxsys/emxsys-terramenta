@@ -24,9 +24,9 @@ import org.openide.windows.WindowManager;
         description = "#CTL_LayerManagerAction_Hint",
         tooltipTitle = "#CTL_LayerManagerAction_TooltipTitle",
         tooltipBody = "#CTL_LayerManagerAction_TooltipBody",
-        tooltipIcon = "images/show-layers32.png",
+        tooltipIcon = "com/terramenta/layermanager/images/show-layers32.png",
         tooltipFooter = "#CTL_LayerManagerAction_TooltipFooter",
-        tooltipFooterIcon = "images/help.png")
+        tooltipFooterIcon = "com/terramenta/images/help.png")
 @NbBundle.Messages(
         {
             "CTL_LayerManagerTopComponent=Layer Manager",
