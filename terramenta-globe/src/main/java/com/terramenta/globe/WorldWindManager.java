@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
@@ -58,7 +59,7 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     private final InstanceContent content = new InstanceContent();
     private final Lookup internalLookup = new AbstractLookup(content);
     private ExpandableLookup masterLookup;
-    private final SessionState sessionState = new SessionState(WorldWindManager.class.getName());
+    private final SessionState sessionState = new SessionState("." + NbBundle.getBranding());
     private final WorldWindowGLJPanel wwd;
     private final Observer dateProviderObserver = new Observer() {
         @Override
