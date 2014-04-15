@@ -29,25 +29,25 @@ public class SunController implements PropertyChangeListener {
 
     private static final Logger logger = Logger.getLogger(SunController.class.getName());
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-    private final AtmosphereLayer atmosphereLayer;
+    //private final AtmosphereLayer atmosphereLayer;
     private final RectangularNormalTessellator suntessellator;
     private final SunLayer sunLayer;
     private final Tessellator originalTessellator;
-    private final SkyGradientLayer originalAtmosphere;
+    //private final SkyGradientLayer originalAtmosphere;
 
     public SunController(SunLayer sunLayer) {
         this.sunLayer = sunLayer;
         this.originalTessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
         this.suntessellator = new RectangularNormalTessellator();
-        this.atmosphereLayer = new AtmosphereLayer();
+        //this.atmosphereLayer = new AtmosphereLayer();
 
-        List<Layer> atmos = wwm.getWorldWindow().getModel().getLayers().getLayersByClass(SkyGradientLayer.class);
-        if (!atmos.isEmpty()) {
-            originalAtmosphere = (SkyGradientLayer) atmos.get(0);
-        } else {
-            originalAtmosphere = new SkyGradientLayer();
-            wwm.getWorldWindow().getModel().getLayers().add(originalAtmosphere);
-        }
+//        List<Layer> atmos = wwm.getWorldWindow().getModel().getLayers().getLayersByClass(SkyGradientLayer.class);
+//        if (!atmos.isEmpty()) {
+//            originalAtmosphere = (SkyGradientLayer) atmos.get(0);
+//        } else {
+//            originalAtmosphere = new SkyGradientLayer();
+//            wwm.getWorldWindow().getModel().getLayers().add(originalAtmosphere);
+//        }
 
         sunLayer.addPropertyChangeListener(this);
     }
@@ -58,31 +58,31 @@ public class SunController implements PropertyChangeListener {
             boolean enabled = (Boolean) evt.getNewValue();
             if (enabled) { // enable shading, use AtmosphereLayer
                 wwm.getWorldWindow().getModel().getGlobe().setTessellator(suntessellator);
-                for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
-                    Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
-                    if (l instanceof SkyGradientLayer) {
-                        this.atmosphereLayer.setEnabled(l.isEnabled());
-                        wwm.getWorldWindow().getModel().getLayers().set(i, this.atmosphereLayer);
-                        break;
-                    }
-                }
+//                for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
+//                    Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
+//                    if (l instanceof SkyGradientLayer) {
+//                        this.atmosphereLayer.setEnabled(l.isEnabled());
+//                        wwm.getWorldWindow().getModel().getLayers().set(i, this.atmosphereLayer);
+//                        break;
+//                    }
+//                }
             } else { // disable lighting, use SkyGradientLayer
                 wwm.getWorldWindow().getModel().getGlobe().setTessellator(originalTessellator);
-                for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
-                    Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
-                    if (l instanceof AtmosphereLayer) {
-                        this.originalAtmosphere.setEnabled(l.isEnabled());
-                        wwm.getWorldWindow().getModel().getLayers().set(i, this.originalAtmosphere);
-                        break;
-                    }
-                }
+//                for (int i = 0; i < wwm.getWorldWindow().getModel().getLayers().size(); i++) {
+//                    Layer l = wwm.getWorldWindow().getModel().getLayers().get(i);
+//                    if (l instanceof AtmosphereLayer) {
+//                        this.originalAtmosphere.setEnabled(l.isEnabled());
+//                        wwm.getWorldWindow().getModel().getLayers().set(i, this.originalAtmosphere);
+//                        break;
+//                    }
+//                }
             }
         }
     }
 
     /**
      *
-     * @param datetime
+     * @param date
      */
     public void update(Date date) {
         double[] ll = subsolarPoint(date);
@@ -92,13 +92,13 @@ public class SunController implements PropertyChangeListener {
 
         this.sunLayer.setSunDirection(sunVector);
         this.suntessellator.setLightDirection(sunVector.getNegative3());
-        this.atmosphereLayer.setSunDirection(sunVector);
+        //this.atmosphereLayer.setSunDirection(sunVector);
     }
 
     /**
      * Calculate the LatLon of sun at given time
      *
-     * @param time
+     * @param date
      * @return
      */
     public static double[] subsolarPoint(Date date) {
