@@ -40,6 +40,7 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final Preferences prefs = NbPreferences.forModule(TimeOptions.class);
     private DatePicker picker;
+    private boolean processingUpdate = false;
 
     /**
      *
@@ -78,7 +79,7 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
                 if (newValue == null) {
                     //revert to old value, no blank date allowed
                     picker.setDate(new Date(oldValue));
-                } else {
+                } else if (!processingUpdate) {
                     dateProvider.setDate(new Date(newValue));
                 }
             }
@@ -96,7 +97,11 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
 
             @Override
             public void run() {
+                // Set a semiphore to prevent a recursive call into setDate by the timestamp listener
+                processingUpdate = true;
                 picker.setDate(dateProvider.getDate());
+                // Reset semiphore
+                processingUpdate = false;
             }
         });
     }
