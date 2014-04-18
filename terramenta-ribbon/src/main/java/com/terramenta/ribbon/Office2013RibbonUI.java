@@ -389,15 +389,15 @@ public class Office2013RibbonUI extends BasicRibbonUI {
 
     /**
      * We override to inject our Ribbon.background color.
+     * @param g
      */
     @Override
     protected void paintBackground(Graphics g) {
         //super.paintBackground(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
-        g2d.setColor(FlamingoUtilities.getColor(Color.lightGray,
-                "Ribbon.background", "Panel.background"));
-        g2d.fillRect(0, 2 /*1*/, this.ribbon.getWidth(), this.ribbon.getHeight());
+        g2d.setColor(FlamingoUtilities.getColor(Color.LIGHT_GRAY, "Ribbon.background", "Panel.background"));
+        g2d.fillRect(0, 0, this.ribbon.getWidth(), this.ribbon.getHeight());
         g2d.dispose();
     }
 
@@ -483,7 +483,7 @@ public class Office2013RibbonUI extends BasicRibbonUI {
         };
 
         public MinimizeButton(JRibbon ribbon) {
-            super("");
+            super((String) null);
             this.ribbon = ribbon;
             this.ribbon.addPropertyChangeListener("minimized", pcl);
             setUI(new MinimizeButtonUI());
