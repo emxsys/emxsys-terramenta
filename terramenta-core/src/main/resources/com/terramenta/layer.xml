@@ -266,6 +266,7 @@
             <file name="Separator4.instance_hidden"/>
             <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
             <file name="Tools_hidden"/>
+            <file name="Web_hidden"/>
             <file name="org-netbeans-core-io-ui-IOWindowAction.shadow_hidden"/>
             <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow_hidden"/>
             <file name="org-netbeans-modules-favorites-View.shadow_hidden"/>
@@ -294,13 +295,13 @@
                 </file>
                 <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-GlobalPropertiesAction.instance"/>
-                    <attr name="position" intvalue="1100"/>
                     <attr name="displayName" stringvalue="Properties"/>
                     <attr name="description" stringvalue="Display the Properties window."/>
                     <attr name="tooltipTitle" stringvalue="Show Properties Window"/>
                     <attr name="tooltipBody" stringvalue="Shows the properties window, which is used for getting or setting values for the currently selected object."/>
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-properties32.png"/>
-                    <!--<attr name="iconBase" stringvalue="com/terramenta/images/show-properties.png"/>-->                    
+                    <!-- ICON CAN ONLY BE CHANGED VIA BRANDING <attr name="iconBase" stringvalue="com/terramenta/images/show-properties.png"/>-->        
+                    <attr name="position" intvalue="1100"/>            
                 </file>
                 <file name="org-netbeans-core-actions-LogAction.shadow">
                     <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
@@ -309,8 +310,19 @@
                     <attr name="tooltipTitle" stringvalue="Show Log Console"/>
                     <attr name="tooltipBody" stringvalue="Shows the application's output log, which is useful for troubleshooting application errors."/>
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-log32.png"/>
-                    <!--<attr name="iconBase" stringvalue="com/terramenta/images/show-log.png"/>-->     
+                    
+                    <!-- ICON CAN ONLY BE CHANGED VIA BRANDING <attr name="iconBase" stringvalue="com/terramenta/images/show-log.png"/>-->     
                     <attr name="position" intvalue="1200"/>
+                </file>
+                <file name="org-netbeans-core-actions-HTMLViewAction.shadow">
+                    <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-HTMLViewAction.instance"/>
+                    <attr name="displayName" stringvalue="Web Browser"/>
+                    <attr name="description" stringvalue="Launch a Web Browser."/>
+                    <attr name="tooltipTitle" stringvalue="Launch a Web Browser"/>
+                    <attr name="tooltipBody" stringvalue="Launchs the current systems Web Browser."/>
+                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-web32.png"/>
+                    <attr name="iconBase" stringvalue="com/terramenta/images/show-web.png"/>    
+                    <attr name="position" intvalue="1300"/>
                 </file>
                 <file name="Separator2.instance">
                     <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
