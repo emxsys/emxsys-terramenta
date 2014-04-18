@@ -14,6 +14,10 @@ package com.terramenta.layermanager.nodes;
 
 import com.terramenta.actions.DestroyNodeAction;
 import com.terramenta.actions.ToggleNodeAction;
+import com.terramenta.interfaces.BooleanState;
+import com.terramenta.interfaces.Destroyable;
+import gov.nasa.worldwind.avlist.AVList;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
 import java.beans.IntrospectionException;
 import javax.swing.Action;
@@ -25,14 +29,16 @@ import org.openide.util.actions.SystemAction;
 /**
  * A RenderableNode instance represents a WorldWind Renderable object.
  *
- * @author Bruce Schubert
+ * @author Bruce Schubert, Chris Heidt
  */
-public class RenderableNode extends BeanNode {
+public class RenderableNode extends BeanNode implements BooleanState.Provider, Destroyable {
 
-    private Renderable renderable;
+    private final RenderableLayer layer;
+    private final Renderable renderable;
 
-    public RenderableNode(Renderable renderable) throws IntrospectionException {
+    public RenderableNode(RenderableLayer layer, Renderable renderable) throws IntrospectionException {
         super(renderable);
+        this.layer = layer;
         this.renderable = renderable;
 
     }
@@ -61,6 +67,33 @@ public class RenderableNode extends BeanNode {
             SystemAction.get(PropertiesAction.class)
         };
         return actions;
+    }
+
+    @Override
+    public void doDestroy() {
+        layer.removeRenderable(renderable);
+        layer.firePropertyChange("Renderables", null, layer.getRenderables());
+    }
+
+    @Override
+    public boolean getBooleanState() {
+        if (renderable instanceof AVList) {
+            AVList avl = (AVList) renderable;
+            Boolean visible = (Boolean) avl.getValue("VISIBLE");
+            if (visible != null) {
+                return visible;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void setBooleanState(boolean state) {
+        if (renderable instanceof AVList) {
+            AVList avl = (AVList) renderable;
+            avl.setValue("VISIBLE", state);
+            avl.firePropertyChange("VISIBLE", null, state);
+        }
     }
 
 }

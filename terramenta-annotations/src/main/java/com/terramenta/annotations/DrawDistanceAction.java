@@ -14,6 +14,7 @@ package com.terramenta.annotations;
 
 import com.terramenta.actions.TopComponentContextAction;
 import com.terramenta.globe.GlobeTopComponent;
+import com.terramenta.globe.properties.RenderableProperties;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -89,11 +90,17 @@ public final class DrawDistanceAction extends TopComponentContextAction {
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                //clear edits on select
-                if (evt.getPropertyName().equals("SELECT")) {
-                    if (AnnotationEditor.isEditing()) {
-                        AnnotationEditor.commit();
-                    }
+                switch (RenderableProperties.valueOf(evt.getPropertyName())) {
+                    case SELECT:
+                        //clear edits on select
+                        if (AnnotationEditor.isEditing()) {
+                            AnnotationEditor.commit();
+                        }
+                        break;
+                    case VISIBLE:
+                        //toggle visibility
+                        shape.setVisible((boolean) evt.getNewValue());
+                        break;
                 }
             }
         });

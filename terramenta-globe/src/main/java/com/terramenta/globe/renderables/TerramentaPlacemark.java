@@ -12,6 +12,7 @@
  */
 package com.terramenta.globe.renderables;
 
+import com.terramenta.globe.properties.RenderableProperties;
 import com.terramenta.globe.utilities.DateBasedVisibilitySupport;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -34,11 +35,11 @@ public class TerramentaPlacemark extends PointPlacemark implements PreRenderable
     private static final PropertyChangeListener selectionListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue() != null) {
+            if (evt.getPropertyName().equals(RenderableProperties.SELECT.toString()) && evt.getNewValue() != null) {
                 Point pnt = (Point) evt.getNewValue();
-            } else if (evt.getPropertyName().equals("HOVER") && evt.getNewValue() != null) {
+            } else if (evt.getPropertyName().equals(RenderableProperties.HOVER.toString()) && evt.getNewValue() != null) {
                 //...
-            } else if (evt.getPropertyName().equals("ROLLOVER") && evt.getNewValue() != null) {
+            } else if (evt.getPropertyName().equals(RenderableProperties.ROLLOVER.toString()) && evt.getNewValue() != null) {
                 //...
             }
         }

@@ -14,6 +14,7 @@ package com.terramenta.annotations;
 
 import com.terramenta.actions.TopComponentContextAction;
 import com.terramenta.globe.GlobeTopComponent;
+import com.terramenta.globe.properties.RenderableProperties;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -91,9 +92,15 @@ public final class DrawEllipseAction extends TopComponentContextAction {
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                //edit on select
-                if (evt.getPropertyName().equals("SELECT")) {
-                    AnnotationEditor.modify(shape);
+                switch (RenderableProperties.valueOf(evt.getPropertyName())) {
+                    case SELECT:
+                        //edit on select
+                        AnnotationEditor.modify(shape);
+                        break;
+                    case VISIBLE:
+                        //toggle visibility
+                        shape.setVisible((boolean) evt.getNewValue());
+                        break;
                 }
             }
         });

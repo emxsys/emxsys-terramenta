@@ -107,15 +107,17 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("Enabled".equals(evt.getPropertyName())) {
-            if (evt.getNewValue().equals(Boolean.TRUE)) {
-                this.setIconBaseWithExtension(ENABLED_ICON_BASE);
-            } else {
-                this.setIconBaseWithExtension(DISABLED_ICON_BASE);
-            }
-            this.fireDisplayNameChange(null, getDisplayName());
-        } else if (evt.getPropertyName().equals("Renderables")) {
-            this.fireDisplayNameChange(null, getDisplayName());
+        switch (evt.getPropertyName()) {
+            case "Enabled":
+                if (evt.getNewValue().equals(Boolean.TRUE)) {
+                    this.setIconBaseWithExtension(ENABLED_ICON_BASE);
+                } else {
+                    this.setIconBaseWithExtension(DISABLED_ICON_BASE);
+                }   this.fireDisplayNameChange(null, getDisplayName());
+                break;
+            case "Renderables":
+                this.fireDisplayNameChange(null, getDisplayName());
+                break;
         }
     }
 

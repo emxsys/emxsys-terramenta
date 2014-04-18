@@ -12,6 +12,7 @@
  */
 package com.terramenta.globe.utilities;
 
+import com.terramenta.globe.properties.RenderableProperties;
 import gov.nasa.worldwind.Disposable;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -152,7 +153,7 @@ public class SelectController implements SelectListener, Disposable {
 
         if (lastSelect != null) {
             logger.info("Unselecting {}", lastSelect);
-            lastSelect.firePropertyChange("SELECT", null, null);
+            lastSelect.firePropertyChange(RenderableProperties.SELECT.toString(), null, null);
             lastSelect = null;
         }
 
@@ -160,7 +161,7 @@ public class SelectController implements SelectListener, Disposable {
             logger.info("Selecting {}", obj);
             AVList avl = (AVList) obj;
             avl.setValue("selectionTimeMillis", System.currentTimeMillis());
-            avl.firePropertyChange("SELECT", null, point);
+            avl.firePropertyChange(RenderableProperties.SELECT.toString(), null, point);
             lastSelect = avl;
         }
     }
@@ -168,14 +169,14 @@ public class SelectController implements SelectListener, Disposable {
     private static void doHover(Point point, Object obj) {
         if (lastHover != null) {
             logger.debug("Unhovering {}", lastHover);
-            lastHover.firePropertyChange("HOVER", null, null);
+            lastHover.firePropertyChange(RenderableProperties.HOVER.toString(), null, null);
             lastHover = null;
         }
 
         if (obj instanceof AVList) {
             logger.debug("Hovering {}", obj);
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("HOVER", null, point);
+            avl.firePropertyChange(RenderableProperties.HOVER.toString(), null, point);
             lastHover = avl;
         }
     }
@@ -183,14 +184,14 @@ public class SelectController implements SelectListener, Disposable {
     private static void doRollover(Point point, Object obj) {
         if (lastRollover != null) {
             logger.debug("Unrollovering {}", lastRollover);
-            lastRollover.firePropertyChange("ROLLOVER", null, null);
+            lastRollover.firePropertyChange(RenderableProperties.ROLLOVER.toString(), null, null);
             lastRollover = null;
         }
 
         if (obj instanceof AVList) {
             logger.debug("Rollovering {}", obj);
             AVList avl = (AVList) obj;
-            avl.firePropertyChange("ROLLOVER", null, point);
+            avl.firePropertyChange(RenderableProperties.ROLLOVER.toString(), null, point);
             lastRollover = avl;
         }
     }

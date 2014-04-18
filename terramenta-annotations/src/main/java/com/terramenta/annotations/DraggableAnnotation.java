@@ -13,6 +13,7 @@
 package com.terramenta.annotations;
 
 import com.terramenta.globe.dnd.Draggable;
+import com.terramenta.globe.properties.RenderableProperties;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.AnnotationAttributes;
 import gov.nasa.worldwind.render.GlobeAnnotation;
@@ -30,11 +31,22 @@ import java.beans.PropertyChangeListener;
 public class DraggableAnnotation extends GlobeAnnotation implements Draggable {
 
     private boolean draggable = true;
+
     private final PropertyChangeListener selectionListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue() != null && evt.getSource() instanceof DraggableAnnotation) {
-                TextAnnotationEditor.edit((DraggableAnnotation) evt.getSource());
+            switch (RenderableProperties.valueOf(evt.getPropertyName())) {
+                case SELECT:
+                    //edit on select
+                    if (evt.getNewValue() != null && evt.getSource() instanceof DraggableAnnotation) {
+                        TextAnnotationEditor.edit((DraggableAnnotation) evt.getSource());
+                    }
+                    break;
+                case VISIBLE:
+                    //toggle visibility
+                    //No way to toggle globe annotation visibility?!?!
+                    //setVisible((boolean) evt.getNewValue());
+                    break;
             }
         }
     };
