@@ -33,7 +33,7 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 public class SpeedBand extends JRibbonBand {
 
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-    private final JCommandButton speedButton = new JCommandButton("");
+    private final JCommandButton speedButton = new JCommandButton((String) null);
     private final ActionListener speedListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

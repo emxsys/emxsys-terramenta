@@ -19,6 +19,8 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import org.openide.DialogDescriptor;
@@ -33,13 +35,25 @@ import org.openide.util.Lookup;
  *
  * modified Feb 2013, replaced GlobeAnnotation with DraggableAnnotation, show the dialog box at the mouse location and
  * add the text annotation in the "User Annotations" layer.
+ *
+ * @author heidtmare
+ * modifications
  */
 public class TextAnnotationEditor {
 
-    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-    private RenderableLayer userLayer;
     public static final String USER_ANNOTATION_LAYER = "User Annotations";
+    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static boolean editing = false;
+    private RenderableLayer userLayer;
     private boolean armed = false;
+    private final KeyAdapter ka = new KeyAdapter() {
+        @Override
+        public void keyReleased(KeyEvent keyEvent) {
+            if (armed && keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                setArmed(false);
+            }
+        }
+    };
     private final MouseAdapter ma = new MouseAdapter() {
         @Override
         public void mouseReleased(MouseEvent mouseEvent) {
@@ -59,11 +73,22 @@ public class TextAnnotationEditor {
     public void setArmed(boolean armed) {
         this.armed = armed;
         if (armed) {
+            // Force keyboard focus to globe
+            wwm.getWorldWindow().requestFocusInWindow();
+
+            //add listeners
+            wwm.getWorldWindow().getInputHandler().addKeyListener(ka);
             wwm.getWorldWindow().getInputHandler().addMouseListener(ma);
-            ((Component) wwm.getWorldWindow()).setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+
+            //change cursor
+            wwm.getWorldWindow().setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         } else {
+            //remove listeners
+            wwm.getWorldWindow().getInputHandler().removeKeyListener(ka);
             wwm.getWorldWindow().getInputHandler().removeMouseListener(ma);
-            ((Component) wwm.getWorldWindow()).setCursor(Cursor.getDefaultCursor());
+
+            //reset cursor
+            wwm.getWorldWindow().setCursor(Cursor.getDefaultCursor());
         }
     }
 
@@ -96,7 +121,13 @@ public class TextAnnotationEditor {
     }
 
     public static void edit(DraggableAnnotation anno) {
-        InputLine inputLine = new NotifyDescriptor.InputLine("Text", "Input");
+        if (editing) {
+            return;
+        }
+
+        editing = true;
+        InputLine inputLine = new NotifyDescriptor.InputLine("Content:", "Text Annotation");
+        inputLine.setInputText(anno.getText());
         Object result = DialogDisplayer.getDefault().notify(inputLine);
         if (result == DialogDescriptor.OK_OPTION) {
             String text = inputLine.getInputText();
@@ -104,5 +135,6 @@ public class TextAnnotationEditor {
             anno.setValue(AVKey.DISPLAY_NAME, text);
             anno.setValue(AVKey.DESCRIPTION, text);
         }
+        editing = false;
     }
 }

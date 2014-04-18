@@ -33,10 +33,8 @@ public class DraggableAnnotation extends GlobeAnnotation implements Draggable {
     private final PropertyChangeListener selectionListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue().equals(Boolean.TRUE)) {
-                if (evt.getSource() instanceof DraggableAnnotation) {
-                    TextAnnotationEditor.edit((DraggableAnnotation) evt.getSource());
-                }
+            if (evt.getPropertyName().equals("SELECT") && evt.getNewValue() != null && evt.getSource() instanceof DraggableAnnotation) {
+                TextAnnotationEditor.edit((DraggableAnnotation) evt.getSource());
             }
         }
     };

@@ -14,7 +14,6 @@ package com.terramenta.annotations;
 
 import com.terramenta.actions.TopComponentContextAction;
 import com.terramenta.globe.GlobeTopComponent;
-import com.terramenta.globe.WorldWindManager;
 import com.terramenta.ribbon.RibbonActionReference;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -28,7 +27,6 @@ import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionID;
-import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 
 /**
@@ -59,7 +57,6 @@ import org.openide.util.NbBundle.Messages;
 
 public final class DrawPolygonAction extends TopComponentContextAction {
 
-    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final ShapeAttributes attr = new BasicShapeAttributes();
     private static final ShapeAttributes highattr = new BasicShapeAttributes();
 
@@ -85,6 +82,7 @@ public final class DrawPolygonAction extends TopComponentContextAction {
             return;
         }
 
+        //define the shape
         final SurfacePolygon shape = new SurfacePolygon();
         shape.setAttributes(attr);
         shape.setHighlightAttributes(highattr);
@@ -94,8 +92,8 @@ public final class DrawPolygonAction extends TopComponentContextAction {
         shape.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
+                //clear edits on select
                 if (evt.getPropertyName().equals("SELECT")) {
-                    //AnnotationEditor.modify(shape);
                     if (AnnotationEditor.isEditing()) {
                         AnnotationEditor.commit();
                     }
@@ -103,20 +101,14 @@ public final class DrawPolygonAction extends TopComponentContextAction {
             }
         });
 
+        //clear edit mode of other annotations
         if (AnnotationEditor.isEditing()) {
             AnnotationEditor.commit();
         }
 
-        AnnotationBuilder builder = new AnnotationBuilder(wwm.getWorldWindow(), shape);
+        //arm the builder
+        AnnotationBuilder builder = new AnnotationBuilder(shape);
         builder.setFreeHand(true);
-//        builder.addPropertyChangeListener(new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                if (evt.getPropertyName().equals("armed") && evt.getNewValue().equals(false)) {
-//                    AnnotationEditor.modify(shape);
-//                }
-//            }
-//        });
         builder.setArmed(true);
     }
 }
