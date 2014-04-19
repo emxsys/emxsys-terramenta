@@ -81,6 +81,8 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
         previewLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         styleView = new org.openide.explorer.view.ListView();
+        jPanel3 = new javax.swing.JPanel();
+        descLabel = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel1.border.title"))); // NOI18N
 
@@ -122,6 +124,27 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
                 .addContainerGap())
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel3.border.title"))); // NOI18N
+
+        descLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(descLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(descLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,7 +153,9 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -138,10 +163,15 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jPanel3.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(RibbonOptionsPanel.class, "RibbonOptionsPanel.jPanel3.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
     void load() {
@@ -192,6 +222,7 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
         if (!providers.isEmpty()) {
             RibbonPreferencesProvider provider = providers.iterator().next();
             previewLabel.setIcon(new ImageIcon(provider.getPreview()));
+            descLabel.setText(provider.getDescription());
         }
     }
 
@@ -211,8 +242,10 @@ final class RibbonOptionsPanel extends javax.swing.JPanel implements ExplorerMan
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel descLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel previewLabel;
     private javax.swing.ButtonGroup styleButtonGroup;
     private org.openide.explorer.view.ListView styleView;
