@@ -57,6 +57,7 @@ import org.pushingpixels.flamingo.api.ribbon.resize.CoreRibbonResizePolicies;
 import org.pushingpixels.flamingo.api.ribbon.resize.IconRibbonBandResizePolicy;
 import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
 
+
 /**
  * Factory for creating Ribbon components from a NetBeans layer XML.
  *
@@ -90,8 +91,8 @@ public class RibbonComponentFactory {
         } else {
             // BDS - get button kind from layer
             PrimaryMenuItem menuItem
-                    = new PrimaryMenuItem(item.getIcon(),
-                            item.getText(), action, getButtonKind(item));
+                = new PrimaryMenuItem(item.getIcon(),
+                    item.getText(), action, getButtonKind(item));
             ArrayList<RibbonApplicationMenuEntrySecondary> secondaries = new ArrayList<>();
             for (ActionItem child : item.getChildren()) {
                 if (child.getAction() == null) {
@@ -124,8 +125,8 @@ public class RibbonComponentFactory {
         } else {
             // BDS - get button kind from layer
             SecondaryMenuItem menuItem
-                    = new SecondaryMenuItem(item.getIcon(),
-                            item.getText(), action, getButtonKind(item));
+                = new SecondaryMenuItem(item.getIcon(),
+                    item.getText(), action, getButtonKind(item));
             menuItem.setDescriptionText(item.getDescription());
             return menuItem;
         }
@@ -150,7 +151,7 @@ public class RibbonComponentFactory {
      */
     public RibbonApplicationMenuEntryFooter createAppMenuFooterPresenter(ActionItem item) {
         RibbonApplicationMenuEntryFooter footer = new RibbonApplicationMenuEntryFooter(
-                item.getIcon(), item.getText(), item.getAction());
+            item.getIcon(), item.getText(), item.getAction());
         return footer;
     }
 
@@ -202,21 +203,21 @@ public class RibbonComponentFactory {
         }
 
         switch (getButtonKind(actionItem)) {
-            case ACTION_AND_POPUP_MAIN_ACTION:
+            case ACTION_AND_POPUP_MAIN_ACTION:  // The "defaultAction" in a sub-menu
             case ACTION_AND_POPUP_MAIN_POPUP:
                 // Compound actions
                 button = new ActionCommandButton(
-                        actionItem.getActionDelegate().getIcon(), // use the defaultAction's icon 
-                        actionItem.getText(), // Use the folder's menuText for the Popup area
-                        actionItem.getActionDelegate().getAction(), // the defaultAction
-                        getButtonKind(actionItem));
+                    actionItem.getActionDelegate().getIcon(), // use the defaultAction's icon 
+                    actionItem.getText(), // Use the folder's menuText for the Popup area
+                    actionItem.getActionDelegate().getAction(), // the defaultAction
+                    getButtonKind(actionItem));
                 break;
             default:
                 button = new ActionCommandButton(
-                        actionItem.getActionDelegate().getIcon(),
-                        text,
-                        actionItem.getActionDelegate().getAction(),
-                        getButtonKind(actionItem));
+                    actionItem.getActionDelegate().getIcon(),
+                    text,
+                    actionItem.getActionDelegate().getAction(),
+                    getButtonKind(actionItem));
         }
         RichTooltip toolTip = actionItem.getActionDelegate().createTooltip();
         button.setActionRichTooltip(toolTip);
@@ -253,9 +254,9 @@ public class RibbonComponentFactory {
             text = (icon == null || icon.equals(ResizableIcons.EMPTY)) ? actionItem.getActionDelegate().getText() : "";
         }
         ActionCommandToggleButton button = new ActionCommandToggleButton(
-                actionItem.getActionDelegate().getIcon(),
-                text,
-                actionItem.getActionDelegate().getAction());
+            actionItem.getActionDelegate().getIcon(),
+            text,
+            actionItem.getActionDelegate().getAction());
 
         RichTooltip toolTip = actionItem.getActionDelegate().createTooltip();
         button.setActionRichTooltip(toolTip);
@@ -271,8 +272,8 @@ public class RibbonComponentFactory {
     public RibbonTask createRibbonTask(ActionItem actionItem) {
         boolean usingPopupMenus = preferences.getUsePopupMenus();
         List<AbstractRibbonBand> bands = usingPopupMenus
-                ? createRibbonBandsWithPopups(actionItem)
-                : createRibbonBands(actionItem);
+            ? createRibbonBandsWithPopups(actionItem) // Nested children are placed in popup menus
+            : createRibbonBands(actionItem);   //  All nested children in the parent ribbon band
         return new RibbonTask(actionItem.getText(), bands.toArray(new AbstractRibbonBand[bands.size()]));
     }
 
@@ -331,9 +332,9 @@ public class RibbonComponentFactory {
     }
 
     /**
-     * Creates AbstractRibbonBands based on the ActionItem. If the ActionItem has children the
-     * children are added to the ribbonBand. If the ActionItem has not only children but
-     * grandChildren also, A ribbonBand is created for each child containing the grandChildren.
+     * Creates AbstractRibbonBands based on the ActionItem. Unwinds sub-menus and places all nested
+     * children in the root ribbon band. If the ActionItem has not only children but grandChildren
+     * also, A ribbonBand is created for each child containing the grandChildren.
      *
      * @param actionItem the ActionItem to create RibbonBands for
      * @return a list of the Created AbstractRibbonBand's
@@ -387,7 +388,7 @@ public class RibbonComponentFactory {
     /**
      * Creates a named RibbonBand from a collection of action items.
      *
-     * @param name        for the ribbon band
+     * @param name for the ribbon band
      * @param actionItems populate the ribbon band
      * @return a JRibbonBand
      */
@@ -422,6 +423,7 @@ public class RibbonComponentFactory {
      * @param items
      * @return
      */
+    @Deprecated
     public JCommandPopupMenu createPopupMenu(List<ActionItem> items) {
         JCommandPopupMenu menu = new JCommandPopupMenu();
         for (ActionItem item : items) {
@@ -467,8 +469,8 @@ public class RibbonComponentFactory {
             }
         }
         JCommandPopupMenu menu = (panel == null
-                ? new JCommandPopupMenu()
-                : new JCommandPopupMenu(panel, BUTTON_PANEL_MAX_COLS, BUTTON_PANEL_MAX_ROWS));
+            ? new JCommandPopupMenu()
+            : new JCommandPopupMenu(panel, BUTTON_PANEL_MAX_COLS, BUTTON_PANEL_MAX_ROWS));
         while (i < item.getChildren().size()) {
             ActionItem child = item.getChildren().get(i++);
             if (child.isSeparator()) {
@@ -499,7 +501,7 @@ public class RibbonComponentFactory {
     public JCommandMenuButton createPopupMenuPresenter(ActionItem item) {
         //TODO orientation of popup
         ActionMenuButton button = new ActionMenuButton(item.getIcon(),
-                item.getText(), item.getAction(), getButtonKind(item));
+            item.getText(), item.getAction(), getButtonKind(item));
         RichTooltip toolTip = item.createTooltip();
         button.setActionRichTooltip(toolTip);
         if (item.hasChildren()) {
@@ -545,10 +547,10 @@ public class RibbonComponentFactory {
                         break;  // exit the loop to enforce this policy's rule for placement and multiplicity
                     } else {
                         logger.log(Level.WARNING, "The token ''{0}'' is not recognized as a "
-                                + "valid resize policy for ''{1}'' -- it will be ignored.",
-                                new Object[]{
-                                    token, actionItem.getText()
-                                });
+                            + "valid resize policy for ''{1}'' -- it will be ignored.",
+                            new Object[]{
+                                token, actionItem.getText()
+                            });
                     }
                 }
             }
@@ -596,7 +598,7 @@ public class RibbonComponentFactory {
     private static ActionListener getDefaultAction(List<ActionItem> actionItems) {
         for (ActionItem child : actionItems) {
             if (child.getValue(ActionItem.DEFAULT_ACTION) == Boolean.TRUE
-                    && child.getAction() != null) {
+                && child.getAction() != null) {
                 return child.getAction();
             }
         }
@@ -622,13 +624,14 @@ public class RibbonComponentFactory {
         return p;
     }
 
+
     /**
      * This class associates an Action with the JCommandButton.
      */
     private static class ActionCommandButton extends JCommandButton {
 
         ActionCommandButton(ResizableIcon icon, String text, final Action action,
-                CommandButtonKind type) {
+                            CommandButtonKind type) {
             super(text, icon);
             setCommandButtonKind(type);
             if (action != null) {
@@ -656,6 +659,7 @@ public class RibbonComponentFactory {
             }
         }
     }
+
 
     /**
      * This class associates an Action with the JCommandToggleMenuButton.
@@ -700,13 +704,14 @@ public class RibbonComponentFactory {
         }
     }
 
+
     /**
      * This class associates an Action with the JCommandMenuButton.
      */
     private static class ActionMenuButton extends JCommandMenuButton {
 
         ActionMenuButton(ResizableIcon icon, String text, final Action action,
-                CommandButtonKind type) {
+                         CommandButtonKind type) {
             super(text, icon);
             setCommandButtonKind(type);
             if (action != null) {
@@ -732,6 +737,7 @@ public class RibbonComponentFactory {
             }
         }
     }
+
 
     /**
      * This class associates an Action with the JCommandToggleMenuButton.
@@ -764,13 +770,14 @@ public class RibbonComponentFactory {
         }
     }
 
+
     /**
      * This class associates an Action PropertyChangeListener with the Primary Menu Entry.
      */
     private static class PrimaryMenuItem extends RibbonApplicationMenuEntryPrimary {
 
         PrimaryMenuItem(ResizableIcon icon, String text, final Action action,
-                CommandButtonKind type) {
+                        CommandButtonKind type) {
             super(icon, text, action, type);
 
             if (action != null) {
@@ -795,12 +802,14 @@ public class RibbonComponentFactory {
         }
     }
 
+
     /**
      * This class associates an Action PropertyChangeListener with the Secondary Menu Entry.
      */
     private static class SecondaryMenuItem extends RibbonApplicationMenuEntrySecondary {
 
-        SecondaryMenuItem(ResizableIcon icon, String text, final Action action, CommandButtonKind type) {
+        SecondaryMenuItem(ResizableIcon icon, String text, final Action action,
+                          CommandButtonKind type) {
             super(icon, text, action, type);
 
             if (action != null) {
@@ -832,11 +841,16 @@ public class RibbonComponentFactory {
      * @return POPUP_ONLY, ACTION_AND_POPUP_MAIN_ACTION or ACTION_ONLY
      */
     private static CommandButtonKind getButtonKind(ActionItem item) {
+        boolean allowCompoundButtons = preferences.getAllowCompoundButtons();
         Action delegate = item.getActionDelegate().getAction();
         if (delegate == null && item.hasChildren()) {
             return CommandButtonKind.POPUP_ONLY;
         } else if (delegate != null && item.hasChildren()) {
-            return CommandButtonKind.ACTION_AND_POPUP_MAIN_ACTION;
+            if (allowCompoundButtons) {
+                return CommandButtonKind.ACTION_AND_POPUP_MAIN_ACTION;
+            } else {
+                return CommandButtonKind.POPUP_ONLY;
+            }
         } else if (delegate != null && !item.hasChildren()) {
             return CommandButtonKind.ACTION_ONLY;
         } else {

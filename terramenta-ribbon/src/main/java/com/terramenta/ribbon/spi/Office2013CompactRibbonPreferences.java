@@ -51,6 +51,7 @@ public class Office2013CompactRibbonPreferences extends Office2013RibbonPreferen
         setAlwaysDisplayGroupText(true);
         setUsePopupMenus(true);
         setUseTabNameForTasksBand(false);
+        setAllowCompoundButtons(false);
         
     }
 

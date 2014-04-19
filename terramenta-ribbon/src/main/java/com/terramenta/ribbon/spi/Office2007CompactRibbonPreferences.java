@@ -51,6 +51,7 @@ public class Office2007CompactRibbonPreferences extends Office2007RibbonPreferen
         setAlwaysDisplayGroupText(true);
         setUsePopupMenus(true);
         setUseTabNameForTasksBand(false);
+        setAllowCompoundButtons(false);
         
     }
 

@@ -105,4 +105,12 @@ public interface RibbonPreferences {
      */
     public boolean getUseTabNameForTasksBand();
 
+    /**
+     * Determines whether compound buttons are allowed.  Should set to false in compact menus.
+     *
+     * @return true to create compound buttons
+     */
+    public boolean getAllowCompoundButtons();
+
+
 }

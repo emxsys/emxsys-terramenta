@@ -45,6 +45,7 @@ public class BasicRibbonPreferences implements RibbonPreferences {
     private Dimension preferredBandSize;
     private boolean shouldDisplayTaskBar = true;
     private boolean usePopupMenus = true;
+    private boolean allowCompoundButtons = true;
     private boolean useTabNameForTasksBand = true;      // true = original Terramenta style
     private boolean alwaysDisplayButtonText = false;    // true = original Terramenta style
     private boolean alwaysDisplayGroupText = true;      // true = original Terramenta style
@@ -93,6 +94,12 @@ public class BasicRibbonPreferences implements RibbonPreferences {
         return useTabNameForTasksBand;
     }
 
+    @Override
+    public boolean getAllowCompoundButtons() {
+        return allowCompoundButtons;
+    }
+
+    
     protected void setLafClassDefaults(Object[] lafClassDefaults) {
         this.lafClassDefaults = lafClassDefaults;
     }
@@ -121,4 +128,10 @@ public class BasicRibbonPreferences implements RibbonPreferences {
         this.useTabNameForTasksBand = useTabNameForTasksBand;
     }
 
+    protected void setAllowCompoundButtons(boolean allowCompoundButtons) {
+        this.allowCompoundButtons = allowCompoundButtons;
+    }
+
+    
+    
 }
