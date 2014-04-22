@@ -17,6 +17,7 @@ import com.terramenta.ribbon.RibbonManager;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.Utilities;
 import org.pushingpixels.flamingo.api.ribbon.JRibbon;
 import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
@@ -26,12 +27,14 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
  * found it displays the "Layer Tools" contextual task group.
  * <p>
  * @author Bruce Schubert
- * @version $Id$
  */
-public class LayerTools implements LookupListener {
+@Messages({
+    "CTL_LayerTools=Layer Tools"
+})
+public final class LayerTools implements LookupListener {
 
     private RibbonContextualTaskGroup taskGroup;
-    private Lookup.Result<LayerNode> lookupResult;
+    private final Lookup.Result<LayerNode> lookupResult;
 
     private LayerTools() {
         // Initilize the lookup listener
@@ -42,7 +45,11 @@ public class LayerTools implements LookupListener {
         resultChanged(null);
     }
 
-    private RibbonContextualTaskGroup getTaskGroup() {
+    /**
+     * Gets the "Layer Tools" task group.
+     * @return The RibbonContextualTaskGroup for the Layer Tools.
+     */
+    private RibbonContextualTaskGroup getLayerToolsTaskGroup() {
         if (this.taskGroup == null) {
             JRibbon ribbon = Lookup.getDefault().lookup(RibbonManager.class).getRibbon();
             if (ribbon == null) {
@@ -51,7 +58,7 @@ public class LayerTools implements LookupListener {
             // Find the Layer Tools task group
             for (int i = 0; i < ribbon.getContextualTaskGroupCount(); i++) {
                 RibbonContextualTaskGroup group = ribbon.getContextualTaskGroup(i);
-                if (group.getTitle().equalsIgnoreCase("Layer Tools")) {
+                if (group.getTitle().equalsIgnoreCase(Bundle.CTL_LayerTools())) {
                     this.taskGroup = group;
                 }
             }
@@ -66,11 +73,16 @@ public class LayerTools implements LookupListener {
      */
     @Override
     public void resultChanged(LookupEvent ev) {
-        RibbonContextualTaskGroup group = getTaskGroup();
+        RibbonContextualTaskGroup group = getLayerToolsTaskGroup();
         if (group != null) {
             JRibbon ribbon = Lookup.getDefault().lookup(RibbonManager.class).getRibbon();
-            // Don't enable the tools if more that one layer is selected
-            ribbon.setVisible(group, this.lookupResult.allInstances().size() == 1);
+            // Enable and show the task pane when a single layer is selected.
+            if (this.lookupResult.allInstances().size() == 1) {
+                ribbon.setVisible(group, true);                
+                ribbon.setSelectedTask(group.getTask(0)); // use the first (and only) task.
+            } else {
+                ribbon.setVisible(group, false);
+            }
         }
     }
 
@@ -80,10 +92,10 @@ public class LayerTools implements LookupListener {
      * @return singleton
      */
     public static LayerTools getInstance() {
-        return SymbologyToolsHolder.INSTANCE;
+        return LayerToolsHolder.INSTANCE;
     }
 
-    private static class SymbologyToolsHolder {
+    private static class LayerToolsHolder {
 
         private static final LayerTools INSTANCE = new LayerTools();
     }

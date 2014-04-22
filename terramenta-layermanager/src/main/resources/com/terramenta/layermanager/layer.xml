@@ -7,19 +7,73 @@
             <folder name="LayerTools">
                 <attr name="menuText" stringvalue="Layer"/>
                 <attr name="position" intvalue="1000"/> 
-                <attr name="contextualTaskGroup" stringvalue="Layer Tools"/>
+                <attr name="contextualTaskGroup" bundlevalue="com.terramenta.layermanager.ribbons.Bundle#CTL_LayerTools"/>
                     
                 <folder name="Edit">
                     <attr name="position" intvalue="200"/>
                     <attr name="menuText" stringvalue="Edit"/>
+                    <file name="com-terramenta-layermanager-rename-layer.instance">
+                        <attr name="instanceClass" stringvalue="org.openide.actions.RenameAction"/>
+                        <attr name="displayName" stringvalue="Rename"/>
+                        <attr name="description" stringvalue="Rename the selected layer."/>
+                        <attr name="tooltipTitle" stringvalue="Rename Layer"/>
+                        <attr name="tooltipBody" stringvalue="Renames the layer using an editor."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/layermanager/images/page_edit32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/layermanager/images/page_edit.png"/>    
+                        <attr name="position" intvalue="100"/>
+                    </file>
+                    <file name="com-terramenta-layermanager-toggle-layer.instance">
+                        <attr name="instanceClass" stringvalue="com.terramenta.actions.ToggleNodeAction"/>
+                        <attr name="displayName" stringvalue="Toggle"/>
+                        <attr name="description" stringvalue="Toggle the selected layer."/>
+                        <attr name="tooltipTitle" stringvalue="Toggle Layer"/>
+                        <attr name="tooltipBody" stringvalue="Toggles the layer on/off."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/images/accept32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/images/accept.png"/>    
+                        <attr name="position" intvalue="200"/>
+                    </file>
                 </folder> 
                 <folder name="Adjust">
-                    <attr name="position" intvalue="200"/>
+                    <attr name="position" intvalue="300"/>
                     <attr name="menuText" stringvalue="Adjust"/>
                 </folder> 
                 <folder name="Arrange">
-                    <attr name="position" intvalue="300"/>
+                    <attr name="position" intvalue="100"/>
                     <attr name="menuText" stringvalue="Arrange"/>
+                    <file name="com-terramenta-layermanager-move-up.instance">
+                        <attr name="instanceClass" stringvalue="org.openide.actions.MoveUpAction"/>
+                        <attr name="displayName" stringvalue="Move Up"/>
+                        <attr name="description" stringvalue="Move the layer up in the layer ordering."/>
+                        <attr name="tooltipTitle" stringvalue="Move Layer Up"/>
+                        <attr name="tooltipBody" stringvalue="Moves the layer up in the Layer Manager sort order."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/layermanager/images/arrow_up32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/layermanager/images/arrow_up.png"/>    
+                        <attr name="position" intvalue="100"/>
+                    </file>
+                    <file name="com-terramenta-layermanager-move-down.instance">
+                        <attr name="instanceClass" stringvalue="org.openide.actions.MoveDownAction"/>
+                        <attr name="displayName" stringvalue="Move Down"/>
+                        <attr name="description" stringvalue="Move the layer down in the layer ordering."/>
+                        <attr name="tooltipTitle" stringvalue="Move Layer Down"/>
+                        <attr name="tooltipBody" stringvalue="Moves the layer down in the Layer Manager sort order."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/layermanager/images/arrow_down32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/layermanager/images/arrow_down.png"/>    
+                        <attr name="position" intvalue="200"/>
+                    </file>
+                </folder> 
+                <folder name="View">
+                    <attr name="position" intvalue="400"/>
+                    <attr name="menuText" stringvalue="View"/>
+                    <file name="com-terramenta-layermanager-layer-properties.instance">
+                        <attr name="instanceClass" stringvalue="org.openide.actions.PropertiesAction"/>
+                        <attr name="displayName" stringvalue="Properties"/>
+                        <attr name="description" stringvalue="View the layer properties."/>
+                        <attr name="tooltipTitle" stringvalue="Layer Properies"/>
+                        <attr name="tooltipBody" stringvalue="View and edit the layer's properties."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/images/properties32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/images/properties.png"/>    
+                        <attr name="position" intvalue="100"/>
+                    </file>
                 </folder> 
             </folder>
             
