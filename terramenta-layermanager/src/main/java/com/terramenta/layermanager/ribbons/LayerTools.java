@@ -14,6 +14,8 @@ package com.terramenta.layermanager.ribbons;
 
 import com.terramenta.layermanager.nodes.LayerNode;
 import com.terramenta.ribbon.RibbonManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -35,6 +37,7 @@ public final class LayerTools implements LookupListener {
 
     private RibbonContextualTaskGroup taskGroup;
     private final Lookup.Result<LayerNode> lookupResult;
+    private static final Logger logger = Logger.getLogger(LayerTools.class.getName());
 
     private LayerTools() {
         // Initilize the lookup listener
@@ -53,14 +56,19 @@ public final class LayerTools implements LookupListener {
         if (this.taskGroup == null) {
             JRibbon ribbon = Lookup.getDefault().lookup(RibbonManager.class).getRibbon();
             if (ribbon == null) {
-                throw new IllegalStateException("Ribbon cannot be null.");
+                logger.warning("getLayerToolsTaskGroup() failed. Ribbon is null.");
+                return null;
             }
             // Find the Layer Tools task group
             for (int i = 0; i < ribbon.getContextualTaskGroupCount(); i++) {
                 RibbonContextualTaskGroup group = ribbon.getContextualTaskGroup(i);
                 if (group.getTitle().equalsIgnoreCase(Bundle.CTL_LayerTools())) {
                     this.taskGroup = group;
+                    break;
                 }
+            }
+            if (this.taskGroup == null) {
+                logger.log(Level.SEVERE, "getLayerToolsTaskGroup() failed. Cannot find task pane titled {0}.", Bundle.CTL_LayerTools());
             }
         }
         return this.taskGroup;
