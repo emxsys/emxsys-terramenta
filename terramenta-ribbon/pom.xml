@@ -18,6 +18,11 @@
             <version>5.0</version>
         </dependency>
         <dependency>
+            <artifactId>trident</artifactId>
+            <groupId>org.pushingpixels</groupId>
+            <version>1.3</version>
+        </dependency>         
+        <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util</artifactId>
             <version>${netbeans.version}</version>
@@ -100,6 +105,7 @@
                         <!--<publicPackage>org.pushingpixels.flamingo.api.common</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common.icon</publicPackage>
                         <publicPackage>org.pushingpixels.flamingo.api.common.model</publicPackage>-->
+                        <publicPackage>org.pushingpixels.trident.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
