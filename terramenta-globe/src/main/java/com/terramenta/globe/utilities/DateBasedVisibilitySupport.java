@@ -31,7 +31,7 @@ public class DateBasedVisibilitySupport {
             if (displayDate != null && displayDateInterval != null) {
                 //does this displayDate exist within the displayDateInterval?
                 long displayDateMillis = displayDate.getTime();
-                return (displayDateMillis >= displayDateInterval.getStartMillis() && displayDateMillis <= displayDateInterval.getEndMillis()) ? true : false;
+                return (displayDateMillis >= displayDateInterval.getStartMillis() && displayDateMillis <= displayDateInterval.getEndMillis());
             }
         }
 
