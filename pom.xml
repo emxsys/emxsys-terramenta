@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <!-- DEPENDENCY VERSIONS -->
-        <netbeans.version>RELEASE74</netbeans.version>
+        <netbeans.version>RELEASE80</netbeans.version>
         <worldwind.version>1.5.1</worldwind.version>
         <jogl.version>1.1.2</jogl.version>
         <gluegen.version>1.0</gluegen.version>
@@ -27,7 +27,8 @@
         <compiler.plugin.version>3.1</compiler.plugin.version>
         <resources.plugin.version>2.6</resources.plugin.version>
         <jar.plugin.version>2.4</jar.plugin.version>
-        <nbm.plugin.version>3.10.1</nbm.plugin.version>
+        <nbm.plugin.version>3.13</nbm.plugin.version>
+        <deploy.plugin.version>2.8.1</deploy.plugin.version>
     </properties>
         
     <repositories>
@@ -103,6 +104,9 @@
                         <source>${project.build.sourceVersion}</source>
                         <target>${project.build.sourceVersion}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArguments>
+                            <bootclasspath>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</bootclasspath>
+                        </compilerArguments>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -139,13 +143,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.1</version>
+                <version>${deploy.plugin.version}</version>
             </plugin>
         </plugins>
     </build>
 
     <modules>
-        <module>terramenta-javafx</module>
+        <!--<module>terramenta-javafx</module>-->
         <module>terramenta-ribbon</module>
         <module>terramenta-core</module>
         <module>terramenta-globe</module>
