@@ -81,12 +81,7 @@
             <artifactId>terramenta-layermanager</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>terramenta-javafx</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        -->
+
     </dependencies>
 
     <build>
@@ -100,27 +95,6 @@
                     <licenseFile>license.txt</licenseFile>
                     <etcConfFile>terramenta.conf</etcConfFile>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/${brandingToken}/${brandingToken}/modules/lib</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>release/modules/lib</directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>

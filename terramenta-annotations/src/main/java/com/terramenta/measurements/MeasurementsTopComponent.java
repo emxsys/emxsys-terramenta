@@ -575,7 +575,7 @@ private void shapeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_shapeComboActionPerformed
 
 private void lineColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineColorButtonActionPerformed
-    Color c = JColorChooser.showDialog(wwm.getWorldWindow(), "Choose a color...", ((JButton) evt.getSource()).getBackground());
+    Color c = JColorChooser.showDialog(((Component)wwm.getWorldWindow()), "Choose a color...", ((JButton) evt.getSource()).getBackground());
     if (c != null) {
         ((JButton) evt.getSource()).setBackground(c);
         measureTool.setLineColor(c);
@@ -585,7 +585,7 @@ private void lineColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
 }//GEN-LAST:event_lineColorButtonActionPerformed
 
 private void pointsColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointsColorButtonActionPerformed
-    Color c = JColorChooser.showDialog(wwm.getWorldWindow(), "Choose a color...", ((JButton) evt.getSource()).getBackground());
+    Color c = JColorChooser.showDialog(((Component)wwm.getWorldWindow()), "Choose a color...", ((JButton) evt.getSource()).getBackground());
     if (c != null) {
         ((JButton) evt.getSource()).setBackground(c);
         measureTool.getControlPointsAttributes().setBackgroundColor(c);
@@ -593,7 +593,7 @@ private void pointsColorButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_pointsColorButtonActionPerformed
 
 private void tooltipsColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tooltipsColorButtonActionPerformed
-    Color c = JColorChooser.showDialog(wwm.getWorldWindow(), "Choose a color...", ((JButton) evt.getSource()).getBackground());
+    Color c = JColorChooser.showDialog(((Component)wwm.getWorldWindow()), "Choose a color...", ((JButton) evt.getSource()).getBackground());
     if (c != null) {
         ((JButton) evt.getSource()).setBackground(c);
         measureTool.getAnnotationAttributes().setTextColor(c);

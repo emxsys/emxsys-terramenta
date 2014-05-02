@@ -20,6 +20,7 @@ import gov.nasa.worldwind.Model;
 import gov.nasa.worldwind.StereoOptionSceneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.awt.WorldWindowGLJPanel;
 import gov.nasa.worldwind.geom.Angle;
@@ -60,7 +61,7 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     private final Lookup internalLookup = new AbstractLookup(content);
     private ExpandableLookup masterLookup;
     private final SessionState sessionState = new SessionState("." + NbBundle.getBranding());
-    private final WorldWindowGLJPanel wwd;
+    private final WorldWindow wwd;
     private final Observer dateProviderObserver = new Observer() {
         @Override
         public void update(Observable o, Object arg) {
@@ -115,7 +116,7 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     }
 
     public WorldWindManager() {
-        wwd = new WorldWindowGLJPanel();
+        wwd = (WorldWindow) new WorldWindowGLJPanel();
         wwd.setModel((Model) WorldWind.createConfigurationComponent(AVKey.MODEL_CLASS_NAME));
 
         //Scene Controller
@@ -132,7 +133,7 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
      *
      * @return
      */
-    public WorldWindowGLJPanel getWorldWindow() {
+    public WorldWindow getWorldWindow() {
         return wwd;
     }
 

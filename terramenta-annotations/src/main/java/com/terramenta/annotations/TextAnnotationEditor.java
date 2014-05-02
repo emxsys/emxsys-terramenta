@@ -74,21 +74,21 @@ public class TextAnnotationEditor {
         this.armed = armed;
         if (armed) {
             // Force keyboard focus to globe
-            wwm.getWorldWindow().requestFocusInWindow();
+            ((Component)wwm.getWorldWindow()).requestFocusInWindow();
 
             //add listeners
             wwm.getWorldWindow().getInputHandler().addKeyListener(ka);
             wwm.getWorldWindow().getInputHandler().addMouseListener(ma);
 
             //change cursor
-            wwm.getWorldWindow().setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+            ((Component)wwm.getWorldWindow()).setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         } else {
             //remove listeners
             wwm.getWorldWindow().getInputHandler().removeKeyListener(ka);
             wwm.getWorldWindow().getInputHandler().removeMouseListener(ma);
 
             //reset cursor
-            wwm.getWorldWindow().setCursor(Cursor.getDefaultCursor());
+            ((Component)wwm.getWorldWindow()).setCursor(Cursor.getDefaultCursor());
         }
     }
 

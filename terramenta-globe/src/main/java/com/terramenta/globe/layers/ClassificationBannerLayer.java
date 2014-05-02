@@ -12,7 +12,8 @@
  */
 package com.terramenta.globe.layers;
 
-import com.sun.opengl.util.j2d.TextRenderer;
+import javax.media.opengl.*;
+import com.jogamp.opengl.util.awt.TextRenderer;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.utilities.Classification;
 import gov.nasa.worldwind.geom.Vec4;
@@ -29,7 +30,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
-import javax.media.opengl.GL;
 import org.openide.util.NbPreferences;
 
 public class ClassificationBannerLayer extends AbstractLayer {
@@ -115,17 +115,17 @@ public class ClassificationBannerLayer extends AbstractLayer {
                 return;
             }
 
-            GL gl = dc.getGL();
+            GL2 gl = dc.getGL().getGL2();
             boolean attribsPushed = false;
             boolean modelviewPushed = false;
             boolean projectionPushed = false;
             try {
-                gl.glPushAttrib(GL.GL_DEPTH_BUFFER_BIT
-                        | GL.GL_COLOR_BUFFER_BIT
-                        | GL.GL_ENABLE_BIT
-                        | GL.GL_TRANSFORM_BIT
-                        | GL.GL_VIEWPORT_BIT
-                        | GL.GL_CURRENT_BIT);
+                gl.glPushAttrib(GL2.GL_DEPTH_BUFFER_BIT
+                        | GL2.GL_COLOR_BUFFER_BIT
+                        | GL2.GL_ENABLE_BIT
+                        | GL2.GL_TRANSFORM_BIT
+                        | GL2.GL_VIEWPORT_BIT
+                        | GL2.GL_CURRENT_BIT);
                 attribsPushed = true;
 
                 gl.glEnable(GL.GL_BLEND);
@@ -135,21 +135,19 @@ public class ClassificationBannerLayer extends AbstractLayer {
                 // Load a parallel projection with xy dimensions (viewportWidth, viewportHeight)
                 // into the GL projection matrix.
                 java.awt.Rectangle viewport = dc.getView().getViewport();
-                gl.glMatrixMode(javax.media.opengl.GL.GL_PROJECTION);
+                gl.glMatrixMode(GL2.GL_PROJECTION);
                 gl.glPushMatrix();
                 projectionPushed = true;
                 gl.glLoadIdentity();
 
                 String text = classification.getText() + protection;
-                TextRenderer textRenderer = OGLTextRenderer.getOrCreateTextRenderer(dc.getTextRendererCache(), this.textFont);
-                Rectangle2D nameBound = textRenderer.getBounds(text);
-                Dimension size = nameBound.getBounds().getSize();
+                Dimension size = getTextRenderSize(dc, text);
                 int offset = 1;
                 if (size.width < viewport.getWidth()) {
                     double maxwh = size.width > size.height ? size.width : size.height;
                     gl.glOrtho(0d, viewport.width, 0d, viewport.height, -0.6 * maxwh, 0.6 * maxwh);
 
-                    gl.glMatrixMode(GL.GL_MODELVIEW);
+                    gl.glMatrixMode(GL2.GL_MODELVIEW);
                     gl.glPushMatrix();
                     modelviewPushed = true;
                     gl.glLoadIdentity();
@@ -162,17 +160,23 @@ public class ClassificationBannerLayer extends AbstractLayer {
                 }
             } finally {
                 if (projectionPushed) {
-                    gl.glMatrixMode(GL.GL_PROJECTION);
+                    gl.glMatrixMode(GL2.GL_PROJECTION);
                     gl.glPopMatrix();
                 }
                 if (modelviewPushed) {
-                    gl.glMatrixMode(GL.GL_MODELVIEW);
+                    gl.glMatrixMode(GL2.GL_MODELVIEW);
                     gl.glPopMatrix();
                 }
                 if (attribsPushed) {
                     gl.glPopAttrib();
                 }
             }
+        }
+
+        private Dimension getTextRenderSize(DrawContext dc, String text) {
+            TextRenderer textRenderer = OGLTextRenderer.getOrCreateTextRenderer(dc.getTextRendererCache(), this.textFont);
+            Rectangle2D nameBound = textRenderer.getBounds(text);
+            return nameBound.getBounds().getSize();
         }
 
         // Draw the label
@@ -199,13 +203,14 @@ public class ClassificationBannerLayer extends AbstractLayer {
         }
 
         private void drawFilledRectangle(DrawContext dc, Vec4 origin, Dimension dimension, Color color) {
-            GL gl = dc.getGL();
-            gl.glColor4ub((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue(), (byte) color.getAlpha());
-            gl.glBegin(GL.GL_POLYGON);
+            GL2 gl = dc.getGL().getGL2(); // GL initialization checks for GL2 compatibility.
+            gl.glColor4ub((byte) color.getRed(), (byte) color.getGreen(),
+                    (byte) color.getBlue(), (byte) color.getAlpha());
+            gl.glBegin(GL2.GL_POLYGON);
             gl.glVertex3d(origin.x, origin.y, 0);
             gl.glVertex3d(origin.x + dimension.getWidth(), origin.y, 0);
-            gl.glVertex3d(origin.x + dimension.getWidth(), origin.y - dimension.getHeight(), 0);
-            gl.glVertex3d(origin.x, origin.y - dimension.getHeight(), 0);
+            gl.glVertex3d(origin.x + dimension.getWidth(), origin.y + dimension.getHeight(), 0);
+            gl.glVertex3d(origin.x, origin.y + dimension.getHeight(), 0);
             gl.glVertex3d(origin.x, origin.y, 0);
             gl.glEnd();
         }

@@ -158,7 +158,7 @@ public class AnnotationBuilder extends AVListImpl {
         firePropertyChange("armed", this.armed, this.armed = armed);
         if (armed) {
             // Force keyboard focus to globe
-            wwm.getWorldWindow().requestFocusInWindow();
+            ((Component)wwm.getWorldWindow()).requestFocusInWindow();
 
             //add listeners
             wwm.getWorldWindow().getInputHandler().addKeyListener(ka);
@@ -167,7 +167,7 @@ public class AnnotationBuilder extends AVListImpl {
             wwm.getWorldWindow().addPositionListener(pl);
 
             //set cursor
-            wwm.getWorldWindow().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+            ((Component)wwm.getWorldWindow()).setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         } else {
             //remove listeners
             wwm.getWorldWindow().getInputHandler().removeKeyListener(ka);
@@ -176,7 +176,7 @@ public class AnnotationBuilder extends AVListImpl {
             wwm.getWorldWindow().removePositionListener(pl);
 
             //reset cursor
-            wwm.getWorldWindow().setCursor(Cursor.getDefaultCursor());
+            ((Component)wwm.getWorldWindow()).setCursor(Cursor.getDefaultCursor());
         }
     }
 

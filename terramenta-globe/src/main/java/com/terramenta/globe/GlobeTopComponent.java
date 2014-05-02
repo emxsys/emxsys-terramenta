@@ -15,13 +15,14 @@ package com.terramenta.globe;
 import com.terramenta.globe.dnd.DragController;
 import com.terramenta.globe.dnd.RenderableDropTargetListener;
 import com.terramenta.globe.options.GlobeOptions;
-import com.terramenta.time.DateProvider;
-import com.terramenta.time.JulianConversions;
 import com.terramenta.globe.utilities.EciController;
 import com.terramenta.globe.utilities.QuickTipController;
 import com.terramenta.globe.utilities.SelectController;
 import com.terramenta.ribbon.RibbonActionReference;
+import com.terramenta.time.DateProvider;
+import com.terramenta.time.JulianConversions;
 import gov.nasa.worldwind.StereoSceneController;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
@@ -38,6 +39,7 @@ import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunController;
 import gov.nasa.worldwindx.sunlight.SunLayer;
+import java.awt.Component;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.util.Date;
@@ -396,7 +398,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
 
         globePanel.setBackground(new java.awt.Color(0, 0, 0));
         globePanel.setLayout(new java.awt.BorderLayout());
-        globePanel.add(wwm.getWorldWindow(), java.awt.BorderLayout.CENTER);
+        globePanel.add((Component)wwm.getWorldWindow(), java.awt.BorderLayout.CENTER);
         add(globePanel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -408,7 +410,8 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     @Override
     protected void componentActivated() {
         super.componentActivated();
-        wwm.getWorldWindow().requestFocusInWindow();
+        Component comp = (Component)wwm.getWorldWindow();
+        comp.requestFocusInWindow();
     }
 
     @Override

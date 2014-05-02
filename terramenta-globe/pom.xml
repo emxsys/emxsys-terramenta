@@ -13,29 +13,37 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.terramenta</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.terramenta</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-time</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.terramenta</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>terramenta-ribbon</artifactId>
             <version>${project.version}</version>
         </dependency>
         
         <!-- WORLD WIND-->
-        <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>jogl</artifactId>
+<!--        <dependency>
+            <groupId>org.jogamp.jogl</groupId>
+            <artifactId>jogl-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun</groupId>
+            <groupId>org.jogamp.gluegen</groupId>
             <artifactId>gluegen-rt</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.jogamp.jogl</groupId>
+            <artifactId>jogl-all-main</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jogamp.gluegen</groupId>
+            <artifactId>gluegen-rt-main</artifactId>
         </dependency>
         <dependency>
             <groupId>gov.nasa</groupId>
@@ -117,6 +125,11 @@
             <groupId>xpp3</groupId>
             <version>1.1.4c</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.swt.gtk.linux</groupId>
+            <artifactId>x86</artifactId>
+            <version>3.3.0-v3346</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -129,7 +142,9 @@
                         <publicPackage>com.terramenta.globe.*</publicPackage>
                         <publicPackage>gov.nasa.worldwind.*</publicPackage>
                         <publicPackage>gov.nasa.worldwindx.*</publicPackage>
-                        <publicPackage>javax.media.opengl.*</publicPackage>
+                        <publicPackage>com.jogamp.*</publicPackage>
+                        <publicPackage>javax.media.*</publicPackage>
+                        <publicPackage>jogamp.*</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -141,6 +156,29 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
             </plugin>
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${brandingToken}/${brandingToken}/modules/lib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>release/modules/lib</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
+    
 </project>
