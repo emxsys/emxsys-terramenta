@@ -14,19 +14,29 @@ package com.terramenta.globe;
 
 import org.openide.modules.ModuleInstall;
 import org.openide.util.Lookup;
+import org.openide.windows.WindowManager;
 
 public class Installer extends ModuleInstall {
 
-    private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    private static WorldWindManager wwm;
 
     @Override
     public void restored() {
-        wwm.restoreSessionState();
+        WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
+
+            @Override
+            public void run() {
+                wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+                wwm.restoreSessionState();
+            }
+        });
     }
 
     @Override
     public boolean closing() {
-        wwm.saveSessionState();
+        if (wwm != null) {
+            wwm.saveSessionState();
+        }
         return true;
     }
 }
