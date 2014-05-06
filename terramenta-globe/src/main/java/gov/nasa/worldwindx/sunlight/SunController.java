@@ -42,10 +42,10 @@ public class SunController implements PropertyChangeListener {
     private final RectangularNormalTessellator suntessellator;
     private final SunLayer sunLayer;
     private final Tessellator originalTessellator;
-
     //private final SkyGradientLayer originalAtmosphere;
+
     static {
-        logger.setLevel(Level.ALL);
+        logger.setLevel(Level.WARNING);
     }
 
     public SunController(SunLayer sunLayer) {
