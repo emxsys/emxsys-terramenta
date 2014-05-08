@@ -260,6 +260,7 @@
             <file name="CloseWindowAction.shadow_hidden"/>
             <file name="ConfigureWindow_hidden"/>
             <file name="DocumentsAction.shadow_hidden"/>
+            <file name="GroupsMenuAction.shadow_hidden"/>
             <file name="Output_hidden"/>
             <file name="ProgressListAction.shadow_hidden"/>
             <file name="Separator3.instance_hidden"/>
