@@ -19,6 +19,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
@@ -33,6 +35,7 @@ import org.openide.util.lookup.Lookups;
  */
 public class ActionItems {
 
+    private static final Logger logger = Logger.getLogger(ActionItems.class.getName());
     private static FileObject fileObjectRoot = FileUtil.getConfigRoot();
     private static Map<String, FileObject> fileObjectMap = new TreeMap<>();
 
@@ -156,20 +159,45 @@ public class ActionItems {
         ActionItem actionItem = actionMap.get(name);
         if (actionItem == null) {
             if (Action.class.isAssignableFrom(item.getType())) {
+                // Create an Action from an instance defined in the file object
+                logger.log(Level.CONFIG, "Creating action: {0}", item.toString());
                 Action instance = (Action) item.getInstance();
                 if (instance != null) {
                     actionItem = ActionItem.actions((Action) instance);
                 }
             } else if (JSeparator.class.isAssignableFrom(item.getType())) {
+                // Create a Separator
                 actionItem = ActionItem.separator();
                 actionItem.setText(foMap.get(name).getName());
             } else if (JComponent.class.isAssignableFrom(item.getType())) {
-                JComponent instance = (JComponent) item.getInstance();
-                if (instance != null) {
-                    actionItem = ActionItem.component((JComponent) instance);
+                // Create a Ribbon component from an instance defined in the file object
+                logger.log(Level.CONFIG, "Creating instance: {0}", item.toString());
+                logger.log(Level.FINE, "Current Classloader: {0}",Thread.currentThread().getContextClassLoader().getClass().getName());
+                
+                // Some ribbon resources use Trident which looks for resources not 
+                // found by the org.netbeans.MainImpl$BootClassLoader. So we
+                // switch to the org.netbeans.ModuleManager$SystemClassLoader.
+                ClassLoader systemClassLoader = Lookup.getDefault().lookup(ClassLoader.class);
+                ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
+                Thread.currentThread().setContextClassLoader(systemClassLoader);
+                
+                try {
+                    logger.log(Level.FINE, "Creating component: {0} on {1} with {2}.",
+                            new Object[]{item.toString(), 
+                                Thread.currentThread(), 
+                                Thread.currentThread().getContextClassLoader().getClass().getName()});
+                    
+                    JComponent instance = (JComponent) item.getInstance();
+                    if (instance != null) {
+                        actionItem = ActionItem.component((JComponent) instance);
+                    }
+                    
+                } finally {
+                    // Restore the original classloader
+                    Thread.currentThread().setContextClassLoader(originalClassLoader);
                 }
             } else {
-                System.err.println("Unknown item: " + item.getType());
+                logger.log(Level.WARNING, "Unknown item: {0}", item.getType());
             }
             if (actionItem != null) {
                 addProperties(actionItem, foMap.get(name));
