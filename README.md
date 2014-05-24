@@ -1,8 +1,8 @@
 # README #
 
-Terramenta is a desktop Java application built on top of the Netbeans platform, using NASA WorldWind for its main GIS features.  You can get started right away by downloading one of the Terramenta installers found in the [Downloads](https://bitbucket.org/teamninjaneer/terramenta/downloads) area.
+Terramenta is a desktop Java application built on top of the Netbeans platform, using NASA WorldWind for its main GIS features.  You can get started right away by downloading one of the Terramenta installers found in the [Downloads](https://bitbucket.org/teamninjaneer/terramenta/downloads) area.  
 
-Guides and tutorials can be found [here](https://bitbucket.org/teamninjaneer/terramenta/wiki/tutorials)
+Get Started at our [wiki homepage](/teamninjaneer/terramenta/wiki/Home).
 
 ### What is this repository for? ###
 
