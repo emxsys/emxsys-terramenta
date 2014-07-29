@@ -1,5 +1,4 @@
 Manifest-Version: 1.0
-OpenIDE-Module-Install: com/terramenta/globe/Installer.class
 OpenIDE-Module-Layer: com/terramenta/globe/layer.xml
 OpenIDE-Module-Localizing-Bundle: com/terramenta/globe/Bundle.properties
 OpenIDE-Module-Display-Category: Geospatial

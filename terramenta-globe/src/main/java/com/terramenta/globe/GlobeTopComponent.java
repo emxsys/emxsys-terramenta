@@ -22,7 +22,6 @@ import com.terramenta.ribbon.RibbonActionReference;
 import com.terramenta.time.DateProvider;
 import com.terramenta.time.JulianConversions;
 import gov.nasa.worldwind.StereoSceneController;
-import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
@@ -45,11 +44,11 @@ import java.awt.dnd.DropTarget;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
 import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
 import org.openide.util.Lookup;
@@ -59,35 +58,45 @@ import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@TopComponent.Description(preferredID = "GlobeTopComponent",
+@TopComponent.Description(
+        preferredID = "GlobeTopComponent",
         iconBase = "com/terramenta/globe/images/show-globe.png",
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = true)
-@ActionID(category = "Window", id = "com.terramenta.globe.GlobeTopComponent")
-@RibbonActionReference(path = "Menu/Window/Show",
-        position = 1,
-        priority = "top",
-        description = "#CTL_GlobeAction_Hint",
-        tooltipTitle = "#CTL_GlobeAction_TooltipTitle",
-        tooltipBody = "#CTL_GlobeAction_TooltipBody",
-        tooltipIcon = "com/terramenta/globe/images/show-globe32.png",
-        tooltipFooter = "#CTL_GlobeAction_TooltipFooter",
-        tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_GlobeTopComponent=Globe",
-            "CTL_GlobeTopComponent_Hint=This is the Globe window.",
-            "CTL_GlobeAction=Globe",
-            "CTL_GlobeAction_Hint=Show the Globe window.",
-            "CTL_GlobeAction_TooltipTitle=Show Globe",
-            "CTL_GlobeAction_TooltipBody=Activates the Globe window and displays the 3D virtual earth.",
-            "CTL_GlobeAction_TooltipFooter=Press F1 for more help."
-        })
-@TopComponent.OpenActionRegistration(displayName = "#CTL_GlobeAction", preferredID = "GlobeTopComponent")
+        persistenceType = TopComponent.PERSISTENCE_NEVER)
+@TopComponent.Registration(
+        mode = "editor",
+        openAtStartup = true)
+@ActionID(
+        category = "Window",
+        id = "com.terramenta.globe.GlobeTopComponent")
+@TopComponent.OpenActionRegistration(
+        displayName = "#CTL_GlobeAction",
+        preferredID = "GlobeTopComponent")
+//@ActionReference(path = "Menu/Window/Show")
+//@RibbonActionReference(
+//        path = "Menu/Window/Show",
+//        position = 1,
+//        priority = "top",
+//        description = "#CTL_GlobeAction_Hint",
+//        tooltipTitle = "#CTL_GlobeAction_TooltipTitle",
+//        tooltipBody = "#CTL_GlobeAction_TooltipBody",
+//        tooltipIcon = "com/terramenta/globe/images/show-globe32.png",
+//        tooltipFooter = "#CTL_GlobeAction_TooltipFooter",
+//        tooltipFooterIcon = "com/terramenta/images/help.png")
+@Messages({
+    "CTL_GlobeTopComponent=Globe",
+    "CTL_GlobeTopComponent_Hint=This is the Globe window.",
+    "CTL_GlobeAction=Globe",
+    "CTL_GlobeAction_Hint=Show the Globe window.",
+    "CTL_GlobeAction_TooltipTitle=Show Globe",
+    "CTL_GlobeAction_TooltipBody=Activates the Globe window and displays the 3D virtual earth.",
+    "CTL_GlobeAction_TooltipFooter=Press F1 for more help."
+})
 public final class GlobeTopComponent extends TopComponent implements PreferenceChangeListener, ExplorerManager.Provider {
 
-    private static final Logger logger = Logger.getLogger(GlobeTopComponent.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(GlobeTopComponent.class);
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
@@ -102,10 +111,14 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     private ExplorerManager explorerManager;
     private Lookup explorerLookup;
 
+    private static Integer loadCount = 0;
+
     /**
      *
      */
     public GlobeTopComponent() {
+        logger.info("Load Count: {}", loadCount++);
+
         setName(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent"));
         setToolTipText(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent_Hint"));
 
@@ -358,29 +371,29 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
         if (evt.getKey().equals("options.globe.isFlat")) {
-            logger.fine("isFlat changed");
+            logger.debug("isFlat changed");
             setFlat(Boolean.parseBoolean(evt.getNewValue()));
         } else if (evt.getKey().equals("options.globe.isECI")) {
-            logger.fine("isECI changed");
+            logger.debug("isECI changed");
             setECI(Boolean.parseBoolean(evt.getNewValue()));
         } else if (evt.getKey().equals("options.globe.flatProjection")) {
-            logger.fine("flatProjection changed");
+            logger.debug("flatProjection changed");
             setFlatProjection(evt.getNewValue());
         } else if (evt.getKey().equals("options.globe.displayMode")) {
-            logger.fine("displayMode changed");
+            logger.debug("displayMode changed");
             StereoSceneController asc = (StereoSceneController) wwm.getWorldWindow().getSceneController();
             asc.setStereoMode(evt.getNewValue());
             wwm.getWorldWindow().redraw();
         } else if (evt.getKey().equals("options.globe.focusAngle")) {
-            logger.fine("focusAngle changed");
+            logger.debug("focusAngle changed");
             StereoSceneController asc = (StereoSceneController) wwm.getWorldWindow().getSceneController();
             asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(evt.getNewValue()) / 10));
             wwm.getWorldWindow().redraw();
         } else if (evt.getKey().equals("options.globe.statusBar")) {
-            logger.fine("statusBar changed");
+            logger.debug("statusBar changed");
             setStatusLayerType(evt.getNewValue());
         } else if (evt.getKey().equals("options.globe.quickTips")) {
-            logger.fine("quickTips changed");
+            logger.debug("quickTips changed");
             quickTipController.setArmed(Boolean.parseBoolean(evt.getNewValue()));
         }
     }
@@ -410,7 +423,7 @@ public final class GlobeTopComponent extends TopComponent implements PreferenceC
     @Override
     protected void componentActivated() {
         super.componentActivated();
-        Component comp = (Component)wwm.getWorldWindow();
+        Component comp = (Component) wwm.getWorldWindow();
         comp.requestFocusInWindow();
     }
 
