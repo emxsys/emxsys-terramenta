@@ -27,8 +27,6 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @TopComponent.Description(
         preferredID = "GlobeTopComponent",
@@ -65,19 +63,16 @@ import org.slf4j.LoggerFactory;
 })
 public class GlobeTopComponent extends TopComponent implements ExplorerManager.Provider {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobeTopComponent.class);
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+    //fetching gcm just to ensure it has been constructed
     private static final GlobeContentManager gcm = Lookup.getDefault().lookup(GlobeContentManager.class);
     private ExplorerManager explorerManager;
     private Lookup explorerLookup;
-    private static Integer loadCount = 0;
 
     /**
      *
      */
     public GlobeTopComponent() {
-        logger.info("Load Count: {}", loadCount++);
-
         setName(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent"));
         setToolTipText(NbBundle.getMessage(GlobeTopComponent.class, "CTL_GlobeTopComponent_Hint"));
 
