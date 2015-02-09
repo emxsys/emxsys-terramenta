@@ -81,7 +81,6 @@
             <artifactId>terramenta-layermanager</artifactId>
             <version>${project.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -91,16 +90,11 @@
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <licenseName>CDDL, Version 1.0</licenseName>
-                    <licenseFile>license.txt</licenseFile>
+                    <licenseFile>LICENSE.txt</licenseFile>
                     <etcConfFile>terramenta.conf</etcConfFile>
                 </configuration>
             </plugin>
         </plugins>
         <finalName>Terramenta-${project.version}</finalName>
     </build>
-    <properties>
-        <netbeans.run.params.ide/>
-        <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    </properties>
 </project>
