@@ -24,11 +24,11 @@ import org.openide.util.Exceptions;
  *
  * @author heidtmare
  */
-public class KMLFeatureChildren extends Index.ArrayChildren {
+public class KMLFeatureNodeFactory extends Index.ArrayChildren {
 
     private final KMLAbstractFeature container;
 
-    public KMLFeatureChildren(KMLAbstractFeature container) {
+    public KMLFeatureNodeFactory(KMLAbstractFeature container) {
         super();
         this.container = container;
     }
@@ -45,7 +45,7 @@ public class KMLFeatureChildren extends Index.ArrayChildren {
                 if (feature != null) {
                     Children kids = Children.LEAF;
                     if (feature instanceof KMLAbstractContainer) {
-                        kids = new KMLFeatureChildren(feature);
+                        kids = new KMLFeatureNodeFactory(feature);
                     }
                     try {
                         childrenNodes.add(new KMLFeatureNode(feature, kids));

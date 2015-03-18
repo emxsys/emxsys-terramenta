@@ -28,11 +28,11 @@ import org.openide.nodes.Node;
  *
  * @author Chris.Heidt
  */
-public class RenderableChildFactory extends ChildFactory.Detachable<Renderable> implements PropertyChangeListener {
+public class RenderableNodeFactory extends ChildFactory.Detachable<Renderable> implements PropertyChangeListener {
 
     private final RenderableLayer layer;
 
-    public RenderableChildFactory(RenderableLayer layer) {
+    public RenderableNodeFactory(RenderableLayer layer) {
         this.layer = layer;
     }
 

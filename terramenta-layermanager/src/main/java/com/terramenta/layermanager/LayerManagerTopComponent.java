@@ -12,7 +12,7 @@
  */
 package com.terramenta.layermanager;
 
-import com.terramenta.layermanager.nodes.RootChildren;
+import com.terramenta.layermanager.nodes.LayerNodeFactory;
 import com.terramenta.layermanager.nodes.RootNode;
 import com.terramenta.layermanager.ribbons.LayerTools;
 import com.terramenta.ribbon.RibbonActionReference;
@@ -62,7 +62,7 @@ public final class LayerManagerTopComponent extends TopComponent implements Expl
         setToolTipText(NbBundle.getMessage(LayerManagerTopComponent.class, "CTL_LayerManagerTopComponent_Hint"));
 
         associateLookup(ExplorerUtils.createLookup(this.getExplorerManager(), this.getActionMap()));
-        em.setRootContext(new RootNode(new RootChildren()));
+        em.setRootContext(new RootNode(new LayerNodeFactory()));
 
         WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
 

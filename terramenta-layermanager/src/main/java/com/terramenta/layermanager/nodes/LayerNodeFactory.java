@@ -31,16 +31,16 @@ import org.openide.util.Lookup;
  *
  * @author heidtmare
  */
-public class RootChildren extends Children.Keys<Layer> implements Index {
+public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
 
-    private static final Logger logger = Logger.getLogger(RootChildren.class.getName());
+    private static final Logger logger = Logger.getLogger(LayerNodeFactory.class.getName());
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private Index indexSupport;
 
     /**
      * 
      */
-    public RootChildren() {
+    public LayerNodeFactory() {
         wwm.getLayers().addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override

@@ -24,6 +24,7 @@ import javax.swing.Action;
 import org.openide.actions.PropertiesAction;
 import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
+import org.openide.nodes.Children;
 import org.openide.util.actions.SystemAction;
 
 /**
@@ -33,14 +34,18 @@ import org.openide.util.actions.SystemAction;
  */
 public class RenderableNode extends BeanNode implements BooleanState.Provider, Destroyable {
 
-    private final RenderableLayer layer;
+    private final RenderableLayer parentLayer;
     private final Renderable renderable;
 
-    public RenderableNode(RenderableLayer layer, Renderable renderable) throws IntrospectionException {
+    public RenderableNode(RenderableLayer parentLayer, Renderable renderable) throws IntrospectionException {
         super(renderable);
-        this.layer = layer;
+        this.parentLayer = parentLayer;
         this.renderable = renderable;
-
+        
+        //is the renderable ALSO a layer?
+        if (renderable instanceof RenderableLayer) {
+            this.setChildren(Children.create(new RenderableNodeFactory((RenderableLayer) renderable), false));
+        }
     }
 
     /**
@@ -71,8 +76,8 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
 
     @Override
     public void doDestroy() {
-        layer.removeRenderable(renderable);
-        layer.firePropertyChange("Renderables", null, layer.getRenderables());
+        parentLayer.removeRenderable(renderable);
+        parentLayer.firePropertyChange("Renderables", null, parentLayer.getRenderables());
     }
 
     @Override

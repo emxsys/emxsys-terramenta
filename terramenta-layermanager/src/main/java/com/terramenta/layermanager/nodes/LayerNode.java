@@ -53,10 +53,10 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
         this.setIconBaseWithExtension(layer.isEnabled() ? ENABLED_ICON_BASE : DISABLED_ICON_BASE);
         this.setSynchronizeName(true);
         if (layer instanceof KMLLayer) {
-            this.setChildren(new KMLFeatureChildren(((KMLLayer) layer).getKmlController().getKmlRoot().getFeature()));
+            this.setChildren(new KMLFeatureNodeFactory(((KMLLayer) layer).getKmlController().getKmlRoot().getFeature()));
         } else if (layer instanceof RenderableLayer) {
             //this.setChildren(new LayerChildren((RenderableLayer) layer));
-            this.setChildren(Children.create(new RenderableChildFactory((RenderableLayer) layer), false));
+            this.setChildren(Children.create(new RenderableNodeFactory((RenderableLayer) layer), false));
         }
 
         layer.addPropertyChangeListener(WeakListeners.propertyChange(this, layer));
