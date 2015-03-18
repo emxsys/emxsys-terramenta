@@ -52,6 +52,7 @@ public class Office2007RibbonPreferences extends BasicRibbonPreferences {
                     "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2007RibbonApplicationMenuButtonUI",
                     "CommandButtonUI", "com.terramenta.ribbon.Office2007CommandButtonUI",
                     "CommandToggleButtonUI", "com.terramenta.ribbon.Office2007CommandToggleButtonUI",
+                    "RichTooltipPanelUI", "com.terramenta.ribbon.Office2007RichTooltipPanelUI",
                     // Colors
                     "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.lightGray/*, "Panel.background"*/), 0.20),
                     "RibbonBand.background",  FlamingoUtilities.getColor(Color.darkGray/*, "Panel.background"*/),

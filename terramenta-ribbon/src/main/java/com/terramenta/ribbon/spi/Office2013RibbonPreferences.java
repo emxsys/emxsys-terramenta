@@ -1,5 +1,5 @@
 /*
-/*
+ /*
  * Copyright (c) 2014, Bruce Schubert. <bruce@emxsys.com>
  * All rights reserved.
  *
@@ -28,7 +28,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.terramenta.ribbon.spi;
 
 import com.terramenta.ribbon.ColorUtil;
@@ -36,33 +35,32 @@ import java.awt.Color;
 import java.awt.Dimension;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
 
-
 /**
  * Office 2013 Ribbon Preferences.
  *
  * @author Bruce Schubert
  */
-public class Office2013RibbonPreferences extends BasicRibbonPreferences
-{
+public class Office2013RibbonPreferences extends BasicRibbonPreferences {
 
-    public Office2013RibbonPreferences()
-    {
+    public Office2013RibbonPreferences() {
         setLafClassDefaults(
-            new Object[]
-            {
-                // UI Classes
-                "RibbonUI", "com.terramenta.ribbon.Office2013RibbonUI",
-                "RibbonBandUI", "com.terramenta.ribbon.Office2013RibbonBandUI",
-                "BandControlPanelUI", "com.terramenta.ribbon.Office2013BandControlPanelUI",
-                "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2013RibbonTaskToggleButtonUI",
-                "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2013RibbonApplicationMenuButtonUI",
-                // Colors
-                "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.darkGray, "Panel.background"), 0.20),
-                "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray, "Panel.background"),
-                "AppButton.background", Color.black,
-                "AppButton.foreground", Color.white,
-                "TaskButton.highlight", Color.cyan,
-            });
+                new Object[]{
+                    // UI Classes
+                    "RibbonUI", "com.terramenta.ribbon.Office2013RibbonUI",
+                    "RibbonBandUI", "com.terramenta.ribbon.Office2013RibbonBandUI",
+                    "BandControlPanelUI", "com.terramenta.ribbon.Office2013BandControlPanelUI",
+                    "RibbonTaskToggleButtonUI", "com.terramenta.ribbon.Office2013RibbonTaskToggleButtonUI",
+                    "RibbonApplicationMenuButtonUI", "com.terramenta.ribbon.Office2013RibbonApplicationMenuButtonUI",
+                    "RichTooltipPanelUI", "com.terramenta.ribbon.Office2013RichTooltipPanelUI",
+                    // Colors
+                    "Ribbon.background", ColorUtil.darker(FlamingoUtilities.getColor(Color.darkGray, "Panel.background"), 0.20),
+                    "ControlPanel.background", FlamingoUtilities.getColor(Color.lightGray, "Panel.background"),
+                    //"RichTooltipPanel.background", Color.magenta,
+                    "AppButton.background", Color.black,
+                    "AppButton.foreground", Color.white,
+                    "TaskButton.highlight", Color.cyan
+                });
+
         setPreferredBandSize(new Dimension(40, 96));// Full size supports buttons with two lines of text
         setAlwaysDisplayButtonText(true);
         setAlwaysDisplayGroupText(false);
