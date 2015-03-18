@@ -66,6 +66,7 @@ public class LingerBand extends JFlowRibbonBand implements ActionListener, Chang
         always.addActionListener(this);
 
         JPanel panel = new JPanel();
+        panel.setBackground(this.getBackground());
         panel.add(never);
         panel.add(slider);
         panel.add(always);

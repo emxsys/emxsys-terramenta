@@ -48,6 +48,7 @@ public class NavigationBand extends JFlowRibbonBand implements ActionListener {
         setPreferredSize(new Dimension(250, 60));
 
         JPanel panel = new JPanel();
+        panel.setBackground(this.getBackground());
 
         coordTypeComboBox = new JComboBox(CoordinateSystem.values());
         coordTypeComboBox.setPreferredSize(new Dimension(65, 32));
