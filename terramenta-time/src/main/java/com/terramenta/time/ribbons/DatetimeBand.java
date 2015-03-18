@@ -21,9 +21,9 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.TimeZone;
+import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -51,18 +51,39 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
         final JFXPanel jfxPanel = new JFXPanel();
         jfxPanel.setPreferredSize(new Dimension(220, 24));
         Platform.setImplicitExit(false);
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                jfxPanel.setScene(createScene());
-            }
+        Platform.runLater(() -> {
+            jfxPanel.setScene(createScene());
         });
 
         setPreferredSize(new Dimension(220, 60));
         addFlowComponent(jfxPanel);
 
+        //update on date change
         dateProvider.addObserver(this);
+
+        //update on preference change
+        prefs.addPreferenceChangeListener((PreferenceChangeEvent evt) -> {
+            Platform.runLater(() -> {
+                if (picker == null) {
+                    return;
+                }
+
+                switch (evt.getKey()) {
+                    case TimeOptions.TIMEZONE:
+                        TimeZone timezone = TimeZone.getTimeZone(evt.getNewValue());
+                        picker.timezoneProperty().setValue(timezone == null ? TimeZone.getDefault() : timezone);
+                        break;
+                    case TimeOptions.LOCALE:
+                        Locale locale = Locale.forLanguageTag(evt.getNewValue());
+                        picker.localeProperty().setValue(locale == null ? Locale.getDefault() : locale);
+                        break;
+                    case TimeOptions.FORMAT:
+                        String format = evt.getNewValue();
+                        picker.formatProperty().setValue(format == null ? "yyyy/MM/dd HH:mm:ss" : format);
+                        break;
+                }
+            });
+        });
     }
 
     private Scene createScene() {
@@ -73,15 +94,12 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
         );
         picker.setDate(dateProvider.getDate());
 
-        picker.timestampProperty().addListener(new ChangeListener<Long>() {
-            @Override
-            public void changed(ObservableValue<? extends Long> arg0, Long oldValue, Long newValue) {
-                if (newValue == null) {
-                    //revert to old value, no blank date allowed
-                    picker.setDate(new Date(oldValue));
-                } else if (!processingUpdate) {
-                    dateProvider.setDate(new Date(newValue));
-                }
+        picker.timestampProperty().addListener((ObservableValue<? extends Long> arg0, Long oldValue, Long newValue) -> {
+            if (newValue == null) {
+                //revert to old value, no blank date allowed
+                picker.setDate(new Date(oldValue));
+            } else if (!processingUpdate) {
+                dateProvider.setDate(new Date(newValue));
             }
         });
         return new Scene(picker);
@@ -93,16 +111,12 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
             return;
         }
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                // Set a semiphore to prevent a recursive call into setDate by the timestamp listener
-                processingUpdate = true;
-                picker.setDate(dateProvider.getDate());
-                // Reset semiphore
-                processingUpdate = false;
-            }
+        Platform.runLater(() -> {
+            // Set a semiphore to prevent a recursive call into setDate by the timestamp listener
+            processingUpdate = true;
+            picker.setDate(dateProvider.getDate());
+            // Reset semiphore
+            processingUpdate = false;
         });
     }
 }
