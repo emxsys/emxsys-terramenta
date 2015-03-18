@@ -36,6 +36,5 @@ public class Office2013RichTooltipPanelUI extends BasicRichTooltipPanelUI {
         g2d.fillRect(0, 0, this.richTooltipPanel.getWidth(), this.richTooltipPanel.getHeight());
         g2d.setFont(FlamingoUtilities.getFont(this.richTooltipPanel, "Ribbon.font", "Button.font", "Panel.font"));
         g2d.dispose();
-        System.out.println("################ RAN CUSTOM Office2013RichTooltipPanelUI #######################");
     }
 }
