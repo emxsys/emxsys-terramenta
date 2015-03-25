@@ -142,7 +142,8 @@ public class ClassificationBannerLayer extends AbstractLayer {
 
                 String text = classification.getText() + protection;
                 Dimension size = getTextRenderSize(dc, text);
-                int offset = 1;
+                size.setSize(size.getWidth(), size.getHeight() - 2);//because it is always a bit too big
+
                 if (size.width < viewport.getWidth()) {
                     double maxwh = size.width > size.height ? size.width : size.height;
                     gl.glOrtho(0d, viewport.width, 0d, viewport.height, -0.6 * maxwh, 0.6 * maxwh);
@@ -152,11 +153,22 @@ public class ClassificationBannerLayer extends AbstractLayer {
                     modelviewPushed = true;
                     gl.glLoadIdentity();
 
-                    Dimension dimension = new Dimension((int) viewport.getWidth(), (int) size.getHeight() + offset);
-                    drawFilledRectangle(dc, new Vec4(0, viewport.getHeight()), dimension, classification.getBackgroundColor());
+                    int padding = 3;
+                    Dimension dimension = new Dimension((int) viewport.getWidth(), (int) size.getHeight() + (padding * 2));
+                    drawFilledRectangle(
+                            dc,
+                            new Vec4(0, viewport.getHeight() - dimension.getHeight()),
+                            dimension,
+                            classification.getBackgroundColor()
+                    );
 
-                    Vec4 center = new Vec4(viewport.getCenterX() - (size.getWidth() / 2), viewport.getHeight() - size.getHeight() + offset);
-                    drawLabel(dc, text, center, classification.getTextColor(), this.textFont);
+                    drawLabel(
+                            dc,
+                            text,
+                            new Vec4(viewport.getCenterX() - (size.getWidth() / 2), viewport.getHeight() - size.getHeight() - padding),
+                            classification.getTextColor(),
+                            this.textFont
+                    );
                 }
             } finally {
                 if (projectionPushed) {
