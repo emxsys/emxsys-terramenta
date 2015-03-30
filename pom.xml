@@ -11,6 +11,7 @@
         <!-- target source and runtime java versions -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <netbeans.hint.licensePath>${project.basedir}/LICENSE.txt</netbeans.hint.licensePath>
         <brandingToken>terramenta</brandingToken>
@@ -30,7 +31,6 @@
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
         <nbm-maven-plugin.version>3.14</nbm-maven-plugin.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
         
     <repositories>
