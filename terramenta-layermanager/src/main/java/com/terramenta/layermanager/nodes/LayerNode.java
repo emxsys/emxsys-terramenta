@@ -38,10 +38,10 @@ import org.openide.util.actions.SystemAction;
  *
  * @author heidtmare
  */
-public class LayerNode extends BeanNode implements BooleanState.Provider, Destroyable, PropertyChangeListener {
+public class LayerNode extends BeanNode implements BooleanState.Provider, Destroyable {
 
-    private String ENABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletGreen.png";
-    private String DISABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletBlack.png";
+    private final String ENABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletGreen.png";
+    private final String DISABLED_ICON_BASE = "com/terramenta/layermanager/images/bulletBlack.png";
 
     /**
      *
@@ -55,11 +55,28 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
         if (layer instanceof KMLLayer) {
             this.setChildren(new KMLFeatureNodeFactory(((KMLLayer) layer).getKmlController().getKmlRoot().getFeature()));
         } else if (layer instanceof RenderableLayer) {
-            //this.setChildren(new LayerChildren((RenderableLayer) layer));
             this.setChildren(Children.create(new RenderableNodeFactory((RenderableLayer) layer), false));
         }
 
-        layer.addPropertyChangeListener(WeakListeners.propertyChange(this, layer));
+        layer.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if (evt == null || evt.getSource() != layer) {
+                return;
+            }
+            
+            switch (evt.getPropertyName()) {
+                case "Enabled":
+                    if (evt.getNewValue().equals(Boolean.TRUE)) {
+                        setIconBaseWithExtension(ENABLED_ICON_BASE);
+                    } else {
+                        setIconBaseWithExtension(DISABLED_ICON_BASE);
+                    }
+                    fireDisplayNameChange(null, getDisplayName());
+                    break;
+                case "Renderables":
+                    fireDisplayNameChange(null, getDisplayName());
+                    break;
+            }
+        });
     }
 
     /**
@@ -105,23 +122,8 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
         return actions;
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()) {
-            case "Enabled":
-                if (evt.getNewValue().equals(Boolean.TRUE)) {
-                    this.setIconBaseWithExtension(ENABLED_ICON_BASE);
-                } else {
-                    this.setIconBaseWithExtension(DISABLED_ICON_BASE);
-                }   this.fireDisplayNameChange(null, getDisplayName());
-                break;
-            case "Renderables":
-                this.fireDisplayNameChange(null, getDisplayName());
-                break;
-        }
-    }
-
     /**
+     * Allows this node to be moved
      *
      * @return
      */
@@ -131,6 +133,7 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
     }
 
     /**
+     * Allows this node to be moved
      *
      * @return
      */
@@ -139,16 +142,29 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
         return true;
     }
 
+    /**
+     * Gets called by the ToggleNodeAction to toggle layer on/off
+     *
+     * @return
+     */
     @Override
     public boolean getBooleanState() {
         return ((Layer) getBean()).isEnabled();
     }
 
+    /**
+     * Gets called by the ToggleNodeAction to toggle layer on/off
+     *
+     * @param state
+     */
     @Override
     public void setBooleanState(boolean state) {
         ((Layer) getBean()).setEnabled(state);
     }
 
+    /**
+     * Gets called by the DestroyNodeAction to remove this layer
+     */
     @Override
     public void doDestroy() {
         WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);

@@ -16,15 +16,21 @@ import com.terramenta.actions.DestroyNodeAction;
 import com.terramenta.actions.ToggleNodeAction;
 import com.terramenta.interfaces.BooleanState;
 import com.terramenta.interfaces.Destroyable;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
+import java.awt.Image;
 import java.beans.IntrospectionException;
+import java.beans.PropertyChangeEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import javax.swing.Action;
 import org.openide.actions.PropertiesAction;
 import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
+import org.openide.util.ImageUtilities;
 import org.openide.util.actions.SystemAction;
 
 /**
@@ -36,15 +42,44 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
 
     private final RenderableLayer parentLayer;
     private final Renderable renderable;
+    private final boolean isAVList;
+    private final boolean isLayer;
 
     public RenderableNode(RenderableLayer parentLayer, Renderable renderable) throws IntrospectionException {
         super(renderable);
         this.parentLayer = parentLayer;
         this.renderable = renderable;
-        
+
+        //is the renderable ALSO an AVList?
+        isAVList = (renderable instanceof AVList);
         //is the renderable ALSO a layer?
-        if (renderable instanceof RenderableLayer) {
+        isLayer = (renderable instanceof RenderableLayer);
+
+        if (isAVList) {
+            AVList avlRen = (AVList) renderable;
+            if (avlRen.hasKey(AVKey.DISPLAY_NAME)) {
+                setName(avlRen.getStringValue(AVKey.DISPLAY_NAME));
+            }
+            if (avlRen.hasKey(AVKey.DISPLAY_ICON)) {
+                setIconBaseWithExtension(avlRen.getStringValue(AVKey.DISPLAY_ICON));
+            }
+        }
+
+        if (isLayer) {
             this.setChildren(Children.create(new RenderableNodeFactory((RenderableLayer) renderable), false));
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String getHtmlDisplayName() {
+        if (getBooleanState()) {
+            return getChildren().getNodesCount() != 0 ? getName() + " [" + getChildren().getNodesCount() + "]" : getName();
+        } else {
+            return "<font color='AAAAAA'><i>" + getName() + "</i></font>";
         }
     }
 
@@ -82,23 +117,69 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
 
     @Override
     public boolean getBooleanState() {
-        if (renderable instanceof AVList) {
-            AVList avl = (AVList) renderable;
-            Boolean visible = (Boolean) avl.getValue("VISIBLE");
-            if (visible != null) {
-                return visible;
-            }
+        //NOTE: Why were we doing this?
+//        if (renderable instanceof AVList) {
+//            AVList avl = (AVList) renderable;
+//            Boolean visible = (Boolean) avl.getValue("VISIBLE");
+//            if (visible != null) {
+//                return visible;
+//            }
+//        }
+
+        // layers use enabled
+        if (isLayer) {
+            return ((RenderableLayer) renderable).isEnabled();
         }
+
+        //most renderables use visible
+        try {
+            Method isVisibleMethod = renderable.getClass().getMethod("isVisible", (Class<?>[]) null);
+            return (boolean) isVisibleMethod.invoke(renderable, (Object[]) null);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            //...
+        }
+
         return true;
     }
 
     @Override
     public void setBooleanState(boolean state) {
-        if (renderable instanceof AVList) {
-            AVList avl = (AVList) renderable;
-            avl.setValue("VISIBLE", state);
-            avl.firePropertyChange("VISIBLE", null, state);
+        //NOTE: Why were we doing this?
+//        if (renderable instanceof AVList) {
+//            AVList avl = (AVList) renderable;
+//            avl.setValue("VISIBLE", state);
+//            avl.firePropertyChange("VISIBLE", null, state);
+//        }
+
+        // layers use enabled
+        if (isLayer) {
+            ((RenderableLayer) renderable).setEnabled(state);
+            this.fireIconChange();//force icon refresh
+            return;
+        }
+
+        //most renderables use visible
+        try {
+            Method setVisibleMethod = renderable.getClass().getMethod("setVisible", new Class[]{boolean.class});
+            setVisibleMethod.invoke(renderable, state);
+            this.fireIconChange();//force icon refresh
+
+            if (isAVList) {
+                //this bubbles up through the parent layers and cause a redraw
+                ((AVList) renderable).firePropertyChange(new PropertyChangeEvent(this, "Enabled", null, state));
+            }
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            //...
         }
     }
 
+    @Override
+    public Image getIcon(int type) {
+        Image icon = super.getIcon(type);
+        boolean enabled = getBooleanState();
+        if (!enabled) {
+            icon = ImageUtilities.createDisabledImage(icon);
+        }
+        return icon;
+    }
 }

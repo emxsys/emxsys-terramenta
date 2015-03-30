@@ -62,17 +62,6 @@ public class RenderableNodeFactory extends ChildFactory.Detachable<Renderable> i
         } catch (IntrospectionException ex) {
             return null;
         }
-
-        if (renderable instanceof AVList) {
-            AVList avlRen = (AVList) renderable;
-            if (avlRen.hasKey(AVKey.DISPLAY_NAME)) {
-                node.setName(avlRen.getStringValue(AVKey.DISPLAY_NAME));
-            }
-            if (avlRen.hasKey(AVKey.DISPLAY_ICON)) {
-                node.setIconBaseWithExtension(avlRen.getStringValue(AVKey.DISPLAY_ICON));
-            }
-        }
-
         return node;
     }
 
