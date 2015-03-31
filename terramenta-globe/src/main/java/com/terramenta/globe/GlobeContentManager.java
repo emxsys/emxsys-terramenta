@@ -63,7 +63,7 @@ public final class GlobeContentManager implements PreferenceChangeListener {
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
-    private static final EciController eciController = new EciController();
+    private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());

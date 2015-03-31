@@ -17,33 +17,39 @@ import com.terramenta.globe.utilities.DateBasedVisibilitySupport;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.BasicWWTexture;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PreRenderable;
+import gov.nasa.worldwind.render.WWTexture;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 import java.util.Date;
 
 /**
- * Example of tying selection and temporal support to a placemark
+ * Example of a placemark with selection and temporal support
  *
  * @author chris.heidt
  */
-public class TerramentaPlacemark extends PointPlacemark implements PreRenderable {
+public class TerramentaPlacemark extends PointPlacemark {
 
-    private static final PropertyChangeListener selectionListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(RenderableProperties.SELECT.toString()) && evt.getNewValue() != null) {
-                Point pnt = (Point) evt.getNewValue();
-            } else if (evt.getPropertyName().equals(RenderableProperties.HOVER.toString()) && evt.getNewValue() != null) {
-                //...
-            } else if (evt.getPropertyName().equals(RenderableProperties.ROLLOVER.toString()) && evt.getNewValue() != null) {
-                //...
-            }
+    private static final PropertyChangeListener selectionListener = (PropertyChangeEvent evt) -> {
+        if (evt.getPropertyName().equals(RenderableProperties.SELECT.toString()) && evt.getNewValue() != null) {
+            Point screenPoint = (Point) evt.getNewValue();
+            //Here you would react to the selection
+        } else if (evt.getPropertyName().equals(RenderableProperties.HOVER.toString()) && evt.getNewValue() != null) {
+            //...
+        } else if (evt.getPropertyName().equals(RenderableProperties.ROLLOVER.toString()) && evt.getNewValue() != null) {
+            //...
         }
     };
+
+    /**
+     * If temporal check is enabled we determine if display date is within the current display
+     * interval
+     */
+    private boolean enableTemporalVisibilityCheck = true;
 
     public TerramentaPlacemark(Position pstn, Object bean) {
         super(pstn);
@@ -74,9 +80,32 @@ public class TerramentaPlacemark extends PointPlacemark implements PreRenderable
         setValue("DISPLAY_DATE", date);
     }
 
+    public boolean isEnableTemporalVisibilityCheck() {
+        return enableTemporalVisibilityCheck;
+    }
+
+    public void setEnableTemporalVisibilityCheck(boolean enabled) {
+        this.enableTemporalVisibilityCheck = enabled;
+    }
+
     @Override
-    public void preRender(DrawContext dc) {
-        boolean isVisible = DateBasedVisibilitySupport.determineVisibility(dc, this);
-        setVisible(isVisible);
+    public void render(DrawContext dc) {
+        //If temporal check is enabled we determine if display date is within the current display interval
+        if (enableTemporalVisibilityCheck && !DateBasedVisibilitySupport.determineVisibility(dc, this)) {
+            return;
+        }
+        super.render(dc);
+    }
+
+    /**
+     * fixes a wwj bug in 2.0.0
+     *
+     * @param address
+     * @return
+     */
+    @Override
+    protected WWTexture initializeTexture(String address) {
+        URL localUrl = WorldWind.getDataFileStore().requestFile(address);
+        return localUrl == null ? null : new BasicWWTexture(localUrl, true);
     }
 }

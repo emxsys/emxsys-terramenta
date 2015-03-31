@@ -12,14 +12,17 @@
  */
 package com.terramenta.globe.utilities;
 
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  *
  * @author heidtmare
  */
+@ServiceProvider(service = EciController.class)
 public class EciController {
 
     /**
-     * 
+     *
      */
     public static final double offsetRotdeg = -90.0; // jogl coordinate Greenwich to ECI x-axis offset
     private double rotateECIdeg = 280.46061837 + offsetRotdeg; // rotation in degrees (default j2k)
