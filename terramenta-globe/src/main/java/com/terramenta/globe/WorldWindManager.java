@@ -13,6 +13,7 @@
 package com.terramenta.globe;
 
 import com.terramenta.globe.options.GlobeOptions;
+import com.terramenta.globe.utilities.EciController;
 import com.terramenta.time.DateInterval;
 import com.terramenta.time.DateProvider;
 import com.terramenta.time.actions.TimeActionController;
@@ -57,6 +58,8 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
+    private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
+
     private final InstanceContent content = new InstanceContent();
     private final Lookup internalLookup = new AbstractLookup(content);
     private ExpandableLookup masterLookup;
@@ -73,30 +76,35 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
             }
 
             DrawContext dc = wwd.getSceneController().getDrawContext();
+
+            //set display date
             dc.setValue("DISPLAY_DATE", date);
 
+            //set display interval
             int linger = tac.getLingerDuration();
             if (linger == 0) {
                 //0 linger means items do not ever disapear, so dont set a display interval
                 dc.removeKey("DISPLAY_DATEINTERVAL");
-                return;
-            }
-
-            //get interval based on play direction
-            DateInterval interval;
-            if (tac.getPreviousStepDirection() < 0) {
-                //interval from playtime to playtime+linger
-                long startMillis = date.getTime();
-                long endMillis = startMillis + linger;
-                interval = new DateInterval(startMillis, endMillis);
             } else {
-                //interval of time from playtime-linger to playtime
-                long endMillis = date.getTime();
-                long startMillis = endMillis - linger;
-                interval = new DateInterval(startMillis, endMillis);
+                //get interval based on play direction
+                DateInterval interval;
+                if (tac.getPreviousStepDirection() < 0) {
+                    //interval from playtime to playtime+linger
+                    long startMillis = date.getTime();
+                    long endMillis = startMillis + linger;
+                    interval = new DateInterval(startMillis, endMillis);
+                } else {
+                    //interval of time from playtime-linger to playtime
+                    long endMillis = date.getTime();
+                    long startMillis = endMillis - linger;
+                    interval = new DateInterval(startMillis, endMillis);
+                }
+                dc.setValue("DISPLAY_DATEINTERVAL", interval);
             }
 
-            dc.setValue("DISPLAY_DATEINTERVAL", interval);
+            //set eci values
+            dc.setValue("ECI", eciController.isEci());
+            dc.setValue("ECI_ROTATION", eciController.calculateRotationalDegree(date.toInstant()));
         }
     };
 

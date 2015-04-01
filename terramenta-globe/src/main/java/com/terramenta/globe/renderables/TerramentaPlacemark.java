@@ -13,7 +13,7 @@
 package com.terramenta.globe.renderables;
 
 import com.terramenta.globe.properties.RenderableProperties;
-import com.terramenta.globe.utilities.DateBasedVisibilitySupport;
+import com.terramenta.globe.utilities.RenderUtilities;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
@@ -91,7 +91,7 @@ public class TerramentaPlacemark extends PointPlacemark {
     @Override
     public void render(DrawContext dc) {
         //If temporal check is enabled we determine if display date is within the current display interval
-        if (enableTemporalVisibilityCheck && !DateBasedVisibilitySupport.determineVisibility(dc, this)) {
+        if (enableTemporalVisibilityCheck && !RenderUtilities.determineTemporalVisibility(dc, this)) {
             return;
         }
         super.render(dc);

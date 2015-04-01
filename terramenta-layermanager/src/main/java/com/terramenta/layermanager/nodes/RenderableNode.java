@@ -154,7 +154,8 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
         // layers use enabled
         if (isLayer) {
             ((RenderableLayer) renderable).setEnabled(state);
-            this.fireIconChange();//force icon refresh
+            fireIconChange(); //force a icon refresh
+            fireDisplayNameChange(null, getDisplayName());//force a label refresh
             return;
         }
 
@@ -162,7 +163,8 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
         try {
             Method setVisibleMethod = renderable.getClass().getMethod("setVisible", new Class[]{boolean.class});
             setVisibleMethod.invoke(renderable, state);
-            this.fireIconChange();//force icon refresh
+            fireIconChange(); //force a icon refresh
+            fireDisplayNameChange(null, getDisplayName());//force a label refresh
 
             if (isAVList) {
                 //this bubbles up through the parent layers and cause a redraw

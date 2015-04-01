@@ -12,6 +12,12 @@
  */
 package com.terramenta.globe.utilities;
 
+import com.terramenta.globe.options.GlobeOptions;
+import com.terramenta.time.JulianConversions;
+import java.time.Instant;
+import java.util.Date;
+import java.util.prefs.Preferences;
+import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -21,40 +27,30 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = EciController.class)
 public class EciController {
 
-    /**
-     *
-     */
+    private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     public static final double offsetRotdeg = -90.0; // jogl coordinate Greenwich to ECI x-axis offset
     private double rotateECIdeg = 280.46061837 + offsetRotdeg; // rotation in degrees (default j2k)
-    private double currentMJD = 51544.5; // current modified julian date, universal time (default J2k)
+    private Instant previousDate;
 
-    /**
-     *
-     * @return
-     */
-    public double getCurrentMJD() {
-        return currentMJD;
+    public boolean isEci() {
+        return prefs.getBoolean("options.globe.isECI", false);
     }
 
-    /**
-     *
-     * @param currentMJD
-     */
-    public void setCurrentMJD(double currentMJD) {
-        this.currentMJD = currentMJD;
-
-        // centuries since J2000.0
-        double tt = (currentMJD - 51544.5) / 36525.0;
-
-        // now calculate the mean sidereal time at Greenwich (UT time) in degrees
-        rotateECIdeg = ((280.46061837 + 360.98564736629 * (currentMJD - 51544.5)) + 0.000387933 * tt * tt - tt * tt * tt / 38710000.0 + offsetRotdeg) % 360.0;
+    public double getCurrentRotationalDegree() {
+        return rotateECIdeg;
     }
 
-    /**
-     *
-     * @return
-     */
-    public double getRotateECIdeg() {
+    public double calculateRotationalDegree(Instant date) {
+        if (previousDate == null || !previousDate.equals(date)) {
+            previousDate = date;
+
+            double mjd = JulianConversions.convertToMJD(Date.from(date));
+            // centuries since J2000.0
+            double tt = (mjd - 51544.5) / 36525.0;
+            // now calculate the mean sidereal time at Greenwich (UT time) in degrees
+            rotateECIdeg = ((280.46061837 + 360.98564736629 * (mjd - 51544.5)) + 0.000387933 * tt * tt - tt * tt * tt / 38710000.0 + offsetRotdeg) % 360.0;
+        }
+
         return rotateECIdeg;
     }
 }

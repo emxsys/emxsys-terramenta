@@ -16,7 +16,6 @@ import com.terramenta.globe.utilities.EciController;
 import com.terramenta.globe.utilities.QuickTipController;
 import com.terramenta.globe.utilities.SelectController;
 import com.terramenta.time.DateProvider;
-import com.terramenta.time.JulianConversions;
 import gov.nasa.worldwind.StereoSceneController;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -40,6 +39,7 @@ import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
 import gov.nasa.worldwindx.sunlight.SunController;
 import gov.nasa.worldwindx.sunlight.SunLayer;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -107,7 +107,7 @@ public final class GlobeContentManager implements PreferenceChangeListener {
                     date = dateProvider.getDate();
                 }
 
-                updateGlobe(date);
+                updateGlobe(date.toInstant());
                 wwm.getWorldWindow().redraw();
             }
         });
@@ -176,35 +176,38 @@ public final class GlobeContentManager implements PreferenceChangeListener {
         ll.add(statusLayer);
     }
 
+    private double previousRotationalDegree = 0;
+
     /**
      *
-     * @param datetime
+     * @param date
      */
-    public void updateGlobe(Date date) {
+    public void updateGlobe(Instant date) {
+        double rotationalDegree = eciController.calculateRotationalDegree(date);
+
         if (isECI()) {
             // need to do something to keep the ECI view moving even after user interaction
             wwm.getWorldWindow().getView().stopMovement();
 
             // update rotation of view and Stars
-            double theta0 = eciController.getRotateECIdeg();
-            eciController.setCurrentMJD(JulianConversions.convertToMJD(date));
-            double thetaf = eciController.getRotateECIdeg();
+            double theta0 = previousRotationalDegree;
+            double thetaf = rotationalDegree;
             double rotateEarthDelta = thetaf - theta0; // amount to rotate the globe around poles axis in degrees
 
             Position pos = ((BasicOrbitView) wwm.getWorldWindow().getView()).getCenterPosition();
             Position newPos = pos.add(new Position(Angle.fromDegrees(0), Angle.fromDegrees(-rotateEarthDelta), 0.0));
             ((BasicOrbitView) wwm.getWorldWindow().getView()).setCenterPosition(newPos);
-        } else {
-            eciController.setCurrentMJD(JulianConversions.convertToMJD(date));
         }
 
         if (starLayer != null) {
-            starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg()));
+            starLayer.setLongitudeOffset(Angle.fromDegrees(-rotationalDegree));
         }
 
         if (sunController != null) {
-            sunController.update(date);
+            sunController.update(Date.from(date));
         }
+
+        previousRotationalDegree = rotationalDegree;
     }
 
     /**
@@ -223,7 +226,7 @@ public final class GlobeContentManager implements PreferenceChangeListener {
         this.eci = state;
         if (starLayer != null) {
             if (state) {
-                starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getRotateECIdeg())); // update stars
+                starLayer.setLongitudeOffset(Angle.fromDegrees(-eciController.getCurrentRotationalDegree())); // update stars
             } else {
                 starLayer.setLongitudeOffset(Angle.fromDegrees(0.0)); // reset to normal
             }
