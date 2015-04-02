@@ -34,6 +34,7 @@
     <Layer href="worldwind/config/Earth/CountryBoundariesLayer.xml" actuate="onLoad">
         <Property name="UseMipMaps" value="false"/>
     </Layer>
+    <Layer className="com.terramenta.globe.layers.RadialGridLayer" title="ECI Radial Grid" actuate="onRequest" />  
     <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>
     <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
