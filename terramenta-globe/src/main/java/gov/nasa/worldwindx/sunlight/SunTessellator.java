@@ -30,7 +30,7 @@ import java.util.List;
  * @author heidtmare
  * Modifed to support JOGL2
  */
-public class RectangularNormalTessellator extends WWObjectImpl implements Tessellator {
+public class SunTessellator extends WWObjectImpl implements Tessellator {
 
     protected static class RenderInfo {
 
@@ -90,7 +90,7 @@ public class RectangularNormalTessellator extends WWObjectImpl implements Tessel
 
     public static class RectTile implements SectorGeometry {
 
-        protected final RectangularNormalTessellator tessellator;
+        protected final SunTessellator tessellator;
         protected final int level;
         protected final Sector sector;
         protected final int density;
@@ -100,7 +100,7 @@ public class RectangularNormalTessellator extends WWObjectImpl implements Tessel
         protected int minColorCode = 0;
         protected int maxColorCode = 0;
 
-        public RectTile(RectangularNormalTessellator tessellator, Extent extent,
+        public RectTile(SunTessellator tessellator, Extent extent,
                 int level, int density, Sector sector, double cellSize) {
             this.tessellator = tessellator;
             this.level = level;
@@ -114,7 +114,7 @@ public class RectangularNormalTessellator extends WWObjectImpl implements Tessel
             return this.ri;
         }
 
-        public RectangularNormalTessellator getTessellator() {
+        public SunTessellator getTessellator() {
             return tessellator;
         }
 
@@ -257,7 +257,7 @@ public class RectangularNormalTessellator extends WWObjectImpl implements Tessel
     protected static final int DEFAULT_NUM_LON_SUBDIVISIONS = 10;
     protected static final int DEFAULT_DENSITY = 20;
     protected static final String CACHE_NAME = "Terrain";
-    protected static final String CACHE_ID = RectangularNormalTessellator.class.getName();
+    protected static final String CACHE_ID = SunTessellator.class.getName();
     // Tri-strip indices and texture coordinates. These depend only on density and can therefore be statically cached.
     protected static final HashMap<Integer, DoubleBuffer> parameterizations = new HashMap<Integer, DoubleBuffer>();
     protected static final HashMap<Integer, IntBuffer> indexLists = new HashMap<Integer, IntBuffer>();
@@ -479,7 +479,7 @@ public class RectangularNormalTessellator extends WWObjectImpl implements Tessel
         return subTiles;
     }
 
-    protected RectangularNormalTessellator.CacheKey createCacheKey(DrawContext dc, RectTile tile) {
+    protected SunTessellator.CacheKey createCacheKey(DrawContext dc, RectTile tile) {
         return new CacheKey(dc, tile.sector, tile.density);
     }
 

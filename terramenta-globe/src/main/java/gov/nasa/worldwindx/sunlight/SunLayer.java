@@ -12,15 +12,26 @@
  */
 package gov.nasa.worldwindx.sunlight;
 
+import com.terramenta.globe.WorldWindManager;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Vec4;
+import gov.nasa.worldwind.terrain.Tessellator;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author heidtmare
  */
-public class SunLayer extends LensFlareLayer {
+public class SunLayer extends LensFlareLayer implements Observer, SunDependent {
+
+    private final SunTessellator sunTessellator = new SunTessellator();
+    private Tessellator originalTessellator;
+    private Sun sun;
 
     /**
      *
@@ -62,4 +73,66 @@ public class SunLayer extends LensFlareLayer {
         flares.add(new FlareImage(disk, .2, 3.5, .1));
         this.addRenderables(flares);
     }
+
+    public Sun getSun() {
+        return sun;
+    }
+
+    @Override
+    public void setSun(Sun sun) {
+        if (this.sun != null) {
+            this.sun.deleteObserver(this);
+        }
+        this.sun = sun;
+
+        if (this.sun != null) {
+            this.sun.addObserver(this);
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Position sunPosition;
+        if (arg instanceof Position) {
+            sunPosition = (Position) arg;
+        } else {
+            sunPosition = sun.getPosition();
+        }
+
+        if (sunPosition == null) {
+            return;
+        }
+
+        WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+        if (wwm == null) {
+            return;
+        }
+
+        Vec4 sunVector = wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(sunPosition).normalize3();
+        this.setSunDirection(sunVector);
+        this.sunTessellator.setLightDirection(sunVector.getNegative3());
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+
+        if (getSun() == null) {
+            return;
+        }
+
+        WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
+        if (wwm == null) {
+            return;
+        }
+
+        //swap tessellators
+        if (enabled) {
+            originalTessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
+            wwm.getWorldWindow().getModel().getGlobe().setTessellator(sunTessellator);
+        } else if (originalTessellator != null) {
+            wwm.getWorldWindow().getModel().getGlobe().setTessellator(originalTessellator);
+        }
+    }
+
 }

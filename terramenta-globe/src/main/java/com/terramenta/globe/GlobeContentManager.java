@@ -37,8 +37,8 @@ import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.StatusLayer;
-import gov.nasa.worldwindx.sunlight.SunController;
-import gov.nasa.worldwindx.sunlight.SunLayer;
+import gov.nasa.worldwindx.sunlight.Sun;
+import gov.nasa.worldwindx.sunlight.SunDependent;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Observable;
@@ -64,13 +64,13 @@ public final class GlobeContentManager implements PreferenceChangeListener {
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
+    private static final Sun sun = Lookup.getDefault().lookup(Sun.class);
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
     private boolean eci = false;// use Earth-centered inertial or Earth-centered, Earth-fixed
     private String flatProjection = FlatGlobe.PROJECTION_MERCATOR;
     private StarsLayer starLayer;
-    private SunController sunController;
 
     /**
      *
@@ -136,8 +136,8 @@ public final class GlobeContentManager implements PreferenceChangeListener {
                 wwm.getWorldWindow().addSelectListener(new ViewControlsSelectListener(wwm.getWorldWindow(), viewControlsLayer));
             } else if (layer instanceof StarsLayer) {
                 this.starLayer = (StarsLayer) layer; //Save a reference for rotation
-            } else if (layer instanceof SunLayer) {
-                this.sunController = new SunController((SunLayer) layer);
+            } else if (layer instanceof SunDependent) {
+                ((SunDependent) layer).setSun(sun);
             }
         }
     }
@@ -201,10 +201,6 @@ public final class GlobeContentManager implements PreferenceChangeListener {
 
         if (starLayer != null) {
             starLayer.setLongitudeOffset(Angle.fromDegrees(-rotationalDegree));
-        }
-
-        if (sunController != null) {
-            sunController.update(Date.from(date));
         }
 
         previousRotationalDegree = rotationalDegree;

@@ -4,6 +4,7 @@
         <Property name="Name" value="Stars"/>
     </Layer>
     <Layer className="gov.nasa.worldwindx.sunlight.SunLayer" actuate="onRequest" />
+    <Layer className="com.terramenta.globe.layers.DayNightTerminatorLayer" title="Day/Night Terminator" actuate="onRequest" />
     <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
     <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage"/>
     <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad">
