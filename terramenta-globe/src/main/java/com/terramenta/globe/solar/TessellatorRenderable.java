@@ -30,7 +30,7 @@ public class TessellatorRenderable extends AVListImpl implements Renderable {
 
     public TessellatorRenderable() {
         setValue(AVKey.DISPLAY_NAME, "Solar Shading");
-        setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/images/solarShading.png");
+        setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/images/sun-shading.png");
     }
 
     public SunTessellator getSunTessellator() {
