@@ -8,11 +8,12 @@
  * http://opensource.org/licenses/GPL-3.0
  *
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 import com.terramenta.time.DateProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.globes.Earth;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +32,8 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = Sun.class)
 public class Sun extends Observable {
 
+    public static double AU = 149597870700d;
+    public static double ALTITUDE = AU - Earth.WGS84_EQUATORIAL_RADIUS;
     private static final Logger logger = LoggerFactory.getLogger(Sun.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private final Observer dateProviderObserver = (Observable o, Object arg) -> {
@@ -63,7 +66,7 @@ public class Sun extends Observable {
         }
 
         double[] ll = subsolarPoint(calcJulianDate(Date.from(date)));
-        position = new Position(LatLon.fromRadians(ll[0], ll[1]), 0);
+        position = new Position(LatLon.fromRadians(ll[0], ll[1]), AU);
         logger.debug("The Sun's Position at {} is {}", date, position);
 
         this.setChanged();

@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/CDDL-1.0
  * http://opensource.org/licenses/GPL-3.0
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.*;
@@ -27,7 +27,7 @@ import java.awt.image.*;
  * @author Patrick Murris
  * @version $Id: LensFlareLayer.java 13909 2010-09-30 06:33:58Z pabercrombie $
  */
-public class LensFlareLayer extends RenderableLayer {
+public class LensFlareLayer extends RenderableLayer implements Renderable{
 
     public static class FlareImage extends ScreenAnnotation {
 
@@ -66,12 +66,12 @@ public class LensFlareLayer extends RenderableLayer {
         }
     }
     //*** LensFlareLayer ***
-    private static double SUN_DISTANCE = 149597892e3;
     private Vec4 sunDirection;
     private Vec4 sunPoint;
 
     public LensFlareLayer() {
         this.setName("Lens Flare");
+        this.setValue(AVKey.DISPLAY_NAME, "Lens Flare");
         this.setPickEnabled(false);
     }
 
@@ -82,7 +82,7 @@ public class LensFlareLayer extends RenderableLayer {
     public void setSunDirection(Vec4 direction) {
         if (direction != null) {
             this.sunDirection = direction.normalize3();
-            this.sunPoint = this.sunDirection.multiply3(SUN_DISTANCE);
+            this.sunPoint = this.sunDirection.multiply3(Sun.AU);
         } else {
             this.sunDirection = null;
             this.sunPoint = null;

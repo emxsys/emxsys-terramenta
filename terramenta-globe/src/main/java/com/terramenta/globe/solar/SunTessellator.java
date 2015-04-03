@@ -4,7 +4,7 @@
  National Aeronautics and Space Administration.
  All Rights Reserved.
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 import com.jogamp.common.nio.Buffers;
 import gov.nasa.worldwind.*;

@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/GPL-3.0
  *
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 /**
  * Marker interface

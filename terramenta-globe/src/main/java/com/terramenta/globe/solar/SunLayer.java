@@ -10,12 +10,13 @@
  * http://opensource.org/licenses/CDDL-1.0
  * http://opensource.org/licenses/GPL-3.0
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 import com.terramenta.globe.WorldWindManager;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
-import gov.nasa.worldwind.terrain.Tessellator;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import com.terramenta.globe.solar.LensFlareLayer.FlareImage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -27,10 +28,13 @@ import org.openide.util.Lookup;
  *
  * @author heidtmare
  */
-public class SunLayer extends LensFlareLayer implements Observer, SunDependent {
+public class SunLayer extends RenderableLayer implements Observer, SunDependent {
 
-    private final SunTessellator sunTessellator = new SunTessellator();
-    private Tessellator originalTessellator;
+    private final LensFlareLayer flare = new LensFlareLayer();
+    private final TerminatorRenderable terminator = new TerminatorRenderable();
+    private final SubsolarPointRenderable subsolarPoint = new SubsolarPointRenderable();
+    private final TessellatorRenderable tessellatorRenderable = new TessellatorRenderable();
+
     private Sun sun;
 
     /**
@@ -40,12 +44,12 @@ public class SunLayer extends LensFlareLayer implements Observer, SunDependent {
         setName("Sun");
         setPickEnabled(false);
 
-        BufferedImage sunDisk = createHaloImage(64, new Color(1f, 1f, .8f), 2f);
-        BufferedImage disk = createDiskImage(128, Color.WHITE);
-        BufferedImage star = createStarImage(128, Color.WHITE);
-        BufferedImage halo = createHaloImage(128, Color.WHITE);
-        BufferedImage rainbow = createRainbowImage(128);
-        BufferedImage rays = createRaysImage(128, 12, Color.WHITE);
+        BufferedImage sunDisk = LensFlareLayer.createHaloImage(64, new Color(1f, 1f, .8f), 2f);
+        BufferedImage disk = LensFlareLayer.createDiskImage(128, Color.WHITE);
+        BufferedImage star = LensFlareLayer.createStarImage(128, Color.WHITE);
+        BufferedImage halo = LensFlareLayer.createHaloImage(128, Color.WHITE);
+        BufferedImage rainbow = LensFlareLayer.createRainbowImage(128);
+        BufferedImage rays = LensFlareLayer.createRaysImage(128, 12, Color.WHITE);
 
         ArrayList flares = new ArrayList();
         flares.add(new FlareImage(rays, 4, 0, .05));
@@ -71,7 +75,23 @@ public class SunLayer extends LensFlareLayer implements Observer, SunDependent {
         flares.add(new FlareImage(disk, .7, 2.6, .1));
         flares.add(new FlareImage(rainbow, 5, 3.0, .03));
         flares.add(new FlareImage(disk, .2, 3.5, .1));
-        this.addRenderables(flares);
+
+        //ball of fire
+        flare.addRenderables(flares);
+        flare.setEnabled(true);
+        this.addRenderable(flare);
+
+        //Subsolar Placemark
+        subsolarPoint.setVisible(false);
+        this.addRenderable(subsolarPoint);
+
+        //Solar Shading
+        tessellatorRenderable.setVisible(false);
+        this.addRenderable(tessellatorRenderable);
+
+        //Day/Night Terminator
+        terminator.setVisible(false);
+        this.addRenderable(terminator);
     }
 
     public Sun getSun() {
@@ -103,36 +123,19 @@ public class SunLayer extends LensFlareLayer implements Observer, SunDependent {
             return;
         }
 
+        //placemark
+        subsolarPoint.setPosition(sunPosition);
+
+        //LatLon theDarkSide = Position.greatCircleEndPosition(sunPosition, Angle.ZERO, Angle.POS180);
+        terminator.setCenter(sunPosition);
+
         WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
         if (wwm == null) {
             return;
         }
 
         Vec4 sunVector = wwm.getWorldWindow().getModel().getGlobe().computePointFromPosition(sunPosition).normalize3();
-        this.setSunDirection(sunVector);
-        this.sunTessellator.setLightDirection(sunVector.getNegative3());
+        this.flare.setSunDirection(sunVector);
+        this.tessellatorRenderable.getSunTessellator().setLightDirection(sunVector.getNegative3());
     }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-
-        if (getSun() == null) {
-            return;
-        }
-
-        WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-        if (wwm == null) {
-            return;
-        }
-
-        //swap tessellators
-        if (enabled) {
-            originalTessellator = wwm.getWorldWindow().getModel().getGlobe().getTessellator();
-            wwm.getWorldWindow().getModel().getGlobe().setTessellator(sunTessellator);
-        } else if (originalTessellator != null) {
-            wwm.getWorldWindow().getModel().getGlobe().setTessellator(originalTessellator);
-        }
-    }
-
 }

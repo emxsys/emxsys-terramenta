@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/CDDL-1.0
  * http://opensource.org/licenses/GPL-3.0
  */
-package gov.nasa.worldwindx.sunlight;
+package com.terramenta.globe.solar;
 
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.geom.*;
