@@ -14,20 +14,77 @@ package com.terramenta.time;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
- * @author Chris.Heidt
+ * @author chris.heidt
  */
-public class JulianConversions {
+public class DateConverter {
 
     /**
+     * Parse Calendar from iso string
      *
+     * @param s
+     * @return
+     */
+    public static Calendar toCalendar(String s) {
+        return DatatypeConverter.parseDateTime(s);
+    }
+
+    /**
+     * Parse Date from iso string
+     *
+     * @param s
+     * @return
+     */
+    public static Date toDate(String s) {
+        return toCalendar(s).getTime();
+    }
+
+    /**
+     * Creates a string representation of the calendar using the local time zone.
+     *
+     * @param c
+     * @return
+     */
+    public static String toString(Calendar c) {
+        return DatatypeConverter.printDateTime(c);
+    }
+
+    /**
+     * Creates a string representation of the date using the local time zone.
+     *
+     * @param d
+     * @return
+     */
+    public static String toString(Date d) {
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTime(d);
+        return toString(c);
+    }
+
+    /**
+     * Creates a string representation of the date using the provided time zone.
+     *
+     * @param d
+     * @param tz
+     * @return
+     */
+    public static String toString(Date d, TimeZone tz) {
+        Calendar c = GregorianCalendar.getInstance(tz);
+        c.setTime(d);
+        return toString(c);
+    }
+    
+    /**
+     * Julian Date
      * @param date
      * @return
      */
-    public static double convertToJD(Date date) {
+    public static double toJD(Date date) {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         cal.set(-4713, 0, 1, 12, 0, 0);
         long epoch = cal.getTimeInMillis();
@@ -43,21 +100,21 @@ public class JulianConversions {
     }
 
     /**
-     *
+     * Modified Julian Date
      * @param date
      * @return
      */
-    public static double convertToMJD(Date date) {
-        return convertToJD(date) - 2400000.5;
+    public static double toMJD(Date date) {
+        return toJD(date) - 2400000.5;
     }
 
     /**
-     *
+     * Modified Julian Day Ephemeris
      * @param date
      * @return
      */
-    public static double convertToMJDE(Date date) {
-        double mjd = convertToMJD(date);
+    public static double toMJDE(Date date) {
+        double mjd = toMJD(date);
         return mjd + deltaT(mjd);
     }
 
@@ -179,7 +236,7 @@ public class JulianConversions {
      * @param mjd Modified Julian Date
      * @return Greenwich mean sidereal time in degrees (0-360)
      */
-    public static double Greenwich_Mean_Sidereal_Deg(double mjd) {
+    public static double toGMST(double mjd) {
         // calculate T
         double T = (mjd - 51544.5) / 36525.0;
 
@@ -201,7 +258,7 @@ public class JulianConversions {
      * @param longitudeDeg
      * @return mean sidereal time in degrees (0-360)
      */
-    public static double Mean_Sidereal_Deg(double mjd, double longitudeDeg) {
-        return (Greenwich_Mean_Sidereal_Deg(mjd) + longitudeDeg) % 360.0;
+    public static double toMST(double mjd, double longitudeDeg) {
+        return (toGMST(mjd) + longitudeDeg) % 360.0;
     }
 }

@@ -13,7 +13,7 @@
 package com.terramenta.globe.utilities;
 
 import com.terramenta.globe.options.GlobeOptions;
-import com.terramenta.time.JulianConversions;
+import com.terramenta.time.DateConverter;
 import java.time.Instant;
 import java.util.Date;
 import java.util.prefs.Preferences;
@@ -44,7 +44,7 @@ public class EciController {
         if (previousDate == null || !previousDate.equals(date)) {
             previousDate = date;
 
-            double mjd = JulianConversions.convertToMJD(Date.from(date));
+            double mjd = DateConverter.toMJD(Date.from(date));
             // centuries since J2000.0
             double tt = (mjd - 51544.5) / 36525.0;
             // now calculate the mean sidereal time at Greenwich (UT time) in degrees
