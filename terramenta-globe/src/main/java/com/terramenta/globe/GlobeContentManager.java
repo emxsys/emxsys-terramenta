@@ -11,6 +11,8 @@
 package com.terramenta.globe;
 
 import com.terramenta.globe.dnd.DragController;
+import com.terramenta.globe.lunar.Moon;
+import com.terramenta.globe.lunar.MoonDependent;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.globe.utilities.EciController;
 import com.terramenta.globe.utilities.QuickTipController;
@@ -65,6 +67,7 @@ public final class GlobeContentManager implements PreferenceChangeListener {
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
     private static final Sun sun = Lookup.getDefault().lookup(Sun.class);
+    private static final Moon moon = Lookup.getDefault().lookup(Moon.class);
     private static final Globe roundGlobe = wwm.getWorldWindow().getModel().getGlobe();
     private static final FlatGlobe flatGlobe = new EarthFlat();
     private static final QuickTipController quickTipController = new QuickTipController(wwm.getWorldWindow());
@@ -115,10 +118,8 @@ public final class GlobeContentManager implements PreferenceChangeListener {
     }
 
     private void initLayers() {
-        LayerList ll = wwm.getLayers();
-
-        //Default Layers
-        for (Layer layer : ll) {
+        //Adjust settings of layers defined in the worldwind.xml files
+        wwm.getLayers().stream().forEach((layer) -> {
             if (layer instanceof CompassLayer) {
                 CompassLayer compassLayer = (CompassLayer) layer;
                 compassLayer.setIconScale(2 / 10d);
@@ -138,8 +139,10 @@ public final class GlobeContentManager implements PreferenceChangeListener {
                 this.starLayer = (StarsLayer) layer; //Save a reference for rotation
             } else if (layer instanceof SunDependent) {
                 ((SunDependent) layer).setSun(sun);
+            } else if (layer instanceof MoonDependent) {
+                ((MoonDependent) layer).setMoon(moon);
             }
-        }
+        });
     }
 
     /**

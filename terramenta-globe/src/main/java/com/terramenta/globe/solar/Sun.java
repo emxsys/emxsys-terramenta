@@ -10,16 +10,15 @@
  */
 package com.terramenta.globe.solar;
 
+import com.terramenta.time.DateConverter;
 import com.terramenta.time.DateProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Earth;
 import java.time.Instant;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.TimeZone;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -32,8 +31,8 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = Sun.class)
 public class Sun extends Observable {
 
-    public static double AU = 149597870700d;
-    public static double ALTITUDE = AU - Earth.WGS84_EQUATORIAL_RADIUS;
+    public static final double AU = 149597870700d;//meters
+    public static final double ALTITUDE = AU - Earth.WGS84_EQUATORIAL_RADIUS;//meters
     private static final Logger logger = LoggerFactory.getLogger(Sun.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
     private final Observer dateProviderObserver = (Observable o, Object arg) -> {
@@ -47,6 +46,7 @@ public class Sun extends Observable {
         Sun.this.update(date);
     };
     private Position position;
+    private LatLon subsolarPosition;
 
     public Sun() {
         //set current position
@@ -56,61 +56,30 @@ public class Sun extends Observable {
         dateProvider.addObserver(dateProviderObserver);
     }
 
-    /**
-     *
-     * @param date
-     */
-    private void update(Instant date) {
-        if (date == null) {
-            return;
-        }
-
-        double[] ll = subsolarPoint(calcJulianDate(Date.from(date)));
-        position = new Position(LatLon.fromRadians(ll[0], ll[1]), AU);
-        logger.debug("The Sun's Position at {} is {}", date, position);
-
-        this.setChanged();
-        this.notifyObservers(position);
-    }
-
     public Position getPosition() {
         return position;
     }
 
+    public LatLon getSubsolarPosition() {
+        return subsolarPosition;
+    }
+
     /**
-     * Computes the Julian date from the given date/time.
      *
-     * From "Practical Astronomy with Your Calculator" by Peter Duffet-Smith
-     *
-     * @param utc The date and time to convert.
-     * @return The Julian date..
+     * @param datetime
      */
-    public static double calcJulianDate(Date utc) {
-        final long SECONDS_IN_FULL_DAY = 86400;
-        final long SECONDS_IN_HALF_DAY = 43200;
-        // Create Gregorian start date used for comparison
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        cal.set(1592, 10, 15);
-        Date startGregorian = cal.getTime();
-
-        // Convert incoming date to UTC
-        cal.setTime(utc);
-
-        long y = cal.get(Calendar.YEAR);
-        long m = cal.get(Calendar.MONTH) + 1;
-        long d = cal.get(Calendar.DAY_OF_MONTH);
-        if (m <= 2) {
-            y -= 1;
-            m += 12;
+    private void update(Instant datetime) {
+        if (datetime == null) {
+            return;
         }
-        long A = y / 100;
-        long B = utc.after(startGregorian) ? 2 - A + (A / 4) : 0;
-        long C = (y < 0) ? (long) ((365.25 * y) - 0.75) : (long) (365.25 * y);
-        long D = (long) (30.6001 * (m + 1));
-        double offsetFromNoon = ((double) (cal.get(Calendar.HOUR_OF_DAY) * 60 * 60
-                + cal.get(Calendar.MINUTE) * 60
-                + cal.get(Calendar.SECOND) - SECONDS_IN_HALF_DAY)) / SECONDS_IN_FULL_DAY;
-        return B + C + D + d + 1720995 + offsetFromNoon;
+
+        double jd = DateConverter.toJD(Date.from(datetime));
+        subsolarPosition = calculateSubsolarPosition(jd);
+        position = new Position(subsolarPosition, ALTITUDE);
+        logger.debug("The Sun's Position at {} is {}", datetime, position);
+
+        this.setChanged();
+        this.notifyObservers(position);
     }
 
     /**
@@ -124,13 +93,12 @@ public class Sun extends Observable {
      * @param julianDate The date/time used to compute the sun's position.
      * @return The latitude and longitude of the subsolar point. [radians]
      */
-    static double[] subsolarPoint(double julianDate) {
+    private static LatLon calculateSubsolarPosition(double julianDate) {
         // Main variables
-        double elapsedJulianDays;
-        double eclipticLongitude;
-        double eclipticObliquity;
-        double rightAscension, declination;
-        double longitude;
+        double elapsedJulianDays, eclipticLongitude,
+                eclipticObliquity, rightAscension,
+                declination, longitude;
+        
         // Calculate difference in days between the current Julian Day
         // and JD 2451545.0, which is noon 1 January 2000 Universal Time
         {
@@ -184,9 +152,7 @@ public class Sun extends Observable {
         while (longitude <= -Math.PI) {
             longitude += Math.PI * 2.0;
         }
-        // Return latitude and longitude [radians]
-        return new double[]{
-            declination, longitude
-        };
+
+        return LatLon.fromRadians(declination, longitude);
     }
 }

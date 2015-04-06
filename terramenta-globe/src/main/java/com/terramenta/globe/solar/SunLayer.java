@@ -32,7 +32,7 @@ public class SunLayer extends RenderableLayer implements Observer, SunDependent 
 
     private final LensFlareLayer flare = new LensFlareLayer();
     private final TerminatorRenderable terminator = new TerminatorRenderable();
-    private final SubsolarPointRenderable subsolarPoint = new SubsolarPointRenderable();
+    private final SubsolarPlacemark subsolarPoint = new SubsolarPlacemark();
     private final TessellatorRenderable tessellatorRenderable = new TessellatorRenderable();
 
     private Sun sun;
@@ -94,6 +94,7 @@ public class SunLayer extends RenderableLayer implements Observer, SunDependent 
         this.addRenderable(terminator);
     }
 
+    @Override
     public Sun getSun() {
         return sun;
     }

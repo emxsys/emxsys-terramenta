@@ -72,7 +72,7 @@ public class LensFlareLayer extends RenderableLayer implements Renderable{
     public LensFlareLayer() {
         this.setName("Lens Flare");
         this.setValue(AVKey.DISPLAY_NAME, "Lens Flare");
-        this.setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/images/sun-flare.png");
+        this.setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/solar/sun-flare.png");
         this.setPickEnabled(false);
     }
 

@@ -66,23 +66,20 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
         }
 
         //nested runnable to finish the handle
-        future = executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                runnable.run();
-
-                if (future.isCancelled()) {
-                    return;
-                }
-
-                if (handle != null) {
-                    handle.finish();
-                }
-
-                LOGGER.log(Level.FINE, "Completed Task {0}", runnable);
-                setChanged();
-                notifyObservers(runnable);
+        future = executor.submit(() -> {
+            runnable.run();
+            
+            if (future.isCancelled()) {
+                return;
             }
+            
+            if (handle != null) {
+                handle.finish();
+            }
+            
+            LOGGER.log(Level.FINE, "Completed Task {0}", runnable);
+            setChanged();
+            notifyObservers(runnable);
         });
     }
 
@@ -113,9 +110,7 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
         if (future != null) {
             try {
                 future.get();// blocks, which is the point.
-            } catch (InterruptedException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (ExecutionException ex) {
+            } catch (InterruptedException | ExecutionException ex) {
                 Exceptions.printStackTrace(ex);
             }
         }

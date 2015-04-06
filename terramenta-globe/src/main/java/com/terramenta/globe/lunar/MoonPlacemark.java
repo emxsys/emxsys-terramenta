@@ -8,7 +8,7 @@
  * http://opensource.org/licenses/GPL-3.0
  *
  */
-package com.terramenta.globe.solar;
+package com.terramenta.globe.lunar;
 
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -24,24 +24,24 @@ import java.net.URL;
  *
  * @author Chris Heidt <heidtmare@gmail.com>
  */
-public class SubsolarPointRenderable extends PointPlacemark {
+public class MoonPlacemark extends PointPlacemark {
 
-    public SubsolarPointRenderable() {
+    public MoonPlacemark() {
         super(Position.ZERO);
-        
-        String iconbase = "com/terramenta/globe/images/sun.png";
+
+        setValue(AVKey.DISPLAY_NAME, "Moon Orbital");
+        setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/lunar/moon.png");//16x16
+
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setImageOffset(new Offset(0.5, 0.5, AVKey.FRACTION, AVKey.FRACTION));
-        URL resource = getClass().getResource("/" + iconbase);
+        URL resource = getClass().getResource("moon32.png");
         if (resource != null) {
             attributes.setImageAddress(resource.toExternalForm());
         }
         setAttributes(attributes);
-        
-        setValue(AVKey.DISPLAY_NAME, "Subsolar Point");
-        setValue(AVKey.DISPLAY_ICON, iconbase);//16x16
-        
-        setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+
+        setAltitudeMode(WorldWind.ABSOLUTE);
+        setClipToHorizon(false);
     }
 
     /**

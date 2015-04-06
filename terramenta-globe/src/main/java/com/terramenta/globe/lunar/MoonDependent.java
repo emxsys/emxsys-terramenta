@@ -8,16 +8,15 @@
  * http://opensource.org/licenses/GPL-3.0
  *
  */
-package com.terramenta.globe.solar;
+package com.terramenta.globe.lunar;
 
 /**
- * Marker interface
  *
  * @author Chris Heidt <heidtmare@gmail.com>
  */
-public interface SunDependent {
+public interface MoonDependent {
 
-    public Sun getSun();
+    public Moon getMoon();
 
-    public void setSun(Sun sun);
+    public void setMoon(Moon moon);
 }

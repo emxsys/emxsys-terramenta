@@ -36,7 +36,7 @@ public class TerminatorRenderable extends SurfaceCircle {
         setAttributes(attrs);
 
         setValue(AVKey.DISPLAY_NAME, "Day/Night Terminator");
-        setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/images/sun-terminator.png");
+        setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/solar/sun-terminator.png");
         setRadius(Earth.WGS84_EQUATORIAL_RADIUS * Angle.POS90.getRadians());
     }
 
