@@ -14,6 +14,7 @@ import com.terramenta.time.DateConverter;
 import com.terramenta.time.DateProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.globes.Earth;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Observable;
@@ -68,15 +69,71 @@ public class Moon extends Observable {
 
         position = calculateMoonPosition(datetime);
         sublunarPosition = new Position(position, 0);
-        logger.info("The Moon's Position at {} is {}", datetime, position);
+        logger.debug("The Moon's Position at {} is {}", datetime, position);
 
         this.setChanged();
         this.notifyObservers(position);
     }
 
     private static Position calculateMoonPosition(Instant datetime) {
-        double j2000 = DateConverter.toJ2000(Date.from(datetime));
-        double[] lla = MoonPosition.getMoonPositionLLA(j2000);
-        return Position.fromRadians(lla[0], lla[1], lla[2]);
+        //const
+        double rad = Math.PI / 180;
+        double lat = 0d;
+        double lng = 0d;
+        double lw = rad * -lng;
+        double phi = rad * lat;
+
+        double dd = DateConverter.toDecimalDays(DateConverter.J2000, datetime);//number of Julian days since 2000/01/01 at 12 UT
+        double L = rad * (218.316 + 13.176396 * dd); // ecliptic longitude
+        double M = rad * (134.963 + 13.064993 * dd); // mean anomaly
+        double F = rad * (93.272 + 13.229350 * dd);  // mean distance
+
+        double l = L + rad * 6.289 * Math.sin(M); // longitude
+        double b = rad * 5.128 * Math.sin(F);     // latitude
+        double dt = 385001 - 20905 * Math.cos(M);  // distance to the moon in km
+
+        double ra = rightAscension(l, b);
+        double dec = declination(l, b);
+
+        double siderealTime = siderealTime(dd, lw) - ra;
+        double h = altitude(siderealTime, phi, dec);
+        h = h + rad * 0.017 / Math.tan(h + rad * 10.26 / (h + rad * 5.10));// altitude correction for refraction
+
+        double azimuth = azimuth(siderealTime, phi, dec);
+        
+        double dtInMeters = dt * 1000;
+        double dtInRadians = dtInMeters / Earth.WGS84_EQUATORIAL_RADIUS;
+        double altitude = h * dtInMeters;
+
+        logger.debug("azimuth:{}, altitude:{}, distance:{}",
+                azimuth, altitude, dtInRadians
+        );
+
+        return new Position(LatLon.greatCircleEndPosition(LatLon.ZERO, azimuth, dtInRadians), altitude);
+    }
+
+    private static double rightAscension(double l, double b) {
+        double rad = Math.PI / 180;
+        double e = rad * 23.4397; // obliquity of the Earth
+        return Math.atan2(Math.sin(l) * Math.cos(e) - Math.tan(b) * Math.sin(e), Math.cos(l));
+    }
+
+    private static double declination(double l, double b) {
+        double rad = Math.PI / 180;
+        double e = rad * 23.4397; // obliquity of the Earth
+        return Math.asin(Math.sin(b) * Math.cos(e) + Math.cos(b) * Math.sin(e) * Math.sin(l));
+    }
+
+    private static double siderealTime(double d, double lw) {
+        double rad = Math.PI / 180;
+        return rad * (280.16 + 360.9856235 * d) - lw;
+    }
+
+    private static double altitude(double H, double phi, double dec) {
+        return Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(H));
+    }
+
+    private static double azimuth(double H, double phi, double dec) {
+        return Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(phi) - Math.tan(dec) * Math.cos(phi));
     }
 }

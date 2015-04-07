@@ -15,7 +15,6 @@ package com.terramenta.globe.utilities;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.time.DateConverter;
 import java.time.Instant;
-import java.util.Date;
 import java.util.prefs.Preferences;
 import org.openide.util.NbPreferences;
 import org.openide.util.lookup.ServiceProvider;
@@ -40,15 +39,21 @@ public class EciController {
         return rotateECIdeg;
     }
 
-    public double calculateRotationalDegree(Instant date) {
-        if (previousDate == null || !previousDate.equals(date)) {
-            previousDate = date;
+    public double calculateRotationalDegree(Instant datetime) {
+        if (previousDate == null || !previousDate.equals(datetime)) {
+            previousDate = datetime;
 
-            double mjd = DateConverter.toMJD(Date.from(date));
+            double j2000 = DateConverter.toDecimalDays(DateConverter.J2000, datetime);
             // centuries since J2000.0
-            double tt = (mjd - 51544.5) / 36525.0;
+            double tt = j2000 / 36525.0;
             // now calculate the mean sidereal time at Greenwich (UT time) in degrees
-            rotateECIdeg = ((280.46061837 + 360.98564736629 * (mjd - 51544.5)) + 0.000387933 * tt * tt - tt * tt * tt / 38710000.0 + offsetRotdeg) % 360.0;
+            rotateECIdeg = ((280.46061837 + 360.98564736629 * j2000) + 0.000387933 * tt * tt - tt * tt * tt / 38710000.0 + offsetRotdeg) % 360.0;
+
+//            double mjd = DateConverter.toDecimalDays(DateConverter.MJD, datetime);
+//            // centuries since J2000.0
+//            double tt = (mjd - 51544.5) / 36525.0;
+//            // now calculate the mean sidereal time at Greenwich (UT time) in degrees
+//            rotateECIdeg = ((280.46061837 + 360.98564736629 * (mjd - 51544.5)) + 0.000387933 * tt * tt - tt * tt * tt / 38710000.0 + offsetRotdeg) % 360.0;
         }
 
         return rotateECIdeg;

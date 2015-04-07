@@ -73,7 +73,7 @@ public class Sun extends Observable {
             return;
         }
 
-        double jd = DateConverter.toJD(Date.from(datetime));
+        double jd = DateConverter.toDecimalDays(DateConverter.JD, datetime);
         subsolarPosition = calculateSubsolarPosition(jd);
         position = new Position(subsolarPosition, ALTITUDE);
         logger.debug("The Sun's Position at {} is {}", datetime, position);
