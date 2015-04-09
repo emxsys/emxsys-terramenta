@@ -19,7 +19,6 @@
         <!-- DEPENDENCY VERSIONS -->
         <beansbinding.version>1.2.1</beansbinding.version>
         <jogl.version>2.1.5-01</jogl.version>
-        <jsofa.version>20150209</jsofa.version>
         <junit.version>4.12</junit.version>
         <netbeans.version>RELEASE802</netbeans.version>
         <slf4j.version>1.7.10</slf4j.version>

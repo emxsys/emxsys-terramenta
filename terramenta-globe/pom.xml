@@ -100,16 +100,6 @@
         
         <!-- MISC -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jastronomy</groupId>
-            <artifactId>jsofa</artifactId>
-            <version>${jsofa.version}</version>
-        </dependency>
-        <dependency>
             <artifactId>slf4j-api</artifactId>
             <groupId>org.slf4j</groupId>
         </dependency>
