@@ -84,6 +84,9 @@
                         <publicPackage>com.terramenta.message</publicPackage>
                         <publicPackage>com.terramenta.utilities</publicPackage>
                         <publicPackage>jfxtras.scene.control</publicPackage>
+                        <publicPackage>jfxtras.internal.scene.control</publicPackage>
+                        <publicPackage>jfxtras.internal.scene.control.fxml</publicPackage>
+                        <publicPackage>jfxtras.internal.scene.control.skin</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

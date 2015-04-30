@@ -29,6 +29,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import jfxtras.scene.control.CalendarPicker;
 import jfxtras.scene.control.CalendarTextField;
 import org.openide.util.Lookup;
 import org.openide.util.NbPreferences;
@@ -71,7 +72,13 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
                     .withCalendar(Calendar.getInstance(TimeZone.getTimeZone(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE)))
                     );
             calendarTextField.calendarProperty().addListener(calendarChangeListener);
-            jfxPanel.setScene(new Scene(calendarTextField));
+
+            Scene scene = new Scene(calendarTextField);
+            scene.getStylesheets().addAll(
+                    CalendarTextField.class.getResource("/jfxtras/internal/scene/control/" + CalendarTextField.class.getSimpleName() + ".css").toExternalForm(),
+                    CalendarPicker.class.getResource("/jfxtras/internal/scene/control/" + CalendarPicker.class.getSimpleName() + ".css").toExternalForm()
+            );
+            jfxPanel.setScene(scene);
         });
 
         setPreferredSize(new Dimension(220, 60));
