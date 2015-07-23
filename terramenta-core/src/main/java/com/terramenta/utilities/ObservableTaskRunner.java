@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.netbeans.api.progress.ProgressHandle;
 import org.openide.util.Cancellable;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -68,15 +67,15 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
         //nested runnable to finish the handle
         future = executor.submit(() -> {
             runnable.run();
-            
+
             if (future.isCancelled()) {
                 return;
             }
-            
+
             if (handle != null) {
                 handle.finish();
             }
-            
+
             LOGGER.log(Level.FINE, "Completed Task {0}", runnable);
             setChanged();
             notifyObservers(runnable);
@@ -111,7 +110,7 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
             try {
                 future.get();// blocks, which is the point.
             } catch (InterruptedException | ExecutionException ex) {
-                Exceptions.printStackTrace(ex);
+                LOGGER.warning("Task executaion was interrupted!");
             }
         }
     }
