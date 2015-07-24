@@ -109,8 +109,12 @@ public class ObservableTaskRunner extends Observable implements Cancellable {
         if (future != null) {
             try {
                 future.get();// blocks, which is the point.
-            } catch (InterruptedException | ExecutionException ex) {
+            } catch (InterruptedException ex) {
                 LOGGER.warning("Task executaion was interrupted!");
+                cancel();//force cleanup and notify
+            } catch (ExecutionException ex) {
+                LOGGER.log(Level.WARNING, "Task executaion exception! {0}", ex.getMessage());
+                cancel();//force cleanup and notify
             }
         }
     }
