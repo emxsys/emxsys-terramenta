@@ -116,9 +116,6 @@
               <Connection code="this.localeModel" type="code"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="localeComboActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="formatCombo">
           <Properties>
@@ -126,9 +123,6 @@
               <Connection code="this.formatModel" type="code"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="formatComboActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

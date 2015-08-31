@@ -12,6 +12,7 @@
  */
 package com.terramenta.time.options;
 
+import java.time.ZoneId;
 import java.util.Locale;
 
 /**
@@ -19,11 +20,12 @@ import java.util.Locale;
  * @author Chris.Heidt
  */
 public class TimeOptions {
+
     public static final String TIMEZONE = "tm.time.timezone";
     public static final String LOCALE = "tm.time.locale";
     public static final String FORMAT = "tm.time.format";
-    
-    public static final String DEFAULT_TIMEZONE = "UTC";
+
+    public static final String DEFAULT_TIMEZONE = ZoneId.systemDefault().getId();
     public static final String DEFAULT_LOCALE = Locale.getDefault().toLanguageTag();
-    public static final String DEFAULT_FORMAT = "yyyy/MM/dd HH:mm:ss";
+    public static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss XXX";
 }

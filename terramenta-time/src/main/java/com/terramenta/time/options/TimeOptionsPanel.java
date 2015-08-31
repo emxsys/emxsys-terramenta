@@ -12,12 +12,13 @@
  */
 package com.terramenta.time.options;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 import java.util.prefs.Preferences;
 import javax.swing.SwingWorker;
 import org.openide.util.NbPreferences;
@@ -26,42 +27,38 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
     private static final Preferences prefs = NbPreferences.forModule(TimeOptions.class);
     private final TimeOptionsPanelController controller;
-    private final SortableComboBoxModel<TimeZoneProxy> timeZoneModel = new SortableComboBoxModel<>();
-    private final SortableComboBoxModel<LocaleProxy> localeModel = new SortableComboBoxModel<>();
-    private final SortableComboBoxModel<FormatProxy> formatModel = new SortableComboBoxModel<>();
+    private final SortableComboBoxModel<TimeZoneComparable> timeZoneModel = new SortableComboBoxModel<>();
+    private final SortableComboBoxModel<LocaleComparable> localeModel = new SortableComboBoxModel<>();
+    private final SortableComboBoxModel<FormatComparable> formatModel = new SortableComboBoxModel<>();
 
     /**
      * TimeZoneProxy makes a TimeZone compatible with a ComboBoxModel.
      */
-    private class TimeZoneProxy implements Comparable<TimeZoneProxy> {
+    private class TimeZoneComparable implements Comparable<TimeZoneComparable> {
 
-        private final TimeZone tz;
+        private final ZoneId zoneId;
 
-        TimeZoneProxy(String timeZoneID) {
-            tz = TimeZone.getTimeZone(timeZoneID);
+        TimeZoneComparable(ZoneId zoneId) {
+            this.zoneId = zoneId;
         }
 
-        public TimeZone getTimeZone() {
-            return tz;
+        public ZoneId getTimeZone() {
+            return zoneId;
         }
 
         @Override
         public String toString() {
-            // E.g.: (UTC-08:00) America/Los Angeles : Pacific Time Zone - PST
-            int hours = tz.getRawOffset() / 3600000;
-            int minutes = Math.abs(tz.getRawOffset() % 3600);
-            return String.format("(UTC%1$+03d:%2$02d) %3$s : %4$s - %5$s",
-                    hours, minutes, tz.getID(), tz.getDisplayName(false, TimeZone.LONG), tz.getDisplayName(false, TimeZone.SHORT));
+            return LocalDateTime.now().atZone(zoneId).getOffset() + " : \t" + zoneId;
         }
 
         @Override
-        public int compareTo(TimeZoneProxy o) {
+        public int compareTo(TimeZoneComparable o) {
             return toString().compareTo(o.toString());
         }
 
         @Override
         public int hashCode() {
-            return tz.hashCode();
+            return zoneId.hashCode();
         }
 
         @Override
@@ -72,8 +69,8 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final TimeZoneProxy other = (TimeZoneProxy) obj;
-            return tz.getID().equals(other.tz.getID());
+            final TimeZoneComparable other = (TimeZoneComparable) obj;
+            return zoneId.getId().equals(other.zoneId.getId());
         }
 
     }
@@ -81,11 +78,11 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
     /**
      * LocaleProxy makes a Locale compatible with a ComboBoxModel.
      */
-    private class LocaleProxy implements Comparable<LocaleProxy> {
+    private class LocaleComparable implements Comparable<LocaleComparable> {
 
         private final Locale locale;
 
-        LocaleProxy(Locale locale) {
+        LocaleComparable(Locale locale) {
             this.locale = locale;
         }
 
@@ -99,7 +96,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
         }
 
         @Override
-        public int compareTo(LocaleProxy o) {
+        public int compareTo(LocaleComparable o) {
             return toString().compareTo(o.toString());
         }
 
@@ -116,7 +113,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final LocaleProxy other = (LocaleProxy) obj;
+            final LocaleComparable other = (LocaleComparable) obj;
             return locale.toLanguageTag().equals(other.locale.toLanguageTag());
         }
 
@@ -125,11 +122,11 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
     /**
      * LocaleProxy makes a Locale compatible with a ComboBoxModel.
      */
-    private class FormatProxy implements Comparable<FormatProxy> {
+    private class FormatComparable implements Comparable<FormatComparable> {
 
         private final String pattern;
 
-        FormatProxy(String pattern) {
+        FormatComparable(String pattern) {
             this.pattern = pattern;
         }
 
@@ -139,13 +136,11 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         public String toString() {
-            Locale locale = getSelectedLocale();
-            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, locale);
-            return dateFormat.format(Calendar.getInstance().getTime()) + " (" + dateFormat.toLocalizedPattern() + ")";
+            return DateTimeFormatter.ofPattern(pattern, getSelectedLocale()).format(ZonedDateTime.now(getSelectedTimeZone()));
         }
 
         @Override
-        public int compareTo(FormatProxy o) {
+        public int compareTo(FormatComparable o) {
             return toString().compareTo(o.toString());
         }
 
@@ -162,13 +157,13 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final FormatProxy other = (FormatProxy) obj;
+            final FormatComparable other = (FormatComparable) obj;
             return pattern.equals(other.pattern);
         }
 
     }
 
-    private class TimeZoneLoader extends SwingWorker<SortableComboBoxModel, TimeZoneProxy> {
+    private class TimeZoneLoader extends SwingWorker<SortableComboBoxModel, TimeZoneComparable> {
 
         private final SortableComboBoxModel model;
 
@@ -178,23 +173,29 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         protected SortableComboBoxModel doInBackground() throws Exception {
-            for (String id : TimeZone.getAvailableIDs()) {
-                TimeZoneProxy proxy = new TimeZoneProxy(id);
+            ZoneId.getAvailableZoneIds().stream().map((id) -> new TimeZoneComparable(ZoneId.of(id))).forEach((proxy) -> {
                 publish(proxy);
-            }
+            });
             return model;
         }
 
         @Override
-        protected void process(List<TimeZoneProxy> proxies) {
-            for (TimeZoneProxy proxy : proxies) {
+        protected void process(List<TimeZoneComparable> proxies) {
+            proxies.stream().forEach((proxy) -> {
                 model.addElement(proxy);
+            });
+        }
+
+        @Override
+        protected void done() {
+            if (timeZoneCombo != null) {
+                timeZoneCombo.setSelectedItem(new TimeZoneComparable(ZoneId.of(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE))));
             }
         }
 
     }
 
-    private class LocaleLoader extends SwingWorker<SortableComboBoxModel, LocaleProxy> {
+    private class LocaleLoader extends SwingWorker<SortableComboBoxModel, LocaleComparable> {
 
         private final SortableComboBoxModel model;
 
@@ -204,26 +205,29 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         protected SortableComboBoxModel doInBackground() throws Exception {
-            //List<TimeZoneProxy> proxies = new ArrayList<>();
-            for (Locale locale : DateFormat.getAvailableLocales()) {
-                LocaleProxy proxy = new LocaleProxy(locale);
-                //proxies.add(new TimeZoneProxy(id));
+            for (Locale locale : Locale.getAvailableLocales()) {
+                LocaleComparable proxy = new LocaleComparable(locale);
                 publish(proxy);
             }
-
-            //Collections.sort(proxies);
             return model;
         }
 
         @Override
-        protected void process(List<LocaleProxy> proxies) {
-            for (LocaleProxy proxy : proxies) {
+        protected void process(List<LocaleComparable> proxies) {
+            proxies.stream().forEach((proxy) -> {
                 model.addElement(proxy);
+            });
+        }
+
+        @Override
+        protected void done() {
+            if (localeCombo != null) {
+                localeCombo.setSelectedItem(new LocaleComparable(Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))));
             }
         }
     }
 
-    private class FormatLoader extends SwingWorker<SortableComboBoxModel, FormatProxy> {
+    private class FormatLoader extends SwingWorker<SortableComboBoxModel, FormatComparable> {
 
         private final SortableComboBoxModel model;
 
@@ -234,13 +238,14 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
         @Override
         protected SortableComboBoxModel doInBackground() throws Exception {
             String[] patterns = {
-                "yyyy/MM/dd HH:mm:ss",
-                "yyyy/MM/dd HH:mm:ss z",
-                "yyyy/MM/dd HH:mm:ss XXX",
+                "yyyy-MM-dd HH:mm:ss z",
+                "yyyy-MM-dd HH:mm:ss XXX",
+                "dd MMM yy @ HH:mm:ss",
+                "MMMM dd yyyy '@' HH:mm:ss",
                 getDefaultPattern(getSelectedLocale())};
 
             for (String pattern : patterns) {
-                FormatProxy proxy = new FormatProxy(pattern);
+                FormatComparable proxy = new FormatComparable(pattern);
                 publish(proxy);
             }
 
@@ -248,27 +253,68 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
         }
 
         @Override
-        protected void process(List<FormatProxy> proxies) {
-            for (FormatProxy proxy : proxies) {
+        protected void process(List<FormatComparable> proxies) {
+            proxies.stream().forEach((proxy) -> {
                 model.addElement(proxy);
+            });
+        }
+
+        @Override
+        protected void done() {
+            if (formatCombo != null) {
+                formatCombo.setSelectedItem(new FormatComparable(prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT)));
             }
         }
+
     }
 
     TimeOptionsPanel(TimeOptionsPanelController controller) {
         this.controller = controller;
 
+        initComponents();
+
         new TimeZoneLoader(timeZoneModel).run();
         new LocaleLoader(localeModel).run();
         new FormatLoader(formatModel).run();
+    }
 
-        initComponents();
+    void load() {
+        timeZoneCombo.setSelectedItem(new TimeZoneComparable(ZoneId.of(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE))));
+        localeCombo.setSelectedItem(new LocaleComparable(Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))));
+        formatCombo.setSelectedItem(new FormatComparable(prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT)));
+    }
+
+    void store() {
+        prefs.put(TimeOptions.TIMEZONE, ((TimeZoneComparable) (timeZoneCombo.getSelectedItem())).getTimeZone().getId());
+        prefs.put(TimeOptions.LOCALE, ((LocaleComparable) (localeCombo.getSelectedItem())).getLocale().toLanguageTag());
+        prefs.put(TimeOptions.FORMAT, ((FormatComparable) (formatCombo.getSelectedItem())).getPattern());
+    }
+
+    boolean valid() {
+        // TODO check whether form is consistent and complete
+        return true;
     }
 
     private Locale getSelectedLocale() {
-        return localeCombo != null
-                ? ((LocaleProxy) (localeCombo.getSelectedItem())).getLocale()
-                : Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE));
+        if (localeCombo != null) {
+            LocaleComparable selection = (LocaleComparable) localeCombo.getSelectedItem();
+            if (selection != null) {
+                return selection.getLocale();
+            }
+        }
+
+        return Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE));
+    }
+
+    private ZoneId getSelectedTimeZone() {
+        if (timeZoneCombo != null) {
+            TimeZoneComparable selection = (TimeZoneComparable) timeZoneCombo.getSelectedItem();
+            if (selection != null) {
+                return selection.getTimeZone();
+            }
+        }
+
+        return ZoneId.of(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE));
     }
 
     private String getDefaultPattern(Locale locale) {
@@ -306,18 +352,8 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
         timeZoneCombo.setModel(this.timeZoneModel);
 
         localeCombo.setModel(this.localeModel);
-        localeCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                localeComboActionPerformed(evt);
-            }
-        });
 
         formatCombo.setModel(this.formatModel);
-        formatCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                formatComboActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -365,36 +401,6 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formatComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formatComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formatComboActionPerformed
-
-    private void localeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeComboActionPerformed
-        // Reinitialize formats to reflect locale specific format
-        //initFormats();
-    }//GEN-LAST:event_localeComboActionPerformed
-
-    void load() {
-        timeZoneCombo.setSelectedItem(
-                new TimeZoneProxy(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE)));
-        localeCombo.setSelectedItem(
-                new LocaleProxy(Locale.forLanguageTag(
-                                prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))));
-        formatCombo.setSelectedItem(
-                new FormatProxy(prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT)));
-    }
-
-    void store() {
-        prefs.put(TimeOptions.TIMEZONE, ((TimeZoneProxy) (timeZoneCombo.getSelectedItem())).getTimeZone().getID());
-        prefs.put(TimeOptions.LOCALE, ((LocaleProxy) (localeCombo.getSelectedItem())).getLocale().toLanguageTag());
-        prefs.put(TimeOptions.FORMAT, ((FormatProxy) (formatCombo.getSelectedItem())).getPattern());
-    }
-
-    boolean valid() {
-        // TODO check whether form is consistent and complete
-        return true;
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
