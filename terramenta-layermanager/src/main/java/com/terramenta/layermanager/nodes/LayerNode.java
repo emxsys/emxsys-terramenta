@@ -22,7 +22,6 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 import org.openide.actions.MoveDownAction;
 import org.openide.actions.MoveUpAction;
@@ -31,7 +30,6 @@ import org.openide.actions.RenameAction;
 import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
 import org.openide.util.Lookup;
-import org.openide.util.WeakListeners;
 import org.openide.util.actions.SystemAction;
 
 /**
@@ -62,7 +60,7 @@ public class LayerNode extends BeanNode implements BooleanState.Provider, Destro
             if (evt == null || evt.getSource() != layer) {
                 return;
             }
-            
+
             switch (evt.getPropertyName()) {
                 case "Enabled":
                     if (evt.getNewValue().equals(Boolean.TRUE)) {

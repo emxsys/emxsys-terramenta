@@ -64,13 +64,9 @@ public final class LayerManagerTopComponent extends TopComponent implements Expl
         associateLookup(ExplorerUtils.createLookup(this.getExplorerManager(), this.getActionMap()));
         em.setRootContext(new RootNode(new LayerNodeFactory()));
 
-        WindowManager.getDefault().invokeWhenUIReady(new Runnable() {
-
-            @Override
-            public void run() {
-                // Initialize contextual ribbon task groups
-                LayerTools.getInstance();
-            }
+        WindowManager.getDefault().invokeWhenUIReady(() -> {
+            // Initialize contextual ribbon task groups
+            LayerTools.getInstance();
         });
     }
 

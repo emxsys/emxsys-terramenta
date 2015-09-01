@@ -12,8 +12,6 @@
  */
 package com.terramenta.layermanager.nodes;
 
-import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
 import java.beans.IntrospectionException;

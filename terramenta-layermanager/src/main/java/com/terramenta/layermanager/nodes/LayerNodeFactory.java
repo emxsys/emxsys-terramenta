@@ -18,8 +18,6 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.LayerList;
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.logging.Logger;
 import javax.swing.event.ChangeListener;
 import org.openide.nodes.Children;
 import org.openide.nodes.Index;
@@ -33,27 +31,22 @@ import org.openide.util.Lookup;
  */
 public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
 
-    private static final Logger logger = Logger.getLogger(LayerNodeFactory.class.getName());
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private Index indexSupport;
 
     /**
-     * 
+     *
      */
     public LayerNodeFactory() {
-        wwm.getLayers().addPropertyChangeListener(new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals(AVKey.LAYERS)) {
-                    addNotify();
-                }
+        wwm.getLayers().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if (evt.getPropertyName().equals(AVKey.LAYERS)) {
+                addNotify();
             }
         });
     }
 
     /**
-     * 
+     *
      */
     @Override
     protected void addNotify() {
@@ -63,7 +56,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param layer
      * @return
      */
@@ -78,7 +71,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param l
      */
     @Override
@@ -87,7 +80,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param l
      */
     @Override
@@ -96,7 +89,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param x
      * @param y
      */
@@ -106,7 +99,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param node
      * @return
      */
@@ -116,7 +109,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param i
      */
     @Override
@@ -125,7 +118,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param i
      */
     @Override
@@ -134,7 +127,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param x
      * @param y
      */
@@ -144,7 +137,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public void reorder() {
@@ -152,7 +145,7 @@ public class LayerNodeFactory extends Children.Keys<Layer> implements Index {
     }
 
     /**
-     * 
+     *
      * @param i
      */
     @Override
