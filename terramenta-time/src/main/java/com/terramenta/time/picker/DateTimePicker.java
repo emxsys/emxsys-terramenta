@@ -14,6 +14,7 @@ package com.terramenta.time.picker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -31,6 +32,7 @@ public class DateTimePicker extends DatePicker {
     ;
     private final ObjectProperty<LocalTime> timeProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<ZonedDateTime> dateTimeProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<ZoneId> zoneProperty = new SimpleObjectProperty<>();
     private boolean isUpdating = false;// Set a semiphore to prevent a recursive call into setDate by the timestamp listener
 
     private ChangeListener updateDateTime = (ChangeListener) (obs, ov, nv) -> {
@@ -38,10 +40,32 @@ public class DateTimePicker extends DatePicker {
             return;
         }
 
+        LocalDate date = getValue();
+        if (date == null) {
+            dateTimeProperty.set(null);
+            return;
+        }
+
+        LocalTime time = getTime();
+        if (time == null) {
+            time = LocalTime.MIN;
+        }
+
+        ZoneId zone = getZone();
+        if (zone == null) {
+            ZonedDateTime dt = getDateTime();
+            if (dt != null) {
+                zone = dt.getZone();
+            }
+        }
+        if (zone == null) {
+            zone = ZoneId.systemDefault();
+        }
+
         ZonedDateTime zdt = ZonedDateTime.of(
-                getValue(),
-                getTime(),
-                getDateTime().getZone()
+                date,
+                time,
+                zone
         );
         dateTimeProperty.set(zdt);
     };
@@ -58,8 +82,14 @@ public class DateTimePicker extends DatePicker {
         //update date and time on dt change
         dateTimeProperty.addListener((obs, ov, nv) -> {
             isUpdating = true;
-            setValue(nv.toLocalDate());
-            setTime(nv.toLocalTime());
+            if (nv == null) {
+                setValue(LocalDate.now());
+                setTime(LocalTime.MIN);
+            } else {
+                setValue(nv.toLocalDate());
+                setTime(nv.toLocalTime());
+                setZone(nv.getZone());
+            }
             isUpdating = false;
         });
 
@@ -67,7 +97,8 @@ public class DateTimePicker extends DatePicker {
 
             @Override
             public String toString(LocalDate object) {
-                return dateTimeFormatterProperty.get().format(dateTimeProperty().get());
+                ZonedDateTime zdt = dateTimeProperty().get();
+                return zdt == null ? "" : dateTimeFormatterProperty.get().format(zdt);
             }
 
             @Override
@@ -118,5 +149,17 @@ public class DateTimePicker extends DatePicker {
 
     public ObjectProperty<DateTimeFormatter> dateTimeFormatterProperty() {
         return dateTimeFormatterProperty;
+    }
+
+    public ObjectProperty<ZoneId> zoneProperty() {
+        return zoneProperty;
+    }
+
+    public void setZone(ZoneId zone) {
+        zoneProperty.set(zone);
+    }
+
+    public ZoneId getZone() {
+        return zoneProperty.get();
     }
 }
