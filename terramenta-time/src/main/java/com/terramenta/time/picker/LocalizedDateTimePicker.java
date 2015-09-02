@@ -53,8 +53,7 @@ public class LocalizedDateTimePicker extends DateTimePicker {
             Platform.runLater(() -> {
                 switch (evt.getKey()) {
                     case TimeOptions.TIMEZONE:
-                        ZonedDateTime withZoneSameInstant = dateTimeProperty().get().withZoneSameInstant(ZoneId.of(evt.getNewValue())); //.setLocalDateTime(LocalDateTime.of(plusSeconds.toLocalDate(), plusSeconds.toLocalTime()));
-                        dateTimeProperty().set(withZoneSameInstant);
+                        zoneProperty().set(ZoneId.of(evt.getNewValue()));
                         break;
                     case TimeOptions.LOCALE:
                     //fall through

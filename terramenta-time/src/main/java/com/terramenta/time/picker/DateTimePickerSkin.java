@@ -19,7 +19,10 @@ import javafx.scene.layout.HBox;
 
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.TextField;
+import javafx.util.converter.NumberStringConverter;
 
 public class DateTimePickerSkin extends DatePickerSkin {
 
@@ -45,37 +48,69 @@ public class DateTimePickerSkin extends DatePickerSkin {
         if (ret == null) {
             ret = (DatePickerContent) super.getPopupContent();
 
+            Label hoursLabel = new Label("Hours: ");
+            hoursLabel.setMinWidth(50);
+            hoursLabel.setMaxWidth(50);
+            hoursLabel.setPrefWidth(50);
+            TextField hoursField = new TextField();
+            hoursField.setMinWidth(20);
+            hoursField.setMaxWidth(20);
+            hoursField.setPrefWidth(20);
             Slider hoursSlider = new Slider(0, 23, (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getHour() : 0));
-            Label hoursLabel = new Label("Hours: " + (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getHour() : "") + " ");
+            Bindings.bindBidirectional(hoursField.textProperty(), hoursSlider.valueProperty(), new NumberStringConverter("00"));
 
+            Label minutesLabel = new Label("Minutes: ");
+            minutesLabel.setMinWidth(50);
+            minutesLabel.setMaxWidth(50);
+            minutesLabel.setPrefWidth(50);
+            TextField minutesField = new TextField();
+            minutesField.setMinWidth(20);
+            minutesField.setMaxWidth(20);
+            minutesField.setPrefWidth(20);
             Slider minutesSlider = new Slider(0, 59, (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getMinute() : 0));
-            Label minutesLabel = new Label("Minutes: " + (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getMinute() : "") + " ");
+            Bindings.bindBidirectional(minutesField.textProperty(), minutesSlider.valueProperty(), new NumberStringConverter("00"));
 
+            Label secondsLabel = new Label("Seconds: ");
+            secondsLabel.setMinWidth(50);
+            secondsLabel.setMaxWidth(50);
+            secondsLabel.setPrefWidth(50);
+            TextField secondsField = new TextField();
+            secondsField.setMinWidth(20);
+            secondsField.setMaxWidth(20);
+            secondsField.setPrefWidth(20);
             Slider secondsSlider = new Slider(0, 59, (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getSecond() : 0));
-            Label secondsLabel = new Label("Seconds: " + (dateTimePicker.getTime() != null ? dateTimePicker.getTime().getSecond() : "") + " ");
+            Bindings.bindBidirectional(secondsField.textProperty(), secondsSlider.valueProperty(), new NumberStringConverter("00"));
 
-            ret.getChildren().addAll(new HBox(hoursLabel, hoursSlider), new HBox(minutesLabel, minutesSlider), new HBox(secondsLabel, secondsSlider));
+            ret.getChildren().addAll(
+                    new HBox(hoursLabel, hoursField, hoursSlider),
+                    new HBox(minutesLabel, minutesField, minutesSlider),
+                    new HBox(secondsLabel, secondsField, secondsSlider));
 
             hoursSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                int hours = newValue.intValue();
-                hoursLabel.setText("Hours: " + String.format("%02d", hours) + " ");
-                dateTimePicker.setTime(dateTimePicker.getTime().withHour(hours));
+                dateTimePicker.setTime(dateTimePicker.getTime().withHour(newValue.intValue()));
             });
 
             minutesSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                int minutes = newValue.intValue();
-                minutesLabel.setText("Minutes: " + String.format("%02d", minutes) + " ");
-                dateTimePicker.setTime(dateTimePicker.getTime().withMinute(minutes));
+                dateTimePicker.setTime(dateTimePicker.getTime().withMinute(newValue.intValue()));
             });
 
             secondsSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                int seconds = newValue.intValue();
-                secondsLabel.setText("Seconds: " + String.format("%02d", seconds) + " ");
-                dateTimePicker.setTime(dateTimePicker.getTime().withSecond(seconds));
+                dateTimePicker.setTime(dateTimePicker.getTime().withSecond(newValue.intValue()));
+            });
+
+            dateTimePicker.timeProperty().addListener((obs, ov, nv) -> {
+                if (nv == null) {
+                    hoursSlider.setValue(0);
+                    minutesSlider.setValue(0);
+                    secondsSlider.setValue(0);
+                    return;
+                }
+                hoursSlider.setValue(nv.getHour());
+                minutesSlider.setValue(nv.getMinute());
+                secondsSlider.setValue(nv.getSecond());
             });
 
         }
         return ret;
     }
-
 }

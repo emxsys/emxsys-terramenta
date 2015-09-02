@@ -79,7 +79,10 @@ public class DateTimePicker extends DatePicker {
         //update dt on time change
         timeProperty.addListener(updateDateTime);
 
-        //update date and time on dt change
+        //update dt on zone change
+        zoneProperty.addListener(updateDateTime);
+
+        //update date, time, and zone on dt change
         dateTimeProperty.addListener((obs, ov, nv) -> {
             isUpdating = true;
             if (nv == null) {
@@ -103,10 +106,22 @@ public class DateTimePicker extends DatePicker {
 
             @Override
             public LocalDate fromString(String string) {
-                return LocalDate.parse(string, dateTimeFormatterProperty.get());
+                ZonedDateTime zdt = ZonedDateTime.parse(string, dateTimeFormatterProperty.get());
+                if (zdt == null) {
+                    //NOTE: we dont reset zone. we'll need that later to rebuild our zoneddatetime from date and time instances
+                    //clear time
+                    timeProperty.set(null);
+                    //clear date
+                    return null;
+                }
+                //apply change to time
+                timeProperty.set(zdt.toLocalTime());
+                //apply chage to date
+                return zdt.toLocalDate();
             }
         });
 
+        //initial value
         setDateTime(ZonedDateTime.now());
     }
 
