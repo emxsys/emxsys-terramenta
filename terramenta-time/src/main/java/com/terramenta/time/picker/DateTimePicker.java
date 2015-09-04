@@ -29,7 +29,6 @@ import javafx.util.StringConverter;
 public class DateTimePicker extends DatePicker {
 
     private final ObjectProperty<DateTimeFormatter> dateTimeFormatterProperty = new SimpleObjectProperty<>(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US));
-    ;
     private final ObjectProperty<LocalTime> timeProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<ZonedDateTime> dateTimeProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<ZoneId> zoneProperty = new SimpleObjectProperty<>();
@@ -42,12 +41,15 @@ public class DateTimePicker extends DatePicker {
 
         LocalDate date = getValue();
         if (date == null) {
-            dateTimeProperty.set(null);
-            return;
+            //this can happen when starting from an empty field and only adjusting the
+            //time sliders, so we'll give the user a default date of now.
+            date = LocalDate.now();
         }
 
         LocalTime time = getTime();
         if (time == null) {
+            //i dont think this condition can happen naturally,
+            //but the user could mess with the timeProperty
             time = LocalTime.MIN;
         }
 
@@ -86,8 +88,8 @@ public class DateTimePicker extends DatePicker {
         dateTimeProperty.addListener((obs, ov, nv) -> {
             isUpdating = true;
             if (nv == null) {
-                setValue(LocalDate.now());
-                setTime(LocalTime.MIN);
+                setValue(null);
+                setTime(LocalTime.MIN);//we always need a time to prevent null points from the time sliders, 00:00 is perfect.
             } else {
                 setValue(nv.toLocalDate());
                 setTime(nv.toLocalTime());
