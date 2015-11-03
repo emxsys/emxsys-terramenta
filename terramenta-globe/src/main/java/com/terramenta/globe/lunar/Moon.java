@@ -10,6 +10,7 @@
  */
 package com.terramenta.globe.lunar;
 
+import com.terramenta.globe.utilities.CoordinateConversion;
 import com.terramenta.time.DateConverter;
 import com.terramenta.time.DateProvider;
 import gov.nasa.worldwind.geom.LatLon;
@@ -20,7 +21,6 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.jastronomy.jsofa.JSOFA;
 import org.openide.util.Lookup;
@@ -37,8 +37,6 @@ public class Moon extends Observable {
 
     private static final Logger logger = LoggerFactory.getLogger(Moon.class);
     private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
-    private static final double eps_mach = 2.22E-17; // machine precision (double?)
-    private static final double eps = 1.0e3 * eps_mach;   // Convergence criterion
     private final Observer dateProviderObserver = (Observable o, Object arg) -> {
         Instant date;
         if (arg instanceof Date) {
@@ -155,8 +153,8 @@ public class Moon extends Observable {
 
         //coordinate conversions
         double[] teme = moonPosition.mapMultiply(distanceInMeters).toArray();
-        double[] ecef = teme2ecef(jd, teme);
-        double[] lla = ecef2lla(ecef);
+        double[] ecef = CoordinateConversion.teme2ecef(jd, teme);
+        double[] lla = CoordinateConversion.ecef2lla(ecef);
 
         return Position.fromRadians(lla[0], lla[1], lla[2]);
     }
@@ -172,154 +170,5 @@ public class Moon extends Observable {
             longitudeOfMoon += 360.0;
         }
         return longitudeOfMoon;
-    }
-
-    /**
-     *
-     * @param jd
-     * @param teme
-     * @return
-     */
-    private static double[] teme2ecef(double jd, double[] teme) {
-        double angle = JSOFA.jauGmst82(jd, 0.0);
-
-        //Rz
-        final double C = Math.cos(angle);
-        final double S = Math.sin(angle);
-        double[][] U = new double[3][3];
-        U[0][0] = +C;
-        U[0][1] = +S;
-        U[0][2] = 0.0;
-        U[1][0] = -S;
-        U[1][1] = +C;
-        U[1][2] = 0.0;
-        U[2][0] = 0.0;
-        U[2][1] = 0.0;
-        U[2][2] = 1.0;
-
-        RealMatrix sideralTimeMatrix = MatrixUtils.createRealMatrix(U);
-        return sideralTimeMatrix.operate(teme);
-    }
-
-    /**
-     *
-     * @param ecef
-     * @return
-     */
-    private static double[] ecef2lla(double[] ecef) {
-        //  lat, lon,  alt;
-        double[] LLA = new double[3];
-
-        // Check validity of input data
-        if (norm(ecef) == 0.0) {
-            System.out.println(" invalid input in Geodetic constructor");
-            LLA[0] = 0.0;
-            LLA[1] = 0.0;
-            LLA[2] = -Earth.WGS84_EQUATORIAL_RADIUS;
-            return LLA;
-        }
-
-        // Vermeille (2004) Estimate of longitude 
-        double p = Math.sqrt(
-                Math.pow(ecef[0], 2) + Math.pow(ecef[1], 2));
-
-        double longitude = calculateLongitudeFromECEF(ecef);
-
-        // Constants for Borkowski's Method
-        double c = (Math.pow(Earth.WGS84_EQUATORIAL_RADIUS, 2)
-                - Math.pow(Earth.WGS84_POLAR_RADIUS, 2))
-                / Math.sqrt(Math.pow(Earth.WGS84_EQUATORIAL_RADIUS * p, 2)
-                        + Math.pow(Earth.WGS84_POLAR_RADIUS
-                                * ecef[2], 2));
-
-        double omega = Math.atan2(Earth.WGS84_POLAR_RADIUS
-                * ecef[2], Earth.WGS84_EQUATORIAL_RADIUS * p);
-
-        // Initial Guess
-        double beta_0 = Math.atan2(
-                Earth.WGS84_EQUATORIAL_RADIUS * ecef[2],
-                Earth.WGS84_POLAR_RADIUS * p);
-
-        double beta_1 = 0;
-        double delta = 10;
-
-        // Iteration
-        while (Math.abs(delta) > eps) {
-            double fBeta = 2 * Math.sin(beta_0 - omega)
-                    - c * Math.sin(2 * beta_0);
-            double fBetaPrime = 2 * (Math.cos(beta_0 - omega)
-                    - c * Math.cos(2 * beta_0));
-
-            delta = fBeta / fBetaPrime;
-
-            beta_1 = beta_0 - fBeta / fBetaPrime;
-
-            beta_0 = beta_1;
-
-        }
-
-        // Determine Latitute
-        double latitude = Math.atan2(
-                Earth.WGS84_EQUATORIAL_RADIUS * Math.tan(beta_1),
-                Earth.WGS84_POLAR_RADIUS);
-
-        // Determine Altitude
-        double altitude
-                = (p - Earth.WGS84_EQUATORIAL_RADIUS * Math.cos(beta_1))
-                * Math.cos(latitude)
-                + (ecef[2] - Earth.WGS84_POLAR_RADIUS
-                * Math.sin(beta_1))
-                * Math.sin(latitude);
-
-        LLA[0] = latitude;
-        LLA[1] = longitude;
-        LLA[2] = altitude;
-
-        return LLA; //h
-    }
-
-    /**
-     * Vermeille, H. (2004) "Computing geodetic coordinates from geocentric coordinate", Journal of
-     * Geodesy, 78, pp 94-95: Estimate of longitude
-     * <p>
-     * @param ecef [in meters]
-     * <p>
-     * @return
-     */
-    private static double calculateLongitudeFromECEF(double[] ecef) {
-        double p = Math.sqrt(Math.pow(ecef[0], 2) + Math.pow(ecef[1], 2));
-        if (ecef[1] >= 0) {
-            return (Math.PI / 2.0) - 2.0 * Math.atan2(ecef[0], p + ecef[1]);
-        } else {
-            return -(Math.PI / 2.0) + 2.0 * Math.atan2(ecef[0], p - ecef[1]);
-        }
-    }
-
-    /**
-     *
-     * @param a
-     * @return
-     */
-    private static double norm(double[] a) {
-        return Math.sqrt(dot(a, a));
-    }
-
-    /**
-     * dot product
-     *
-     * @param a
-     * @param b
-     * @return a dot b
-     */
-    private static double dot(double[] a, double[] b) {
-        double c = 0.0;
-        if (a.length == b.length) {
-            for (int i = 0; i < a.length; i++) {// row
-                c += a[i] * b[i];
-            }
-        } else {
-            throw new ArithmeticException("Unequal Array Sizes");
-        }
-        return c;
     }
 }
