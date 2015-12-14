@@ -3,8 +3,8 @@
     <Layer className="gov.nasa.worldwind.layers.StarsLayer" actuate="onRequest">
         <Property name="Name" value="Stars"/>
     </Layer>
-    <Layer className="com.terramenta.globe.solar.SunLayer" actuate="onRequest" />
-    <Layer className="com.terramenta.globe.lunar.MoonLayer" actuate="onRequest" />
+    <Layer className="com.terramenta.globe.solar.SunLayer" actuate="onLoad" />
+    <Layer className="com.terramenta.globe.lunar.MoonLayer" actuate="onLoad" />
     <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
     <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage"/>
     <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad">

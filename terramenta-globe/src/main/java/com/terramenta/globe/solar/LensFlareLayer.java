@@ -70,8 +70,8 @@ public class LensFlareLayer extends RenderableLayer implements Renderable{
     private Vec4 sunPoint;
 
     public LensFlareLayer() {
-        this.setName("Lens Flare");
-        this.setValue(AVKey.DISPLAY_NAME, "Lens Flare");
+        this.setName("Sun Orbital");
+        this.setValue(AVKey.DISPLAY_NAME, "Sun Orbital");
         this.setValue(AVKey.DISPLAY_ICON, "com/terramenta/globe/solar/sun-flare.png");
         this.setPickEnabled(false);
     }

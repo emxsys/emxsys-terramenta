@@ -28,29 +28,12 @@ public class MoonLayer extends RenderableLayer implements Observer, MoonDependen
     public MoonLayer() {
         setName("Moon");
         setPickEnabled(false);
-        
-        moonRenderable.setVisible(true);
-        addRenderable(moonRenderable);
 
         sublunarPlacemark.setVisible(true);
         addRenderable(sublunarPlacemark);
-    }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        Position moonPosition;
-        if (arg instanceof Position) {
-            moonPosition = (Position) arg;
-        } else {
-            moonPosition = moon.getPosition();
-        }
-
-        if (moonPosition == null) {
-            return;
-        }
-
-        moonRenderable.setPosition(moonPosition);
-        sublunarPlacemark.setPosition(moonPosition);
+        moonRenderable.setVisible(false);
+        addRenderable(moonRenderable);
     }
 
     @Override
@@ -68,5 +51,25 @@ public class MoonLayer extends RenderableLayer implements Observer, MoonDependen
         if (this.moon != null) {
             this.moon.addObserver(this);
         }
+
+        //trigger update for initial positioning
+        update(null, null);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Position moonPosition;
+        if (arg instanceof Position) {
+            moonPosition = (Position) arg;
+        } else {
+            moonPosition = moon.getPosition();
+        }
+
+        if (moonPosition == null) {
+            return;
+        }
+
+        moonRenderable.setPosition(moonPosition);
+        sublunarPlacemark.setPosition(moonPosition);
     }
 }

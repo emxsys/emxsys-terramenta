@@ -87,7 +87,7 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
         asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(prefs.get("options.globe.focusAngle", "0")) / 10));
         asc.setDeepPickEnabled(true);
-        asc.getDrawContext().setValue("DISPLAY_DATE", datetimeProvider.getDatetime());
+        asc.getDrawContext().setValue("DISPLAY_DATETIME", datetimeProvider.getDatetime());
 
         datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
             DrawContext dc = wwd.getSceneController().getDrawContext();

@@ -44,13 +44,17 @@ public class SunLayer extends RenderableLayer implements Observer, SunDependent 
         setName("Sun");
         setPickEnabled(false);
 
+        //Subsolar Placemark
+        subsolarPoint.setVisible(true);
+        this.addRenderable(subsolarPoint);
+
+        //ball of fire
         BufferedImage sunDisk = LensFlareLayer.createHaloImage(64, new Color(1f, 1f, .8f), 2f);
         BufferedImage disk = LensFlareLayer.createDiskImage(128, Color.WHITE);
         BufferedImage star = LensFlareLayer.createStarImage(128, Color.WHITE);
         BufferedImage halo = LensFlareLayer.createHaloImage(128, Color.WHITE);
         BufferedImage rainbow = LensFlareLayer.createRainbowImage(128);
         BufferedImage rays = LensFlareLayer.createRaysImage(128, 12, Color.WHITE);
-
         ArrayList flares = new ArrayList();
         flares.add(new FlareImage(rays, 4, 0, .05));
         flares.add(new FlareImage(star, 1.4, 0, .1));
@@ -75,15 +79,9 @@ public class SunLayer extends RenderableLayer implements Observer, SunDependent 
         flares.add(new FlareImage(disk, .7, 2.6, .1));
         flares.add(new FlareImage(rainbow, 5, 3.0, .03));
         flares.add(new FlareImage(disk, .2, 3.5, .1));
-
-        //ball of fire
         flare.addRenderables(flares);
-        flare.setEnabled(true);
+        flare.setEnabled(false);
         this.addRenderable(flare);
-
-        //Subsolar Placemark
-        subsolarPoint.setVisible(false);
-        this.addRenderable(subsolarPoint);
 
         //Solar Shading
         tessellatorRenderable.setVisible(false);
@@ -109,6 +107,9 @@ public class SunLayer extends RenderableLayer implements Observer, SunDependent 
         if (this.sun != null) {
             this.sun.addObserver(this);
         }
+
+        //trigger update for initial positioning
+        update(null, null);
     }
 
     @Override
