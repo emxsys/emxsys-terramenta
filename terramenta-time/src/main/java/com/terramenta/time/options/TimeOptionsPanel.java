@@ -168,6 +168,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
         private final SortableComboBoxModel model;
 
         public TimeZoneLoader(SortableComboBoxModel model) {
+
             this.model = model;
         }
 
@@ -188,9 +189,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         protected void done() {
-            if (timeZoneCombo != null) {
-                timeZoneCombo.setSelectedItem(new TimeZoneComparable(ZoneId.of(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE))));
-            }
+            model.setSelectedItem(new TimeZoneComparable(ZoneId.of(prefs.get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE))));
         }
 
     }
@@ -221,9 +220,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         protected void done() {
-            if (localeCombo != null) {
-                localeCombo.setSelectedItem(new LocaleComparable(Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))));
-            }
+            model.setSelectedItem(new LocaleComparable(Locale.forLanguageTag(prefs.get(TimeOptions.LOCALE, TimeOptions.DEFAULT_LOCALE))));
         }
     }
 
@@ -261,9 +258,7 @@ final class TimeOptionsPanel extends javax.swing.JPanel {
 
         @Override
         protected void done() {
-            if (formatCombo != null) {
-                formatCombo.setSelectedItem(new FormatComparable(prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT)));
-            }
+            model.setSelectedItem(new FormatComparable(prefs.get(TimeOptions.FORMAT, TimeOptions.DEFAULT_FORMAT)));
         }
 
     }
