@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.Preferences;
@@ -68,10 +67,6 @@ public class LocalizedDateTimePicker extends DateTimePicker {
                 }
             });
         });
-    }
-
-    public void setLocalizedDateTime(Date date) {
-        setLocalizedDateTime(date.toInstant());
     }
 
     public void setLocalizedDateTime(Instant insant) {

@@ -12,38 +12,40 @@
  */
 package com.terramenta.time;
 
+import java.time.Instant;
+
 /**
  *
  * @author chris.heidt
  */
-public class DateInterval {
+public class DatetimeInterval {
 
-    private final long startMillis;
-    private final long endMillis;
+    private final Instant startDatetime;
+    private final Instant endDatetime;
 
     /**
      *
-     * @param startMillis
-     * @param endMillis
+     * @param startDatetime
+     * @param endDatetime
      */
-    public DateInterval(long startMillis, long endMillis) {
-        this.startMillis = startMillis;
-        this.endMillis = endMillis;
+    public DatetimeInterval(Instant startDatetime, Instant endDatetime) {
+        this.startDatetime = startDatetime;
+        this.endDatetime = endDatetime;
     }
 
     /**
      *
      * @return
      */
-    public long getStartMillis() {
-        return startMillis;
+    public Instant getStartDatetime() {
+        return startDatetime;
     }
 
     /**
      *
      * @return
      */
-    public long getEndMillis() {
-        return endMillis;
+    public Instant getEndDatetime() {
+        return endDatetime;
     }
 }

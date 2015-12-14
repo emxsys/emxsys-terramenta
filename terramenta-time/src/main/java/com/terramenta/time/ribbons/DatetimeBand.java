@@ -12,12 +12,9 @@
  */
 package com.terramenta.time.ribbons;
 
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeProvider;
 import com.terramenta.time.picker.LocalizedDateTimePicker;
 import java.awt.Dimension;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -28,9 +25,9 @@ import org.pushingpixels.flamingo.api.ribbon.JFlowRibbonBand;
  *
  * @author Chris.Heidt
  */
-public class DatetimeBand extends JFlowRibbonBand implements Observer {
+public class DatetimeBand extends JFlowRibbonBand {
 
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private LocalizedDateTimePicker dateTimePicker;
     private boolean isUpdating = false;// Set a semiphore to prevent a recursive call into setDate by the timestamp listener
 
@@ -47,7 +44,7 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
             dateTimePicker = new LocalizedDateTimePicker();
             dateTimePicker.dateTimeProperty().addListener((obs, ov, nv) -> {
                 if (!isUpdating) {
-                    dateProvider.setDate(Date.from(nv.toInstant()));
+                    datetimeProvider.setDatetime(nv.toInstant());
                 }
             });
             Scene scene = new Scene(dateTimePicker);
@@ -58,26 +55,16 @@ public class DatetimeBand extends JFlowRibbonBand implements Observer {
         addFlowComponent(jfxPanel);
 
         //update on date change
-        dateProvider.addObserver(this);
-    }
+        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+            if (dateTimePicker == null) {
+                return;
+            }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if (dateTimePicker == null) {
-            return;
-        }
-
-        Date date;
-        if (arg instanceof Date) {
-            date = (Date) arg;
-        } else {
-            date = dateProvider.getDate();
-        }
-
-        Platform.runLater(() -> {
-            isUpdating = true;
-            dateTimePicker.setLocalizedDateTime(date);
-            isUpdating = false;
+            Platform.runLater(() -> {
+                isUpdating = true;
+                dateTimePicker.setLocalizedDateTime(newDatetime);
+                isUpdating = false;
+            });
         });
     }
 }

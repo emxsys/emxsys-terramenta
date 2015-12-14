@@ -25,7 +25,7 @@ import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Example of a placemark with selection and temporal support
@@ -59,7 +59,7 @@ public class TerramentaPlacemark extends PointPlacemark {
         setBean(bean);
         setDisplayName(bean.getClass().getSimpleName());//replace with some info from your bean
         setDescription(bean.getClass().getName());//replace with some info from your bean
-        setDisplayDate(new Date());//replace with some info from your bean
+        setDisplayDatetime(Instant.now());//replace with some info from your bean
 
         addPropertyChangeListener(selectionListener);
     }
@@ -76,8 +76,8 @@ public class TerramentaPlacemark extends PointPlacemark {
         setValue(AVKey.DESCRIPTION, desc);
     }
 
-    public void setDisplayDate(Date date) {
-        setValue("DISPLAY_DATE", date);
+    public void setDisplayDatetime(Instant datetime) {
+        setValue("DISPLAY_DATETIME", datetime);
     }
 
     public boolean isEnableTemporalVisibilityCheck() {

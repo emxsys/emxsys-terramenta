@@ -11,15 +11,13 @@
 package com.terramenta.globe.lunar;
 
 import com.terramenta.globe.utilities.CoordinateConversion;
-import com.terramenta.time.DateConverter;
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeConverter;
+import com.terramenta.time.DatetimeProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Earth;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Observable;
-import java.util.Observer;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealVector;
 import org.jastronomy.jsofa.JSOFA;
@@ -36,25 +34,17 @@ import org.slf4j.LoggerFactory;
 public class Moon extends Observable {
 
     private static final Logger logger = LoggerFactory.getLogger(Moon.class);
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
-    private final Observer dateProviderObserver = (Observable o, Object arg) -> {
-        Instant date;
-        if (arg instanceof Date) {
-            date = ((Date) arg).toInstant();
-        } else {
-            date = dateProvider.getDate().toInstant();
-        }
-
-        Moon.this.update(date);
-    };
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private Position position;
 
     public Moon() {
-        //set current position
-        update(dateProvider.getDate().toInstant());
+        //listen for datetime changes
+        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+            update(newDatetime);
+        });
 
-        //listen for date changes
-        dateProvider.addObserver(dateProviderObserver);
+        //set current position
+        update(datetimeProvider.getDatetime());
     }
 
     public Position getPosition() {
@@ -79,7 +69,7 @@ public class Moon extends Observable {
 
     private static Position calculateMoonPosition(Instant datetime) {
 
-        double jd = DateConverter.toDecimalDays(DateConverter.J2000, datetime);
+        double jd = DatetimeConverter.toDecimalDays(DatetimeConverter.J2000, datetime);
 
         double tdbTime = jd / JSOFA.DJC;
 

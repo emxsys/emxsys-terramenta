@@ -5,11 +5,10 @@
  */
 package com.terramenta.globe.utilities;
 
-import com.terramenta.time.DateInterval;
+import com.terramenta.time.DatetimeInterval;
 import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.render.DrawContext;
 import java.time.Instant;
-import java.util.Date;
 
 /**
  *
@@ -18,22 +17,21 @@ import java.util.Date;
 public class RenderUtilities {
 
     public static boolean determineTemporalVisibility(DrawContext dc, AVList avlist) {
-        if (dc != null && avlist != null && avlist.hasKey("DISPLAY_DATE") && dc.hasKey("DISPLAY_DATEINTERVAL")) {
-            Date displayDate = (Date) avlist.getValue("DISPLAY_DATE");
-            DateInterval displayDateInterval = (DateInterval) dc.getValue("DISPLAY_DATEINTERVAL");
+        if (dc != null && avlist != null && avlist.hasKey("DISPLAY_DATETIME") && dc.hasKey("DISPLAY_DATETIME_INTERVAL")) {
+            Instant displayDatetime = (Instant) avlist.getValue("DISPLAY_DATETIME");
+            DatetimeInterval displayDatetimeInterval = (DatetimeInterval) dc.getValue("DISPLAY_DATETIME_INTERVAL");
 
-            if (displayDate != null && displayDateInterval != null) {
+            if (displayDatetime != null && displayDatetimeInterval != null) {
                 //does this displayDate exist within the displayDateInterval?
-                long displayDateMillis = displayDate.getTime();
-                return (displayDateMillis >= displayDateInterval.getStartMillis() && displayDateMillis <= displayDateInterval.getEndMillis());
+                return !(displayDatetime.isBefore(displayDatetimeInterval.getStartDatetime()) || displayDatetime.isAfter(displayDatetimeInterval.getEndDatetime()));
             }
         }
 
         //if we have no date restrictions then its always visible
         return true;
     }
-    
-    public abstract static class DisplayDateChecker {
+
+    public abstract static class DisplayDatetimeChecker {
 
         private Instant currentDisplayInstant;
 
@@ -42,24 +40,23 @@ public class RenderUtilities {
                 throw new IllegalArgumentException("Null DrawContext");
             }
 
-            Instant newDate = getDisplayDate(dc);
+            Instant newDate = getDisplayDatetime(dc);
             Instant oldDate = currentDisplayInstant;
             if (newDate == null || newDate.equals(oldDate)) {
                 return;
             }
             currentDisplayInstant = newDate;
-            onDateChange(oldDate, newDate);
+            onDisplayDatetimeChange(oldDate, newDate);
         }
 
-        public Instant getDisplayDate(DrawContext dc) {
+        public Instant getDisplayDatetime(DrawContext dc) {
             if (dc == null) {
                 throw new IllegalArgumentException("Null DrawContext");
             }
 
-            Date displayDate = (Date) dc.getValue("DISPLAY_DATE");
-            return (displayDate == null) ? null : displayDate.toInstant();
+            return (Instant) dc.getValue("DISPLAY_DATETIME");
         }
 
-        public abstract void onDateChange(Instant oldDate, Instant newDate);
+        public abstract void onDisplayDatetimeChange(Instant oldDate, Instant newDate);
     }
 }

@@ -15,12 +15,7 @@ package com.terramenta.time;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import javax.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,13 +23,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author chris.heidt
  */
-public class DateConverter {
+public class DatetimeConverter {
 
     public static final Instant JD = ZonedDateTime.of(-4713, 01, 01, 12, 0, 0, 0, ZoneOffset.UTC).toInstant();
     public static final Instant MJD = ZonedDateTime.of(1858, 11, 17, 0, 0, 0, 0, ZoneOffset.UTC).toInstant();
     public static final Instant J2000 = ZonedDateTime.of(2000, 01, 01, 12, 0, 0, 0, ZoneOffset.UTC).toInstant();
 
-    private static final Logger logger = LoggerFactory.getLogger(DateConverter.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatetimeConverter.class);
     private static final double MILLISECONDS_PER_DAY = TimeUnit.DAYS.toMillis(1);
 
     /**
@@ -43,42 +38,38 @@ public class DateConverter {
      * @param s
      * @return
      */
-    public static Calendar toCalendar(String s) {
-        return DatatypeConverter.parseDateTime(s);
-    }
-
+//    public static Calendar toCalendar(String s) {
+//        return DatatypeConverter.parseDateTime(s);
+//    }
     /**
      * Parse Date from iso string
      *
      * @param s
      * @return
      */
-    public static Date toDate(String s) {
-        return toCalendar(s).getTime();
-    }
-
+//    public static Date toDate(String s) {
+//        return toCalendar(s).getTime();
+//    }
     /**
      * Creates a string representation of the calendar using the local time zone.
      *
      * @param c
      * @return
      */
-    public static String toString(Calendar c) {
-        return DatatypeConverter.printDateTime(c);
-    }
-
+//    public static String toString(Calendar c) {
+//        return DatatypeConverter.printDateTime(c);
+//    }
     /**
      * Creates a string representation of the date using the local time zone.
      *
      * @param d
      * @return
      */
-    public static String toString(Date d) {
-        Calendar c = GregorianCalendar.getInstance();
-        c.setTime(d);
-        return toString(c);
-    }
-
+//    public static String toString(Date d) {
+//        Calendar c = GregorianCalendar.getInstance();
+//        c.setTime(d);
+//        return toString(c);
+//    }
     /**
      * Creates a string representation of the date using the provided time zone.
      *
@@ -86,22 +77,21 @@ public class DateConverter {
      * @param tz
      * @return
      */
-    public static String toString(Date d, TimeZone tz) {
-        Calendar c = GregorianCalendar.getInstance(tz);
-        c.setTime(d);
-        return toString(c);
-    }
-
+//    public static String toString(Date d, TimeZone tz) {
+//        Calendar c = GregorianCalendar.getInstance(tz);
+//        c.setTime(d);
+//        return toString(c);
+//    }
     /**
      * Decimal Days since the provided epoch. JD, MJD, J200 are available predefined epochs
      *
      * @param epoch
-     * @param date
+     * @param datetime
      * @return
      */
-    public static double toDecimalDays(Instant epoch, Instant date) {
-        double dd = (date.toEpochMilli() - epoch.toEpochMilli()) / MILLISECONDS_PER_DAY;
-        logger.debug("Epoch:{}, Date:{}, Days:{}", epoch, date, dd);
+    public static double toDecimalDays(Instant epoch, Instant datetime) {
+        double dd = (datetime.toEpochMilli() - epoch.toEpochMilli()) / MILLISECONDS_PER_DAY;
+        logger.debug("Epoch:{}, Date:{}, Days:{}", epoch, datetime, dd);
         return dd;
     }
 
@@ -131,7 +121,7 @@ public class DateConverter {
      * Calculates the mean sidereal time (MST) on julDate (doesn't have to be 0h) for a given
      * longitiude.
      *
-     * @param mjd          Modified Julian Date
+     * @param mjd Modified Julian Date
      * @param longitudeDeg
      * @return mean sidereal time in degrees (0-360)
      */

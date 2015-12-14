@@ -14,8 +14,8 @@ package com.terramenta.globe;
 
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.globe.utilities.EciController;
-import com.terramenta.time.DateInterval;
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeInterval;
+import com.terramenta.time.DatetimeProvider;
 import com.terramenta.time.actions.TimeActionController;
 import gov.nasa.worldwind.Model;
 import gov.nasa.worldwind.StereoOptionSceneController;
@@ -32,9 +32,6 @@ import gov.nasa.worldwindx.examples.util.SessionState;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -51,12 +48,12 @@ import org.openide.util.lookup.ServiceProvider;
  * @author heidtmare
  */
 @ServiceProvider(service = WorldWindManager.class)
-public class WorldWindManager implements Serializable, Lookup.Provider {
+public class WorldWindManager implements Lookup.Provider, Serializable {
 
     public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
     private static final Logger logger = Logger.getLogger(WorldWindManager.class.getName());
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
     private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
 
@@ -65,48 +62,6 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
     private ExpandableLookup masterLookup;
     private final SessionState sessionState = new SessionState("." + NbBundle.getBranding());
     private final WorldWindow wwd;
-    private final Observer dateProviderObserver = new Observer() {
-        @Override
-        public void update(Observable o, Object arg) {
-            Date date;
-            if (arg instanceof Date) {
-                date = (Date) arg;
-            } else {
-                date = dateProvider.getDate();
-            }
-
-            DrawContext dc = wwd.getSceneController().getDrawContext();
-
-            //set display date
-            dc.setValue("DISPLAY_DATE", date);
-
-            //set display interval
-            int linger = tac.getLingerDuration();
-            if (linger == 0) {
-                //0 linger means items do not ever disapear, so dont set a display interval
-                dc.removeKey("DISPLAY_DATEINTERVAL");
-            } else {
-                //get interval based on play direction
-                DateInterval interval;
-                if (tac.getPreviousStepDirection() < 0) {
-                    //interval from playtime to playtime+linger
-                    long startMillis = date.getTime();
-                    long endMillis = startMillis + linger;
-                    interval = new DateInterval(startMillis, endMillis);
-                } else {
-                    //interval of time from playtime-linger to playtime
-                    long endMillis = date.getTime();
-                    long startMillis = endMillis - linger;
-                    interval = new DateInterval(startMillis, endMillis);
-                }
-                dc.setValue("DISPLAY_DATEINTERVAL", interval);
-            }
-
-            //set eci values
-            dc.setValue("ECI", eciController.isEci());
-            dc.setValue("ECI_ROTATION", eciController.calculateRotationalDegree(date.toInstant()));
-        }
-    };
 
     /**
      * WorldWind Configuration Settings
@@ -132,9 +87,36 @@ public class WorldWindManager implements Serializable, Lookup.Provider {
         asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
         asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(prefs.get("options.globe.focusAngle", "0")) / 10));
         asc.setDeepPickEnabled(true);
-        asc.getDrawContext().setValue("DISPLAY_DATE", dateProvider.getDate());
+        asc.getDrawContext().setValue("DISPLAY_DATE", datetimeProvider.getDatetime());
 
-        dateProvider.addObserver(dateProviderObserver);
+        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+            DrawContext dc = wwd.getSceneController().getDrawContext();
+
+            //set display date
+            dc.setValue("DISPLAY_DATETIME", newDatetime);
+
+            //set display interval
+            int linger = tac.getLingerDuration();
+            if (linger == 0) {
+                //0 linger means items do not ever disapear, so dont set a display interval
+                dc.removeKey("DISPLAY_DATETIME_INTERVAL");
+            } else {
+                //get interval based on play direction
+                DatetimeInterval interval;
+                if (tac.getPreviousStepDirection() < 0) {
+                    //interval from playtime to playtime+linger
+                    interval = new DatetimeInterval(newDatetime, newDatetime.plusMillis(linger));
+                } else {
+                    //interval of time from playtime-linger to playtime
+                    interval = new DatetimeInterval(newDatetime.minusMillis(linger), newDatetime);
+                }
+                dc.setValue("DISPLAY_DATETIME_INTERVAL", interval);
+            }
+
+            //set eci values
+            dc.setValue("ECI", eciController.isEci());
+            dc.setValue("ECI_ROTATION", eciController.calculateRotationalDegree(newDatetime));
+        });
     }
 
     /**

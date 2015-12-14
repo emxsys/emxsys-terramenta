@@ -10,15 +10,13 @@
  */
 package com.terramenta.globe.solar;
 
-import com.terramenta.time.DateConverter;
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeConverter;
+import com.terramenta.time.DatetimeProvider;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Earth;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Observable;
-import java.util.Observer;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -34,26 +32,18 @@ public class Sun extends Observable {
     public static final double AU = 149597870700d;//meters
     public static final double ALTITUDE = AU - Earth.WGS84_EQUATORIAL_RADIUS;//meters
     private static final Logger logger = LoggerFactory.getLogger(Sun.class);
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
-    private final Observer dateProviderObserver = (Observable o, Object arg) -> {
-        Instant date;
-        if (arg instanceof Date) {
-            date = ((Date) arg).toInstant();
-        } else {
-            date = dateProvider.getDate().toInstant();
-        }
-
-        Sun.this.update(date);
-    };
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private Position position;
     private LatLon subsolarPosition;
 
     public Sun() {
-        //set current position
-        update(dateProvider.getDate().toInstant());
+        //listen for datetime changes
+        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+            update(newDatetime);
+        });
 
-        //listen for date changes
-        dateProvider.addObserver(dateProviderObserver);
+        //set current position
+        update(datetimeProvider.getDatetime());
     }
 
     public Position getPosition() {
@@ -73,7 +63,7 @@ public class Sun extends Observable {
             return;
         }
 
-        double jd = DateConverter.toDecimalDays(DateConverter.JD, datetime);
+        double jd = DatetimeConverter.toDecimalDays(DatetimeConverter.JD, datetime);
         subsolarPosition = calculateSubsolarPosition(jd);
         position = new Position(subsolarPosition, ALTITUDE);
         logger.debug("The Sun's Position at {} is {}", datetime, position);
@@ -98,7 +88,7 @@ public class Sun extends Observable {
         double elapsedJulianDays, eclipticLongitude,
                 eclipticObliquity, rightAscension,
                 declination, longitude;
-        
+
         // Calculate difference in days between the current Julian Day
         // and JD 2451545.0, which is noon 1 January 2000 Universal Time
         {

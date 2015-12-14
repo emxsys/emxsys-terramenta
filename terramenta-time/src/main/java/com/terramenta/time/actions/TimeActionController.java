@@ -12,12 +12,12 @@
  */
 package com.terramenta.time.actions;
 
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeProvider;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Calendar;
+import java.time.temporal.ChronoUnit;
 import javax.swing.Timer;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
@@ -49,7 +49,7 @@ public class TimeActionController {
      *
      */
     public static final String LINGER = "TimeActionController.LingerDuration";
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private static final int animationRefreshRateMs = 100;//~10 frames per second
     private final PropertyChangeSupport pcs;
     private Timer playTimer = null;
@@ -81,7 +81,8 @@ public class TimeActionController {
     }
 
     /**
-     * 1=forward, -1=backward, 0=no animation step, but can update time (esentially a graphic ini or refresh)
+     * 1=forward, -1=backward, 0=no animation step, but can update time (esentially a graphic ini or
+     * refresh)
      *
      * @param direction
      */
@@ -125,8 +126,7 @@ public class TimeActionController {
      */
     public void step(int direction) {
         this.dir = direction;//so we know the last direction we went for visual purposes.
-
-        dateProvider.add(Calendar.MILLISECOND, stepIncrement * direction);
+        datetimeProvider.modifyDatetime(stepIncrement * direction, ChronoUnit.MILLIS);
         pcs.firePropertyChange(STEP, false, true);
     }
 

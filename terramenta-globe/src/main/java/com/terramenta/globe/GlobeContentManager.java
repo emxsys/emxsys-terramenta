@@ -17,7 +17,7 @@ import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.globe.utilities.EciController;
 import com.terramenta.globe.utilities.QuickTipController;
 import com.terramenta.globe.utilities.SelectController;
-import com.terramenta.time.DateProvider;
+import com.terramenta.time.DatetimeProvider;
 import gov.nasa.worldwind.StereoSceneController;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -42,9 +42,6 @@ import gov.nasa.worldwindx.examples.util.StatusLayer;
 import com.terramenta.globe.solar.Sun;
 import com.terramenta.globe.solar.SunDependent;
 import java.time.Instant;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
@@ -64,7 +61,7 @@ public final class GlobeContentManager implements PreferenceChangeListener {
     private static final Logger logger = LoggerFactory.getLogger(GlobeContentManager.class);
     private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
-    private static final DateProvider dateProvider = Lookup.getDefault().lookup(DateProvider.class);
+    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
     private static final Sun sun = Lookup.getDefault().lookup(Sun.class);
     private static final Moon moon = Lookup.getDefault().lookup(Moon.class);
@@ -100,21 +97,13 @@ public final class GlobeContentManager implements PreferenceChangeListener {
         prefs.addPreferenceChangeListener(this);
 
         //establish datetime listener
-        dateProvider.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                Date date;
-                if (arg instanceof Date) {
-                    date = (Date) arg;
-                } else {
-                    date = dateProvider.getDate();
-                }
-
-                updateGlobe(date.toInstant());
-                wwm.getWorldWindow().redraw();
-            }
+        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+            updateGlobe(newDatetime);
+            wwm.getWorldWindow().redraw();
         });
-        dateProvider.setDate(dateProvider.getDate()); //trigger the above listener
+
+        updateGlobe(datetimeProvider.getDatetime());
+        wwm.getWorldWindow().redraw();
     }
 
     private void initLayers() {

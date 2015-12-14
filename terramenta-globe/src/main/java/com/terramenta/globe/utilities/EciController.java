@@ -13,7 +13,7 @@
 package com.terramenta.globe.utilities;
 
 import com.terramenta.globe.options.GlobeOptions;
-import com.terramenta.time.DateConverter;
+import com.terramenta.time.DatetimeConverter;
 import java.time.Instant;
 import java.util.prefs.Preferences;
 import org.openide.util.NbPreferences;
@@ -43,7 +43,7 @@ public class EciController {
         if (previousDate == null || !previousDate.equals(datetime)) {
             previousDate = datetime;
 
-            double j2000 = DateConverter.toDecimalDays(DateConverter.J2000, datetime);
+            double j2000 = DatetimeConverter.toDecimalDays(DatetimeConverter.J2000, datetime);
             // centuries since J2000.0
             double tt = j2000 / 36525.0;
             // now calculate the mean sidereal time at Greenwich (UT time) in degrees
