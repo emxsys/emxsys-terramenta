@@ -1,0 +1,58 @@
+/**
+ * Copyright © 2014, Terramenta. All rights reserved.
+ *
+ * This work is subject to the terms of either
+ * the GNU General Public License Version 3 ("GPL") or
+ * the Common Development and Distribution License("CDDL") (collectively, the "License").
+ * You may not use this work except in compliance with the License.
+ *
+ * You can obtain a copy of the License at
+ * http://opensource.org/licenses/CDDL-1.0
+ * http://opensource.org/licenses/GPL-3.0
+ */
+package com.terramenta.globe.selectors;
+
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceCircle;
+import gov.nasa.worldwind.render.SurfaceShape;
+import java.awt.Color;
+
+/**
+ *
+ * @author Chris Heidt <chris.heidt@vencore.com>
+ */
+public class RadialSurfaceSelector extends SurfaceSelector {
+
+    private static ShapeAttributes attr;
+    private static ShapeAttributes highattr;
+
+    public RadialSurfaceSelector() {
+        super(createShape());
+    }
+
+    protected static SurfaceShape createShape() {
+        //lazy load attrs
+        if (attr == null) {
+            attr = new BasicShapeAttributes();
+            attr.setInteriorMaterial(new Material(Color.yellow));
+            attr.setInteriorMaterial(new Material(new Color(1f, 1f, 1f, 0f)));
+            attr.setInteriorOpacity(0.2);
+            attr.setOutlineMaterial(new Material(Color.yellow));
+            attr.setOutlineMaterial(new Material(new Color(1f, 1f, 0f, 0.5f)));
+            attr.setOutlineOpacity(0.6);
+            attr.setOutlineWidth(2);
+
+            highattr = new BasicShapeAttributes();
+            highattr.copy(attr);
+            highattr.setInteriorOpacity(0.4);
+            highattr.setOutlineOpacity(1.0);
+        }
+
+        SurfaceCircle circle = new SurfaceCircle();
+        circle.setAttributes(attr);
+        circle.setHighlightAttributes(highattr);
+        return circle;
+    }
+}
