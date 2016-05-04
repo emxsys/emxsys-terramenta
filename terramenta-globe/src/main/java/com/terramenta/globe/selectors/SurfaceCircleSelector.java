@@ -27,11 +27,8 @@ public class SurfaceCircleSelector extends Selector<SurfaceCircle> {
     private static ShapeAttributes attr;
     private static ShapeAttributes highattr;
 
-    public SurfaceCircleSelector() {
-        super(createShape());
-    }
-
-    protected static SurfaceCircle createShape() {
+    @Override
+    protected SurfaceCircle createShape() {
         //lazy load attrs
         if (attr == null) {
             attr = new BasicShapeAttributes();

@@ -27,11 +27,8 @@ public class SurfaceSectorSelector extends Selector<SurfaceSector> {
     private static ShapeAttributes attr;
     private static ShapeAttributes highattr;
 
-    public SurfaceSectorSelector() {
-        super(createShape());
-    }
-
-    protected static SurfaceSector createShape() {
+    @Override
+    protected SurfaceSector createShape() {
         //lazy load attrs
         if (attr == null) {
             attr = new BasicShapeAttributes();

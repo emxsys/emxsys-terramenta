@@ -41,13 +41,16 @@ import org.openide.util.Lookup;
 
 /**
  *
- * @author Chris Heidt <chris.heidt@vencore.com>
+ * @author heidtmare
+ * @param <T>
  */
-public class Selector<T extends SurfaceShape> extends AVListImpl {
+public abstract class Selector<T extends SurfaceShape> extends AVListImpl {
+
+    public static final String UPDATE_PROPERTY = Selector.class.getName() + ".UPDATE_PROPERTY";
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private RenderableLayer layer;
-    private final T shape;
+    private T shape;
     private boolean armed = false;
     private boolean active = false;
     private boolean freehand = false;
@@ -107,29 +110,8 @@ public class Selector<T extends SurfaceShape> extends AVListImpl {
         }
     };
 
-    public Selector(T shape) {
-        this.shape = shape;
-        this.layer = (RenderableLayer) wwm.getLayers().getLayerByName("Selectors");
-        if (layer == null) {
-            layer = new RenderableLayer();
-            layer.setName("Selectors");
-            wwm.getLayers().add(layer);
-        }
-        layer.addRenderable(shape);
-
-        //USECASE: signals layer manager that the layer has modified children
-        //         and the count in the display name should be updated
-        layer.firePropertyChange("Renderables", null, layer.getRenderables());
-    }
-
-    public Selector(T shape, RenderableLayer layer) {
-        this.shape = shape;
-        this.layer = layer;
-        layer.addRenderable(shape);
-
-        //USECASE: signals layer manager that the layer has modified children
-        //         and the count in the display name should be updated
-        layer.firePropertyChange("Renderables", null, layer.getRenderables());
+    public Selector() {
+        //...
     }
 
     /**
@@ -182,6 +164,9 @@ public class Selector<T extends SurfaceShape> extends AVListImpl {
     public void setArmed(boolean armed) {
         firePropertyChange("armed", this.armed, this.armed = armed);
         if (armed) {
+            //data reset
+            reset();
+
             // Force keyboard focus to globe
             ((Component) wwm.getWorldWindow()).requestFocusInWindow();
 
@@ -205,7 +190,33 @@ public class Selector<T extends SurfaceShape> extends AVListImpl {
         }
     }
 
-    private void addPosition() {
+    protected abstract T createShape();
+
+    protected void reset() {
+        positions.clear();
+
+        //ensure layer is available
+        this.layer = (RenderableLayer) wwm.getLayers().getLayerByName("Selectors");
+        if (layer == null) {
+            layer = new RenderableLayer();
+            layer.setName("Selectors");
+            wwm.getLayers().add(layer);
+        }
+        //remove old shape if applicable
+        if (shape != null) {
+            layer.removeRenderable(shape);
+        }
+
+        //build a clean shape
+        shape = createShape();
+        layer.addRenderable(shape);
+
+        //USECASE: signals layer manager that the layer has modified children
+        //         and the count in the display name should be updated
+        layer.firePropertyChange("Renderables", null, layer.getRenderables());
+    }
+
+    protected void addPosition() {
         Position curPos = wwm.getWorldWindow().getCurrentPosition();
         if (curPos == null) {
             return;
@@ -259,6 +270,7 @@ public class Selector<T extends SurfaceShape> extends AVListImpl {
             }
         }
 
+        this.firePropertyChange(Selector.UPDATE_PROPERTY, null, curPos);
         wwm.getWorldWindow().redraw();
     }
 
