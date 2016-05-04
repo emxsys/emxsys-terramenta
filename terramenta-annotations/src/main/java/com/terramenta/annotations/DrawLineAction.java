@@ -46,15 +46,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawLineAction_TooltipTitle",
         tooltipBody = "#CTL_DrawLineAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-line32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawLineAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawLineAction=Line",
-            "CTL_DrawLineAction_Hint=Draw a straight line.",
-            "CTL_DrawLineAction_TooltipTitle=Draw Line",
-            "CTL_DrawLineAction_TooltipBody=Draws a straight line annotation on the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawLineAction=Line",
+    "CTL_DrawLineAction_Hint=Draw a straight line.",
+    "CTL_DrawLineAction_TooltipTitle=Draw Line",
+    "CTL_DrawLineAction_TooltipBody=Draws a straight line annotation on the surface of the globe.",
+    "CTL_DrawLineAction_TooltipFooter=Press F1 for more help."
+})
 
 public final class DrawLineAction extends TopComponentContextAction {
 

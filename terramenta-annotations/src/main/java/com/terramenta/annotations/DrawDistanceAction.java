@@ -44,15 +44,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawDistanceAction_TooltipTitle",
         tooltipBody = "#CTL_DrawDistanceAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/measure-distance32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawDistanceAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawDistanceAction=Distance Measurement",
-            "CTL_DrawDistanceAction_Hint=Point to point distance measurement.",
-            "CTL_DrawDistanceAction_TooltipTitle=Distance Measurement Tool",
-            "CTL_DrawDistanceAction_TooltipBody=Measures point to point distances on the globe."
-        })
+@Messages({
+    "CTL_DrawDistanceAction=Distance Measurement",
+    "CTL_DrawDistanceAction_Hint=Point to point distance measurement.",
+    "CTL_DrawDistanceAction_TooltipTitle=Distance Measurement Tool",
+    "CTL_DrawDistanceAction_TooltipBody=Measures point to point distances on the globe.",
+    "CTL_DrawDistanceAction_TooltipFooter=Press F1 for more help."
+})
 
 public final class DrawDistanceAction extends TopComponentContextAction {
 

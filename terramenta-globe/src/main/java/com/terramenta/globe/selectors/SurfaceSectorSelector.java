@@ -16,23 +16,22 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceSector;
-import gov.nasa.worldwind.render.SurfaceShape;
 import java.awt.Color;
 
 /**
  *
  * @author heidtmare
  */
-public class SectorSurfaceSelector extends SurfaceSelector {
+public class SurfaceSectorSelector extends Selector<SurfaceSector> {
 
     private static ShapeAttributes attr;
     private static ShapeAttributes highattr;
 
-    public SectorSurfaceSelector() {
+    public SurfaceSectorSelector() {
         super(createShape());
     }
 
-    protected static SurfaceShape createShape() {
+    protected static SurfaceSector createShape() {
         //lazy load attrs
         if (attr == null) {
             attr = new BasicShapeAttributes();

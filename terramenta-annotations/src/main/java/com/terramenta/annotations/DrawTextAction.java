@@ -35,15 +35,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawTextAction_TooltipTitle",
         tooltipBody = "#CTL_DrawTextAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-text32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawTextAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawTextAction=Text",
-            "CTL_DrawTextAction_Hint=Add a textual annotation to the globe.",
-            "CTL_DrawTextAction_TooltipTitle=Add Text",
-            "CTL_DrawTextAction_TooltipBody=Add a textual annotation to the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawTextAction=Text",
+    "CTL_DrawTextAction_Hint=Add a textual annotation to the globe.",
+    "CTL_DrawTextAction_TooltipTitle=Add Text",
+    "CTL_DrawTextAction_TooltipBody=Add a textual annotation to the surface of the globe.",
+    "CTL_DrawTextAction_TooltipFooter=Press F1 for more help."
+})
 public class DrawTextAction extends TopComponentContextAction {
 
     private DrawTextAction() {

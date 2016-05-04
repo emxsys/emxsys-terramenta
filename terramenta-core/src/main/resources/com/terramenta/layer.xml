@@ -5,7 +5,7 @@
         <!--FILE Tab (Application Menu-->
         <folder name="AppMenu">
             <!-- Open Project actions -->
-            <folder name="Open">
+<!--            <folder name="Open">
                 <attr name="position" intvalue="100"/>
                 <attr name="iconBase" stringvalue="com/terramenta/images/folder_accept.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Open"/>
@@ -18,7 +18,7 @@
                 </file>
 
                 <file name="org-netbeans-modules-openfile-OpenFileAction.shadow">
-                    <!--org.netbeans.modules.openfile.OpenFileAction-->
+                    org.netbeans.modules.openfile.OpenFileAction
                     <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-openfile-OpenFileAction.instance"/>
                     <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_OpenFile"/>
                     <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_OpenFile_Hint"/>
@@ -32,14 +32,14 @@
                 </file>
 
                 <file name="org-netbeans-modules-openfile-RecentFileAction.shadow">
-                    <!--org.netbeans.modules.openfile.RecentFileAction-->
+                    org.netbeans.modules.openfile.RecentFileAction
                     <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-openfile-RecentFileAction.instance"/>
                     <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_RecentFiles"/>
                     <attr intvalue="900" name="position"/>
                 </file>
-            </folder>
+            </folder>-->
             <!-- New Project and File actions -->
-            <folder name="New">
+<!--            <folder name="New">
                 <attr name="position" intvalue="101"/>
                 <attr name="iconBase" stringvalue="com/terramenta/images/folder_add.png"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_New"/>
@@ -61,20 +61,20 @@
             <file name="SeparatorNew.instance">
                 <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
                 <attr name="position" intvalue="475"/>
-            </file>
+            </file>-->
             <!--Close actions-->
             <!--            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
                 <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-CloseProject.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
             </file>-->
-            <file name="com-terramenta-actions-CloseProjectAction.shadow">
+<!--            <file name="com-terramenta-actions-CloseProjectAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/com-terramenta-actions-CloseProjectAction.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
             </file>            
             <file name="org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.shadow">
-                <!--NetBeans 8.0 Action-->
+                NetBeans 8.0 Action
                 <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseAllProjects"/>
                 <attr name="position" intvalue="750"/>
@@ -82,9 +82,9 @@
             <file name="SeparatorOpen.instance">
                 <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>                 
                 <attr name="position" intvalue="975"/>
-            </file>
+            </file>-->
             <!-- Save actions -->
-            <file name="org-openide-actions-SaveAction.shadow">
+<!--            <file name="org-openide-actions-SaveAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAction.instance"/>
                 <attr name="position" intvalue="1000"/>
                 <attr name="iconBase" stringvalue="com/terramenta/images/save.png"/>
@@ -104,7 +104,7 @@
             <file name="SeparatorSave.instance">
                 <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
                 <attr name="position" intvalue="1500"/>
-            </file>
+            </file>-->
             <!-- Print actions -->
             <folder name="Print">
                 <attr name="position" intvalue="1600"/>

@@ -43,11 +43,11 @@ import org.openide.util.Lookup;
  *
  * @author Chris Heidt <chris.heidt@vencore.com>
  */
-public class SurfaceSelector extends AVListImpl {
+public class Selector<T extends SurfaceShape> extends AVListImpl {
 
     private static final WorldWindManager wwm = Lookup.getDefault().lookup(WorldWindManager.class);
     private RenderableLayer layer;
-    private final SurfaceShape shape;
+    private final T shape;
     private boolean armed = false;
     private boolean active = false;
     private boolean freehand = false;
@@ -57,7 +57,7 @@ public class SurfaceSelector extends AVListImpl {
         @Override
         public void keyReleased(KeyEvent keyEvent) {
             if (armed && !active && keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                cancel();
+                setArmed(false);
             }
         }
     };
@@ -106,9 +106,8 @@ public class SurfaceSelector extends AVListImpl {
             addPosition();
         }
     };
-    private boolean canceled;
 
-    public SurfaceSelector(SurfaceShape shape) {
+    public Selector(T shape) {
         this.shape = shape;
         this.layer = (RenderableLayer) wwm.getLayers().getLayerByName("Selectors");
         if (layer == null) {
@@ -123,7 +122,7 @@ public class SurfaceSelector extends AVListImpl {
         layer.firePropertyChange("Renderables", null, layer.getRenderables());
     }
 
-    public SurfaceSelector(SurfaceShape shape, RenderableLayer layer) {
+    public Selector(T shape, RenderableLayer layer) {
         this.shape = shape;
         this.layer = layer;
         layer.addRenderable(shape);
@@ -133,8 +132,44 @@ public class SurfaceSelector extends AVListImpl {
         layer.firePropertyChange("Renderables", null, layer.getRenderables());
     }
 
+    /**
+     *
+     * @return
+     */
     public RenderableLayer getLayer() {
         return this.layer;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public T getShape() {
+        return shape;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isFreeHand() {
+        return freehand;
+    }
+
+    /**
+     *
+     * @param freehand
+     */
+    public void setFreeHand(boolean freehand) {
+        this.freehand = freehand;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isArmed() {
+        return armed;
     }
 
     /**
@@ -232,7 +267,7 @@ public class SurfaceSelector extends AVListImpl {
      * @param shape
      * @param newPosition
      */
-    protected void updateShape(SurfaceShape shape, Position newPosition) {
+    protected void updateShape(T shape, Position newPosition) {
         if (shape instanceof SurfaceQuad) {
             SurfaceQuad quadShape = (SurfaceQuad) shape;
             Angle controlAzimuth = LatLon.greatCircleAzimuth(quadShape.getCenter(), newPosition);
@@ -266,30 +301,5 @@ public class SurfaceSelector extends AVListImpl {
             Position startingPosition = (Position) sectorShape.getValue("STARTING_POSITION");
             sectorShape.setSector(Sector.boundingSector(startingPosition, newPosition));
         }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isFreeHand() {
-        return freehand;
-    }
-
-    /**
-     *
-     * @param freehand
-     */
-    public void setFreeHand(boolean freehand) {
-        this.freehand = freehand;
-    }
-
-    public boolean isCanceled() {
-        return canceled;
-    }
-
-    public void cancel() {
-        this.canceled = true;
-        setArmed(false);
     }
 }

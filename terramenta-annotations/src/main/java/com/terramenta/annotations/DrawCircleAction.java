@@ -44,15 +44,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawCircleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawCircleAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-circle32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawCircleAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawCircleAction=Circle",
-            "CTL_DrawCircleAction_Hint=Draw a circle annotation.",
-            "CTL_DrawCircleAction_TooltipTitle=Draw Circle",
-            "CTL_DrawCircleAction_TooltipBody=Draws a circular annotation on the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawCircleAction=Circle",
+    "CTL_DrawCircleAction_Hint=Draw a circle annotation.",
+    "CTL_DrawCircleAction_TooltipTitle=Draw Circle",
+    "CTL_DrawCircleAction_TooltipBody=Draws a circular annotation on the surface of the globe.",
+    "CTL_DrawCircleAction_TooltipFooter=Press F1 for more help."
+})
 public final class DrawCircleAction extends TopComponentContextAction {
 
     private static final ShapeAttributes attr = new BasicShapeAttributes();

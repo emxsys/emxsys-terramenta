@@ -16,23 +16,22 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceCircle;
-import gov.nasa.worldwind.render.SurfaceShape;
 import java.awt.Color;
 
 /**
  *
  * @author Chris Heidt <chris.heidt@vencore.com>
  */
-public class RadialSurfaceSelector extends SurfaceSelector {
+public class SurfaceCircleSelector extends Selector<SurfaceCircle> {
 
     private static ShapeAttributes attr;
     private static ShapeAttributes highattr;
 
-    public RadialSurfaceSelector() {
+    public SurfaceCircleSelector() {
         super(createShape());
     }
 
-    protected static SurfaceShape createShape() {
+    protected static SurfaceCircle createShape() {
         //lazy load attrs
         if (attr == null) {
             attr = new BasicShapeAttributes();

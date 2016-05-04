@@ -25,9 +25,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.openide.awt.ActionRegistration;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
 /**
@@ -46,15 +46,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawPolygonAction_TooltipTitle",
         tooltipBody = "#CTL_DrawPolygonAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-polygon32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawPolygonAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawPolygonAction=Polygon",
-            "CTL_DrawPolygonAction_Hint=Draw a polygon.",
-            "CTL_DrawPolygonAction_TooltipTitle=Draw Polygon",
-            "CTL_DrawPolygonAction_TooltipBody=Draws a polygon annotation on the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawPolygonAction=Polygon",
+    "CTL_DrawPolygonAction_Hint=Draw a polygon.",
+    "CTL_DrawPolygonAction_TooltipTitle=Draw Polygon",
+    "CTL_DrawPolygonAction_TooltipBody=Draws a polygon annotation on the surface of the globe.",
+    "CTL_DrawPolygonAction_TooltipFooter=Press F1 for more help."
+})
 
 public final class DrawPolygonAction extends TopComponentContextAction {
 

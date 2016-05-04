@@ -25,9 +25,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.openide.awt.ActionRegistration;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
 /**
@@ -46,15 +46,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawEllipseAction_TooltipTitle",
         tooltipBody = "#CTL_DrawEllipseAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-ellipse32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawEllipseAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawEllipseAction=Ellipse",
-            "CTL_DrawEllipseAction_Hint=Draw an ellipse.",
-            "CTL_DrawEllipseAction_TooltipTitle=Draw Ellipse",
-            "CTL_DrawEllipseAction_TooltipBody=Draws an elliptical annotation on surface of the globe."
-        })
+@Messages({
+    "CTL_DrawEllipseAction=Ellipse",
+    "CTL_DrawEllipseAction_Hint=Draw an ellipse.",
+    "CTL_DrawEllipseAction_TooltipTitle=Draw Ellipse",
+    "CTL_DrawEllipseAction_TooltipBody=Draws an elliptical annotation on surface of the globe.",
+    "CTL_DrawEllipseAction_TooltipFooter=Press F1 for more help."
+})
 public final class DrawEllipseAction extends TopComponentContextAction {
 
     private static final ShapeAttributes attr = new BasicShapeAttributes();

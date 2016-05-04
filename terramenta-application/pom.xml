@@ -38,12 +38,18 @@
             <version>${netbeans.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.netbeans.modules</groupId>
             <artifactId>org-netbeans-modules-projectui</artifactId>
             <version>${netbeans.version}</version>
             <scope>runtime</scope>
         </dependency>
+         <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-projectui-base</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
+        </dependency>-->
         
         <!-- Terramenta Modules -->
         <dependency>

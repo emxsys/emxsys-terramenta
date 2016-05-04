@@ -46,15 +46,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawFreehandAction_TooltipTitle",
         tooltipBody = "#CTL_DrawFreehandAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-freehand32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawFreehandAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawFreehandAction=Free Hand",
-            "CTL_DrawFreehandAction_Hint=Draw a free hand shape.",
-            "CTL_DrawFreehandAction_TooltipTitle=Draw Free Hand",
-            "CTL_DrawFreehandAction_TooltipBody=Draws a free hand shape annotation on the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawFreehandAction=Free Hand",
+    "CTL_DrawFreehandAction_Hint=Draw a free hand shape.",
+    "CTL_DrawFreehandAction_TooltipTitle=Draw Free Hand",
+    "CTL_DrawFreehandAction_TooltipBody=Draws a free hand shape annotation on the surface of the globe.",
+    "CTL_DrawFreehandAction_TooltipFooter=Press F1 for more help."
+})
 
 public final class DrawFreehandAction extends TopComponentContextAction {
 

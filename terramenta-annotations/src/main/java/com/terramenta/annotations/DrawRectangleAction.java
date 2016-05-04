@@ -25,17 +25,16 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.openide.awt.ActionRegistration;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionID;
+import org.openide.awt.ActionReference;
+import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
 /**
  *
  * @author heidtmare
  */
-@ActionID(category = "Tools",
-        id = "com.terramenta.annotations.DrawRectangleAction")
+@ActionID(category = "Tools", id = "com.terramenta.annotations.DrawRectangleAction")
 @ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-rectangle.png",
         displayName = "#CTL_DrawRectangleAction")
 @ActionReference(path = "Toolbars/Annotations", position = 5)
@@ -46,15 +45,15 @@ import org.openide.util.NbBundle.Messages;
         tooltipTitle = "#CTL_DrawRectangleAction_TooltipTitle",
         tooltipBody = "#CTL_DrawRectangleAction_TooltipBody",
         tooltipIcon = "com/terramenta/annotations/images/draw-rectangle32.png",
-        tooltipFooter = "#CTL_Default_TooltipFooter",
+        tooltipFooter = "#CTL_DrawRectangleAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@Messages(
-        {
-            "CTL_DrawRectangleAction=Rectangle",
-            "CTL_DrawRectangleAction_Hint=Draw a rectangle annotation.",
-            "CTL_DrawRectangleAction_TooltipTitle=Draw Rectangle",
-            "CTL_DrawRectangleAction_TooltipBody=Draws a rectanglular annotation on the surface of the globe."
-        })
+@Messages({
+    "CTL_DrawRectangleAction=Rectangle",
+    "CTL_DrawRectangleAction_Hint=Draw a rectangle annotation.",
+    "CTL_DrawRectangleAction_TooltipTitle=Draw Rectangle",
+    "CTL_DrawRectangleAction_TooltipBody=Draws a rectanglular annotation on the surface of the globe.",
+    "CTL_DrawRectangleAction_TooltipFooter=Press F1 for more help."
+})
 public final class DrawRectangleAction extends TopComponentContextAction {
 
     private static final ShapeAttributes attr = new BasicShapeAttributes();
