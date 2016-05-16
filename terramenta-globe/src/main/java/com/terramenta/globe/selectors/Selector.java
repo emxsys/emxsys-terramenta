@@ -209,7 +209,9 @@ public abstract class Selector<T extends SurfaceShape> extends AVListImpl {
 
         //build a clean shape
         shape = createShape();
+        shape.setVisible(true);
         layer.addRenderable(shape);
+        layer.setEnabled(true);
 
         //USECASE: signals layer manager that the layer has modified children
         //         and the count in the display name should be updated
