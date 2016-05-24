@@ -98,6 +98,8 @@
                 <configuration>
                     <licenseFile>LICENSE.txt</licenseFile>
                     <etcConfFile>terramenta.conf</etcConfFile>
+                    <installerOsSolaris>false</installerOsSolaris>
+                    <installerLicenseFile>../LICENSE.txt</installerLicenseFile>
                 </configuration>
             </plugin>
         </plugins>
