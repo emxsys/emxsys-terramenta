@@ -3,39 +3,30 @@
     <Layer className="gov.nasa.worldwind.layers.StarsLayer" actuate="onRequest">
         <Property name="Name" value="Stars"/>
     </Layer>
+    <!--TM-->
     <Layer className="com.terramenta.globe.solar.SunLayer" actuate="onLoad" />
+    <!--TM-->
     <Layer className="com.terramenta.globe.lunar.MoonLayer" actuate="onLoad" />
     <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
-    <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage"/>
-    <Layer href="worldwind/config/Earth/BMNGWMSLayer.xml" actuate="onLoad">
-        <Property name="UseMipMaps" value="false"/>
+    <Layer className="gov.nasa.worldwind.layers.Earth.BMNGOneImage">
+        <Property name="MinActiveAltitude" value="3e6"/>
     </Layer>
-    <Layer href="worldwind/config/Earth/LandsatI3WMSLayer.xml" actuate="onLoad">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
-    <!--<Layer href="config/Earth/USDANAIPWMSImageLayer.xml" actuate="onRequest"/>-->    
-    <!--<Layer href="config/Earth/USDANAIPUSGSWMSImageLayer.xml" actuate="onRequest"/>-->
-    <!--<Layer href="config/Earth/MSVirtualEarthAerialLayer.xml" actuate="onRequest"/>-->
-    <!--<Layer href="config/Earth/USGSUrbanAreaOrthoLayer.xml" actuate="onRequest"/>-->   
-    <Layer href="config/Earth/USGSTopoLowResLayer.xml" actuate="onRequest">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
-    <Layer href="config/Earth/USGSTopoMedResLayer.xml" actuate="onRequest">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
-    <Layer href="config/Earth/USGSTopoHighResLayer.xml" actuate="onRequest">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
-    <Layer href="config/Earth/OpenStreetMap.xml" actuate="onRequest">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
+    <Layer href="config/Earth/BMNGWMSLayer2.xml" actuate="onLoad"/>
+    <Layer href="config/Earth/LandsatI3WMSLayer2.xml" actuate="onLoad"/>
+    <Layer href="config/Earth/USGSNAIPPlusLayer.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/BingImagery.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/USGSTNMTopoLayer.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/USGSTNMTopoLargeLayer.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/USGSTopoLowResLayer.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/USGSTopoMedResLayer.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/USGSTopoHighResLayer.xml" actuate="onRequest"/>
+    <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer" actuate="onRequest"/>
+    <Layer href="config/Earth/OpenStreetMap.xml" actuate="onRequest"/>
+    <Layer href="config/Earth/EarthAtNightLayer.xml" actuate="onRequest"/>
     <Layer className="gov.nasa.worldwind.layers.LatLonGraticuleLayer" title="LatLon Graticule" actuate="onRequest" />
-    <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />  
-    <!--    <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer"/>-->
-    <Layer href="worldwind/config/Earth/CountryBoundariesLayer.xml" actuate="onLoad">
-        <Property name="UseMipMaps" value="false"/>
-    </Layer>
-    <Layer className="com.terramenta.globe.layers.RadialGridLayer" title="ECI Radial Grid" actuate="onRequest" />  
+    <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />
+    <!--TM-->
+    <Layer className="com.terramenta.globe.layers.RadialGridLayer" title="ECI Radial Grid" actuate="onRequest" /> 
     <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>
     <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
     <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
@@ -43,5 +34,4 @@
     <Layer className="gov.nasa.worldwind.layers.CompassLayer">
         <Property name="IconFilePath" value="images/notched-compass.png"/>
     </Layer>
-    <Layer className="com.terramenta.globe.layers.ClassificationBannerLayer"/>
 </LayerList>

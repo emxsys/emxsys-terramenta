@@ -83,7 +83,7 @@ public class LayerAddAction extends SystemAction {
                         layer = new KMLLayer((String) layerPath);
                     } else if (layerType.equals("Shapefile")) {
                         ShapefileLoader loader = new ShapefileLoader();
-                        layer = (Layer) loader.createLayersFromSource(new URL((String) layerPath));
+                        layer = (Layer) loader.createLayerFromSource(new URL((String) layerPath));
                     } else if (layerType.equals("GeoTiff")) {
                         SurfaceImageLayer sil = new SurfaceImageLayer();
                         sil.addImage((String) layerPath);

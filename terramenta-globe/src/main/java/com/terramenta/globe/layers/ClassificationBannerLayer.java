@@ -12,14 +12,13 @@
  */
 package com.terramenta.globe.layers;
 
-import javax.media.opengl.*;
-import com.jogamp.opengl.util.awt.TextRenderer;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.utilities.Classification;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.AbstractLayer;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.OrderedRenderable;
+import gov.nasa.worldwind.render.TextRenderer;
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.OGLTextRenderer;
 import java.awt.Color;
@@ -30,6 +29,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import java.util.prefs.Preferences;
+import javax.media.opengl.*;
 import org.openide.util.NbPreferences;
 
 public class ClassificationBannerLayer extends AbstractLayer {

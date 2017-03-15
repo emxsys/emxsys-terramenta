@@ -21,17 +21,17 @@
         <commons-math3.version>3.5</commons-math3.version>
         <jogl.version>2.1.5-01</jogl.version>
         <junit.version>4.12</junit.version>
-        <netbeans.version>RELEASE81</netbeans.version>
+        <netbeans.version>RELEASE82</netbeans.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <worldwind.version>2.0.0</worldwind.version>
+        <worldwind.version>2.1.0</worldwind.version>
 
         <!-- PLUGIN VERSIONS -->
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version><!-- note: 3.2 errors during deploy -->
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <nbm-maven-plugin.version>4.1</nbm-maven-plugin.version>
     </properties>
         
@@ -147,7 +147,9 @@
                     <version>${maven-jar-plugin.version}</version>
                     <configuration>
                         <!-- to have the jar plugin pickup the nbm generated manifest -->
-                        <useDefaultManifestFile>true</useDefaultManifestFile>
+                        <archive>
+                            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                        </archive>
                     </configuration>
                 </plugin>
                 <plugin>
