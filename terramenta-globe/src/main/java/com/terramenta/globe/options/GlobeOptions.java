@@ -14,12 +14,18 @@ package com.terramenta.globe.options;
 
 import com.terramenta.globe.utilities.CoordinateSystem;
 import gov.nasa.worldwind.avlist.AVKey;
+import java.util.prefs.Preferences;
+import org.openide.util.NbPreferences;
 
 /**
  *
  * @author Chris.Heidt
  */
 public class GlobeOptions {
+
+    public static final Preferences getPreferences() {
+        return NbPreferences.forModule(GlobeOptions.class);
+    }
 
     public static final String IS_FLAT = "options.globe.isFlat";
     public static final String FLAT_PROJECTION = "options.globe.flatProjection";

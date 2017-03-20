@@ -8,7 +8,7 @@
             </file>
         </folder>
         <folder name="Animate">
-            <file name="com-terramenta-globe-ribbons-EciBand.instance">
+            <file name="com-terramenta-globe-ribbons-PerspectiveBand.instance">
                 <attr name="position" intvalue="500"/>
             </file>
         </folder>
