@@ -15,8 +15,10 @@ package com.terramenta.globe.ribbons;
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.ribbon.api.ResizableIcons;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.util.Arrays;
 import java.util.prefs.Preferences;
+import org.openide.util.ImageUtilities;
 import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.common.RichTooltip;
 import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
@@ -30,6 +32,11 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  * @author Chris.Heidt
  */
 public class PerspectiveBand extends JRibbonBand {
+
+    private static final Image IMAGE_ECI = ImageUtilities.loadImage("com/terramenta/globe/ribbons/frame-eci32.png");
+    private static final Image IMAGE_ECEF = ImageUtilities.loadImage("com/terramenta/globe/ribbons/frame-ecef32.png");
+    private static final Image IMAGE_2D = ImageUtilities.loadImage("com/terramenta/globe/ribbons/dimensions-2d32.png");
+    private static final Image IMAGE_3D = ImageUtilities.loadImage("com/terramenta/globe/ribbons/dimensions-3d32.png");
 
     private static final ResizableIcon ICON_ECI = ResizableIcons.fromResource("com/terramenta/globe/ribbons/frame-eci.png");
     private static final ResizableIcon ICON_ECEF = ResizableIcons.fromResource("com/terramenta/globe/ribbons/frame-ecef.png");
@@ -51,37 +58,43 @@ public class PerspectiveBand extends JRibbonBand {
         Preferences prefs = GlobeOptions.getPreferences();
 
         /**
-         * Perspective button
+         * Coordinate Frame button
          */
-        boolean isEci = prefs.getBoolean("options.globe.isECI", false);
         JCommandButton frameBtn = new JCommandButton(ICON_ECI);
-        frameBtn.setIcon(isEci ? ICON_ECEF : ICON_ECI);
-        frameBtn.setActionRichTooltip(new RichTooltip("Coordinate Frame", "Switch to " + (isEci ? "ECEF" : "ECI")));
-        frameBtn.getActionModel().setActionCommand(isEci ? "ECEF" : "ECI");
+        updateFrame(frameBtn, prefs.getBoolean("options.globe.isECI", false));
         frameBtn.addActionListener(e -> {
-            boolean eci = e.getActionCommand().equals("ECI");
-            prefs.putBoolean("options.globe.isECI", eci);
-            frameBtn.getActionModel().setActionCommand(eci ? "ECEF" : "ECI");
-            frameBtn.setIcon(eci ? ICON_ECEF : ICON_ECI);
-            frameBtn.setActionRichTooltip(new RichTooltip("Coordinate Frame", "Switch to " + (isEci ? "ECEF" : "ECI")));
+            boolean isECI = e.getActionCommand().equals("ECI");
+            prefs.putBoolean("options.globe.isECI", isECI);
+            updateFrame(frameBtn, isECI);
         });
         addCommandButton(frameBtn, RibbonElementPriority.MEDIUM);
 
         /**
          * Dimension button
          */
-        boolean isFlat = prefs.getBoolean("options.globe.isFlat", false);
         JCommandButton dimensionsBtn = new JCommandButton(ICON_2D);
-        dimensionsBtn.setIcon(isFlat ? ICON_3D : ICON_2D);
-        dimensionsBtn.setActionRichTooltip(new RichTooltip("Display Dimensions", "Switch to " + (isFlat ? "3D" : "2D")));
-        dimensionsBtn.getActionModel().setActionCommand(isFlat ? "3D" : "2D");
+        updateDimensions(dimensionsBtn, prefs.getBoolean("options.globe.isFlat", false));
         dimensionsBtn.addActionListener(e -> {
-            boolean flat = e.getActionCommand().equals("2D");
-            prefs.putBoolean("options.globe.isFlat", flat);
-            dimensionsBtn.getActionModel().setActionCommand(flat ? "3D" : "2D");
-            dimensionsBtn.setIcon(flat ? ICON_3D : ICON_2D);
-            dimensionsBtn.setActionRichTooltip(new RichTooltip("Display Dimensions", "Switch to " + (flat ? "3D" : "2D")));
+            boolean is2D = e.getActionCommand().equals("2D");
+            prefs.putBoolean("options.globe.isFlat", is2D);
+            updateDimensions(dimensionsBtn, is2D);
         });
         addCommandButton(dimensionsBtn, RibbonElementPriority.MEDIUM);
+    }
+
+    private static void updateFrame(JCommandButton frameBtn, boolean isEci) {
+        RichTooltip frameBtnTooltip = new RichTooltip("Coordinate Frame", "Currently in " + (isEci ? "ECI" : "ECEF"));
+        frameBtnTooltip.setMainImage(isEci ? IMAGE_ECI : IMAGE_ECEF);
+        frameBtn.setActionRichTooltip(frameBtnTooltip);
+        frameBtn.setIcon(isEci ? ICON_ECI : ICON_ECEF);
+        frameBtn.getActionModel().setActionCommand(isEci ? "ECEF" : "ECI");
+    }
+
+    private static void updateDimensions(JCommandButton dimensionsBtn, boolean is2D) {
+        RichTooltip dimensionsBtnTooltip = new RichTooltip("Display Dimensions", "Currently in " + (is2D ? "2D" : "3D"));
+        dimensionsBtnTooltip.setMainImage(is2D ? IMAGE_2D : IMAGE_3D);
+        dimensionsBtn.setActionRichTooltip(dimensionsBtnTooltip);
+        dimensionsBtn.setIcon(is2D ? ICON_2D : ICON_3D);
+        dimensionsBtn.getActionModel().setActionCommand(is2D ? "3D" : "2D");
     }
 }
