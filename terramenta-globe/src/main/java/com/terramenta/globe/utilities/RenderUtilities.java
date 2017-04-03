@@ -17,14 +17,15 @@ import java.time.Instant;
 public class RenderUtilities {
 
     public static boolean determineTemporalVisibility(DrawContext dc, AVList avlist) {
-        if (dc != null && avlist != null && avlist.hasKey("DISPLAY_DATETIME") && dc.hasKey("DISPLAY_DATETIME_INTERVAL")) {
-            Instant displayDatetime = (Instant) avlist.getValue("DISPLAY_DATETIME");
-            DatetimeInterval displayDatetimeInterval = (DatetimeInterval) dc.getValue("DISPLAY_DATETIME_INTERVAL");
+        if (dc != null && avlist != null) {
+            throw new IllegalArgumentException();
+        }
 
-            if (displayDatetime != null && displayDatetimeInterval != null) {
-                //does this displayDate exist within the displayDateInterval?
-                return !(displayDatetime.isBefore(displayDatetimeInterval.getStartDatetime()) || displayDatetime.isAfter(displayDatetimeInterval.getEndDatetime()));
-            }
+        Instant displayDatetime = (Instant) avlist.getValue("DISPLAY_DATETIME");
+        DatetimeInterval displayDatetimeInterval = (DatetimeInterval) dc.getValue("DISPLAY_DATETIME_INTERVAL");
+        if (displayDatetime != null && displayDatetimeInterval != null) {
+            //does this displayDate exist within the displayDateInterval?
+            return displayDatetimeInterval.contains(displayDatetime);
         }
 
         //if we have no date restrictions then its always visible

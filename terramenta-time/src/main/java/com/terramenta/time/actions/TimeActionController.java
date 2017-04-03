@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import javax.swing.Timer;
 import org.openide.util.Lookup;
@@ -48,13 +49,13 @@ public class TimeActionController {
     /**
      *
      */
-    public static final String LINGER = "TimeActionController.LingerDuration";
+    public static final String DURATION = "TimeActionController.LingerDuration";
     private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
     private static final int animationRefreshRateMs = 100;//~10 frames per second
     private final PropertyChangeSupport pcs;
     private Timer playTimer = null;
     private int stepIncrement = AnimationSpeed.SLOW.getMilliseconds();
-    private int linger = 0;
+    private Duration displayDuration = Duration.ofHours(1);
     private int dir = 0;
 
     /**
@@ -157,15 +158,18 @@ public class TimeActionController {
      *
      * @return
      */
-    public int getLingerDuration() {
-        return this.linger;
+    public Duration getDisplayDuration() {
+        return this.displayDuration;
     }
 
     /**
      *
-     * @param linger
+     * @param displayDuration
      */
-    public void setLingerDuration(int linger) {
-        pcs.firePropertyChange(LINGER, this.linger, this.linger = linger);
+    public void setDisplayDuration(Duration displayDuration) {
+        if (displayDuration == null) {
+            displayDuration = Duration.ZERO;
+        }
+        pcs.firePropertyChange(DURATION, this.displayDuration, this.displayDuration = displayDuration);
     }
 }

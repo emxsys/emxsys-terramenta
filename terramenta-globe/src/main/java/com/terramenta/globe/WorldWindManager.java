@@ -30,6 +30,7 @@ import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwindx.examples.util.SessionState;
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -96,20 +97,13 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
             dc.setValue("DISPLAY_DATETIME", newDatetime);
 
             //set display interval
-            int linger = tac.getLingerDuration();
-            if (linger == 0) {
-                //0 linger means items do not ever disapear, so dont set a display interval
+            Duration displayDuration = tac.getDisplayDuration();
+            if (Duration.ZERO.equals(displayDuration)) {
+                //zero duration means items do not ever disapear, so dont set a display interval
                 dc.removeKey("DISPLAY_DATETIME_INTERVAL");
             } else {
-                //get interval based on play direction
-                DatetimeInterval interval;
-                if (tac.getPreviousStepDirection() < 0) {
-                    //interval from playtime to playtime+linger
-                    interval = new DatetimeInterval(newDatetime, newDatetime.plusMillis(linger));
-                } else {
-                    //interval of time from playtime-linger to playtime
-                    interval = new DatetimeInterval(newDatetime.minusMillis(linger), newDatetime);
-                }
+                Duration halfDisplayDuration = displayDuration.dividedBy(2);
+                DatetimeInterval interval = new DatetimeInterval(newDatetime.minus(halfDisplayDuration), newDatetime.plus(halfDisplayDuration));
                 dc.setValue("DISPLAY_DATETIME_INTERVAL", interval);
             }
 

@@ -14,6 +14,8 @@ package com.terramenta.time.options;
 
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.prefs.Preferences;
+import org.openide.util.NbPreferences;
 
 /**
  *
@@ -28,4 +30,8 @@ public class TimeOptions {
     public static final String DEFAULT_TIMEZONE = ZoneId.systemDefault().getId();
     public static final String DEFAULT_LOCALE = Locale.getDefault().toLanguageTag();
     public static final String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss XXX";
+
+    public static final Preferences getPreferences() {
+        return NbPreferences.forModule(TimeOptions.class);
+    }
 }

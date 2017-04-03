@@ -29,6 +29,10 @@ public class DatetimeInterval {
      * @param endDatetime
      */
     public DatetimeInterval(Instant startDatetime, Instant endDatetime) {
+        if (startDatetime == null || endDatetime == null) {
+            throw new IllegalArgumentException("Datetimes must not be null!");
+        }
+
         this.startDatetime = startDatetime;
         this.endDatetime = endDatetime;
     }
@@ -47,5 +51,13 @@ public class DatetimeInterval {
      */
     public Instant getEndDatetime() {
         return endDatetime;
+    }
+
+    public boolean contains(Instant datetime) {
+        if (datetime == null) {
+            return false;
+        }
+
+        return startDatetime.isBefore(datetime) && endDatetime.isAfter(datetime);
     }
 }
