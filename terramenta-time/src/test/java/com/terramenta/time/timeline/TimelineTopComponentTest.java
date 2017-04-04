@@ -28,7 +28,7 @@ public class TimelineTopComponentTest {
         JFrame frame = new JFrame();
         frame.add(tc);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1000, 100);
+        frame.setSize(1000, 200);
         frame.show();
     }
     

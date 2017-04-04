@@ -19,6 +19,7 @@ import java.time.Duration;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -53,7 +54,6 @@ public final class TimelineTopComponent extends TopComponent {
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
 
     private final Timeline timeline;
-
     public TimelineTopComponent() {
         initComponents();
         setName(Bundle.CTL_TimelineTopComponent());
@@ -63,7 +63,6 @@ public final class TimelineTopComponent extends TopComponent {
         Duration displayDuration = tac.getDisplayDuration();
         Duration timelineDuration = displayDuration.isZero() ? Duration.ofDays(1) : displayDuration.multipliedBy(3);
         timeline = new Timeline(dtp.getDatetime(), displayDuration, timelineDuration);
-
         //listen for date changes
         dtp.addChangeListener((oldDatetime, newDatetime) -> {
             timeline.setDisplayDatetime(newDatetime);
@@ -85,9 +84,10 @@ public final class TimelineTopComponent extends TopComponent {
         timeline.displayDurationProperty().addListener((obs, oldDuration, newDuration) -> {
             tac.setDisplayDuration(newDuration);
         });
-
+        //TimelinePlot timeline = new TimelinePlot();
         Platform.runLater(() -> {
-            jFXPanel1.setScene(new Scene(new StackPane(timeline)));
+            //timeline.setControlsEnabled(true);
+            jFXPanel1.setScene(new Scene(new StackPane(timeline), Color.DARKGRAY));
         });
     }
 
