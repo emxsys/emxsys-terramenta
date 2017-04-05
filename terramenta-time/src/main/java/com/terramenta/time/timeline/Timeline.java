@@ -12,12 +12,8 @@
  */
 package com.terramenta.time.timeline;
 
-import com.terramenta.time.options.TimeOptions;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -36,7 +32,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
 
 /**
@@ -47,6 +43,7 @@ public class Timeline extends Region {
 
     private final ObjectProperty<Instant> displayDatetimeProperty = new SimpleObjectProperty<>(null);
     private final ObjectProperty<Duration> displayDurationProperty = new SimpleObjectProperty<Duration>() {
+
         @Override
         public void set(Duration duration) {
             if (duration == null || duration.compareTo(Duration.ZERO) < 0) {
@@ -86,44 +83,31 @@ public class Timeline extends Region {
     private final Group timelineItemMarkers = new Group();
     private final TimelineAxis topAxis;
     private final TimelineAxis bottomAxis;
-    private final Polygon displayDurationRegion;
+    private final Rectangle displayDurationRegion;
     private final Line displayDatetimeLine;
     private final Line cursorLine;
     private double priorX;
 
     public Timeline() {
-        this(Instant.now(), Duration.ofHours(1), Duration.ofHours(12));
+        this(null, null, null);
     }
 
     public Timeline(Instant displayDate, Duration displayDuration, Duration boundingDuration) {
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
+        //ordered
+        this.displayDatetimeProperty.set(displayDate);
         this.timelineDurationProperty.set(boundingDuration);
         this.displayDurationProperty.set(displayDuration);
-        this.displayDatetimeProperty.set(displayDate);
 
         //update if any date propertys change
-        this.displayDatetimeProperty.addListener((obs, ov, nv) -> update());
-        this.displayDurationProperty.addListener((obs, ov, duration) -> update());
-        this.timelineDurationProperty.addListener((obs, ov, duration) -> update());
+        this.displayDatetimeProperty.addListener((obs, ov, nv) -> update(false));
+        this.displayDurationProperty.addListener((obs, ov, duration) -> update(true));
+        this.timelineDurationProperty.addListener((obs, ov, duration) -> update(true));
 
         //auto scaling number axis
         topAxis = new TimelineAxis();
-        topAxis.setTickLabelRotation(90);//vertical labels
-        topAxis.setTickLabelFormatter(new StringConverter<Number>() {
-            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy, HH:mm:ss");
-
-            @Override
-            public String toString(Number seconds) {
-                ZoneId zone = ZoneId.of(TimeOptions.getPreferences().get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE));
-                return formatter.format(ZonedDateTime.ofInstant(Instant.ofEpochSecond(seconds.longValue()), zone));
-            }
-
-            @Override
-            public Number fromString(String label) {
-                return formatter.parse(label, Instant::from).getEpochSecond();
-            }
-        });
+        topAxis.setTickLabelRotation(80);//vertical labels
         topAxis.setSide(Side.BOTTOM);//effectivly inversed
         topAxis.prefWidthProperty().bind(this.widthProperty());
         topAxis.prefHeightProperty().bind(this.heightProperty());
@@ -157,14 +141,18 @@ public class Timeline extends Region {
         displayDatetimeLine = new Line();
         displayDatetimeLine.setStrokeWidth(1);
         displayDatetimeLine.setStroke(Color.GRAY);
+        displayDatetimeLine.startXProperty().bind(Bindings.add(layoutXProperty(), widthProperty().divide(2)));
         displayDatetimeLine.startYProperty().bind(layoutYProperty());
+        displayDatetimeLine.endXProperty().bind(displayDatetimeLine.startXProperty());
         displayDatetimeLine.endYProperty().bind(Bindings.add(layoutYProperty(), heightProperty()));
 
         //display duration region
-        displayDurationRegion = new Polygon();
+        displayDurationRegion = new Rectangle();
         displayDurationRegion.setOpacity(0.3);
         displayDurationRegion.setStrokeWidth(0);
         displayDurationRegion.setFill(Color.GRAY);
+        displayDurationRegion.yProperty().bind(layoutYProperty());
+        displayDurationRegion.heightProperty().bind(heightProperty());
 
         //display data line
         cursorLine = new Line();
@@ -174,7 +162,7 @@ public class Timeline extends Region {
         cursorLine.endYProperty().bind(Bindings.add(layoutYProperty(), heightProperty()));
 
         //set all kids back to front
-        this.getChildren().addAll(displayDatetimeLine, bottomAxis, topAxis, displayDurationRegion, cursorLine, timelineItemMarkers);
+        this.getChildren().addAll(displayDurationRegion, displayDatetimeLine, bottomAxis, topAxis, cursorLine, timelineItemMarkers);
 
         //listen for data changes
         sortedTimelineItems.addListener((Observable obs) -> {
@@ -236,15 +224,11 @@ public class Timeline extends Region {
             cursorLine.setStartX(snapedX);
             cursorLine.setEndX(snapedX);
         });
-    }
 
-    /**
-     * refresh values during layout changes
-     */
-    @Override
-    protected void layoutChildren() {
-        super.layoutChildren();
-        update();
+        this.layoutBoundsProperty().addListener((obs, ov, nv) -> update(true));
+
+        //initial draw
+        update(true);
     }
 
     public ObjectProperty<Instant> displayDateProperty() {
@@ -317,10 +301,7 @@ public class Timeline extends Region {
         setDisplayDuration(newDuration);
     }
 
-    private void update() {
-        displayDatetimeLine.setVisible(false);
-        displayDurationRegion.setVisible(false);
-
+    private void update(boolean updateDisplay) {
         //required: cant do much without these values
         Instant displayDatetime = displayDatetimeProperty.get();
         if (displayDatetime == null) {
@@ -331,12 +312,11 @@ public class Timeline extends Region {
         long displayDurationInSeconds = displayDurationProperty.get().getSeconds();
         long timelineDurationInSeconds = timelineDurationProperty.get().getSeconds();
         updateAxis(displayDatetimeInSeconds, timelineDurationInSeconds);
-        updateDisplayDatetimeLine(displayDatetimeInSeconds);
-        updateDisplayDurationRegion(displayDatetimeInSeconds, displayDurationInSeconds);
         updateTimelineItemMarkers(displayDatetimeInSeconds, displayDurationInSeconds, timelineDurationInSeconds);
 
-        displayDurationRegion.setVisible(true);
-        displayDatetimeLine.setVisible(true);
+        if (updateDisplay) {
+            updateDisplayDurationRegion(displayDatetimeInSeconds, displayDurationInSeconds);
+        }
     }
 
     private void updateAxis(long displayDateInSeconds, long timelineDurationInSeconds) {
@@ -346,19 +326,19 @@ public class Timeline extends Region {
         topAxis.setUpperBound(displayDateInSeconds + halfTimelineDurationInSeconds);
     }
 
-    private void updateDisplayDatetimeLine(long displayDatetimeInSeconds) {
-        //draw display date line
-        double nowScreenX = snap(topAxis.getDisplayPosition(displayDatetimeInSeconds));
-        displayDatetimeLine.setStartX(nowScreenX);
-        displayDatetimeLine.setEndX(nowScreenX);
-    }
-
+//    private void updateDisplayDatetimeLine(long displayDatetimeInSeconds) {
+//        //draw display date line
+//        double nowScreenX = snap(topAxis.getDisplayPosition(displayDatetimeInSeconds));
+//        displayDatetimeLine.setStartX(nowScreenX);
+//        displayDatetimeLine.setEndX(nowScreenX);
+//    }
     private void updateDisplayDurationRegion(long displayDatetimeInSeconds, long displayDurationInSeconds) {
         //draw display offset region
         double halfDisplayDurationInSeconds = displayDurationInSeconds / 2;
         double minScreenX = topAxis.getDisplayPosition(displayDatetimeInSeconds - halfDisplayDurationInSeconds);
         double maxScreenX = topAxis.getDisplayPosition(displayDatetimeInSeconds + halfDisplayDurationInSeconds);
-        displayDurationRegion.getPoints().setAll(minScreenX, 0d, maxScreenX, 0d, maxScreenX, topAxis.getHeight(), minScreenX, topAxis.getHeight());
+        displayDurationRegion.setX(minScreenX);
+        displayDurationRegion.setWidth(maxScreenX - minScreenX);
     }
 
     private void updateTimelineItemMarkers(long displayDateInSeconds, long displayDurationInSeconds, long timelineDurationInSeconds) {
@@ -387,7 +367,7 @@ public class Timeline extends Region {
                 marker.setEndY(topAxis.getLayoutY() + topAxis.getHeight());
                 if (sec >= lowerDisplayBoundInSeconds && sec <= upperDisplayBoundInSeconds) {
                     marker.setFill(Color.CYAN);
-                }else{
+                } else {
                     marker.setFill(Color.MAGENTA);
                 }
                 marker.setVisible(true);
