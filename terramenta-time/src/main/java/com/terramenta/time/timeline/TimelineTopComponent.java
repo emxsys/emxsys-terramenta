@@ -13,12 +13,8 @@
 package com.terramenta.time.timeline;
 
 import com.terramenta.ribbon.RibbonActionReference;
-import com.terramenta.time.DatetimeProvider;
-import com.terramenta.time.actions.TimeActionController;
 import java.awt.Dimension;
-import java.time.Duration;
 import javafx.application.Platform;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -51,10 +47,8 @@ import org.openide.windows.TopComponent;
 })
 public final class TimelineTopComponent extends TopComponent {
 
-    private static final DatetimeProvider dtp = Lookup.getDefault().lookup(DatetimeProvider.class);
-    private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-
-    private final Timeline timeline;
+    private static final TimelineProvider tp = Lookup.getDefault().lookup(TimelineProvider.class);
+    private Timeline timeline;
 
     public TimelineTopComponent() {
         initComponents();
@@ -63,33 +57,7 @@ public final class TimelineTopComponent extends TopComponent {
         setMinimumSize(new Dimension(50, 50));
         setPreferredSize(new Dimension(75, 75));
 
-        Duration displayDuration = tac.getDisplayDuration();
-        Duration timelineDuration = displayDuration.isZero() ? Duration.ofDays(1) : displayDuration.multipliedBy(3);
-        timeline = new Timeline(dtp.getDatetime(), displayDuration, timelineDuration);
-        timeline.setOrientation(Orientation.VERTICAL);
-
-        //listen for date changes
-        dtp.addChangeListener((oldDatetime, newDatetime) -> {
-            timeline.setDisplayDatetime(newDatetime);
-        });
-
-        //update Timeline to reflect changes in display duration
-        tac.addPropertyChangeListener(pce -> {
-            if (pce.getPropertyName().equals(TimeActionController.DURATION)) {
-                timeline.setDisplayDuration((Duration) pce.getNewValue());
-            }
-        });
-
-        //update DatetimeProvider to reflect changes in display date
-        timeline.displayDateProperty().addListener((obs, oldDatetime, newDatetime) -> {
-            dtp.setDatetime(newDatetime);
-        });
-
-        //update TimeActionController to reflect changes in display duration
-        timeline.displayDurationProperty().addListener((obs, oldDuration, newDuration) -> {
-            tac.setDisplayDuration(newDuration);
-        });
-
+        timeline = tp.getTimeline();
         Platform.runLater(() -> {
             jFXPanel1.setScene(new Scene(new StackPane(timeline), Color.BLACK));
         });
@@ -114,11 +82,11 @@ public final class TimelineTopComponent extends TopComponent {
 
     @Override
     public void componentOpened() {
-
+        timeline.setArmed(true);
     }
 
     @Override
     public void componentClosed() {
-
+        timeline.setArmed(false);
     }
 }

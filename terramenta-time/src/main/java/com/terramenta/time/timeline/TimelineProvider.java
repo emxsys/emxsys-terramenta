@@ -12,26 +12,10 @@
  */
 package com.terramenta.time.timeline;
 
-import java.io.IOException;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 /**
  *
  * @author Chris Heidt <chris.heidt@vencore.com>
  */
-public class TimelineTopComponentTest {
-    
-    public static void main(String[] args) throws IOException {
-        TimelineTopComponent tc = new TimelineTopComponent();
-        
-        JFrame frame = new JFrame();
-        frame.add(tc);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(100, 800);
-        frame.show();
-        
-        tc.componentOpened();//arm
-    }
-    
+public interface TimelineProvider {
+    Timeline getTimeline();
 }

@@ -117,15 +117,6 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
 
     @Override
     public boolean getBooleanState() {
-        //NOTE: Why were we doing this?
-//        if (renderable instanceof AVList) {
-//            AVList avl = (AVList) renderable;
-//            Boolean visible = (Boolean) avl.getValue("VISIBLE");
-//            if (visible != null) {
-//                return visible;
-//            }
-//        }
-
         // layers use enabled
         if (isLayer) {
             return ((RenderableLayer) renderable).isEnabled();
@@ -144,13 +135,6 @@ public class RenderableNode extends BeanNode implements BooleanState.Provider, D
 
     @Override
     public void setBooleanState(boolean state) {
-        //NOTE: Why were we doing this?
-//        if (renderable instanceof AVList) {
-//            AVList avl = (AVList) renderable;
-//            avl.setValue("VISIBLE", state);
-//            avl.firePropertyChange("VISIBLE", null, state);
-//        }
-
         // layers use enabled
         if (isLayer) {
             ((RenderableLayer) renderable).setEnabled(state);
