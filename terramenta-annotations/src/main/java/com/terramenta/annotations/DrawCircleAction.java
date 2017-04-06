@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -35,8 +34,9 @@ import org.openide.util.NbBundle.Messages;
  * @author heidtmare
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawCircleAction")
-@ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-circle.png", displayName = "#CTL_DrawCircleAction")
-@ActionReference(path = "Toolbars/Annotations", position = 2)
+@ActionRegistration(
+        iconBase = "com/terramenta/annotations/images/draw-circle.png",
+        displayName = "#CTL_DrawCircleAction")
 @RibbonActionReference(path = "Menu/Insert/Annotations",
         position = 2,
         priority = "top",

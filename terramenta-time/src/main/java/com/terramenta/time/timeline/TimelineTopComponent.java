@@ -32,9 +32,9 @@ import org.openide.windows.TopComponent;
  */
 @TopComponent.Description(
         preferredID = "TimelineTopComponent",
-        persistenceType = TopComponent.PERSISTENCE_NEVER
+        persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
-@TopComponent.Registration(mode = "explorer", openAtStartup = true)
+@TopComponent.Registration(mode = "timelineMode", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.time.timeline.TimelineTopComponent")
 @RibbonActionReference(
         path = "Menu/Animate/Controls",

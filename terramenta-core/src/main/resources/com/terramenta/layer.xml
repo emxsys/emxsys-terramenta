@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
+     <folder name="Windows2">
+        <folder name="Modes">
+            <folder name="properties">
+                <file name="properties.wstcref" url="propertiesWstcref.xml"/>
+            </folder>
+        </folder>
+        <file name="WindowManager.wswmgr" url="WindowManager.wswmgr"/>
+    </folder>
+    
     <folder name="Ribbon">
         <!--FILE Tab (Application Menu-->
         <folder name="AppMenu">
@@ -68,7 +77,7 @@
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
             </file>-->
-<!--            <file name="com-terramenta-actions-CloseProjectAction.shadow">
+            <!--            <file name="com-terramenta-actions-CloseProjectAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/com-terramenta-actions-CloseProjectAction.instance"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
                 <attr name="position" intvalue="700"/>
@@ -84,7 +93,7 @@
                 <attr name="position" intvalue="975"/>
             </file>-->
             <!-- Save actions -->
-<!--            <file name="org-openide-actions-SaveAction.shadow">
+            <!--            <file name="org-openide-actions-SaveAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAction.instance"/>
                 <attr name="position" intvalue="1000"/>
                 <attr name="iconBase" stringvalue="com/terramenta/images/save.png"/>
@@ -201,24 +210,6 @@
                 <attr name="position" intvalue="100"/>
                 <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_AnnotationsGroup"/>
             </folder>
-        </folder>
-        <!--ANIMATE Tab-->
-        <folder name="Animate">
-            <attr name="position" intvalue="300"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_AnimateTab"/>
-            <folder name="Controls">
-                <attr name="position" intvalue="100"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ControlsGroup"/>
-            </folder>
-            <file name="com-terramenta-time-ribbons-DatetimeBand.instance">
-                <attr name="position" intvalue="200"/>
-            </file>
-            <file name="com-terramenta-time-ribbons-LingerBand.instance">
-                <attr name="position" intvalue="300"/>
-            </file>
-            <file name="com-terramenta-time-ribbons-SpeedBand.instance">
-                <attr name="position" intvalue="400"/>
-            </file>
         </folder>
         <!--DATA Tab-->
         <folder name="Data">
@@ -424,13 +415,5 @@
             </folder>               
         </folder>
     </folder>
-    <folder name="Windows2">
-        <folder name="Modes">
-            <file name="rightSide.wsmode" url="rightSideMode.xml"/>
-            <folder name="properties">
-                <file name="properties.wstcref" url="propertiesWstcref.xml"/>
-            </folder>
-        </folder>
-        <file name="WindowManager.wswmgr" url="WindowManager.wswmgr"/>
-    </folder>
+   
 </filesystem>
