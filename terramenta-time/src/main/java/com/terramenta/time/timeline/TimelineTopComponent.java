@@ -89,4 +89,8 @@ public final class TimelineTopComponent extends TopComponent {
     public void componentClosed() {
         timeline.setArmed(false);
     }
+    
+    public Timeline getTimeline(){
+        return timeline;
+    }
 }

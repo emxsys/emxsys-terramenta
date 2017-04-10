@@ -14,8 +14,6 @@ package com.terramenta.time.timeline;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
-import java.util.stream.Collectors;
 import javafx.animation.AnimationTimer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -23,7 +21,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.geometry.Side;
@@ -86,8 +83,8 @@ public class Timeline extends Region {
     };
 
     private final BooleanProperty armedProperty = new SimpleBooleanProperty(false);
-    private final ObservableList<TimelineItem> timelineItems = FXCollections.<TimelineItem>observableArrayList();
-    private final Group timelineItemMarkers = new Group();
+    private final ObservableList<TimelineMarker> timelineMarkers = FXCollections.<TimelineMarker>observableArrayList();
+    private final Group timelineMarkersGroup = new Group();
     private final TimelineAxis topAxis;
     private final TimelineAxis bottomAxis;
     private final Rectangle displayDurationRectangle;
@@ -170,37 +167,38 @@ public class Timeline extends Region {
         cursorLine.startYProperty().bind(layoutYProperty());
         cursorLine.endYProperty().bind(Bindings.add(layoutYProperty(), heightProperty()));
 
+        Bindings.bindContent(timelineMarkersGroup.getChildren(), timelineMarkers);
+
         //set all kids back to front
-        this.getChildren().addAll(displayDurationRectangle, displayDatetimeLine, topAxis, bottomAxis, timelineItemMarkers, cursorLine);
+        this.getChildren().addAll(displayDurationRectangle, displayDatetimeLine, topAxis, bottomAxis, cursorLine, timelineMarkersGroup);
 
         //listen for data changes
-        timelineItems.addListener((ListChangeListener.Change<? extends TimelineItem> c) -> {
-
-            //just rebuilding all the markers for now.
-            //TODO: review add/remove lists from Change parameter and create/remove markers accordingly
-            List<Line> markers = timelineItems.stream().map(ti -> {
-                double position = topAxis.getDisplayPosition(ti.getDateTime().getEpochSecond());
-                Line marker = new Line();
-                if (Orientation.HORIZONTAL.equals(orientation)) {
-                    marker.setStartX(position);
-                    marker.setEndX(position);
-                    marker.setStartY(topAxis.getLayoutY());
-                    marker.setEndY(topAxis.getLayoutY() + topAxis.getHeight());
-                } else {
-                    marker.setStartX(topAxis.getLayoutX());
-                    marker.setEndX(topAxis.getLayoutX() + topAxis.getWidth());
-                    marker.setStartY(position);
-                    marker.setEndY(position);
-                }
-                marker.setUserData(ti);
-                marker.setStroke(Color.MAGENTA);
-                marker.setStrokeWidth(1);
-                return marker;
-            }).collect(Collectors.toList());
-
-            timelineItemMarkers.getChildren().setAll(markers);
-        });
-
+//        timelineMarkers.addListener((ListChangeListener.Change<? extends TimelineMarker> c) -> {
+//
+//            //just rebuilding all the markers for now.
+//            //TODO: review add/remove lists from Change parameter and create/remove markers accordingly
+//            List<Line> markers = timelineMarkers.stream().map(ti -> {
+//                double position = topAxis.getDisplayPosition(ti.getDateTime().getEpochSecond());
+//                Line marker = new Line();
+//                if (Orientation.HORIZONTAL.equals(orientation)) {
+//                    marker.setStartX(position);
+//                    marker.setEndX(position);
+//                    marker.setStartY(topAxis.getLayoutY());
+//                    marker.setEndY(topAxis.getLayoutY() + topAxis.getHeight());
+//                } else {
+//                    marker.setStartX(topAxis.getLayoutX());
+//                    marker.setEndX(topAxis.getLayoutX() + topAxis.getWidth());
+//                    marker.setStartY(position);
+//                    marker.setEndY(position);
+//                }
+//                marker.setUserData(ti);
+//                marker.setStroke(Color.MAGENTA);
+//                marker.setStrokeWidth(1);
+//                return marker;
+//            }).collect(Collectors.toList());
+//
+//            timelineMarkersGroup.getChildren().setAll(markers);
+//        });
         //scroll handler for adjusting durations 
         this.addEventHandler(ScrollEvent.SCROLL, e -> {
             if (e.isControlDown()) {
@@ -405,8 +403,8 @@ public class Timeline extends Region {
         this.displayDurationProperty.set(duration);
     }
 
-    public ObservableList<TimelineItem> getTimelineItems() {
-        return timelineItems;
+    public ObservableList<TimelineMarker> getTimelineMarkers() {
+        return timelineMarkers;
     }
 
 //*******************
@@ -482,7 +480,7 @@ public class Timeline extends Region {
     }
 
     private void updateTimelineItemMarkers(long displayDateInSeconds, long displayDurationInSeconds, long timelineDurationInSeconds) {
-        if (timelineItemMarkers.getChildren().isEmpty()) {
+        if (timelineMarkers.isEmpty()) {
             return;
         }
 
@@ -495,10 +493,9 @@ public class Timeline extends Region {
         double upperTimelineBoundInSeconds = displayDateInSeconds + halfTimelineDurationInSeconds;
 
         //update position of markers
-        timelineItemMarkers.getChildren().forEach(tim -> {
-            Line marker = (Line) tim;
+        timelineMarkers.forEach(marker -> {
             marker.setVisible(false);
-            long sec = ((TimelineItem) marker.getUserData()).getDateTime().getEpochSecond();
+            long sec = marker.getDateTime().getEpochSecond();
             if (sec >= lowerTimelineBoundInSeconds && sec <= upperTimelineBoundInSeconds) {
                 double position = topAxis.getDisplayPosition(sec);
                 if (Orientation.HORIZONTAL.equals(orientation)) {
@@ -513,14 +510,13 @@ public class Timeline extends Region {
                     marker.setEndY(position);
                 }
                 if (sec >= lowerDisplayBoundInSeconds && sec <= upperDisplayBoundInSeconds) {
-                    marker.setFill(Color.CYAN);
+                    marker.setStroke(Color.CYAN);
                 } else {
-                    marker.setFill(Color.MAGENTA);
+                    marker.setStroke(Color.MAGENTA);
                 }
                 marker.setVisible(true);
             }
         });
-
     }
 
     public static double snap(double val) {

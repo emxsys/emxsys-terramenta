@@ -12,13 +12,6 @@
  */
 package com.terramenta.time.timeline;
 
-import com.terramenta.time.options.TimeOptions;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -41,11 +34,12 @@ import javafx.util.StringConverter;
  */
 public class TimelineAxis extends ValueAxis<Number> {
 
+    private static final StringConverter<Number> DEFAULT_FORMATTER = new LocalizedTimelineLabeler();
+
     /**
      * Possible tick spacing at the 10^1 level. must be between 1 and 10
      */
     private static final double[] dividers = new double[]{1.0, 2.5, 5.0};
-
     private static final int numMinorTicks = 3;
 
     private final Timeline animationTimeline = new Timeline();
@@ -61,8 +55,6 @@ public class TimelineAxis extends ValueAxis<Number> {
         }
     };
 
-    private List<Number> minorTicks;
-
     /**
      * Amount of padding to add on the each end of the axis when auto ranging.
      */
@@ -73,55 +65,7 @@ public class TimelineAxis extends ValueAxis<Number> {
      */
     private BooleanProperty forceZeroInRange = new SimpleBooleanProperty(true);
 
-    private static final StringConverter<Number> DEFAULT_FORMATTER = new StringConverter<Number>() {
-        //private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy, HH:mm:ss");
-        private final DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy G");
-        private final DateTimeFormatter yearMonth = DateTimeFormatter.ofPattern("MMMM yyyy");
-        private final DateTimeFormatter yearMonthDay = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
-        private final DateTimeFormatter hourMin = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-        private final DateTimeFormatter hourMinSecond = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM);
-
-        private Number previous = null;
-
-        @Override
-        public String toString(Number seconds) {
-
-            /**
-             * NOTE: This only works because we are creating an offscreen tick at each end of the
-             * region. The initial label for the first(offscreen) tick will be blank, subsequently
-             * its label will be incorrect since it's value will be compared to the "previous" of
-             * the last tick from the prior label formatting sequence.
-             */
-            if (previous == null) {
-                previous = seconds;
-                return "";
-            }
-
-            ZoneId zone = ZoneId.of(TimeOptions.getPreferences().get(TimeOptions.TIMEZONE, TimeOptions.DEFAULT_TIMEZONE));
-            ZonedDateTime datetime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(seconds.longValue()), zone);
-
-            String output;
-            long diff = seconds.longValue() - previous.longValue();
-            if (diff < ChronoUnit.HOURS.getDuration().getSeconds()) {
-                output = hourMinSecond.format(datetime);
-            } else if (diff < ChronoUnit.DAYS.getDuration().getSeconds()) {
-                output = hourMin.format(datetime);
-            } else if (diff < ChronoUnit.MONTHS.getDuration().getSeconds()) {
-                output = yearMonthDay.format(datetime);
-            } else if (diff < ChronoUnit.YEARS.getDuration().getSeconds()) {
-                output = yearMonth.format(datetime);
-            } else {
-                output = year.format(datetime);
-            }
-            previous = seconds;
-            return output;
-        }
-
-        @Override
-        public Number fromString(String label) {
-            throw new UnsupportedOperationException("not implemented.");
-        }
-    };
+    private List<Number> minorTicks;
 
     public TimelineAxis() {
         setAutoRanging(false);//!important
@@ -131,6 +75,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * Amount of padding to add on the each end of the axis when auto ranging.
+     *
+     * @return
      */
     public double getAutoRangePadding() {
         return autoRangePadding.get();
@@ -138,6 +84,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * Amount of padding to add on the each end of the axis when auto ranging.
+     *
+     * @return
      */
     public DoubleProperty autoRangePaddingProperty() {
         return autoRangePadding;
@@ -145,6 +93,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * Amount of padding to add on the each end of the axis when auto ranging.
+     *
+     * @param autoRangePadding
      */
     public void setAutoRangePadding(double autoRangePadding) {
         this.autoRangePadding.set(autoRangePadding);
@@ -152,6 +102,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * If true, when auto-ranging, force 0 to be the min or max end of the range.
+     *
+     * @return
      */
     public boolean isForceZeroInRange() {
         return forceZeroInRange.get();
@@ -159,6 +111,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * If true, when auto-ranging, force 0 to be the min or max end of the range.
+     *
+     * @return
      */
     public BooleanProperty forceZeroInRangeProperty() {
         return forceZeroInRange;
@@ -166,6 +120,8 @@ public class TimelineAxis extends ValueAxis<Number> {
 
     /**
      * If true, when auto-ranging, force 0 to be the min or max end of the range.
+     *
+     * @param forceZeroInRange
      */
     public void setForceZeroInRange(boolean forceZeroInRange) {
         this.forceZeroInRange.set(forceZeroInRange);
@@ -374,6 +330,7 @@ public class TimelineAxis extends ValueAxis<Number> {
     protected String getTickMarkLabel(Number value) {
         StringConverter<Number> formatter = getTickLabelFormatter();
         return formatter == null ? DEFAULT_FORMATTER.toString(value) : formatter.toString(value);
+
     }
 
     private static class Range {
