@@ -17,7 +17,7 @@ import java.time.Instant;
 public class RenderUtilities {
 
     public static boolean determineTemporalVisibility(DrawContext dc, AVList avlist) {
-        if (dc != null && avlist != null) {
+        if (dc == null || avlist == null) {
             throw new IllegalArgumentException();
         }
 
