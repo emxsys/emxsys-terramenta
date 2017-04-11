@@ -28,6 +28,7 @@ import org.openide.windows.TopComponent;
  */
 @TopComponent.Description(
         preferredID = "TimelineTopComponent",
+        iconBase = "timeline.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
 @TopComponent.Registration(mode = "timelineMode", openAtStartup = true)
@@ -38,6 +39,7 @@ import org.openide.windows.TopComponent;
 @ActionID(category = "Window", id = "com.terramenta.time.timeline.TimelineTopComponent")
 @RibbonActionReference(
         path = "Menu/Animate/Controls",
+        tooltipIcon = "timeline24.png",
         position = 6
 )
 @Messages({
