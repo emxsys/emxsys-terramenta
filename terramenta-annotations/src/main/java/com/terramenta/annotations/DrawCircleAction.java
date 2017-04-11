@@ -37,7 +37,7 @@ import org.openide.util.NbBundle.Messages;
 @ActionRegistration(
         iconBase = "com/terramenta/annotations/images/draw-circle.png",
         displayName = "#CTL_DrawCircleAction")
-@RibbonActionReference(path = "Menu/Insert/Annotations",
+@RibbonActionReference(path = "Ribbon/TaskPanes/Insert/Annotations",
         position = 2,
         priority = "top",
         description = "#CTL_DrawCircleAction_Hint",

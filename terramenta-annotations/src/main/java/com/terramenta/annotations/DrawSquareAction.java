@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -38,8 +37,7 @@ import org.openide.util.NbBundle.Messages;
         id = "com.terramenta.annotations.DrawSquareAction")
 @ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-square.png",
         displayName = "#CTL_DrawSquareAction")
-@ActionReference(path = "Toolbars/Annotations", position = 4)
-@RibbonActionReference(path = "Menu/Insert/Annotations",
+@RibbonActionReference(path = "Ribbon/TaskPanes/Insert/Annotations",
         position = 4,
         priority = "top",
         description = "#CTL_DrawSquareAction_Hint",

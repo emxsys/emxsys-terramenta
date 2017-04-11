@@ -1,120 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
 <filesystem>
-     <folder name="Windows2">
+    <folder name="Windows2">
+        <!-- provide config for window dimensions-->
+        <file name="WindowManager.wswmgr" url="WindowManager.wswmgr"/>
+        
         <folder name="Modes">
             <folder name="properties">
+                <!-- put the properties topcomponent into the properties mode-->
                 <file name="properties.wstcref" url="propertiesWstcref.xml"/>
             </folder>
         </folder>
-        <file name="WindowManager.wswmgr" url="WindowManager.wswmgr"/>
     </folder>
     
+    <!-- Main ribon definition, can be modified by each module -->
     <folder name="Ribbon">
         <!--FILE Tab (Application Menu-->
         <folder name="AppMenu">
-            <!-- Open Project actions -->
-<!--            <folder name="Open">
-                <attr name="position" intvalue="100"/>
-                <attr name="iconBase" stringvalue="com/terramenta/images/folder_accept.png"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Open"/>
-            
-                <file name="org-netbeans-modules-project-ui-OpenProject.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-OpenProject.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_OpenProject"/>
-                    <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_OpenProject_Hint"/>
-                    <attr name="position" intvalue="500"/>
-                </file>
-
-                <file name="org-netbeans-modules-openfile-OpenFileAction.shadow">
-                    org.netbeans.modules.openfile.OpenFileAction
-                    <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-openfile-OpenFileAction.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_OpenFile"/>
-                    <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_OpenFile_Hint"/>
-                    <attr intvalue="800" name="position"/>
-                </file>
-                            
-                <file name="org-netbeans-modules-project-ui-RecentProjects.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-RecentProjects.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_RecentProjects"/>
-                    <attr name="position" intvalue="600"/>
-                </file>
-
-                <file name="org-netbeans-modules-openfile-RecentFileAction.shadow">
-                    org.netbeans.modules.openfile.RecentFileAction
-                    <attr name="originalFile" stringvalue="Actions/System/org-netbeans-modules-openfile-RecentFileAction.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_RecentFiles"/>
-                    <attr intvalue="900" name="position"/>
-                </file>
-            </folder>-->
-            <!-- New Project and File actions -->
-<!--            <folder name="New">
-                <attr name="position" intvalue="101"/>
-                <attr name="iconBase" stringvalue="com/terramenta/images/folder_add.png"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_New"/>
-            
-                <file name="org-netbeans-modules-project-ui-NewProject.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-NewProject.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_NewProject"/>
-                    <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_NewProject_Hint"/>
-                    <attr name="position" intvalue="100"/>
-                </file>
-
-                <file name="org-netbeans-modules-project-ui-NewFile.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-NewFile.instance"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_NewFile"/>
-                    <attr name="description" bundlevalue="com.terramenta.Bundle#CTL_NewFile_Hint"/>
-                    <attr name="position" intvalue="200"/>
-                </file>
-            </folder>
-            <file name="SeparatorNew.instance">
-                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
-                <attr name="position" intvalue="475"/>
-            </file>-->
-            <!--Close actions-->
-            <!--            <file name="org-netbeans-modules-project-ui-CloseProject.shadow">
-                <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-CloseProject.instance"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
-                <attr name="position" intvalue="700"/>
-            </file>-->
-            <!--            <file name="com-terramenta-actions-CloseProjectAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/File/com-terramenta-actions-CloseProjectAction.instance"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseProject"/>
-                <attr name="position" intvalue="700"/>
-            </file>            
-            <file name="org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.shadow">
-                NetBeans 8.0 Action
-                <attr name="originalFile" stringvalue="Actions/File/org-netbeans-modules-project-ui-actions-CloseAllProjectsAction.instance"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_CloseAllProjects"/>
-                <attr name="position" intvalue="750"/>
-            </file>
-            <file name="SeparatorOpen.instance">
-                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>                 
-                <attr name="position" intvalue="975"/>
-            </file>-->
-            <!-- Save actions -->
-            <!--            <file name="org-openide-actions-SaveAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAction.instance"/>
-                <attr name="position" intvalue="1000"/>
-                <attr name="iconBase" stringvalue="com/terramenta/images/save.png"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_Save"/>
-            </file>
-            <file name="org-openide-actions-SaveAllAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAllAction.instance"/>
-                <attr name="position" intvalue="1100"/>
-                <attr name="iconBase" stringvalue="com/terramenta/images/save_all.png"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_SaveAll"/>
-            </file>
-            <file name="org-openide-actions-SaveAsAction.shadow">
-                <attr name="originalFile" stringvalue="Actions/System/org-openide-actions-SaveAsAction.instance"/>
-                <attr name="position" intvalue="1200"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_SaveAs"/>
-            </file>
-            <file name="SeparatorSave.instance">
-                <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
-                <attr name="position" intvalue="1500"/>
-            </file>-->
-            <!-- Print actions -->
             <folder name="Print">
                 <attr name="position" intvalue="1600"/>
                 <attr name="iconBase" stringvalue="com/terramenta/images/print.png"/>
@@ -186,105 +88,30 @@
             </file>
         </folder>
    
-        <folder name="TaskPanes"/>
-    </folder>
-    <folder name="Menu">
-        <folder name="File_hidden"/>
-        <folder name="Edit_hidden"/>
-        <folder name="GoTo_hidden"/>       
-        <folder name="BuildProject_hidden"/>
-        <folder name="Profile_hidden"/>
-        <folder name="Refactoring_hidden"/>
-        <folder name="RunProject_hidden"/>
-        <folder name="Source_hidden"/>
-        <!-- HOME Tab -->
-        <folder name="Home">
-            <attr name="position" intvalue="100"/>
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_HomeTab"/>
-        </folder>
-        <!--INSERT Tab-->
-        <folder name="Insert">
-            <attr name="position" intvalue="200"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_InsertTab"/>
-            <folder name="Annotations">
+        <folder name="TaskPanes">
+            <!-- HOME Tab -->
+            <folder name="Home">
                 <attr name="position" intvalue="100"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_AnnotationsGroup"/>
+                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_HomeTab"/>
             </folder>
-        </folder>
-        <!--DATA Tab-->
-        <folder name="Data">
-            <attr name="position" intvalue="400"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_DataTab"/>
-        </folder>
-        <!--PROCESS Tab-->
-        <folder name="Process">
-            <attr name="position" intvalue="500"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ProcessTab"/>
-        </folder>
-        <!--TOOLS Tab (Should not use. A placeholder for 3rd party modules)-->
-        <folder name="Tools">
-            <attr name="position" intvalue="600"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ToolsTab"/>
-            <file name="Separator1.instance_hidden"/>
-            <file name="Separator2.instance_hidden"/>
-            <file name="org-netbeans-modules-autoupdate-ui-actions-PluginManagerAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-favorites-templates-TemplatesAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-templates-actions-TemplatesAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-options-OptionsWindowAction-separatorBefore.instance_hidden"/>
-            <file name="org-netbeans-modules-options-OptionsWindowAction.shadow_hidden"/>
-            <file name="org-openide-actions-ToolsAction.shadow_hidden"/>         
-            <folder name="Tasks">
-                <attr name="position" intvalue="9999"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_TasksGroup"/>
-            </folder>               
-        </folder>
-        <!--VIEW (Window) Tab-->
-        <file name="Versioning_hidden"/>
-        <folder name="Window">
-            <attr name="position" intvalue="700"/> 
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ViewTab"/>
-
-            <file name="CloneDocumentAction.shadow_hidden"/>
-            <file name="CloseAllButThisAction.shadow_hidden"/>
-            <file name="CloseAllDocumentsAction.shadow_hidden"/>
-            <file name="CloseWindowAction.shadow_hidden"/>
-            <file name="ConfigureWindow_hidden"/>
-            <file name="DocumentsAction.shadow_hidden"/>
-            <file name="GroupsMenuAction.shadow_hidden"/>
-            <file name="Output_hidden"/>
-            <file name="ProgressListAction.shadow_hidden"/>
-            <file name="Separator3.instance_hidden"/>
-            <file name="Separator4.instance_hidden"/>
-            <file name="SwitchToRecentDocumentAction.shadow_hidden"/>
-            <file name="Tools_hidden"/>
-            <file name="Web_hidden"/>
-            <file name="org-netbeans-core-io-ui-IOWindowAction.shadow_hidden"/>
-            <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-favorites-View.shadow_hidden"/>
-            <file name="org-netbeans-modules-project-ui-logical-tab-action.shadow_hidden"/>
-            <file name="org-netbeans-modules-project-ui-physical-tab-action.shadow_hidden"/>
-            
-            <folder name="Layout">
-                <attr name="position" intvalue="100"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_LayoutGroup"/>
-                <file name="org-netbeans-core-windows-actions-ToggleFullScreenAction.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ToggleFullScreenAction.instance"/>
-                    <attr name="displayName" stringvalue="Full Screen"/>
-                    <attr name="description" stringvalue="Toggles full screen model."/>
-                    <attr name="tooltipTitle" stringvalue="Toggle Full Screen"/>
-                    <attr name="tooltipBody" stringvalue="Toggles the full screen display of the application."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/toggle-full-screen32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/toggle-full-screen.png"/>
-                </file>
+            <!-- INSERT Tab-->
+            <folder name="Insert">
+                <attr name="position" intvalue="400"/> 
+                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_InsertTab"/>
+                <folder name="Annotations">
+                    <attr name="position" intvalue="100"/>
+                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_AnnotationsGroup"/>
+                </folder>
             </folder>
-            <folder name="Show">
-                <attr name="position" intvalue="1200"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ShowGroup"/>            
+            <!-- WINDOW Tab-->
+            <folder name="Window">
+                <attr name="position" intvalue="999"/>
                 <file name="Separator1.instance">
                     <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
-                    <attr name="position" intvalue="1000"/>
+                    <attr name="position" intvalue="200"/>
                 </file>
                 <file name="org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow">
+                    <attr name="position" intvalue="300"/>     
                     <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-GlobalPropertiesAction.instance"/>
                     <attr name="displayName" stringvalue="Properties"/>
                     <attr name="description" stringvalue="Display the Properties window."/>
@@ -292,20 +119,19 @@
                     <attr name="tooltipBody" stringvalue="Shows the properties window, which is used for getting or setting values for the currently selected object."/>
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-properties32.png"/>
                     <!-- ICON CAN ONLY BE CHANGED VIA BRANDING <attr name="iconBase" stringvalue="com/terramenta/images/show-properties.png"/>-->        
-                    <attr name="position" intvalue="1100"/>            
                 </file>
                 <file name="org-netbeans-core-actions-LogAction.shadow">
+                    <attr name="position" intvalue="400"/>
                     <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-LogAction.instance"/>
                     <attr name="displayName" stringvalue="Log Console"/>
                     <attr name="description" stringvalue="Display the applicataion log."/>
                     <attr name="tooltipTitle" stringvalue="Show Log Console"/>
                     <attr name="tooltipBody" stringvalue="Shows the application's output log, which is useful for troubleshooting application errors."/>
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-log32.png"/>
-                    
                     <!-- ICON CAN ONLY BE CHANGED VIA BRANDING <attr name="iconBase" stringvalue="com/terramenta/images/show-log.png"/>-->     
-                    <attr name="position" intvalue="1200"/>
                 </file>
                 <file name="org-netbeans-core-actions-HTMLViewAction.shadow">
+                    <attr name="position" intvalue="500"/>
                     <attr name="originalFile" stringvalue="Actions/View/org-netbeans-core-actions-HTMLViewAction.instance"/>
                     <attr name="displayName" stringvalue="Web Browser"/>
                     <attr name="description" stringvalue="Launch a Web Browser."/>
@@ -313,106 +139,42 @@
                     <attr name="tooltipBody" stringvalue="Launchs the current systems Web Browser."/>
                     <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-web32.png"/>
                     <attr name="iconBase" stringvalue="com/terramenta/images/show-web.png"/>    
-                    <attr name="position" intvalue="1300"/>
                 </file>
-                <file name="Separator2.instance">
-                    <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
-                    <attr name="position" intvalue="2000"/>
-                </file>
-                <file name="org-netbeans-modules-project-ui-logical-tab-action.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-logical-tab-action.instance"/>
-                    <attr name="displayName" stringvalue="Projects"/>
-                    <attr name="description" stringvalue="Display the Projects window."/>
-                    <attr name="tooltipTitle" stringvalue="Show Projects"/>
-                    <attr name="tooltipBody" stringvalue="Shows the Projects window which displays the open projects. This is a logical view of the projects' files."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/folder_info32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/folder_info.png"/>                
-                    <attr name="position" intvalue="2100"/>
-                    <attr name="priority" stringvalue="medium"/>
-                </file>
-                <file name="org-netbeans-modules-project-ui-physical-tab-action.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Project/org-netbeans-modules-project-ui-physical-tab-action.instance"/>
-                    <attr name="displayName" stringvalue="Files"/>
-                    <attr name="description" stringvalue="Display the Files window."/>
-                    <attr name="tooltipTitle" stringvalue="Show Files"/>
-                    <attr name="tooltipBody" stringvalue="Shows the Files window which displays the physical files in the open projects. This view may differ from the view in the Projects window."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/folder_full32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/folder_full.png"/>                
-                    <attr name="position" intvalue="2200"/>
-                    <attr name="priority" stringvalue="medium"/>
-                </file>
-                <file name="org-netbeans-modules-favorites-View.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-modules-favorites-View.instance"/>
-                    <attr name="displayName" stringvalue="Favorites"/>
-                    <attr name="description" stringvalue="Display the Favorites window."/>
-                    <attr name="tooltipTitle" stringvalue="Show Favorites"/>
-                    <attr name="tooltipBody" stringvalue="Shows the Favorites window, which contains shortcuts to the files you added to 'Favorites'."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/show-favorite32.png"/>
-                    <attr name="position" intvalue="2300"/>
-                    <attr name="priority" stringvalue="medium"/>
-                </file>
+                <folder name="Layout">
+                    <attr name="position" intvalue="200"/>
+                    <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_LayoutGroup"/>
+                    <file name="org-netbeans-core-windows-actions-ToggleFullScreenAction.shadow">
+                        <attr name="position" intvalue="1"/>
+                        <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ToggleFullScreenAction.instance"/>
+                        <attr name="displayName" stringvalue="Full Screen"/>
+                        <attr name="description" stringvalue="Toggles full screen model."/>
+                        <attr name="tooltipTitle" stringvalue="Toggle Full Screen"/>
+                        <attr name="tooltipBody" stringvalue="Toggles the full screen display of the application."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/images/toggle-full-screen32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/images/toggle-full-screen.png"/>
+                    </file>
+                    <file name="CloseWindowAction.shadow">
+                        <attr name="position" intvalue="2"/>
+                        <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-CloseWindowAction.instance"/>
+                        <attr name="displayName" stringvalue="Close Window"/>
+                        <attr name="description" stringvalue="Close the current window."/>
+                        <attr name="tooltipTitle" stringvalue="Close Current Window"/>
+                        <attr name="tooltipBody" stringvalue="Closes the current window."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-close32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/images/window-close.png"/>
+                    </file>
+                    <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow">
+                        <attr name="position" intvalue="3"/>
+                        <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ResetWindowsAction.instance"/>
+                        <attr name="displayName" stringvalue="Reset Windows"/>
+                        <attr name="description" stringvalue="Reset the window layout."/>
+                        <attr name="tooltipTitle" stringvalue="Reset Window Layout"/>
+                        <attr name="tooltipBody" stringvalue="Resets the window layout to the application's default layout."/>
+                        <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-reset-all32.png"/>
+                        <attr name="iconBase" stringvalue="com/terramenta/images/window-reset-all.png"/>                
+                    </file>
+                </folder>   
             </folder>
-            <folder name="Manage">
-                <attr name="position" intvalue="9000"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ManageGroup"/>
-                <file name="CloseWindowAction.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-CloseWindowAction.instance"/>
-                    <attr name="displayName" stringvalue="Close Window"/>
-                    <attr name="description" stringvalue="Close the current window."/>
-                    <attr name="tooltipTitle" stringvalue="Close Current Window"/>
-                    <attr name="tooltipBody" stringvalue="Closes the current window."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-close32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/window-close.png"/>
-                </file>
-                <file name="org-netbeans-core-windows-actions-ResetWindowsAction.shadow">
-                    <attr name="originalFile" stringvalue="Actions/Window/org-netbeans-core-windows-actions-ResetWindowsAction.instance"/>
-                    <attr name="displayName" stringvalue="Reset Windows"/>
-                    <attr name="description" stringvalue="Reset the window layout."/>
-                    <attr name="tooltipTitle" stringvalue="Reset Window Layout"/>
-                    <attr name="tooltipBody" stringvalue="Resets the window layout to the application's default layout."/>
-                    <attr name="tooltipIcon" stringvalue="com/terramenta/images/window-reset-all32.png"/>
-                    <attr name="iconBase" stringvalue="com/terramenta/images/window-reset-all.png"/>                
-                </file>
-            </folder>               
-            <folder name="Tasks">
-                <attr name="position" intvalue="9999"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_TasksGroup"/>
-            </folder>               
-        </folder>
-        <!--Show Tab (Should not use. A placeholder for 3rd party modules)-->
-        <folder name="View">
-            <attr name="position" intvalue="800"/>
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_ShowTab"/>
-            <file name="Separator1.instance_hidden"/>
-            <file name="Separator2.instance_hidden"/>
-            <file name="Separator3.instance_hidden"/>
-            <file name="ShowEditorOnlyAction.shadow_hidden"/>
-            <file name="ToggleFullScreenAction.shadow_hidden"/>
-            <file name="org-netbeans-core-actions-LogAction.shadow_hidden"/>
-            <file name="org-netbeans-core-windows-actions-ToolbarsListAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-editor-NbCodeFoldingAction.instance_hidden"/>
-            <file name="org-netbeans-modules-project-ui-SyncEditorWithViewsAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-versioning-core-ShowTextAnnotationsAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-versioning-ui-diff-ShowDiffSidebarAction.shadow_hidden"/>
-            <folder name="Tasks">
-                <attr name="position" intvalue="9999"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_TasksGroup"/>
-            </folder>               
-        </folder>
-        <!--HELP Tab-->
-        <folder name="Help">
-            <attr name="position" intvalue="9999"/>
-            <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_HelpTab"/>
-            <file name="Separator1.instance_hidden"/>
-            <file name="SeparatorAfterJavadoc.instance_hidden"/>
-            <file name="master-help.xml_hidden"/>
-            <file name="org-netbeans-core-actions-AboutAction.shadow_hidden"/>
-            <file name="org-netbeans-modules-autoupdate-ui-actions-CheckForUpdatesAction.shadow_hidden"/>
-            <folder name="Tasks">
-                <attr name="position" intvalue="9999"/>
-                <attr name="menuText" bundlevalue="com.terramenta.Bundle#CTL_TasksGroup"/>
-            </folder>               
         </folder>
     </folder>
-   
 </filesystem>

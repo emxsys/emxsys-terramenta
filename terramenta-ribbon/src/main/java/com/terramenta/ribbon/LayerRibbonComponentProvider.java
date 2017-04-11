@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import org.pushingpixels.flamingo.api.ribbon.JRibbon;
@@ -45,8 +44,8 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonContextualTaskGroup;
 import org.pushingpixels.flamingo.api.ribbon.RibbonTask;
 
 /**
- * Provider for the Components on the Ribbon defined in the XML Layer: the
- * AppMenu, TaskBar and TaskPanes.
+ * Provider for the Components on the Ribbon defined in the XML Layer: the AppMenu, TaskBar and
+ * TaskPanes.
  *
  * @author Chris
  */
@@ -76,8 +75,8 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
     }
 
     /**
-     * For the taskBar on the right side of the menu button. Scans the layer.xml
-     * for entries in the Toolbars folder.
+     * For the taskBar on the right side of the menu button. Scans the layer.xml for entries in the
+     * Toolbars folder.
      *
      * @param ribbon the ribbon to add the TaskBar ActionItems too.
      */
@@ -111,19 +110,18 @@ public class LayerRibbonComponentProvider extends RibbonComponentProvider {
     }
 
     /**
-     * For the actual tabbed menu items. Scans the layer.xml for entries in the
-     * Menu folder and the Ribbon/TaskPanes. A tabbed TaskPane is created for
-     * each child folder, and a RibbonBand is created for each grandchild
-     * folder.
+     * For the actual tabbed menu items. Scans the layer.xml for entries in the Menu folder and the
+     * Ribbon/TaskPanes. A tabbed TaskPane is created for each child folder, and a RibbonBand is
+     * created for each grandchild folder.
      *
      * @param ribbon the JRibbon to add the tabbed menu items to
      */
     private void addTaskPanes(JRibbon ribbon) {
         RibbonComponentFactory factory = new RibbonComponentFactory();
         HashMap<String, ArrayList<RibbonTask>> contextualGroups = new HashMap<>();
-        List<ActionItem> items = new ArrayList<>();
-        items.addAll(ActionItems.forPath("Ribbon/TaskPanes"));
-        items.addAll(ActionItems.forPath("Menu"));
+        List<? extends ActionItem> items = ActionItems.forPath("Ribbon/TaskPanes");//new ArrayList<>();
+        //items.addAll(ActionItems.forPath("Ribbon/TaskPanes"));
+        //items.addAll(ActionItems.forPath("Menu"));
         for (ActionItem item : items) {
             if (item == null) {
                 continue;

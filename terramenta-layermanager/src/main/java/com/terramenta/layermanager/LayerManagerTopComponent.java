@@ -27,7 +27,7 @@ import org.openide.windows.WindowManager;
 @TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "com/terramenta/layermanager/images/show-layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "layerManagerMode", openAtStartup = true)
 @ActionID(category = "Window", id = "com.terramenta.layermanager.LayerManagerTopComponent")
-@RibbonActionReference(path = "Menu/Window/Show",
+@RibbonActionReference(path = "Ribbon/TaskPanes/Window",
         position = 2,
         priority = "top",
         description = "#CTL_LayerManagerAction_Hint",

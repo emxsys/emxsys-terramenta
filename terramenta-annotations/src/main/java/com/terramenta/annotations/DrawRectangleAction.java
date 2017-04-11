@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -37,8 +36,7 @@ import org.openide.util.NbBundle.Messages;
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawRectangleAction")
 @ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-rectangle.png",
         displayName = "#CTL_DrawRectangleAction")
-@ActionReference(path = "Toolbars/Annotations", position = 5)
-@RibbonActionReference(path = "Menu/Insert/Annotations",
+@RibbonActionReference(path = "Ribbon/TaskPanes/Insert/Annotations",
         position = 5,
         priority = "top",
         description = "#CTL_DrawRectangleAction_Hint",

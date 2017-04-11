@@ -14,11 +14,18 @@ package com.terramenta.globe.ribbons;
 
 import com.terramenta.globe.options.GlobeOptions;
 import com.terramenta.ribbon.api.ResizableIcons;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.Arrays;
 import java.util.prefs.Preferences;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import org.openide.util.ImageUtilities;
+import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.common.RichTooltip;
 import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
@@ -37,11 +44,15 @@ public class PerspectiveBand extends JRibbonBand {
     private static final Image IMAGE_ECEF = ImageUtilities.loadImage("com/terramenta/globe/ribbons/frame-ecef32.png");
     private static final Image IMAGE_2D = ImageUtilities.loadImage("com/terramenta/globe/ribbons/dimensions-2d32.png");
     private static final Image IMAGE_3D = ImageUtilities.loadImage("com/terramenta/globe/ribbons/dimensions-3d32.png");
+    private static final Image IMAGE_FULLSCREEN = ImageUtilities.loadImage("com/terramenta/globe/images/toggle-globe32.png");
 
     private static final ResizableIcon ICON_ECI = ResizableIcons.fromResource("com/terramenta/globe/ribbons/frame-eci.png");
     private static final ResizableIcon ICON_ECEF = ResizableIcons.fromResource("com/terramenta/globe/ribbons/frame-ecef.png");
     private static final ResizableIcon ICON_2D = ResizableIcons.fromResource("com/terramenta/globe/ribbons/dimensions-2d.png");
     private static final ResizableIcon ICON_3D = ResizableIcons.fromResource("com/terramenta/globe/ribbons/dimensions-3d.png");
+    private static final ResizableIcon ICON_FULLSCREEN = ResizableIcons.fromResource("com/terramenta/globe/images/toggle-globe.png");
+
+    private Container originalContentPane = null;
 
     public PerspectiveBand() {
         super("Perspective", null);
@@ -80,6 +91,18 @@ public class PerspectiveBand extends JRibbonBand {
             updateDimensions(dimensionsBtn, is2D);
         });
         addCommandButton(dimensionsBtn, RibbonElementPriority.MEDIUM);
+
+        /**
+         * Fullscreen Globe button
+         */
+        JCommandButton fullscreenBtn = new JCommandButton(ICON_FULLSCREEN);
+        RichTooltip fullscreenBtnTooltip = new RichTooltip("Toggle Full Globe", "Toggles the Globe between Maximized and Minimizes views.");
+        fullscreenBtnTooltip.setMainImage(IMAGE_FULLSCREEN);
+        fullscreenBtn.setActionRichTooltip(fullscreenBtnTooltip);
+        fullscreenBtn.addActionListener(e -> {
+            toggleFullscreen();
+        });
+        addCommandButton(fullscreenBtn, RibbonElementPriority.MEDIUM);
     }
 
     private static void updateFrame(JCommandButton frameBtn, boolean isEci) {
@@ -96,5 +119,37 @@ public class PerspectiveBand extends JRibbonBand {
         dimensionsBtn.setActionRichTooltip(dimensionsBtnTooltip);
         dimensionsBtn.setIcon(is2D ? ICON_2D : ICON_3D);
         dimensionsBtn.getActionModel().setActionCommand(is2D ? "3D" : "2D");
+    }
+
+    private void toggleFullscreen() {
+        if (null == originalContentPane) {
+            TopComponent globeTopComponent = WindowManager.getDefault().findTopComponent("GlobeTopComponent");
+            if (globeTopComponent == null || !globeTopComponent.isOpened()) {
+                return;
+            }
+
+            final JFrame mainWnd = (JFrame) WindowManager.getDefault().getMainWindow();
+            originalContentPane = mainWnd.getContentPane();
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(globeTopComponent, BorderLayout.CENTER);
+            mainWnd.setContentPane(panel);
+            mainWnd.invalidate();
+            mainWnd.revalidate();
+            mainWnd.repaint();
+        } else {
+            JFrame frame = (JFrame) WindowManager.getDefault().getMainWindow();
+            frame.setContentPane(originalContentPane);
+            originalContentPane = null;
+        }
+
+        final TopComponent tc = TopComponent.getRegistry().getActivated();
+        if (tc == null) {
+            return;
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            tc.requestFocusInWindow();
+        });
     }
 }

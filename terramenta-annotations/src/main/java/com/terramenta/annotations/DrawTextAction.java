@@ -17,7 +17,6 @@ import com.terramenta.globe.GlobeTopComponent;
 import com.terramenta.ribbon.RibbonActionReference;
 import java.awt.event.ActionEvent;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -27,8 +26,7 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawTextAction")
 @ActionRegistration(iconBase = "com/terramenta/annotations/images/draw-text.png", displayName = "#CTL_DrawTextAction", popupText = "#CTL_DrawTextAction_Hint")
-@ActionReference(path = "Toolbars/Annotations", position = 7)
-@RibbonActionReference(path = "Menu/Insert/Annotations",
+@RibbonActionReference(path = "Ribbon/TaskPanes/Insert/Annotations",
         position = 7,
         priority = "top",
         description = "#CTL_DrawTextAction_Hint",

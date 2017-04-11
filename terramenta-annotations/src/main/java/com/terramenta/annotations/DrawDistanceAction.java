@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 
@@ -36,9 +35,8 @@ import org.openide.util.NbBundle.Messages;
  */
 @ActionID(category = "Tools", id = "com.terramenta.annotations.DrawDistanceAction")
 @ActionRegistration(iconBase = "com/terramenta/annotations/images/measure-distance.png", displayName = "#CTL_DrawDistanceAction", popupText = "#CTL_DrawDistanceAction_Hint")
-@ActionReference(path = "Toolbars/Annotations", position = 8)
-@RibbonActionReference(path = "Menu/Insert/Annotations",
-        position = 8,
+@RibbonActionReference(path = "Ribbon/TaskPanes/Insert/Measurements",
+        position = 1,
         priority = "top",
         description = "#CTL_DrawDistanceAction_Hint",
         tooltipTitle = "#CTL_DrawDistanceAction_TooltipTitle",
@@ -49,7 +47,7 @@ import org.openide.util.NbBundle.Messages;
 @Messages({
     "CTL_DrawDistanceAction=Distance Measurement",
     "CTL_DrawDistanceAction_Hint=Point to point distance measurement.",
-    "CTL_DrawDistanceAction_TooltipTitle=Distance Measurement Tool",
+    "CTL_DrawDistanceAction_TooltipTitle=Distance Measurement",
     "CTL_DrawDistanceAction_TooltipBody=Measures point to point distances on the globe.",
     "CTL_DrawDistanceAction_TooltipFooter=Press F1 for more help."
 })

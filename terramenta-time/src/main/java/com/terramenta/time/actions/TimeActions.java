@@ -20,8 +20,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
@@ -41,8 +39,13 @@ public class TimeActions {
      * @author Chris.Heidt
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepBackwardAction")
-    @ActionRegistration(iconBase = "com/terramenta/time/images/time-step-backward.png", displayName = "#CTL_TimeStepBackwardAction", popupText = "Step backwards one frame in time.")
-    @RibbonActionReference(path = "Menu/Animate/Controls", position = 1)
+    @ActionRegistration(
+            iconBase = "com/terramenta/time/images/time-step-backward.png",
+            displayName = "#CTL_TimeStepBackwardAction",
+            popupText = "Step backwards one frame in time.")
+    @RibbonActionReference(
+            path = "Ribbon/TaskPanes/Time/Controls",
+            position = 1)
     @Messages("CTL_TimeStepBackwardAction=Step Backward")
     public static final class TimeStepBackwardAction implements ActionListener {
 
@@ -56,8 +59,13 @@ public class TimeActions {
      * REWIND
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeRewindAction")
-    @ActionRegistration(displayName = "#CTL_TimeRewindAction", popupText = "Play backwards through time.", lazy = false)
-    @RibbonActionReference(path = "Menu/Animate/Controls", position = 2)
+    @ActionRegistration(
+            displayName = "#CTL_TimeRewindAction",
+            popupText = "Play backwards through time.",
+            lazy = false)
+    @RibbonActionReference(
+            path = "Ribbon/TaskPanes/Time/Controls",
+            position = 2)
     @Messages("CTL_TimeRewindAction=Rewind")
     public static final class TimeRewindAction extends AbstractAction {
 
@@ -101,7 +109,7 @@ public class TimeActions {
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStopAction")
     @ActionRegistration(displayName = "#CTL_TimeStopAction", popupText = "Stop time animation.", lazy = false)
-    @RibbonActionReference(path = "Menu/Animate/Controls", position = 3)
+    @RibbonActionReference(path = "Ribbon/TaskPanes/Time/Controls", position = 3)
     @Messages("CTL_TimeStopAction=Stop")
     public static final class TimeStopAction extends AbstractAction {
 
@@ -142,7 +150,7 @@ public class TimeActions {
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimePlayAction")
     @ActionRegistration(displayName = "#CTL_TimePlayAction", popupText = "Play through time.", lazy = false)
-    @RibbonActionReference(path = "Menu/Animate/Controls", position = 4)
+    @RibbonActionReference(path = "Ribbon/TaskPanes/Time/Controls", position = 4)
     @Messages("CTL_TimePlayAction=Play")
     public static final class TimePlayAction extends AbstractAction {
 
@@ -186,7 +194,7 @@ public class TimeActions {
      */
     @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeStepForwardAction")
     @ActionRegistration(iconBase = "com/terramenta/time/images/time-step-forward.png", displayName = "#CTL_TimeStepForwardAction", popupText = "Step forward one frame in time.")
-    @RibbonActionReference(path = "Menu/Animate/Controls", position = 5)
+    @RibbonActionReference(path = "Ribbon/TaskPanes/Time/Controls", position = 5)
     @Messages("CTL_TimeStepForwardAction=Step Forward")
     public static final class TimeStepForwardAction implements ActionListener {
 
