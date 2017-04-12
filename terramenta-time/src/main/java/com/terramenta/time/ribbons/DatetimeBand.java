@@ -19,12 +19,14 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 import org.pushingpixels.flamingo.api.ribbon.JFlowRibbonBand;
 
 /**
  *
  * @author Chris.Heidt
  */
+@NbBundle.Messages("LBL_RibbonBand_DatetimeBand=Datetime")
 public class DatetimeBand extends JFlowRibbonBand {
 
     private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
@@ -35,7 +37,7 @@ public class DatetimeBand extends JFlowRibbonBand {
      *
      */
     public DatetimeBand() {
-        super("Datetime", null);
+        super(Bundle.LBL_RibbonBand_DatetimeBand(), null);
 
         final JFXPanel jfxPanel = new JFXPanel();
         jfxPanel.setPreferredSize(new Dimension(230, 24));

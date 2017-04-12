@@ -12,16 +12,18 @@
             <!--Time Tab-->
             <folder name="Time">
                 <attr name="position" intvalue="200"/> 
-                <attr name="menuText" bundlevalue="com.terramenta.time.Bundle#LBL_TimeTaskPane"/>
+                <attr name="menuText" bundlevalue="com.terramenta.time.actions.Bundle#LBL_RibbonTask_Time"/>
                 <folder name="Controls">
-                    <attr name="position" intvalue="200"/>
-                    <attr name="menuText" bundlevalue="com.terramenta.time.Bundle#LBL_ControlsRibbonBand"/>
+                    <attr name="position" intvalue="100"/>
+                    <attr name="menuText" bundlevalue="com.terramenta.time.actions.Bundle#LBL_RibbonBand_Controls"/>
                 </folder>
                 <file name="com-terramenta-time-ribbons-DatetimeBand.instance">
-                    <attr name="position" intvalue="300"/>
+                    <attr name="position" intvalue="200"/>
+                    <attr name="menuText" bundlevalue="com.terramenta.time.ribbons.Bundle#LBL_RibbonBand_DatetimeBand"/>
                 </file>
                 <file name="com-terramenta-time-ribbons-SpeedBand.instance">
-                    <attr name="position" intvalue="400"/>
+                    <attr name="position" intvalue="300"/>
+                    <attr name="menuText" bundlevalue="com.terramenta.time.ribbons.Bundle#LBL_RibbonBand_SpeedBand"/>
                 </file>
             </folder>
         </folder>

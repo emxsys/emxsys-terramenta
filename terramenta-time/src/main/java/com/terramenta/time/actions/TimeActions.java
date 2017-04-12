@@ -29,6 +29,10 @@ import org.openide.util.WeakListeners;
  *
  * @author chris.heidt
  */
+@Messages({
+    "LBL_RibbonTask_Time=Time",
+    "LBL_RibbonBand_Controls=Controls"
+})
 public class TimeActions {
 
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);

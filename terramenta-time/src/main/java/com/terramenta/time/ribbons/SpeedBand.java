@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand;
 import org.pushingpixels.flamingo.api.ribbon.RibbonElementPriority;
@@ -30,6 +31,7 @@ import org.pushingpixels.flamingo.api.ribbon.resize.RibbonBandResizePolicy;
  *
  * @author Chris.Heidt
  */
+@NbBundle.Messages("LBL_RibbonBand_SpeedBand=Speed")
 public class SpeedBand extends JRibbonBand {
 
     private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
@@ -47,7 +49,7 @@ public class SpeedBand extends JRibbonBand {
      *
      */
     public SpeedBand() {
-        super("Speed", null);
+        super(Bundle.LBL_RibbonBand_SpeedBand(), null);
 
         setResizePolicies(Arrays.<RibbonBandResizePolicy>asList(
                 new CoreRibbonResizePolicies.None(getControlPanel()),
