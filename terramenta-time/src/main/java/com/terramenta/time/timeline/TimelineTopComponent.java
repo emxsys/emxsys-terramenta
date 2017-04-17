@@ -60,6 +60,7 @@ public final class TimelineTopComponent extends TopComponent {
         setToolTipText(Bundle.HINT_TimelineTopComponent());
         setMinimumSize(new Dimension(50, 50));
         setPreferredSize(new Dimension(75, 75));
+        putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
 
         Platform.runLater(() -> {
             timeline = tp.getTimeline();
