@@ -44,8 +44,8 @@ import org.openide.util.actions.SystemAction;
         displayName = "#CTL_LayerAddAction",
         popupText = "Add a layer to the globe.")
 @RibbonActionReference(
-        path = "Menu/Insert/Layers",
-        position = 100,
+        path = "Ribbon/TaskPanes/LayerTools/Edit",
+        position = 400,
         priority = "top",
         description = "#CTL_LayerAddAction_Hint",
         tooltipTitle = "#CTL_LayerAddAction_TooltipTitle",
