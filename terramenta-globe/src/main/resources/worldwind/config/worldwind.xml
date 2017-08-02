@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorldWindConfiguration version="1">
+    <Property name="gov.nasa.worldwind.avkey.ViewClassName" value="com.terramenta.globe.AutoClippingOrbitView"/>
+    <Property name="gov.nasa.worldwind.avkey.ViewInputHandlerClassName" value="com.terramenta.globe.utilities.ZoomToCursorViewInputHandler"/>
+    <Property name="gov.nasa.worldwind.avkey.WorldMapImagePath" value="images/earth-map-512x256.png"/>
+    <LayerList>
+        <Layer className="gov.nasa.worldwind.layers.StarsLayer" actuate="onRequest">
+            <Property name="Name" value="Stars"/>
+        </Layer>
+        <!--TM-->
+        <Layer className="com.terramenta.globe.solar.SunLayer" actuate="onLoad" />
+        <!--TM-->
+        <Layer className="com.terramenta.globe.lunar.MoonLayer" actuate="onLoad" />
+        <Layer className="gov.nasa.worldwind.layers.SkyGradientLayer"/>
+        <!--TM-->
+        <Layer className="com.terramenta.globe.layers.CustomBMNGOneImage">
+            <Property name="MinActiveAltitude" value="3e6"/>
+        </Layer>
+        <Layer href="config/Earth/BMNGWMSLayer2.xml" actuate="onLoad"/>
+        <Layer href="config/Earth/LandsatI3WMSLayer2.xml" actuate="onLoad"/>
+        <Layer href="config/Earth/USGSNAIPPlusLayer.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/BingImagery.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/USGSTNMTopoLayer.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/USGSTNMTopoLargeLayer.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/USGSTopoLowResLayer.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/USGSTopoMedResLayer.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/USGSTopoHighResLayer.xml" actuate="onRequest"/>
+        <Layer className="gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer" actuate="onRequest"/>
+        <Layer href="config/Earth/OpenStreetMap.xml" actuate="onRequest"/>
+        <Layer href="config/Earth/EarthAtNightLayer.xml" actuate="onRequest"/>
+        <Layer className="gov.nasa.worldwind.layers.LatLonGraticuleLayer" title="LatLon Graticule" actuate="onRequest" />
+        <Layer className="gov.nasa.worldwind.layers.Earth.MGRSGraticuleLayer" title="MGRS Graticule" actuate="onRequest" />
+        <!--TM-->
+        <Layer className="com.terramenta.globe.layers.RadialGridLayer" title="ECI Radial Grid" actuate="onRequest" /> 
+        <Layer className="gov.nasa.worldwind.layers.Earth.NASAWFSPlaceNameLayer"/>
+        <Layer className="gov.nasa.worldwind.layers.WorldMapLayer"/>
+        <Layer className="gov.nasa.worldwind.layers.ScalebarLayer"/>
+        <Layer className="gov.nasa.worldwind.layers.ViewControlsLayer"/>
+        <Layer className="gov.nasa.worldwind.layers.CompassLayer">
+            <Property name="IconFilePath" value="images/notched-compass.png"/>
+        </Layer>
+    </LayerList>
+</WorldWindConfiguration>
