@@ -29,7 +29,12 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwindx.examples.util.SessionState;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,17 +57,19 @@ import org.openide.util.lookup.ServiceProvider;
 public class WorldWindManager implements Lookup.Provider, Serializable {
 
     public static final String DEFAULT_CONFIG = "worldwind/config/worldwind.xml";
-    private static final Logger logger = Logger.getLogger(WorldWindManager.class.getName());
-    private static final Preferences prefs = NbPreferences.forModule(GlobeOptions.class);
-    private static final DatetimeProvider datetimeProvider = Lookup.getDefault().lookup(DatetimeProvider.class);
-    private static final TimeActionController tac = Lookup.getDefault().lookup(TimeActionController.class);
-    private static final EciController eciController = Lookup.getDefault().lookup(EciController.class);
+    private static final Logger LOGGER = Logger.getLogger(WorldWindManager.class.getName());
+    private static final Preferences PREFS = NbPreferences.forModule(GlobeOptions.class);
+    private static final DatetimeProvider DATETIME_PROVIDER = Lookup.getDefault().lookup(DatetimeProvider.class);
+    private static final TimeActionController TAC = Lookup.getDefault().lookup(TimeActionController.class);
+    private static final EciController ECI_CONTROLLER = Lookup.getDefault().lookup(EciController.class);
 
     private final InstanceContent content = new InstanceContent();
     private final Lookup internalLookup = new AbstractLookup(content);
-    private ExpandableLookup masterLookup;
     private final SessionState sessionState = new SessionState("." + NbBundle.getBranding());
     private final WorldWindow wwd;
+
+    //lookup instance is lazy loaded
+    private ExpandableLookup masterLookup;
 
     /**
      * WorldWind Configuration Settings
@@ -72,11 +79,31 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
         System.setProperty("sun.awt.noerasebackground", "true"); // prevents flashing during window resizing
 
         //load configuration
-        String config = prefs.get("options.globe.worldwindConfig", DEFAULT_CONFIG);
-        if (config.isEmpty()) {
-            config = DEFAULT_CONFIG;
+        //use user preference first
+        String config = PREFS.get("options.globe.worldwindConfig", null);
+        if (config == null || config.isEmpty()) {
+            //try the etc directory
+            Path configPath = Paths.get("./etc/worldwind.xml");
+            if (Files.exists(configPath)) {
+                config = configPath.toAbsolutePath().normalize().toString();
+            } else {
+                try {
+                    //write the local resource to the etc
+                    Files.copy(
+                            WorldWindManager.class.getClassLoader().getResourceAsStream(DEFAULT_CONFIG),
+                            configPath,
+                            StandardCopyOption.REPLACE_EXISTING);
+                    config = configPath.toAbsolutePath().normalize().toString();
+                } catch (IOException ex) {
+                    //if we fail to write just use the local resources directly
+                    LOGGER.log(Level.WARNING, "Failed to write to etc directory!");
+                    config = DEFAULT_CONFIG;
+                }
+            }
         }
+
         System.setProperty("gov.nasa.worldwind.app.config.document", config);
+        LOGGER.log(Level.INFO, "Using WorldWind configuration: {0}", config);
     }
 
     public WorldWindManager() {
@@ -85,19 +112,19 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
 
         //Scene Controller
         StereoOptionSceneController asc = (StereoOptionSceneController) wwd.getSceneController();
-        asc.setStereoMode(prefs.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
-        asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(prefs.get("options.globe.focusAngle", "0")) / 10));
+        asc.setStereoMode(PREFS.get("options.globe.displayMode", AVKey.STEREO_MODE_NONE));
+        asc.setFocusAngle(Angle.fromDegrees(Double.parseDouble(PREFS.get("options.globe.focusAngle", "0")) / 10));
         asc.setDeepPickEnabled(true);
-        asc.getDrawContext().setValue("DISPLAY_DATETIME", datetimeProvider.getDatetime());
+        asc.getDrawContext().setValue("DISPLAY_DATETIME", DATETIME_PROVIDER.getDatetime());
 
-        datetimeProvider.addChangeListener((oldDatetime, newDatetime) -> {
+        DATETIME_PROVIDER.addChangeListener((oldDatetime, newDatetime) -> {
             DrawContext dc = wwd.getSceneController().getDrawContext();
 
             //set display date
             dc.setValue("DISPLAY_DATETIME", newDatetime);
 
             //set display interval
-            Duration displayDuration = tac.getDisplayDuration();
+            Duration displayDuration = TAC.getDisplayDuration();
             if (Duration.ZERO.equals(displayDuration)) {
                 //zero duration means items do not ever disapear, so dont set a display interval
                 dc.removeKey("DISPLAY_DATETIME_INTERVAL");
@@ -108,8 +135,8 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
             }
 
             //set eci values
-            dc.setValue("ECI", eciController.isEci());
-            dc.setValue("ECI_ROTATION", eciController.calculateRotationalDegree(newDatetime));
+            dc.setValue("ECI", ECI_CONTROLLER.isEci());
+            dc.setValue("ECI_ROTATION", ECI_CONTROLLER.calculateRotationalDegree(newDatetime));
         });
     }
 
@@ -148,26 +175,26 @@ public class WorldWindManager implements Lookup.Provider, Serializable {
     }
 
     public void saveSessionState() {
-        logger.info("Saving Session...");
+        LOGGER.info("Saving Session...");
         try {
             sessionState.saveSessionState(wwd);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to save session state!", e);
+            LOGGER.log(Level.SEVERE, "Failed to save session state!", e);
             return;
         }
-        logger.info("Session has been saved.");
+        LOGGER.info("Session has been saved.");
     }
 
     public void restoreSessionState() {
-        logger.info("Restoring Session...");
+        LOGGER.info("Restoring Session...");
         try {
             sessionState.restoreSessionState(wwd);
             wwd.redraw();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to restore session state!", e);
+            LOGGER.log(Level.SEVERE, "Failed to restore session state!", e);
             return;
         }
-        logger.info("Session has been restored.");
+        LOGGER.info("Session has been restored.");
     }
 
     @Override
