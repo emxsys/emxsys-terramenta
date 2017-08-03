@@ -40,7 +40,7 @@ import org.openide.windows.TopComponent;
 @RibbonActionReference(
         path = "Ribbon/TaskPanes/Window",
         tooltipIcon = "com/terramenta/time/timeline/timeline24.png",
-        position = 1,
+        position = 3,
         tooltipTitle = "Timeline Controller",
         tooltipBody = "Display the Timeline controller"
 )

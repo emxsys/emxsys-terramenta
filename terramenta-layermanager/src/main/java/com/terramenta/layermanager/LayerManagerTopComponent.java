@@ -24,9 +24,19 @@ import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 
-@TopComponent.Description(preferredID = "LayerManagerTopComponent", iconBase = "com/terramenta/layermanager/images/show-layers.png", persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "layerManagerMode", openAtStartup = true)
-@ActionID(category = "Window", id = "com.terramenta.layermanager.LayerManagerTopComponent")
+@TopComponent.Description(
+        preferredID = "LayerManagerTopComponent",
+        iconBase = "com/terramenta/layermanager/images/show-layers.png",
+        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+@TopComponent.Registration(
+        mode = "layerManagerMode",
+        openAtStartup = true)
+@TopComponent.OpenActionRegistration(
+        displayName = "#CTL_LayerManagerAction",
+        preferredID = "LayerManagerTopComponent")
+@ActionID(
+        category = "Window",
+        id = "com.terramenta.layermanager.LayerManagerTopComponent")
 @RibbonActionReference(path = "Ribbon/TaskPanes/Window",
         position = 2,
         priority = "top",
@@ -36,19 +46,16 @@ import org.openide.windows.WindowManager;
         tooltipIcon = "com/terramenta/layermanager/images/show-layers32.png",
         tooltipFooter = "#CTL_LayerManagerAction_TooltipFooter",
         tooltipFooterIcon = "com/terramenta/images/help.png")
-@NbBundle.Messages(
-        {
-            "CTL_LayerManagerTopComponent=Layer Manager",
-            "CTL_LayerManagerTopComponent_Hint=This is the Layer Manager.",
-            "CTL_LayerManagerAction=Layer Manager",
-            "CTL_LayerManagerAction_Hint=Show the Layer Manager.",
-            "CTL_LayerManagerAction_TooltipTitle=Show Layer Manager",
-            "CTL_LayerManagerAction_TooltipBody=Activates the Layer Manager window used for managing "
-            + "the layers displayed on the Globe.",
-            "CTL_LayerManagerAction_TooltipFooter=Press F1 for more help."
-        })
-
-@TopComponent.OpenActionRegistration(displayName = "#CTL_LayerManagerAction", preferredID = "LayerManagerTopComponent")
+@NbBundle.Messages({
+    "CTL_LayerManagerTopComponent=Layer Manager",
+    "CTL_LayerManagerTopComponent_Hint=This is the Layer Manager.",
+    "CTL_LayerManagerAction=Layer Manager",
+    "CTL_LayerManagerAction_Hint=Show the Layer Manager.",
+    "CTL_LayerManagerAction_TooltipTitle=Show Layer Manager",
+    "CTL_LayerManagerAction_TooltipBody=Activates the Layer Manager window used for managing "
+    + "the layers displayed on the Globe.",
+    "CTL_LayerManagerAction_TooltipFooter=Press F1 for more help."
+})
 public final class LayerManagerTopComponent extends TopComponent implements ExplorerManager.Provider {
 
     private final ExplorerManager em = new ExplorerManager();

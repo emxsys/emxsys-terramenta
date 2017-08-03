@@ -18,7 +18,6 @@ import java.awt.Component;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
 import org.openide.util.Lookup;
@@ -31,19 +30,19 @@ import org.openide.windows.WindowManager;
 @TopComponent.Description(
         preferredID = "GlobeTopComponent",
         iconBase = "com/terramenta/globe/images/show-globe.png",
-        persistenceType = TopComponent.PERSISTENCE_NEVER)
+        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(
         mode = "editor",
         openAtStartup = true)
-@ActionID(
-        category = "Window",
-        id = "com.terramenta.globe.GlobeTopComponent")
+
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_GlobeAction",
         preferredID = "GlobeTopComponent")
-@ActionReference(path = "Menu/Window/Show")
+@ActionID(
+        category = "Window",
+        id = "com.terramenta.globe.GlobeTopComponent")
 @RibbonActionReference(
-        path = "Menu/Window/Show",
+        path = "Ribbon/TaskPanes/Window",
         position = 1,
         priority = "top",
         description = "#CTL_GlobeAction_Hint",
