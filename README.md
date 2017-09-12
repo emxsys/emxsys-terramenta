@@ -7,7 +7,7 @@ Get Started at our [wiki homepage](https://bitbucket.org/teamninjaneer/terrament
 ### What is this repository for? ###
 
 * This repository is used for the active development of Terramenta.
-* Current version is 2.0-SNAPSHOT
+* Current version is 2.2
 
 ### How do I get set up? ###
 
