@@ -24,6 +24,8 @@
         <netbeans.version>RELEASE82</netbeans.version>
         <slf4j.version>1.7.21</slf4j.version>
         <worldwind.version>2.1.0</worldwind.version>
+        <worldwind.path>${user.home}/Projects/emxsys-terramenta/resources/worldwind/${worldwind.version}</worldwind.path>
+        
 
         <!-- PLUGIN VERSIONS -->
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
@@ -208,7 +210,7 @@
                         <phase>clean</phase>
                         <configuration>
                             <!--Specify the path where you unzipped the worldwind.jar file-->
-                            <file>D:\Java\worldwind-v${worldwind.version}\worldwind.jar</file>
+                            <file>${worldwind.path}/worldwind.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>gov.nasa</groupId>
                             <artifactId>worldwind</artifactId>
@@ -225,7 +227,7 @@
                         <phase>clean</phase>
                         <configuration>
                             <!--Specify the path where you unzipped the worldwindx.jar file-->
-                            <file>D:\Java\worldwind-v${worldwind.version}\worldwindx.jar</file>
+                            <file>${worldwind.path}/worldwindx.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>gov.nasa</groupId>
                             <artifactId>worldwindx</artifactId>
