@@ -47,7 +47,7 @@
             <url>http://astrogrid.jb.man.ac.uk/maven/</url>
         </repository>
     </repositories>
-
+<!--
     <distributionManagement>
         <repository>
             <id>moosArtifacts</id>
@@ -60,7 +60,7 @@
             <url>http://artifactory.thunder.gov/ext-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
-    
+    -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -158,7 +158,11 @@
                     <version>${nbm-maven-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <useOSGiDependencies>true</useOSGiDependencies>
+                        <!--BDS: set useOSGiDependencies to false to prevent the following error when running the app:
+                        Can't process ..\..\..\terramenta-globe\target\classes
+                        [INFO] java.io.FileNotFoundException: ..\..\..\terramenta-globe\target\classes (Access is denied)
+                        -->
+                        <useOSGiDependencies>false</useOSGiDependencies>
                         <brandingToken>${brandingToken}</brandingToken>
                         <cluster>${brandingToken}</cluster>
                     </configuration>
@@ -189,6 +193,51 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <!--                
+                    Install the worldwind jars into the local maven repository (.m2 folder)
+                    You can download the NASA WorldWind jars here: 
+                    https://github.com/NASAWorldWind/WorldWindJava/releases/download/v2.1.0/worldwind-v2.1.0.zip
+                    -->
+                    <execution>
+                        <id>install-worldwind</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <!--Specify the path where you unzipped the worldwind.jar file-->
+                            <file>D:\Java\worldwind-v${worldwind.version}\worldwind.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>gov.nasa</groupId>
+                            <artifactId>worldwind</artifactId>
+                            <version>${worldwind.version}</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-worldwindx</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <!--Specify the path where you unzipped the worldwindx.jar file-->
+                            <file>D:\Java\worldwind-v${worldwind.version}\worldwindx.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>gov.nasa</groupId>
+                            <artifactId>worldwindx</artifactId>
+                            <version>${worldwind.version}</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
