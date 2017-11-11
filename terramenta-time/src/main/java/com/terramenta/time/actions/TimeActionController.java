@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import javax.swing.Timer;
 import org.openide.util.Lookup;
@@ -42,6 +43,10 @@ public class TimeActionController {
      *
      */
     public static final String STEP = "TimeActionController.Step";
+    /**
+     *
+     */
+    public static final String RESET = "TimeActionController.Reset";
     /**
      *
      */
@@ -129,6 +134,18 @@ public class TimeActionController {
         this.dir = direction;//so we know the last direction we went for visual purposes.
         datetimeProvider.modifyDatetime(stepIncrement * direction, ChronoUnit.MILLIS);
         pcs.firePropertyChange(STEP, false, true);
+    }
+
+    /**
+     * reset the application time to the current system time
+     *
+     */
+    public void reset() {
+        if (isPlaying()) {
+            stop();
+        }
+        datetimeProvider.setDatetime(Instant.now());
+        pcs.firePropertyChange(RESET, false, true);
     }
 
     /**
