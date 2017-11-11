@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>terramenta</artifactId>
-        <groupId>com.terramenta</groupId>
+        <groupId>com.emxsys</groupId>
         <version>2.3.0-SNAPSHOT</version>
     </parent>
 

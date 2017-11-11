@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.terramenta</groupId>
+    <groupId>com.emxsys</groupId>
     <artifactId>terramenta</artifactId>
     <version>2.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -24,7 +24,12 @@
         <netbeans.version>RELEASE82</netbeans.version>
         <slf4j.version>1.7.21</slf4j.version>
         <worldwind.version>2.1.0</worldwind.version>
-        <worldwind.path>${user.home}/Projects/emxsys-terramenta/resources/worldwind/${worldwind.version}</worldwind.path>
+        <!--
+        Path to the worldwind and worldwindx jars in your local file system. These jars
+        will be installed in you local maven repo. You can download the NASA WorldWind jars here: 
+        https://github.com/NASAWorldWind/WorldWindJava/releases/download/v2.1.0/worldwind-v2.1.0.zip 
+        -->
+        <worldwind.path>${user.home}/Projects/Emxsys/emxsys-terramenta/resources/worldwind/${worldwind.version}</worldwind.path>
         
 
         <!-- PLUGIN VERSIONS -->

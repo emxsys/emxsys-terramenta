@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>terramenta</artifactId>
-        <groupId>com.terramenta</groupId>
+        <groupId>com.emxsys</groupId>
         <version>2.3.0-SNAPSHOT</version>
     </parent>
 
@@ -15,12 +15,12 @@
     <dependencies>
         <!-- Terramenta -->
         <dependency>
-            <groupId>com.terramenta</groupId>
+            <groupId>com.emxsys</groupId>
             <artifactId>terramenta-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.terramenta</groupId>
+            <groupId>com.emxsys</groupId>
             <artifactId>terramenta-globe</artifactId>
             <version>${project.version}</version>
         </dependency>
