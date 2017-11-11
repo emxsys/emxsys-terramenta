@@ -44,6 +44,15 @@
         
     <repositories>
         <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-emxsys-maven</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/emxsys/maven</url>
+        </repository>
+ 
+        <repository>
             <id>netbeans</id>
             <name>NetBeans</name>
             <url>http://bits.netbeans.org/maven2/</url>
@@ -54,7 +63,7 @@
             <url>http://astrogrid.jb.man.ac.uk/maven/</url>
         </repository>
     </repositories>
-<!--
+    <!--
     <distributionManagement>
         <repository>
             <id>moosArtifacts</id>
@@ -201,20 +210,21 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
             </plugin>
+<!-- TODO: Remove this deprecated block once the bintray maven repo is vetted
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
-                    <!--                
+                                    
                     Install the worldwind jars into the local maven repository (.m2 folder)
                     You can download the NASA WorldWind jars here: 
                     https://github.com/NASAWorldWind/WorldWindJava/releases/download/v2.1.0/worldwind-v2.1.0.zip
-                    -->
+                    
                     <execution>
                         <id>install-worldwind</id>
                         <phase>clean</phase>
                         <configuration>
-                            <!--Specify the path where you unzipped the worldwind.jar file-->
+                            Specify the path where you unzipped the worldwind.jar file
                             <file>${worldwind.path}/worldwind.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>gov.nasa</groupId>
@@ -231,7 +241,7 @@
                         <id>install-worldwindx</id>
                         <phase>clean</phase>
                         <configuration>
-                            <!--Specify the path where you unzipped the worldwindx.jar file-->
+                            Specify the path where you unzipped the worldwindx.jar file
                             <file>${worldwind.path}/worldwindx.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>gov.nasa</groupId>
@@ -246,6 +256,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
 
