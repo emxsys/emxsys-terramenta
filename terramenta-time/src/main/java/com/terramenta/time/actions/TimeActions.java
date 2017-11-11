@@ -207,4 +207,19 @@ public class TimeActions {
             tac.step(1);
         }
     }
+
+    /**
+     * RESET
+     */
+    @ActionID(category = "Other", id = "com.terramenta.time.actions.TimeResetAction")
+    @ActionRegistration(iconBase = "com/terramenta/time/images/time-reset.png", displayName = "#CTL_TimeResetAction", popupText = "Reset the application time.")
+    @RibbonActionReference(path = "Ribbon/TaskPanes/Time/Controls", position = 7, separatorBefore = 6)
+    @Messages("CTL_TimeResetAction=Reset")
+    public static final class TimeResetAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            tac.reset();
+        }
+    }
 }
